@@ -4,9 +4,9 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using NinjaHive.UI.Models;
+using NinjaHive.WebApp.Models;
 
-namespace NinjaHive.UI.Controllers
+namespace NinjaHive.WebApp.Controllers
 {
     [Authorize]
     public class AccountController : Controller

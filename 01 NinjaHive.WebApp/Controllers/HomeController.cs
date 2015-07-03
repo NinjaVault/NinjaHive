@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace NinjaHive.UI.Controllers
+namespace NinjaHive.WebApp.Controllers
 {
     public class HomeController : Controller
     {

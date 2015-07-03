@@ -3,10 +3,10 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
+using NinjaHive.WebApp.Models;
 using Owin;
-using NinjaHive.UI.Models;
 
-namespace NinjaHive.UI
+namespace NinjaHive.WebApp
 {
     public partial class Startup
     {

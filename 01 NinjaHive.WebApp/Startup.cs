@@ -1,8 +1,8 @@
 ﻿using Microsoft.Owin;
 using Owin;
 
-[assembly: OwinStartupAttribute(typeof(NinjaHive.UI.Startup))]
-namespace NinjaHive.UI
+[assembly: OwinStartupAttribute(typeof(NinjaHive.WebApp.Startup))]
+namespace NinjaHive.WebApp
 {
     public partial class Startup
     {

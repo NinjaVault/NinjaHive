@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("NinjaHive.UI")]
+[assembly: AssemblyTitle("NinjaHive.WebApp")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("NinjaHive.UI")]
-[assembly: AssemblyCopyright("Copyright ©  2015")]
+[assembly: AssemblyProduct("NinjaHive")]
+[assembly: AssemblyCopyright("Copyright ©  2015 - NinjaVault")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

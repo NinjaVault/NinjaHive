@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 
-namespace NinjaHive.UI.Models
+namespace NinjaHive.WebApp.Models
 {
     public class IndexViewModel
     {

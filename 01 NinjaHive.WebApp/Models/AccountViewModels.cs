@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace NinjaHive.UI.Models
+namespace NinjaHive.WebApp.Models
 {
     public class LoginViewModel
     {
