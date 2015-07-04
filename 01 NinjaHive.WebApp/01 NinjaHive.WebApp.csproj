@@ -250,6 +250,23 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\03 NinjaHive.Contract\03 NinjaHive.Contract.csproj">
+      <Project>{3b537332-5517-4bc2-b8cc-24bf208ee365}</Project>
+      <Name>03 NinjaHive.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\04 NinjaHive.BusinessLayer\04 NinjaHive.BusinessLayer.csproj">
+      <Project>{57b6a4ed-47ba-4ff6-bd28-fc42299c7e09}</Project>
+      <Name>04 NinjaHive.BusinessLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\06 NinjaHive.Core\06 NinjaHive.Core.csproj">
+      <Project>{1087016a-3d9a-41b4-8893-13d56f7d7f75}</Project>
+      <Name>06 NinjaHive.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

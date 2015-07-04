@@ -8,10 +8,13 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.DataProtection;
+using NinjaHive.Core;
+using NinjaHive.Core.Decoraters;
 using NinjaHive.WebApp.Models.IdentityModels;
 using Owin;
 using SimpleInjector;
 using SimpleInjector.Advanced;
+using SimpleInjector.Extensions;
 using SimpleInjector.Integration.Web.Mvc;
 
 namespace NinjaHive.WebApp
@@ -26,6 +29,8 @@ namespace NinjaHive.WebApp
 
             RegisterOwinAndIdentity(app);
 
+            RegisterCommandHandlers();
+
             container.RegisterMvcControllers(Assembly.GetExecutingAssembly());
             container.RegisterMvcIntegratedFilterProvider();
 
@@ -34,6 +39,15 @@ namespace NinjaHive.WebApp
             DependencyResolver.SetResolver(new SimpleInjectorDependencyResolver(container));
 
             return container;
+        }
+
+        private static void RegisterCommandHandlers()
+        {
+            container.RegisterManyForOpenGeneric(typeof (ICommandHandler<>),
+                AppDomain.CurrentDomain.GetAssemblies());
+
+            container.RegisterDecorator(typeof (ICommandHandler<>),
+                typeof (SaveChangesCommandHandlerDecorator<>));
         }
 
         private static void RegisterOwinAndIdentity(IAppBuilder app)
