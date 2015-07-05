@@ -11,13 +11,16 @@ namespace NinjaHive.WebApp.Controllers
     {
         private readonly IQueryHandler<GetAllItemsQuery, ItemDto[]> getItemsQuery;
         private readonly ICommandHandler<CreateItemCommand> createItemCommand;
+        private readonly ICommandHandler<DeleteItemCommand> deleteItemCommand;
 
         public TestController(
             IQueryHandler<GetAllItemsQuery, ItemDto[]> getItemsQuery,
-            ICommandHandler<CreateItemCommand> createItemCommand)
+            ICommandHandler<CreateItemCommand> createItemCommand,
+            ICommandHandler<DeleteItemCommand> deleteItemCommand)
         {
             this.getItemsQuery = getItemsQuery;
             this.createItemCommand = createItemCommand;
+            this.deleteItemCommand = deleteItemCommand;
         }
 
         public ActionResult Index()
@@ -39,6 +42,15 @@ namespace NinjaHive.WebApp.Controllers
             item.ItemId = Guid.NewGuid();
             var command = new CreateItemCommand(item);
             createItemCommand.Handle(command);
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult DeleteItem(ItemDto item)
+        {
+            var command = new DeleteItemCommand(item);
+            deleteItemCommand.Handle(command);
 
             return RedirectToAction("Index");
         }

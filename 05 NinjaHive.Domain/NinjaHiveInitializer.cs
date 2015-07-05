@@ -13,6 +13,7 @@ namespace NinjaHive.Domain
             {
                 new ItemEntity {Id = Guid.NewGuid(), Name = "Demo Item",},
             };
+
             items.ForEach(i => context.Items.Add(i));
             context.SaveChanges();
         }
