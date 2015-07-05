@@ -1,13 +1,12 @@
 ﻿using NinjaHive.Contract.Commands;
 using NinjaHive.Core;
 using NinjaHive.Domain;
-using NinjaHive.Domain.Entities;
 
 namespace NinjaHive.BusinessLayer.CommandHandlers
 {
     public class DeleteItemCommandHandler : ICommandHandler<DeleteItemCommand>
     {
-        public readonly NinjaHiveEntities db;
+        private readonly NinjaHiveEntities db;
 
         public DeleteItemCommandHandler(NinjaHiveEntities db)
         {

@@ -4,16 +4,17 @@ using NinjaHive.Contract.Commands;
 using NinjaHive.Contract.DTOs;
 using NinjaHive.Contract.Queries;
 using NinjaHive.Core;
+using NinjaHive.WebApp.Services;
 
 namespace NinjaHive.WebApp.Controllers
 {
-    public class TestController : Controller
+    public class ItemController : Controller
     {
         private readonly IQueryHandler<GetAllItemsQuery, ItemDto[]> getItemsQuery;
         private readonly ICommandHandler<CreateItemCommand> createItemCommand;
         private readonly ICommandHandler<DeleteItemCommand> deleteItemCommand;
 
-        public TestController(
+        public ItemController(
             IQueryHandler<GetAllItemsQuery, ItemDto[]> getItemsQuery,
             ICommandHandler<CreateItemCommand> createItemCommand,
             ICommandHandler<DeleteItemCommand> deleteItemCommand)
@@ -31,27 +32,29 @@ namespace NinjaHive.WebApp.Controllers
             return View(items);
         }
 
-        public ActionResult CreateItem()
+        public ActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
-        public ActionResult CreateItem(ItemDto item)
+        public ActionResult Create(ItemDto item)
         {
             item.ItemId = Guid.NewGuid();
             var command = new CreateItemCommand(item);
             createItemCommand.Handle(command);
 
-            return RedirectToAction("Index");
+            var redirectUri = UrlProvider<ItemController>.GetRouteValues(c => c.Index());
+            return RedirectToRoute(redirectUri);
         }
 
-        public ActionResult DeleteItem(ItemDto item)
+        public ActionResult Delete(ItemDto item)
         {
             var command = new DeleteItemCommand(item);
             deleteItemCommand.Handle(command);
 
-            return RedirectToAction("Index");
+            var redirectUri = UrlProvider<ItemController>.GetRouteValues(c => c.Index());
+            return RedirectToRoute(redirectUri);
         }
     }
 }

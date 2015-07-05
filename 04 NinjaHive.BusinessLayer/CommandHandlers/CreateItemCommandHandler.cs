@@ -7,7 +7,7 @@ namespace NinjaHive.BusinessLayer.CommandHandlers
 {
     public class CreateItemCommandHandler : ICommandHandler<CreateItemCommand>
     {
-        public readonly NinjaHiveEntities db;
+        private readonly NinjaHiveEntities db;
 
         public CreateItemCommandHandler(NinjaHiveEntities db)
         {
