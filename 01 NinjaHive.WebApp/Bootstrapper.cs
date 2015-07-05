@@ -1,7 +1,8 @@
 ﻿using System;
-using System.Data.Entity;
+using System.Linq;
 using System.Reflection;
 using System.Web;
+using System.Web.Compilation;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -33,6 +34,7 @@ namespace NinjaHive.WebApp
             RegisterNinjaHiveDatabase();
 
             RegisterCommandHandlers();
+            RegisterQueryHandlers();
 
             container.RegisterMvcControllers(Assembly.GetExecutingAssembly());
             container.RegisterMvcIntegratedFilterProvider();
@@ -57,6 +59,12 @@ namespace NinjaHive.WebApp
 
             container.RegisterDecorator(typeof (ICommandHandler<>),
                 typeof (SaveChangesCommandHandlerDecorator<>));
+        }
+
+        private static void RegisterQueryHandlers()
+        {
+            container.RegisterManyForOpenGeneric(typeof (IQueryHandler<,>),
+                BuildManager.GetReferencedAssemblies().OfType<Assembly>().ToArray());
         }
 
         private static void RegisterOwinAndIdentity(IAppBuilder app)

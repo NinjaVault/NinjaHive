@@ -42,6 +42,7 @@
     <Compile Include="Commands\CreateItemCommand.cs" />
     <Compile Include="DTOs\ItemDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Queries\GetAllItemsQuery.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\06 NinjaHive.Core\06 NinjaHive.Core.csproj">

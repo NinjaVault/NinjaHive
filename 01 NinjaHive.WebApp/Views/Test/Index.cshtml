@@ -1,15 +1,20 @@
 ﻿@using NinjaHive.Contract.DTOs
-@model ItemDto
+@model ItemDto[]
 
 <div class="row">
-    <div class="col-md-4">
-        <h2>Testing Add Item</h2>
-        <p>Create an item by giving the item a name and pressing the button to add it.</p>
-        @using (Html.BeginForm())
-        {
-            @Html.LabelFor(m => m.Name, new { @class = "control-label" })
-            @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
-            <input type="submit" value="Add Item" class="btn btn-default" />
-        }
+    <div class="col-md-12">
+        <br/>
+        <p>
+            @Html.ActionLink("Create Item", "CreateItem", null, new { @class = "btn btn-default" })
+        </p>
+        <hr />
+        <h4>List of items in the database</h4>
     </div>
+    @foreach (var item in Model)
+    {
+        <div class="col-md-12">
+            <p>@item.Name</p>
+        </div>
+    }
+    
 </div>
