@@ -13,6 +13,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "04 NinjaHive.BusinessLayer"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "05 NinjaHive.Domain", "05 NinjaHive.Domain\05 NinjaHive.Domain.csproj", "{0FCB7CC9-5B77-41A0-9DED-51799A5ED885}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "101 NinjaHive.WebApp.Tests", "101 NinjaHive.WebApp.Tests\101 NinjaHive.WebApp.Tests.csproj", "{1183409D-CC1E-45B4-B1D2-41C42D5500A4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{7ACC2937-74F2-45AE-B1E2-FF497BF878F5}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +48,10 @@ Global
 		{0FCB7CC9-5B77-41A0-9DED-51799A5ED885}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0FCB7CC9-5B77-41A0-9DED-51799A5ED885}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0FCB7CC9-5B77-41A0-9DED-51799A5ED885}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1183409D-CC1E-45B4-B1D2-41C42D5500A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1183409D-CC1E-45B4-B1D2-41C42D5500A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1183409D-CC1E-45B4-B1D2-41C42D5500A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1183409D-CC1E-45B4-B1D2-41C42D5500A4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

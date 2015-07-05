@@ -28,6 +28,17 @@ namespace NinjaHive.WebApp
 
         public static Container Initialize(IAppBuilder app)
         {
+            container = GetInitializedContainer(app);
+
+            container.Verify();
+
+            DependencyResolver.SetResolver(new SimpleInjectorDependencyResolver(container));
+
+            return container;
+        }
+
+        public static Container GetInitializedContainer(IAppBuilder app)
+        {
             container = new Container();
 
             RegisterOwinAndIdentity(app);
@@ -38,10 +49,6 @@ namespace NinjaHive.WebApp
 
             container.RegisterMvcControllers(Assembly.GetExecutingAssembly());
             container.RegisterMvcIntegratedFilterProvider();
-
-            container.Verify();
-
-            DependencyResolver.SetResolver(new SimpleInjectorDependencyResolver(container));
 
             return container;
         }
@@ -64,7 +71,7 @@ namespace NinjaHive.WebApp
         private static void RegisterQueryHandlers()
         {
             container.RegisterManyForOpenGeneric(typeof (IQueryHandler<,>),
-                BuildManager.GetReferencedAssemblies().OfType<Assembly>().ToArray());
+                AppDomain.CurrentDomain.GetAssemblies());
         }
 
         private static void RegisterOwinAndIdentity(IAppBuilder app)
