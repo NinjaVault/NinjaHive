@@ -11,17 +11,20 @@ namespace NinjaHive.WebApp.Controllers
     public class ItemController : Controller
     {
         private readonly IQueryHandler<GetAllItemsQuery, ItemDto[]> getItemsQuery;
+        private readonly IQueryHandler<GetItemByIdQuery, ItemDto> getItemByIdQuery; 
         private readonly ICommandHandler<CreateItemCommand> createItemCommand;
         private readonly ICommandHandler<DeleteItemCommand> deleteItemCommand;
 
         public ItemController(
             IQueryHandler<GetAllItemsQuery, ItemDto[]> getItemsQuery,
             ICommandHandler<CreateItemCommand> createItemCommand,
-            ICommandHandler<DeleteItemCommand> deleteItemCommand)
+            ICommandHandler<DeleteItemCommand> deleteItemCommand,
+            IQueryHandler<GetItemByIdQuery, ItemDto> getItemByIdQuery)
         {
             this.getItemsQuery = getItemsQuery;
             this.createItemCommand = createItemCommand;
             this.deleteItemCommand = deleteItemCommand;
+            this.getItemByIdQuery = getItemByIdQuery;
         }
 
         public ActionResult Index()
@@ -35,6 +38,14 @@ namespace NinjaHive.WebApp.Controllers
         public ActionResult Create()
         {
             return View();
+        }
+
+        public ActionResult Details(Guid itemId)
+        {
+            var query = new GetItemByIdQuery(itemId);
+            var item = this.getItemByIdQuery.Handle(query);
+
+            return View(item);
         }
 
         [HttpPost]

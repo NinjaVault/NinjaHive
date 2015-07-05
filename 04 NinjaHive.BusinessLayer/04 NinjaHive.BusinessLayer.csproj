@@ -55,6 +55,7 @@
     <Compile Include="CrossCuttingConcerns\SaveChangesCommandHandlerDecorator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueryHandlers\GetAllItemsQueryHandler.cs" />
+    <Compile Include="QueryHandlers\GetItemByIdQueryHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\03 NinjaHive.Contract\03 NinjaHive.Contract.csproj">

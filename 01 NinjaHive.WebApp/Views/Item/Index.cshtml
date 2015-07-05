@@ -1,9 +1,11 @@
 ﻿@using NinjaHive.Contract.DTOs
+@using NinjaHive.WebApp.Controllers
+@using NinjaHive.WebApp.Services
 @model ItemDto[]
 
 <div class="row">
     <div class="col-md-12">
-        <br/>
+        <br />
         <p>
             @Html.ActionLink("Create Item", "Create", null, new { @class = "btn btn-default" })
         </p>
@@ -12,13 +14,19 @@
     </div>
     @foreach (var item in Model)
     {
-        <div class="col-md-12">     
-            <p>     
-                @item.Name <br />
-                @Html.ActionLink("Delete Item", "Delete", item)
-            </p>    
-     
+        var itemId = item.ItemId;
+        var itemDetailsUrl = UrlProvider<ItemController>.GetUrl(c => c.Details(itemId));
+        
+        <div class="col-md-2">
+            <div class="thumbnail">
+                <a href="@itemDetailsUrl" class="thumbnail">
+                    <img src="/Content/Images/default_image.png" alt="..."/>
+                </a>
+                <div class="caption">
+                    <p>@item.Name</p>
+                    <p>@Html.ActionLink("Delete Item", "Delete", item)</p>
+                </div>
+            </div>
         </div>
     }
-    
 </div>
