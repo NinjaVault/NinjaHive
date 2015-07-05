@@ -44,7 +44,7 @@ namespace NinjaHive.WebApp.Controllers
         {
             var query = new GetItemByIdQuery(itemId);
             var item = this.getItemByIdQuery.Handle(query);
-
+           
             return View(item);
         }
 

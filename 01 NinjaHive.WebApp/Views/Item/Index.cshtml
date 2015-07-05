@@ -24,7 +24,10 @@
                 </a>
                 <div class="caption">
                     <p>@item.Name</p>
-                    <p>@Html.ActionLink("Delete Item", "Delete", item)</p>
+                    <p>
+                        @Html.ActionLink("Delete Item", "Delete", item)<br />
+                        @Html.ActionLink("View Details", "Details", item)
+                    </p>
                 </div>
             </div>
         </div>
