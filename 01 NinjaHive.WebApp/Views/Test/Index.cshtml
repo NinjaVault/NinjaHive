@@ -13,10 +13,11 @@
     @foreach (var item in Model)
     {
         <div class="col-md-12">     
-            <p>
-                @item.Name
-                @Html.ActionLink("Delete Item", "DeleteItem", null, new { @class = "btn btn-default" })
-            </p>      
+            <p>     
+                @item.Name <br />
+                @Html.ActionLink("Delete Item", "DeleteItem", item)
+            </p>    
+     
         </div>
     }
     

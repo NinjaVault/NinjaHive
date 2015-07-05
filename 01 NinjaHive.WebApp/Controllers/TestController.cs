@@ -46,7 +46,6 @@ namespace NinjaHive.WebApp.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpPost]
         public ActionResult DeleteItem(ItemDto item)
         {
             var command = new DeleteItemCommand(item);
