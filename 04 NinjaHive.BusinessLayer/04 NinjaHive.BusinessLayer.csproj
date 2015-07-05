@@ -30,7 +30,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -40,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommandHandlers\CreateItemCommandHandler.cs" />
+    <Compile Include="CrossCuttingConcerns\SaveChangesCommandHandlerDecorator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -47,10 +57,18 @@
       <Project>{3b537332-5517-4bc2-b8cc-24bf208ee365}</Project>
       <Name>03 NinjaHive.Contract</Name>
     </ProjectReference>
+    <ProjectReference Include="..\05 NinjaHive.Domain\05 NinjaHive.Domain.csproj">
+      <Project>{0fcb7cc9-5b77-41a0-9ded-51799a5ed885}</Project>
+      <Name>05 NinjaHive.Domain</Name>
+    </ProjectReference>
     <ProjectReference Include="..\06 NinjaHive.Core\06 NinjaHive.Core.csproj">
       <Project>{1087016a-3d9a-41b4-8893-13d56f7d7f75}</Project>
       <Name>06 NinjaHive.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

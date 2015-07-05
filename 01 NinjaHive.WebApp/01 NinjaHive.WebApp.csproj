@@ -183,7 +183,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels\ApplicationDbContext.cs" />
@@ -228,7 +228,7 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Test\Index.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
@@ -258,6 +258,10 @@
     <ProjectReference Include="..\04 NinjaHive.BusinessLayer\04 NinjaHive.BusinessLayer.csproj">
       <Project>{57b6a4ed-47ba-4ff6-bd28-fc42299c7e09}</Project>
       <Name>04 NinjaHive.BusinessLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\05 NinjaHive.Domain\05 NinjaHive.Domain.csproj">
+      <Project>{0fcb7cc9-5b77-41a0-9ded-51799a5ed885}</Project>
+      <Name>05 NinjaHive.Domain</Name>
     </ProjectReference>
     <ProjectReference Include="..\06 NinjaHive.Core\06 NinjaHive.Core.csproj">
       <Project>{1087016a-3d9a-41b4-8893-13d56f7d7f75}</Project>

@@ -1,16 +1,17 @@
-﻿using System.Data.Entity;
+﻿using NinjaHive.Core;
+using NinjaHive.Domain;
 
-namespace NinjaHive.Core.Decoraters
+namespace NinjaHive.BusinessLayer.CrossCuttingConcerns
 {
     public class SaveChangesCommandHandlerDecorator<TCommand>
         : ICommandHandler<TCommand>
     {
         private readonly ICommandHandler<TCommand> decoratee;
-        private readonly DbContext dbContext;
+        private readonly NinjaHiveEntities dbContext;
 
         public SaveChangesCommandHandlerDecorator(
             ICommandHandler<TCommand> decoratee,
-            DbContext dbContext)
+            NinjaHiveEntities dbContext)
         {
             this.decoratee = decoratee;
             this.dbContext = dbContext;
@@ -19,7 +20,6 @@ namespace NinjaHive.Core.Decoraters
         public void Handle(TCommand command)
         {
             this.decoratee.Handle(command);
-
             this.dbContext.SaveChanges();
         }
     }

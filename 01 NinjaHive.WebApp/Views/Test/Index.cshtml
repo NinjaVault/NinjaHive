@@ -1,0 +1,15 @@
+﻿@using NinjaHive.Contract.DTOs
+@model ItemDto
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Testing Add Item</h2>
+        <p>Create an item by giving the item a name and pressing the button to add it.</p>
+        @using (Html.BeginForm())
+        {
+            @Html.LabelFor(m => m.Name, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+            <input type="submit" value="Add Item" class="btn btn-default" />
+        }
+    </div>
+</div>
