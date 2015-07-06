@@ -15,7 +15,7 @@
     @foreach (var item in Model)
     {
         var itemId = item.ItemId;
-        var itemDetailsUrl = UrlProvider<ItemController>.GetUrl(c => c.Details(itemId));
+        var itemDetailsUrl = UrlProvider<ItemController>.GetUrl(c => c.Edit(itemId));
         
         <div class="col-md-2">
             <div class="thumbnail">
@@ -26,7 +26,7 @@
                     <p>@item.Name</p>
                     <p>
                         @Html.ActionLink("Delete Item", "Delete", item)<br />
-                        @Html.ActionLink("View Details", "Details", item)
+                        @Html.ActionLink("Edit Item", "Edit", item)
                     </p>
                 </div>
             </div>

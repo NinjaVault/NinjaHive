@@ -3,22 +3,24 @@
 
 @*TODO: make a pretty page using Twitter Bootstrap, see: http://getbootstrap.com/*@
 
-<header class="modal-header">
-    <h2>Details: @Model.Name</h2>
-</header>
+<div class="">
+    @using (Html.BeginForm())
+    {        
+        <header class="modal-header">
+            <h2>Details: @Model.Name</h2>
+            <input type="submit" value="Save" name="Save" class="btn btn-default" />
+        </header>
 
-<div class ="panel-default">
-    <div class="col-lg-7 panel panel-heading" style="margin: 0; padding: 0; left: 0; margin-top: 10px; margin-bottom: 10px;">
-        <div class="panel-heading panel-title" style="background: rgb(53, 106, 181); color:white; text-indent: 10px;">
-            General Informations
-        </div>
-        <div class="">
-            @using (Html.BeginForm())
-            {
+        <div class="panel-default">
+            <div class="col-lg-7 panel panel-heading" style="margin: 0; padding: 0; left: 0; margin-top: 10px; margin-bottom: 10px;">
+                <div class="panel-heading panel-title" style="background: rgb(53, 106, 181); color:white; text-indent: 10px;">
+                    General Informations
+                </div>
+
                 <table class="table table-bordered text-right text-uppercase" style="bottom: 0; margin:0; padding:0; min-height: 220px;">
                     <tr>
                         <td style="vertical-align: middle;  font-weight:bold;"> Name </td>
-                        <td> @Html.TextBoxFor(m => Model.Name, new { @class = "form-control", @style = "max-width: 100%;" })</td>
+                        <td> @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @style = "max-width: 100%;" })</td>
                     </tr>
                     <tr>
                         <td style="vertical-align: middle;  font-weight:bold;"> Type </td>
@@ -50,12 +52,10 @@
                         <td> @Html.TextArea("temp", new { @class = "form-control", @style = "max-width: 100%; resize:vertical;" }) </td>
                     </tr>
                 </table>
-            }
+            </div>
         </div>
-    </div>
-    <div class="panel-default col-lg-push-1 col-lg-4 row" style="min-height: 200px; margin-top: 10px; margin-bottom: 10px;">
-        <iframe style="position:relative; width:100%; min-height: 265px; height: 100%;" width="640" height="480" src="https://www.artstation.com/embed/822140" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" onmousewheel="" scrolling="no"></iframe>
-    </div>
-
-    
+        <div class="panel-default col-lg-push-1 col-lg-4 row" style="min-height: 200px; margin-top: 10px; margin-bottom: 10px;">
+            <iframe style="position:relative; width:100%; min-height: 265px; height: 100%;" width="640" height="480" src="https://www.artstation.com/embed/822140" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" onmousewheel="" scrolling="no"></iframe>
+        </div>
+    }
 </div>

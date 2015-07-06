@@ -14,16 +14,19 @@ namespace NinjaHive.WebApp.Controllers
         private readonly IQueryHandler<GetItemByIdQuery, ItemDto> getItemByIdQuery; 
         private readonly ICommandHandler<CreateItemCommand> createItemCommand;
         private readonly ICommandHandler<DeleteItemCommand> deleteItemCommand;
+        private readonly ICommandHandler<SaveItemCommand> saveItemCommand;
 
         public ItemController(
             IQueryHandler<GetAllItemsQuery, ItemDto[]> getItemsQuery,
             ICommandHandler<CreateItemCommand> createItemCommand,
             ICommandHandler<DeleteItemCommand> deleteItemCommand,
+            ICommandHandler<SaveItemCommand> saveItemCommand,
             IQueryHandler<GetItemByIdQuery, ItemDto> getItemByIdQuery)
         {
             this.getItemsQuery = getItemsQuery;
             this.createItemCommand = createItemCommand;
             this.deleteItemCommand = deleteItemCommand;
+            this.saveItemCommand = saveItemCommand;
             this.getItemByIdQuery = getItemByIdQuery;
         }
 
@@ -40,7 +43,7 @@ namespace NinjaHive.WebApp.Controllers
             return View();
         }
 
-        public ActionResult Details(Guid itemId)
+        public ActionResult Edit(Guid itemId)
         {
             var query = new GetItemByIdQuery(itemId);
             var item = this.getItemByIdQuery.Handle(query);
@@ -49,13 +52,24 @@ namespace NinjaHive.WebApp.Controllers
         }
 
         [HttpPost]
+        public ActionResult Edit(ItemDto item)
+        {
+            var command = new SaveItemCommand(item);
+            saveItemCommand.Handle(command);
+
+            var redirectUri = UrlProvider<ItemController>.GetRouteValues(c => c.Index());
+            return RedirectToRoute(redirectUri);
+        }
+
+        [HttpPost]
         public ActionResult Create(ItemDto item)
         {
             item.ItemId = Guid.NewGuid();
+
             var command = new CreateItemCommand(item);
             createItemCommand.Handle(command);
 
-            var redirectUri = UrlProvider<ItemController>.GetRouteValues(c => c.Index());
+            var redirectUri = UrlProvider<ItemController>.GetRouteValues(c => c.Edit(item.ItemId));
             return RedirectToRoute(redirectUri);
         }
 

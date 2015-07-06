@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="CommandHandlers\CreateItemCommandHandler.cs" />
     <Compile Include="CommandHandlers\DeleteItemCommandHandler.cs" />
+    <Compile Include="CommandHandlers\SaveItemCommandHandler.cs" />
     <Compile Include="CrossCuttingConcerns\SaveChangesCommandHandlerDecorator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueryHandlers\GetAllItemsQueryHandler.cs" />
