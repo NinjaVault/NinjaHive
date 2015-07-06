@@ -4,31 +4,28 @@
 @*TODO: make a pretty page using Twitter Bootstrap, see: http://getbootstrap.com/*@
 
 
-<header class="panel panel-collapse">
+<header class="modal-header">
     <h2>Details: @Model.Name</h2>
 </header>
 
-<div style="width:100%; height: inherit; position:relative;">
-    <table style="width:inherit; height:100%; margin:0; padding:0; bottom:0;">
-        <tr >
-            <td width="60%">
-                <div class=" panel panel-primary" style="width:auto; margin-right:10px; min-width: 100px;">
-                    <div class="panel-title" style="background: rgb(53, 106, 181); color:white; text-indent: 10px;">
-                        General Informations
-                    </div>
-                    <div>
-                        @using (Html.BeginForm())
-                        {
-                            <table class="table table-bordered" style="width:100%; height:100%; margin:0; padding:0; bottom:0;">
-                                <tr>
-                                    <td style="vertical-align: middle;"> Name </td>
-                                    <td> @Html.TextBoxFor(m => Model.Name, new { @class = "form-control", @style = "max-width: 100%;" })</td>
-                                </tr>
-                                <tr>
-                                    <td style ="vertical-align: middle;"> Type </td>
-                                    <td>
-                                        @{
-                                            List<SelectListItem> items = new List<SelectListItem>
+<div class ="panel-default">
+    <div class="col-lg-7 panel panel-heading" style="margin: 0; padding: 0; left: 0; margin-top: 10px; margin-bottom: 10px;">
+        <div class="panel-heading panel-title" style="background: rgb(53, 106, 181); color:white; text-indent: 10px;">
+            General Informations
+        </div>
+        <div class="">
+            @using (Html.BeginForm())
+            {
+                <table class="table table-bordered text-right text-uppercase" style="bottom: 0; margin:0; padding:0;">
+                    <tr>
+                        <td style="vertical-align: middle;  font-weight:bold;"> Name </td>
+                        <td> @Html.TextBoxFor(m => Model.Name, new { @class = "form-control", @style = "max-width: 100%;" })</td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle;  font-weight:bold;"> Type </td>
+                        <td>
+                            @{
+                List<SelectListItem> items = new List<SelectListItem>
                                             {
                                                 new SelectListItem
                                                 {
@@ -36,7 +33,7 @@
                                                     Value= "Type",
                                                     Selected= true,
                                                 },
-                                                
+
                                                  new SelectListItem
                                                 {
                                                     Text = "Type2",
@@ -44,26 +41,22 @@
                                                     Selected= false,
                                                 },
                                             };
-                                        }
+                            }
 
-                                        @Html.DropDownList("temp", items, new { @class = "form-control", @style = "max-width: 100%;" })
-                                    </td>                                   
-                                </tr>
-                                <tr>
-                                    <td style ="vertical-align: middle;"> Description </td>
-                                    <td> @Html.TextArea("temp", new { @class = "form-control", @style = "max-width: 100%; resize:vertical;"}) </td>
-                                </tr>
-                            </table>
-                        }
-                    </div>
-                </div>
-            </td>
-            <td width="*">
-                <div class=" panel panel-primary" style="min-width: 100px; height:inherit">
-                    3D Preview
-                </div>
-            </td>
-        </tr>
-</table>
+                            @Html.DropDownList("temp", items, new { @class = "form-control", @style = "max-width: 100%;" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><span style="top: 7px; position:relative;  font-weight:bold;"> Description </span></td>
+                        <td> @Html.TextArea("temp", new { @class = "form-control", @style = "max-width: 100%; resize:vertical;" }) </td>
+                    </tr>
+                </table>
+            }
+        </div>
+    </div>
+    <div class="panel col-lg-push-1 col-lg-4 row" style="margin: 0; padding: 0; margin-top: 10px; margin-bottom: 10px;">
+        3D Preview
+    </div>
+
     
 </div>
