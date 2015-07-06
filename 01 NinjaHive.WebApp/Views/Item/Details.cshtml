@@ -3,6 +3,64 @@
 
 @*TODO: make a pretty page using Twitter Bootstrap, see: http://getbootstrap.com/*@
 
+<style type="text/css">
+    <!--
+    body {
+        font-family: Helvetica, Verdana, Arial, sans-serif;
+        background-color: white;
+        color: black;
+        text-align: center;
+    }
+
+    a:link, a:visited {
+        color: #000;
+    }
+
+    a:active, a:hover {
+        color: #666;
+    }
+
+    p.header {
+        font-size: small;
+    }
+
+        p.header span {
+            font-weight: bold;
+        }
+
+    p.footer {
+        font-size: x-small;
+    }
+
+    div.content {
+        margin: auto;
+        width: 480px;
+    }
+
+    div.missing {
+        margin: auto;
+        position: relative;
+        top: 50%;
+        width: 193px;
+    }
+
+        div.missing a {
+            height: 63px;
+            position: relative;
+            top: -31px;
+        }
+
+        div.missing img {
+            border-width: 0px;
+        }
+
+    div#unityPlayer {
+        cursor: default;
+        height: 320px;
+        width: 480px;
+    }
+    -->
+</style>
 
 <header class="modal-header">
     <h2>Details: @Model.Name</h2>
@@ -16,7 +74,7 @@
         <div class="">
             @using (Html.BeginForm())
             {
-                <table class="table table-bordered text-right text-uppercase" style="bottom: 0; margin:0; padding:0;">
+                <table class="table table-bordered text-right text-uppercase" style="bottom: 0; margin:0; padding:0; min-height: 220px;">
                     <tr>
                         <td style="vertical-align: middle;  font-weight:bold;"> Name </td>
                         <td> @Html.TextBoxFor(m => Model.Name, new { @class = "form-control", @style = "max-width: 100%;" })</td>
@@ -54,8 +112,8 @@
             }
         </div>
     </div>
-    <div class="panel col-lg-push-1 col-lg-4 row" style="margin: 0; padding: 0; margin-top: 10px; margin-bottom: 10px;">
-        3D Preview
+    <div class="panel-default col-lg-push-1 col-lg-4 row" style="min-height: 200px; margin-top: 10px; margin-bottom: 10px;">
+        <iframe style="position:relative; width:100%; min-height: 265px; height: 100%;" width="640" height="480" src="https://www.artstation.com/embed/822140" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" onmousewheel="" scrolling="no"></iframe>
     </div>
 
     
