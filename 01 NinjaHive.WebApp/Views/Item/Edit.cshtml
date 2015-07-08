@@ -2,6 +2,11 @@
 @model ItemDto
 
 @*TODO: make a pretty page using Twitter Bootstrap, see: http://getbootstrap.com/*@
+@section JavaScript
+{
+    <script type="text/javascript" src="../../Scripts/externals/SparkPreviewer.js"></script>
+}
+
 
 <div class="">
     @using (Html.BeginForm())
@@ -55,6 +60,9 @@
             </div>
         </div>
         <div class="panel-default col-lg-push-1 col-lg-4 row" style="min-height: 200px; margin-top: 10px; margin-bottom: 10px;">
+            <canvas id="sparkViewer" width="800" height="600" style="width:100%; height:inherit;">
+                You have to update your broswer to use the SparkViewer viewer
+            </canvas>
         </div>
     }
 </div>
