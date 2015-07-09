@@ -5,10 +5,10 @@ namespace NinjaHive.Domain
 {
     public class NinjaHiveEntities : DbContext
     {
-        public NinjaHiveEntities(string connectionString)
-            : base(connectionString)
+        public NinjaHiveEntities(string connectionstring)
+            : base(connectionstring)
         {
-            Database.SetInitializer(new NinjaHiveInitializer());
+            Database.Initialize(true);
         }
 
         public DbSet<ItemEntity> Items { get; set; }

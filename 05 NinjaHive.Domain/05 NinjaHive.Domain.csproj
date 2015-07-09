@@ -53,8 +53,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\ItemEntity.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="NinjaHiveEntities.cs" />
-    <Compile Include="NinjaHiveInitializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

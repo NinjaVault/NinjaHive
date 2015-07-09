@@ -39,13 +39,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commands\CreateItemCommand.cs" />
-    <Compile Include="Commands\DeleteItemCommand.cs" />
-    <Compile Include="Commands\SaveItemCommand.cs" />
-    <Compile Include="DTOs\ItemDto.cs" />
+    <Compile Include="DTOs\GameItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Queries\GetAllItemsQuery.cs" />
-    <Compile Include="Queries\GetItemByIdQuery.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\06 NinjaHive.Core\06 NinjaHive.Core.csproj">
@@ -53,7 +48,10 @@
       <Name>06 NinjaHive.Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Commands\" />
+    <Folder Include="Queries\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

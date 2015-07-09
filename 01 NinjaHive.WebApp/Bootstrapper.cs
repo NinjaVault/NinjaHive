@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Linq;
 using System.Reflection;
 using System.Web;
-using System.Web.Compilation;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -12,7 +10,6 @@ using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.DataProtection;
 using NinjaHive.BusinessLayer.CrossCuttingConcerns;
 using NinjaHive.Core;
-using NinjaHive.Domain;
 using NinjaHive.WebApp.Models.IdentityModels;
 using Owin;
 using SimpleInjector;
@@ -55,8 +52,8 @@ namespace NinjaHive.WebApp
 
         private static void RegisterNinjaHiveDatabase()
         {
-            container.RegisterPerWebRequest<NinjaHiveEntities>(
-                () => new NinjaHiveEntities("name=NinjaHiveEntities"));
+            //container.RegisterPerWebRequest<NinjaHiveEntities>(
+            //    () => new NinjaHiveEntities());
         }
 
         private static void RegisterCommandHandlers()

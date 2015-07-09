@@ -1,39 +1,26 @@
 ﻿using System;
 using System.Web.Mvc;
-using NinjaHive.Contract.Commands;
 using NinjaHive.Contract.DTOs;
-using NinjaHive.Contract.Queries;
-using NinjaHive.Core;
 using NinjaHive.WebApp.Services;
 
 namespace NinjaHive.WebApp.Controllers
 {
     public class ItemController : Controller
     {
-        private readonly IQueryHandler<GetAllItemsQuery, ItemDto[]> getItemsQuery;
-        private readonly IQueryHandler<GetItemByIdQuery, ItemDto> getItemByIdQuery; 
-        private readonly ICommandHandler<CreateItemCommand> createItemCommand;
-        private readonly ICommandHandler<DeleteItemCommand> deleteItemCommand;
-        private readonly ICommandHandler<SaveItemCommand> saveItemCommand;
+        private readonly GameItem demoGameItem;
 
-        public ItemController(
-            IQueryHandler<GetAllItemsQuery, ItemDto[]> getItemsQuery,
-            ICommandHandler<CreateItemCommand> createItemCommand,
-            ICommandHandler<DeleteItemCommand> deleteItemCommand,
-            ICommandHandler<SaveItemCommand> saveItemCommand,
-            IQueryHandler<GetItemByIdQuery, ItemDto> getItemByIdQuery)
+        public ItemController()
         {
-            this.getItemsQuery = getItemsQuery;
-            this.createItemCommand = createItemCommand;
-            this.deleteItemCommand = deleteItemCommand;
-            this.saveItemCommand = saveItemCommand;
-            this.getItemByIdQuery = getItemByIdQuery;
+            this.demoGameItem = new GameItem
+            {
+                ItemId = Guid.NewGuid(),
+                Name = "Demo item"
+            };
         }
 
         public ActionResult Index()
         {
-            var query = new GetAllItemsQuery();
-            var items = this.getItemsQuery.Handle(query);
+            var items = new[] {this.demoGameItem};
 
             return View(items);
         }
@@ -45,39 +32,27 @@ namespace NinjaHive.WebApp.Controllers
 
         public ActionResult Edit(Guid itemId)
         {
-            var query = new GetItemByIdQuery(itemId);
-            var item = this.getItemByIdQuery.Handle(query);
+            var item = this.demoGameItem;
            
             return View(item);
         }
 
         [HttpPost]
-        public ActionResult Edit(ItemDto item)
+        public ActionResult Edit(GameItem gameItem)
         {
-            var command = new SaveItemCommand(item);
-            saveItemCommand.Handle(command);
-
             var redirectUri = UrlProvider<ItemController>.GetRouteValues(c => c.Index());
             return RedirectToRoute(redirectUri);
         }
 
         [HttpPost]
-        public ActionResult Create(ItemDto item)
+        public ActionResult Create(GameItem gameItem)
         {
-            item.ItemId = Guid.NewGuid();
-
-            var command = new CreateItemCommand(item);
-            createItemCommand.Handle(command);
-
-            var redirectUri = UrlProvider<ItemController>.GetRouteValues(c => c.Edit(item.ItemId));
+            var redirectUri = UrlProvider<ItemController>.GetRouteValues(c => c.Edit(gameItem.ItemId));
             return RedirectToRoute(redirectUri);
         }
 
-        public ActionResult Delete(ItemDto item)
+        public ActionResult Delete(GameItem gameItem)
         {
-            var command = new DeleteItemCommand(item);
-            deleteItemCommand.Handle(command);
-
             var redirectUri = UrlProvider<ItemController>.GetRouteValues(c => c.Index());
             return RedirectToRoute(redirectUri);
         }
