@@ -54,11 +54,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\03 NinjaHive.Contract\03 NinjaHive.Contract.csproj">
+    <ProjectReference Include="..\NinjaHive.Contract\03 NinjaHive.Contract.csproj">
       <Project>{3b537332-5517-4bc2-b8cc-24bf208ee365}</Project>
       <Name>03 NinjaHive.Contract</Name>
     </ProjectReference>
-    <ProjectReference Include="..\06 NinjaHive.Core\06 NinjaHive.Core.csproj">
+    <ProjectReference Include="..\NinjaHive.Core\06 NinjaHive.Core.csproj">
       <Project>{1087016a-3d9a-41b4-8893-13d56f7d7f75}</Project>
       <Name>06 NinjaHive.Core</Name>
     </ProjectReference>
