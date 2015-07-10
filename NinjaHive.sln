@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01 NinjaHive.WebApp", "01 NinjaHive.WebApp\01 NinjaHive.WebApp.csproj", "{34EE914C-BC5F-4EB2-8E12-03E9DBA4179D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NinjaHive.WebApp", "NinjaHive.WebApp\01 NinjaHive.WebApp.csproj", "{34EE914C-BC5F-4EB2-8E12-03E9DBA4179D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "06 NinjaHive.Core", "06 NinjaHive.Core\06 NinjaHive.Core.csproj", "{1087016A-3D9A-41B4-8893-13D56F7D7F75}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NinjaHive.Core", "NinjaHive.Core\06 NinjaHive.Core.csproj", "{1087016A-3D9A-41B4-8893-13D56F7D7F75}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "03 NinjaHive.Contract", "03 NinjaHive.Contract\03 NinjaHive.Contract.csproj", "{3B537332-5517-4BC2-B8CC-24BF208EE365}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NinjaHive.Contract", "NinjaHive.Contract\03 NinjaHive.Contract.csproj", "{3B537332-5517-4BC2-B8CC-24BF208EE365}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "04 NinjaHive.BusinessLayer", "04 NinjaHive.BusinessLayer\04 NinjaHive.BusinessLayer.csproj", "{57B6A4ED-47BA-4FF6-BD28-FC42299C7E09}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NinjaHive.BusinessLayer", "NinjaHive.BusinessLayer\04 NinjaHive.BusinessLayer.csproj", "{57B6A4ED-47BA-4FF6-BD28-FC42299C7E09}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "101 NinjaHive.WebApp.Tests", "101 NinjaHive.WebApp.Tests\101 NinjaHive.WebApp.Tests.csproj", "{1183409D-CC1E-45B4-B1D2-41C42D5500A4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NinjaHive.WebApp.Tests", "NinjaHive.WebApp.Tests\101 NinjaHive.WebApp.Tests.csproj", "{1183409D-CC1E-45B4-B1D2-41C42D5500A4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{7ACC2937-74F2-45AE-B1E2-FF497BF878F5}"
 	ProjectSection(SolutionItems) = preProject
