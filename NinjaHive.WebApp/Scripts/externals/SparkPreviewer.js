@@ -1,3 +1,27 @@
+// The MIT License (MIT)
+
+// Copyright (c) 2015 Ruggero Enrico Visintin
+
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE. 
+
+console.log("SparkViewer.js included");
+
 {
     var scriptEls = document.getElementsByTagName('script');
     var thisScriptEl = scriptEls[scriptEls.length - 1];
@@ -8,45 +32,65 @@
 
     var head = document.getElementsByTagName("head")[0];
 
+    var subFolders = "core/";
+
     var js = document.createElement("script");
     js.type = "text/javascript";
-    js.src = scriptFolder + "/SparkViewer/Renderer.js";
+    js.src = scriptFolder + subFolders + "Renderer.js";
 
     head.appendChild(js);
 
     var js = document.createElement("script");
     js.type = "text/javascript";
-    js.src = scriptFolder + "/SparkViewer/glMatrix.js";
+    js.src = scriptFolder + subFolders + "math/Matrix4.js";
 
     head.appendChild(js);
 
     var js = document.createElement("script");
     js.type = "text/javascript";
-    js.src = scriptFolder + "/SparkViewer/RendererUtils.js";
+    js.src = scriptFolder + subFolders + "RendererUtils.js";
 
     head.appendChild(js);
 
     var js = document.createElement("script");
     js.type = "text/javascript";
-    js.src = scriptFolder + "/SparkViewer/RenderMaterial.js";
+    js.src = scriptFolder + subFolders + "RenderMaterial.js";
 
     head.appendChild(js);
 
     var js = document.createElement("script");
     js.type = "text/javascript";
-    js.src = scriptFolder + "/SparkViewer/RenderMesh.js";
+    js.src = scriptFolder + subFolders + "RenderMesh.js";
 
     head.appendChild(js);
 
     var js = document.createElement("script");
     js.type = "text/javascript";
-    js.src = scriptFolder + "/SparkViewer/RenderModel.js";
+    js.src = scriptFolder + subFolders + "RenderModel.js";
 
     head.appendChild(js);
 
     var js = document.createElement("script");
     js.type = "text/javascript";
-    js.src = scriptFolder + "/SparkViewer/RenderTypes.js";
+    js.src = scriptFolder + subFolders + "RenderTypes.js";
+
+    head.appendChild(js);
+	
+    var js = document.createElement("script");
+    js.type = "text/javascript";
+    js.src = scriptFolder + subFolders + "math/Vector2.js";
+
+    head.appendChild(js);
+
+    var js = document.createElement("script");
+    js.type = "text/javascript";
+    js.src = scriptFolder + subFolders + "math/Vector3.js";
+
+    head.appendChild(js);
+
+    var js = document.createElement("script");
+    js.type = "text/javascript";
+    js.src = scriptFolder + subFolders + "glMatrix.js";
 
     head.appendChild(js);
 
@@ -67,24 +111,36 @@ function Application(canvas) {
 	
 	var mProjectionMatrix;
 	var mModelViewMatrix;
+	var mCameraView;
+	
+	var running;
 
-    var LIT_VERTEX_SHADER_SOURCE                            	                     =
-        "attribute vec2 position;" 								                     +
-		//"attribute vec3 normal;" 								                     +
-        "attribute vec2 uv;" 									                     +
+	var phi = 90 * Math.PI / 180;
+	var theta = 0 * Math.PI / 180;
+	var radius = 10;
+
+	var mouseDown = false;
+	var oldMouseX;
+	var oldMouseY;
+
+	var LIT_VERTEX_SHADER_SOURCE =
+        "attribute vec3 position;" 								                     +
+		//"attribute vec3 color;" 								                     +
+        //"attribute vec2 uv;" 									                     +
 		"uniform mat4 modelViewProjectionMatrix;" 				                     +
-        "varying vec2 outUv;"									                     +
+       "varying vec3 outColor;"									                     +
         "void main(void) {" 									                     +
-        "   outUv = uv;"        								                     +
-		"   vec4 pos = modelViewProjectionMatrix * vec4(position, 0.0, 1.0);"        +
+       "    outColor = position;"      								                 +
+		"   vec4 pos = modelViewProjectionMatrix * vec4(position, 1.0);"             +
         "   gl_Position = pos;"       	                                             +
         "}"                                                 	                     ;
 	
     var LIT_FRAGMENT_SHADER_SOURCE                          	                     =
         "precision highp float;" 								                     +
-        "varying vec2 outUv;" 									                     +
+       "varying vec3 outColor;"                                                       +
+        ""                                                                           +
         "void main(void) {"                                 	                     +
-        "   gl_FragColor = vec4(1.0, outUv.x, outUv.y, 1);" 	                     +
+        "   gl_FragColor = vec4(outColor, 1);" 	                                     +
         "}"                                                 	                     ;
 
     this.init = function () {
@@ -99,30 +155,37 @@ function Application(canvas) {
         renderer.program = litShaderProgram;		
         renderer.init();
 
-        // resize the viewport when the window is resized
-        window.onresize = onResizeEvent;
-        onResizeEvent(); // force the window to resize to start the application
+        window.addEventListener('resize', onResizeEvent, false);
+        mCanvas.addEventListener('mousedown', handleMouseDown, false);
+        mCanvas.addEventListener('mouseup', handleMouseUp, false);
+        mCanvas.addEventListener('mousemove', handleMouseMove, false);
     };
 
     this.run = function () {
+		running = true;
         runLoop();
     };
 	
+	this.stop = function () {
+		running = false;
+	};
+	
 	var initMatrices = function () {
-        mModelViewMatrix = mat4.create();
-        mProjectionMatrix = mat4.create();	
+	    mModelViewMatrix = Matrix4.create();
+	    mProjectionMatrix = Matrix4.create();
+	    mCameraView = Matrix4.create();
 		
-		mat4.identity(mModelViewMatrix);
-		mat4.translate(mModelViewMatrix, [0, 0, -6]);   	
-		
-        
-		//mat4.ortho(-1.0, 1.0, -1.0, 1.0, 0.1, 100, mProjectionMatrix);
-        //mat4.scale(mModelViewMatrix, [0.5, 0.5, 0.5]);
+	    Matrix4.perspective(45, mCanvas.clientWidth / mCanvas.clientHeight, 0.1, 100, mProjectionMatrix);
 
+	    eyeX = radius * Math.sin(theta) * Math.sin(phi);
+	    eyeY = radius * Math.cos(phi);
+	    eyeZ = radius * Math.cos(theta) * Math.sin(phi);
+
+	    Matrix4.lookAt([eyeX, eyeY, eyeZ], [0, 0, 0], [0, 1, 0], mCameraView);
 	};
 
 	var initBackground = function() {
-		backgroundColor = vec3.create(0.0, 0.0, 0.0);
+		backgroundColor = Vector3.create(0.0, 0.0, 0.0);
 	};
 	
 	var initShaderPrograms = function () {
@@ -130,12 +193,55 @@ function Application(canvas) {
 	};
 	
 	var initDefaultModel = function() {
-				
-        var vertices = [
-                0.0, 1.0, 0.0, 1.0,
-                -1.0, -1.0, -1.0, -1.0,
-                1.0, -1.0, 1.0, -1.0,
-        ];
+
+	   var vertices = [
+		-1.0, -1.0, -1.0, // 0
+		 1.0, 1.0, -1.0, // 2
+		 1.0, -1.0, -1.0, // 1
+		-1.0, -1.0, -1.0, // 0
+		-1.0, 1.0, -1.0, // 3
+		 1.0, 1.0, -1.0, // 2
+
+		// Y-
+		-1.0, -1.0, -1.0, // 0
+		 1.0, -1.0, -1.0, // 1
+		 1.0, -1.0, 1.0, // 5
+		-1.0, -1.0, -1.0, // 0
+		 1.0, -1.0, 1.0, // 5
+		-1.0, -1.0, 1.0, // 4
+
+		// X+
+		 1.0, -1.0, -1.0, // 1
+		 1.0, 1.0, -1.0, // 2
+		 1.0, 1.0, 1.0, // 6
+		 1.0, -1.0, -1.0, // 1
+		 1.0, 1.0, 1.0, // 6
+		 1.0, -1.0, 1.0, // 5
+
+		// Y+
+		 1.0, 1.0, -1.0, // 2
+		-1.0, 1.0, 1.0, // 7
+		 1.0, 1.0, 1.0, // 6
+		 1.0, 1.0, -1.0, // 2
+		-1.0, 1.0, -1.0, // 3
+		-1.0, 1.0, 1.0, // 7
+
+		// X-
+		-1.0, 1.0, -1.0, // 3
+		-1.0, -1.0, 1.0, // 4
+		-1.0, 1.0, 1.0, // 7
+		-1.0, 1.0, -1.0, // 3
+		-1.0, -1.0, -1.0, // 0
+		-1.0, -1.0, 1.0, // 4
+
+		// Z+		 
+		-1.0, -1.0, 1.0, // 4
+		 1.0, -1.0, 1.0, // 5
+		 1.0, 1.0, 1.0, // 6
+		-1.0, -1.0, 1.0, // 4
+		 1.0, 1.0, 1.0, // 6
+		-1.0, 1.0, 1.0, // 7
+	   ];
 		
 		var renderMesh = new RenderMesh();
         var vbo = renderer.getGfx().createBuffer();
@@ -150,7 +256,7 @@ function Application(canvas) {
         var renderMaterialTexture = loadTextureFromUrl("img/img.png", renderer.getGfx());
         renderMaterial.setDiffuseTextureHandle(renderMaterialTexture);
 
-        var materialColor = vec3.create(0.0, 1.0, 0.0);
+        var materialColor = Vector3.create(0.0, 1.0, 0.0);
         renderMaterial.setDiffuseColor(materialColor);
 
         renderModel = new RenderModel();
@@ -159,35 +265,85 @@ function Application(canvas) {
 	};
 	
 	var rotation = 1;
-	
-	var runLoop = function () {
-	    var mvp = mat4.create();
 
-		mat4.rotate(mModelViewMatrix, rotation * Math.PI/180, [0.0, 1.0, 0.0], mModelViewMatrix);		
-		mat4.multiply(mProjectionMatrix, mModelViewMatrix, mvp);
-								
+	var runLoop = function () {
+	
+	    var mvp = Matrix4.create();
+
+	    var eyeX, eyeY, eyeZ;
+
+	    eyeX = radius * Math.sin(theta) * Math.sin(phi) + 0;
+	    eyeY = radius * Math.cos(phi);
+	    eyeZ = radius * Math.cos(theta) * Math.sin(phi) + 0;
+
+	    Matrix4.lookAt([eyeX, eyeY, eyeZ], [0, 0, 0], [0, 1, 0], mCameraView);
+
+	    Matrix4.multiply(mProjectionMatrix, mCameraView, mvp);        
+	    Matrix4.multiply(mvp, mModelViewMatrix, mvp);
+				
         var drawCall = new DrawCall();
         drawCall.vbo = renderModel.getRenderMesh().getVertexBufferHandle();
         drawCall.shaderProgram = litShaderProgram;
-        drawCall.verticesNumber = 3;
+        drawCall.verticesNumber = 36;
 
 		drawCall.matrixMVP = mvp;
 		drawCall.mvpLocation = renderer.getGfx().getUniformLocation(litShaderProgram, "modelViewProjectionMatrix");
+        
+		drawCall.textureHandle = renderModel.getRenderMaterial(0).getDiffsueTextureHandle;
 
         renderer.render(0, drawCall);
-        window.requestAnimationFrame(runLoop);
+		
+		if(running) {
+			window.requestAnimationFrame(runLoop);
+		}
 	};
 
 	var onResizeEvent = function () {
-	    mat4.perspective(45, mCanvas.clientWidth / mCanvas.clientHeight, 0.1, 100, mProjectionMatrix);
-	}
+	    console.log("onResize");
+	    Matrix4.perspective(45, mCanvas.clientWidth / mCanvas.clientHeight, 0.1, 100, mProjectionMatrix);
+	};
+
+	var handleMouseDown = function () {
+	    mouseDown = true;
+	};
+
+	var handleMouseUp = function () {
+	    mouseDown = false;
+	};
+
+	var handleMouseMove = function (e) {
+	    if (mouseDown) {	        
+	        
+	        if ((oldMouseY - e.clientY) > 0) {
+	            if ((phi * 180 / Math.PI) < 170) {
+	                console.log("positive: " + (oldMouseY - e.clientY) + "angle: " + (phi * 180 / Math.PI));
+	                phi += (oldMouseY - e.clientY) * 0.05;	               	                
+	            }
+	        } else if((oldMouseY - e.clientY) < 0){ 
+	            if ((phi * 180 / Math.PI) > 10) {
+	                console.log("negative: " + (oldMouseY - e.clientY) + "angle: " + (phi * 180 / Math.PI));
+	                phi += (oldMouseY - e.clientY) * 0.05;
+	                
+	            }
+	        }
+
+	        theta += (oldMouseX - e.clientX) * 0.05;
+	        console.log((oldMouseX - e.clientX) * 180 / Math.PI ) 
+
+        }
+
+	    oldMouseX = e.clientX;
+	    oldMouseY = e.clientY;
+	};
 
     return this;
 }
 
+var APPLICATION;
+
 function SparkPreviewerMain() {
 
-    var APPLICATION = new Application(document.getElementById("sparkViewer"));
+    APPLICATION = new Application(document.getElementById("sparkViewer"));
     APPLICATION.init();
     APPLICATION.run();
 
