@@ -1,0 +1,1088 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="NinjaHiveEntities.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Classes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EquipmentItems">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Durability" Type="int" Nullable="false" />
+          <Property Name="NumberOfSlots" Type="int" Nullable="false" />
+          <Property Name="BodySlot" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EquipmentItemsClassesAssociation">
+          <Key>
+            <PropertyRef Name="FKEquipmentItemsId" />
+            <PropertyRef Name="FKClassesId" />
+          </Key>
+          <Property Name="FKEquipmentItemsId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="FKClassesId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EquipmentItemsEnhancersAssociation">
+          <Key>
+            <PropertyRef Name="FKEquipmentItemsId" />
+            <PropertyRef Name="FKEnhancersId" />
+          </Key>
+          <Property Name="FKEquipmentItemsId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="FKEnhancersId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EquipmentItemsRacesAssociation">
+          <Key>
+            <PropertyRef Name="FKEquipmentItemsId" />
+            <PropertyRef Name="FKRacesId" />
+          </Key>
+          <Property Name="FKEquipmentItemsId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="FKRacesId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="GameItems">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" StoreGeneratedPattern="None" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Category" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Craftable" Type="bit" Nullable="false" />
+          <Property Name="IsUpgrader" Type="bit" Nullable="false" />
+          <Property Name="IsCrafter" Type="bit" Nullable="false" />
+          <Property Name="IsQuestItem" Type="bit" Nullable="false" />
+          <Property Name="Value" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Levels">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Level" Type="int" Nullable="false" />
+          <Property Name="Threshold" Type="int" Nullable="false" />
+          <Property Name="FKTiersId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="FKStatInfoId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MiscItems">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="FKSkillsId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OtherItems">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="IsEnhancer" Type="bit" Nullable="false" />
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="FKStatInfoId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OtherItemsCraftingItemsAssociation">
+          <Key>
+            <PropertyRef Name="FKOtherItemsId" />
+            <PropertyRef Name="FKCraftingIngredientsId" />
+          </Key>
+          <Property Name="FKOtherItemsId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="FKCraftingIngredientsId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Races">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Skills">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Range" Type="int" Nullable="false" />
+          <Property Name="Radius" Type="int" Nullable="false" />
+          <Property Name="Targets" Type="int" Nullable="false" />
+          <Property Name="Target" Type="int" Nullable="false" />
+          <Property Name="Friendly" Type="bit" Nullable="false" />
+          <Property Name="FKStatInfoId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SkillsSpecialsAssociation">
+          <Key>
+            <PropertyRef Name="FKSkillsId" />
+            <PropertyRef Name="FKSpecialsId" />
+          </Key>
+          <Property Name="FKSkillsId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="FKSpecialsId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Specials">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StatInfo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Health" Type="int" Nullable="false" />
+          <Property Name="Magic" Type="int" Nullable="false" />
+          <Property Name="Attack" Type="int" Nullable="false" />
+          <Property Name="Defense" Type="int" Nullable="false" />
+          <Property Name="Stamina" Type="int" Nullable="false" />
+          <Property Name="Hunger" Type="int" Nullable="false" />
+          <Property Name="Agility" Type="int" Nullable="false" />
+          <Property Name="Intelligence" Type="int" Nullable="false" />
+          <Property Name="Resistance" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tiers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Tier" Type="int" Nullable="false" />
+          <Property Name="FKEquipmentItemsId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TiersCraftingItemsAssociation">
+          <Key>
+            <PropertyRef Name="FKTiersId" />
+            <PropertyRef Name="FKCraftingIngredientsId" />
+          </Key>
+          <Property Name="FKTiersId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="FKCraftingIngredientsId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TiersSkillsAssociation">
+          <Key>
+            <PropertyRef Name="FKTiersId" />
+            <PropertyRef Name="FKSkillsId" />
+          </Key>
+          <Property Name="FKTiersId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="FKSkillsId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TiersUpgradeItemsAssociation">
+          <Key>
+            <PropertyRef Name="FKTiersId" />
+            <PropertyRef Name="FKUpgradeIngredientsId" />
+          </Key>
+          <Property Name="FKTiersId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="FKUpgradeIngredientsId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_EquipmentItemEnhancersAssociation_Enhancers">
+          <End Role="OtherItems" Type="Self.OtherItems" Multiplicity="1" />
+          <End Role="EquipmentItemsEnhancersAssociation" Type="Self.EquipmentItemsEnhancersAssociation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OtherItems">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EquipmentItemsEnhancersAssociation">
+              <PropertyRef Name="FKEnhancersId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EquipmentItems_GameItems">
+          <End Role="GameItems" Type="Self.GameItems" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="EquipmentItems" Type="Self.EquipmentItems" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="GameItems">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EquipmentItems">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EquipmentItems_Tiers">
+          <End Role="EquipmentItems" Type="Self.EquipmentItems" Multiplicity="1" />
+          <End Role="Tiers" Type="Self.Tiers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EquipmentItems">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tiers">
+              <PropertyRef Name="FKEquipmentItemsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EquipmentItemsClassesAssociation_Classes">
+          <End Role="Classes" Type="Self.Classes" Multiplicity="1" />
+          <End Role="EquipmentItemsClassesAssociation" Type="Self.EquipmentItemsClassesAssociation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Classes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EquipmentItemsClassesAssociation">
+              <PropertyRef Name="FKClassesId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EquipmentItemsClassesAssociation_EquipmentItems">
+          <End Role="EquipmentItems" Type="Self.EquipmentItems" Multiplicity="1" />
+          <End Role="EquipmentItemsClassesAssociation" Type="Self.EquipmentItemsClassesAssociation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EquipmentItems">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EquipmentItemsClassesAssociation">
+              <PropertyRef Name="FKEquipmentItemsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EquipmentItemsEnhancersAssociation_EquipmentItems">
+          <End Role="EquipmentItems" Type="Self.EquipmentItems" Multiplicity="1" />
+          <End Role="EquipmentItemsEnhancersAssociation" Type="Self.EquipmentItemsEnhancersAssociation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EquipmentItems">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EquipmentItemsEnhancersAssociation">
+              <PropertyRef Name="FKEquipmentItemsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EquipmentItemsRacesAssociation_EquipmentItems">
+          <End Role="EquipmentItems" Type="Self.EquipmentItems" Multiplicity="1" />
+          <End Role="EquipmentItemsRacesAssociation" Type="Self.EquipmentItemsRacesAssociation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EquipmentItems">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EquipmentItemsRacesAssociation">
+              <PropertyRef Name="FKEquipmentItemsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EquipmentItemsRacesAssociation_Races">
+          <End Role="Races" Type="Self.Races" Multiplicity="1" />
+          <End Role="EquipmentItemsRacesAssociation" Type="Self.EquipmentItemsRacesAssociation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Races">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EquipmentItemsRacesAssociation">
+              <PropertyRef Name="FKRacesId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Level_StatInfo">
+          <End Role="StatInfo" Type="Self.StatInfo" Multiplicity="1" />
+          <End Role="Levels" Type="Self.Levels" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StatInfo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Levels">
+              <PropertyRef Name="FKStatInfoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MiscItems_GameItems">
+          <End Role="GameItems" Type="Self.GameItems" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MiscItems" Type="Self.MiscItems" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="GameItems">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MiscItems">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MiscItems_Skills">
+          <End Role="Skills" Type="Self.Skills" Multiplicity="1" />
+          <End Role="MiscItems" Type="Self.MiscItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Skills">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MiscItems">
+              <PropertyRef Name="FKSkillsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OtherItems_GameItems">
+          <End Role="GameItems" Type="Self.GameItems" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="OtherItems" Type="Self.OtherItems" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="GameItems">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OtherItems">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OtherItems_StatInfo">
+          <End Role="StatInfo" Type="Self.StatInfo" Multiplicity="1" />
+          <End Role="OtherItems" Type="Self.OtherItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StatInfo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OtherItems">
+              <PropertyRef Name="FKStatInfoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OtherItemsCraftingItemsAssociation_CraftingIngredients">
+          <End Role="GameItems" Type="Self.GameItems" Multiplicity="1" />
+          <End Role="OtherItemsCraftingItemsAssociation" Type="Self.OtherItemsCraftingItemsAssociation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GameItems">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OtherItemsCraftingItemsAssociation">
+              <PropertyRef Name="FKCraftingIngredientsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OtherItemsCraftingItemsAssociation_OtherItems">
+          <End Role="OtherItems" Type="Self.OtherItems" Multiplicity="1" />
+          <End Role="OtherItemsCraftingItemsAssociation" Type="Self.OtherItemsCraftingItemsAssociation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OtherItems">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OtherItemsCraftingItemsAssociation">
+              <PropertyRef Name="FKOtherItemsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Skills_StatInfo">
+          <End Role="StatInfo" Type="Self.StatInfo" Multiplicity="1" />
+          <End Role="Skills" Type="Self.Skills" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StatInfo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Skills">
+              <PropertyRef Name="FKStatInfoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SkillsSpecialsAssociation_Skills">
+          <End Role="Skills" Type="Self.Skills" Multiplicity="1" />
+          <End Role="SkillsSpecialsAssociation" Type="Self.SkillsSpecialsAssociation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Skills">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SkillsSpecialsAssociation">
+              <PropertyRef Name="FKSkillsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SkillsSpecialsAssociation_Specials">
+          <End Role="Specials" Type="Self.Specials" Multiplicity="1" />
+          <End Role="SkillsSpecialsAssociation" Type="Self.SkillsSpecialsAssociation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Specials">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SkillsSpecialsAssociation">
+              <PropertyRef Name="FKSpecialsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tiers_Levels">
+          <End Role="Tiers" Type="Self.Tiers" Multiplicity="1" />
+          <End Role="Levels" Type="Self.Levels" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tiers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Levels">
+              <PropertyRef Name="FKTiersId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TiersCraftingItemsAssociation_CraftingIngredients">
+          <End Role="GameItems" Type="Self.GameItems" Multiplicity="1" />
+          <End Role="TiersCraftingItemsAssociation" Type="Self.TiersCraftingItemsAssociation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GameItems">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TiersCraftingItemsAssociation">
+              <PropertyRef Name="FKCraftingIngredientsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TiersCraftingItemsAssociation_Tiers">
+          <End Role="Tiers" Type="Self.Tiers" Multiplicity="1" />
+          <End Role="TiersCraftingItemsAssociation" Type="Self.TiersCraftingItemsAssociation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tiers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TiersCraftingItemsAssociation">
+              <PropertyRef Name="FKTiersId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TiersSkillsAssociation_Skills">
+          <End Role="Skills" Type="Self.Skills" Multiplicity="1" />
+          <End Role="TiersSkillsAssociation" Type="Self.TiersSkillsAssociation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Skills">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TiersSkillsAssociation">
+              <PropertyRef Name="FKSkillsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TiersSkillsAssociation_Tiers">
+          <End Role="Tiers" Type="Self.Tiers" Multiplicity="1" />
+          <End Role="TiersSkillsAssociation" Type="Self.TiersSkillsAssociation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tiers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TiersSkillsAssociation">
+              <PropertyRef Name="FKTiersId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TiersUpgradeItemsAssociation_Tiers">
+          <End Role="Tiers" Type="Self.Tiers" Multiplicity="1" />
+          <End Role="TiersUpgradeItemsAssociation" Type="Self.TiersUpgradeItemsAssociation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tiers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TiersUpgradeItemsAssociation">
+              <PropertyRef Name="FKTiersId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TiersUpgradeItemsAssociation_UpgradeIngredients">
+          <End Role="GameItems" Type="Self.GameItems" Multiplicity="1" />
+          <End Role="TiersUpgradeItemsAssociation" Type="Self.TiersUpgradeItemsAssociation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GameItems">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TiersUpgradeItemsAssociation">
+              <PropertyRef Name="FKUpgradeIngredientsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="NinjaHiveEntitiesStoreContainer">
+          <EntitySet Name="Classes" EntityType="Self.Classes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EquipmentItems" EntityType="Self.EquipmentItems" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EquipmentItemsClassesAssociation" EntityType="Self.EquipmentItemsClassesAssociation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EquipmentItemsEnhancersAssociation" EntityType="Self.EquipmentItemsEnhancersAssociation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EquipmentItemsRacesAssociation" EntityType="Self.EquipmentItemsRacesAssociation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GameItems" EntityType="Self.GameItems" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Levels" EntityType="Self.Levels" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MiscItems" EntityType="Self.MiscItems" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OtherItems" EntityType="Self.OtherItems" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OtherItemsCraftingItemsAssociation" EntityType="Self.OtherItemsCraftingItemsAssociation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Races" EntityType="Self.Races" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Skills" EntityType="Self.Skills" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SkillsSpecialsAssociation" EntityType="Self.SkillsSpecialsAssociation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Specials" EntityType="Self.Specials" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StatInfo" EntityType="Self.StatInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tiers" EntityType="Self.Tiers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TiersCraftingItemsAssociation" EntityType="Self.TiersCraftingItemsAssociation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TiersSkillsAssociation" EntityType="Self.TiersSkillsAssociation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TiersUpgradeItemsAssociation" EntityType="Self.TiersUpgradeItemsAssociation" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_EquipmentItemEnhancersAssociation_Enhancers" Association="Self.FK_EquipmentItemEnhancersAssociation_Enhancers">
+            <End Role="OtherItems" EntitySet="OtherItems" />
+            <End Role="EquipmentItemsEnhancersAssociation" EntitySet="EquipmentItemsEnhancersAssociation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EquipmentItems_GameItems" Association="Self.FK_EquipmentItems_GameItems">
+            <End Role="GameItems" EntitySet="GameItems" />
+            <End Role="EquipmentItems" EntitySet="EquipmentItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EquipmentItems_Tiers" Association="Self.FK_EquipmentItems_Tiers">
+            <End Role="EquipmentItems" EntitySet="EquipmentItems" />
+            <End Role="Tiers" EntitySet="Tiers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EquipmentItemsClassesAssociation_Classes" Association="Self.FK_EquipmentItemsClassesAssociation_Classes">
+            <End Role="Classes" EntitySet="Classes" />
+            <End Role="EquipmentItemsClassesAssociation" EntitySet="EquipmentItemsClassesAssociation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EquipmentItemsClassesAssociation_EquipmentItems" Association="Self.FK_EquipmentItemsClassesAssociation_EquipmentItems">
+            <End Role="EquipmentItems" EntitySet="EquipmentItems" />
+            <End Role="EquipmentItemsClassesAssociation" EntitySet="EquipmentItemsClassesAssociation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EquipmentItemsEnhancersAssociation_EquipmentItems" Association="Self.FK_EquipmentItemsEnhancersAssociation_EquipmentItems">
+            <End Role="EquipmentItems" EntitySet="EquipmentItems" />
+            <End Role="EquipmentItemsEnhancersAssociation" EntitySet="EquipmentItemsEnhancersAssociation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EquipmentItemsRacesAssociation_EquipmentItems" Association="Self.FK_EquipmentItemsRacesAssociation_EquipmentItems">
+            <End Role="EquipmentItems" EntitySet="EquipmentItems" />
+            <End Role="EquipmentItemsRacesAssociation" EntitySet="EquipmentItemsRacesAssociation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EquipmentItemsRacesAssociation_Races" Association="Self.FK_EquipmentItemsRacesAssociation_Races">
+            <End Role="Races" EntitySet="Races" />
+            <End Role="EquipmentItemsRacesAssociation" EntitySet="EquipmentItemsRacesAssociation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Level_StatInfo" Association="Self.FK_Level_StatInfo">
+            <End Role="StatInfo" EntitySet="StatInfo" />
+            <End Role="Levels" EntitySet="Levels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MiscItems_GameItems" Association="Self.FK_MiscItems_GameItems">
+            <End Role="GameItems" EntitySet="GameItems" />
+            <End Role="MiscItems" EntitySet="MiscItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MiscItems_Skills" Association="Self.FK_MiscItems_Skills">
+            <End Role="Skills" EntitySet="Skills" />
+            <End Role="MiscItems" EntitySet="MiscItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OtherItems_GameItems" Association="Self.FK_OtherItems_GameItems">
+            <End Role="GameItems" EntitySet="GameItems" />
+            <End Role="OtherItems" EntitySet="OtherItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OtherItems_StatInfo" Association="Self.FK_OtherItems_StatInfo">
+            <End Role="StatInfo" EntitySet="StatInfo" />
+            <End Role="OtherItems" EntitySet="OtherItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OtherItemsCraftingItemsAssociation_CraftingIngredients" Association="Self.FK_OtherItemsCraftingItemsAssociation_CraftingIngredients">
+            <End Role="GameItems" EntitySet="GameItems" />
+            <End Role="OtherItemsCraftingItemsAssociation" EntitySet="OtherItemsCraftingItemsAssociation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OtherItemsCraftingItemsAssociation_OtherItems" Association="Self.FK_OtherItemsCraftingItemsAssociation_OtherItems">
+            <End Role="OtherItems" EntitySet="OtherItems" />
+            <End Role="OtherItemsCraftingItemsAssociation" EntitySet="OtherItemsCraftingItemsAssociation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Skills_StatInfo" Association="Self.FK_Skills_StatInfo">
+            <End Role="StatInfo" EntitySet="StatInfo" />
+            <End Role="Skills" EntitySet="Skills" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SkillsSpecialsAssociation_Skills" Association="Self.FK_SkillsSpecialsAssociation_Skills">
+            <End Role="Skills" EntitySet="Skills" />
+            <End Role="SkillsSpecialsAssociation" EntitySet="SkillsSpecialsAssociation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SkillsSpecialsAssociation_Specials" Association="Self.FK_SkillsSpecialsAssociation_Specials">
+            <End Role="Specials" EntitySet="Specials" />
+            <End Role="SkillsSpecialsAssociation" EntitySet="SkillsSpecialsAssociation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tiers_Levels" Association="Self.FK_Tiers_Levels">
+            <End Role="Tiers" EntitySet="Tiers" />
+            <End Role="Levels" EntitySet="Levels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TiersCraftingItemsAssociation_CraftingIngredients" Association="Self.FK_TiersCraftingItemsAssociation_CraftingIngredients">
+            <End Role="GameItems" EntitySet="GameItems" />
+            <End Role="TiersCraftingItemsAssociation" EntitySet="TiersCraftingItemsAssociation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TiersCraftingItemsAssociation_Tiers" Association="Self.FK_TiersCraftingItemsAssociation_Tiers">
+            <End Role="Tiers" EntitySet="Tiers" />
+            <End Role="TiersCraftingItemsAssociation" EntitySet="TiersCraftingItemsAssociation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TiersSkillsAssociation_Skills" Association="Self.FK_TiersSkillsAssociation_Skills">
+            <End Role="Skills" EntitySet="Skills" />
+            <End Role="TiersSkillsAssociation" EntitySet="TiersSkillsAssociation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TiersSkillsAssociation_Tiers" Association="Self.FK_TiersSkillsAssociation_Tiers">
+            <End Role="Tiers" EntitySet="Tiers" />
+            <End Role="TiersSkillsAssociation" EntitySet="TiersSkillsAssociation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TiersUpgradeItemsAssociation_Tiers" Association="Self.FK_TiersUpgradeItemsAssociation_Tiers">
+            <End Role="Tiers" EntitySet="Tiers" />
+            <End Role="TiersUpgradeItemsAssociation" EntitySet="TiersUpgradeItemsAssociation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TiersUpgradeItemsAssociation_UpgradeIngredients" Association="Self.FK_TiersUpgradeItemsAssociation_UpgradeIngredients">
+            <End Role="GameItems" EntitySet="GameItems" />
+            <End Role="TiersUpgradeItemsAssociation" EntitySet="TiersUpgradeItemsAssociation" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="NinjaHiveEntities" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="NinjaHiveContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="GameItemEntities" EntityType="NinjaHiveEntities.GameItemEntity" />
+          <EntitySet Name="RaceEntities" EntityType="NinjaHiveEntities.RaceEntity" />
+          <EntitySet Name="ClassEntities" EntityType="NinjaHiveEntities.ClassEntity" />
+          <EntitySet Name="TierEntities" EntityType="NinjaHiveEntities.TierEntity" />
+          <EntitySet Name="LevelEntities" EntityType="NinjaHiveEntities.LevelEntity" />
+          <EntitySet Name="SkillEntities" EntityType="NinjaHiveEntities.SkillEntity" />
+          <EntitySet Name="StatInfoEntities" EntityType="NinjaHiveEntities.StatInfoEntity" />
+          <EntitySet Name="SpecialEntities" EntityType="NinjaHiveEntities.SpecialEntity" />
+          <AssociationSet Name="EquipmentItemsTiersAssociations" Association="NinjaHiveEntities.EquipmentItemsTiersAssociation">
+            <End Role="EquipmentItemEntity" EntitySet="GameItemEntities" />
+            <End Role="TierEntity" EntitySet="TierEntities" />
+          </AssociationSet>
+          <AssociationSet Name="TiersLevelsAssociations" Association="NinjaHiveEntities.TiersLevelsAssociation">
+            <End Role="TierEntity" EntitySet="TierEntities" />
+            <End Role="LevelEntity" EntitySet="LevelEntities" />
+          </AssociationSet>
+          <AssociationSet Name="TiersSkillsAssociations" Association="NinjaHiveEntities.TiersSkillsAssociation">
+            <End Role="TierEntity" EntitySet="TierEntities" />
+            <End Role="SkillEntity" EntitySet="SkillEntities" />
+          </AssociationSet>
+          <AssociationSet Name="SkillsSpecialsAssociations" Association="NinjaHiveEntities.SkillsSpecialsAssociation">
+            <End Role="SkillEntity" EntitySet="SkillEntities" />
+            <End Role="SpecialEntity" EntitySet="SpecialEntities" />
+          </AssociationSet>
+          <AssociationSet Name="LevelsStatInfoAssociations" Association="NinjaHiveEntities.LevelsStatInfoAssociation">
+            <End Role="LevelEntity" EntitySet="LevelEntities" />
+            <End Role="StatInfoEntity" EntitySet="StatInfoEntities" />
+          </AssociationSet>
+          <AssociationSet Name="SkillsStatInfoAssociations" Association="NinjaHiveEntities.SkillsStatInfoAssociation">
+            <End Role="SkillEntity" EntitySet="SkillEntities" />
+            <End Role="StatInfoEntity" EntitySet="StatInfoEntities" />
+          </AssociationSet>
+          <AssociationSet Name="OtherItemsStatInfoAssociations" Association="NinjaHiveEntities.OtherItemsStatInfoAssociation">
+            <End Role="OtherItemEntity" EntitySet="GameItemEntities" />
+            <End Role="StatInfoEntity" EntitySet="StatInfoEntities" />
+          </AssociationSet>
+          <AssociationSet Name="MiscItemsSkillsAssociations" Association="NinjaHiveEntities.MiscItemsSkillsAssociation">
+            <End Role="MiscItemEntity" EntitySet="GameItemEntities" />
+            <End Role="SkillEntity" EntitySet="SkillEntities" />
+          </AssociationSet>
+          <AssociationSet Name="EquipmentItemsRacesAssociations" Association="NinjaHiveEntities.EquipmentItemsRacesAssociation">
+            <End Role="EquipmentItemEntity" EntitySet="GameItemEntities" />
+            <End Role="RaceEntity" EntitySet="RaceEntities" />
+          </AssociationSet>
+          <AssociationSet Name="EquipmentItemsClassesAssociations" Association="NinjaHiveEntities.EquipmentItemsClassesAssociation">
+            <End Role="EquipmentItemEntity" EntitySet="GameItemEntities" />
+            <End Role="ClassEntity" EntitySet="ClassEntities" />
+          </AssociationSet>
+          <AssociationSet Name="EquipmentItemsEnhancersAssociations" Association="NinjaHiveEntities.EquipmentItemsEnhancersAssociation">
+            <End Role="EquipmentItemEntity" EntitySet="GameItemEntities" />
+            <End Role="OtherItemEntity" EntitySet="GameItemEntities" />
+          </AssociationSet>
+          <AssociationSet Name="OtherItemsCrafingItemsAssociations" Association="NinjaHiveEntities.OtherItemsCrafingItemsAssociation">
+            <End Role="OtherItemEntity" EntitySet="GameItemEntities" />
+            <End Role="GameItemEntity" EntitySet="GameItemEntities" />
+          </AssociationSet>
+          <AssociationSet Name="TiersUpgradeItemsAssociations" Association="NinjaHiveEntities.TiersUpgradeItemsAssociation">
+            <End Role="TierEntity" EntitySet="TierEntities" />
+            <End Role="GameItemEntity" EntitySet="GameItemEntities" />
+          </AssociationSet>
+          <AssociationSet Name="TiersCraftingItemsAssociations" Association="NinjaHiveEntities.TiersCraftingItemsAssociation">
+            <End Role="TierEntity" EntitySet="TierEntities" />
+            <End Role="GameItemEntity" EntitySet="GameItemEntities" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="GameItemEntity">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Category" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Craftable" Type="Boolean" Nullable="false" />
+          <Property Name="IsUpgrader" Type="Boolean" Nullable="false" />
+          <Property Name="IsCrafter" Type="Boolean" Nullable="false" />
+          <Property Name="IsQuestItem" Type="Boolean" Nullable="false" />
+          <Property Name="Value" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RaceEntity">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="ClassEntity">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="OtherItemEntity" BaseType="NinjaHiveEntities.GameItemEntity" >
+          <Property Name="IsEnhancer" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="StatInfo" Relationship="NinjaHiveEntities.OtherItemsStatInfoAssociation" FromRole="OtherItemEntity" ToRole="StatInfoEntity" />
+          <NavigationProperty Name="CraftingIngredients" Relationship="NinjaHiveEntities.OtherItemsCrafingItemsAssociation" FromRole="OtherItemEntity" ToRole="GameItemEntity" />
+        </EntityType>
+        <EntityType Name="MiscItemEntity" BaseType="NinjaHiveEntities.GameItemEntity" >
+          <NavigationProperty Name="Skill" Relationship="NinjaHiveEntities.MiscItemsSkillsAssociation" FromRole="MiscItemEntity" ToRole="SkillEntity" />
+        </EntityType>
+        <EntityType Name="EquipmentItemEntity" BaseType="NinjaHiveEntities.GameItemEntity" >
+          <Property Name="Durability" Type="Int32" Nullable="false" />
+          <Property Name="Slot" Type="NinjaHiveEntities.ItemSlot" Nullable="false" />
+          <NavigationProperty Name="Tiers" Relationship="NinjaHiveEntities.EquipmentItemsTiersAssociation" FromRole="EquipmentItemEntity" ToRole="TierEntity" />
+          <NavigationProperty Name="Races" Relationship="NinjaHiveEntities.EquipmentItemsRacesAssociation" FromRole="EquipmentItemEntity" ToRole="RaceEntity" />
+          <NavigationProperty Name="Classes" Relationship="NinjaHiveEntities.EquipmentItemsClassesAssociation" FromRole="EquipmentItemEntity" ToRole="ClassEntity" />
+          <NavigationProperty Name="Enhancers" Relationship="NinjaHiveEntities.EquipmentItemsEnhancersAssociation" FromRole="EquipmentItemEntity" ToRole="OtherItemEntity" />
+        </EntityType>
+        <EnumType Name="BodySlot" cg:ExternalTypeName="NinjaHive.Domain.Enums.BodySlot" />
+        <ComplexType Name="ItemSlot">
+          <Property Type="Int32" Name="NumberOfSlots" Nullable="false" />
+          <Property Type="NinjaHiveEntities.BodySlot" Name="BodySlot" Nullable="false" />
+        </ComplexType>
+        <EntityType Name="TierEntity">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Tier" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="EquipmentItem" Relationship="NinjaHiveEntities.EquipmentItemsTiersAssociation" FromRole="TierEntity" ToRole="EquipmentItemEntity" />
+          <NavigationProperty Name="Levels" Relationship="NinjaHiveEntities.TiersLevelsAssociation" FromRole="TierEntity" ToRole="LevelEntity" />
+          <NavigationProperty Name="Skills" Relationship="NinjaHiveEntities.TiersSkillsAssociation" FromRole="TierEntity" ToRole="SkillEntity" />
+          <NavigationProperty Name="UpgradeIngredients" Relationship="NinjaHiveEntities.TiersUpgradeItemsAssociation" FromRole="TierEntity" ToRole="GameItemEntity" />
+          <NavigationProperty Name="CraftingIngredients" Relationship="NinjaHiveEntities.TiersCraftingItemsAssociation" FromRole="TierEntity" ToRole="GameItemEntity" />
+        </EntityType>
+        <EntityType Name="LevelEntity">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="Level" Type="Int32" Nullable="false" />
+          <Property Name="Threshold" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Tier" Relationship="NinjaHiveEntities.TiersLevelsAssociation" FromRole="LevelEntity" ToRole="TierEntity" />
+          <NavigationProperty Name="StatInfo" Relationship="NinjaHiveEntities.LevelsStatInfoAssociation" FromRole="LevelEntity" ToRole="StatInfoEntity" />
+        </EntityType>
+        <EntityType Name="SkillEntity">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Range" Type="Int32" Nullable="false" DefaultValue="0" />
+          <Property Name="Radius" Type="Int32" Nullable="false" DefaultValue="0" />
+          <Property Name="Targets" Type="Int32" Nullable="false" DefaultValue="1" />
+          <Property Name="Target" Type="NinjaHiveEntities.Target" Nullable="false" />
+          <Property Name="Friendly" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Specials" Relationship="NinjaHiveEntities.SkillsSpecialsAssociation" FromRole="SkillEntity" ToRole="SpecialEntity" />
+          <NavigationProperty Name="StatInfo" Relationship="NinjaHiveEntities.SkillsStatInfoAssociation" FromRole="SkillEntity" ToRole="StatInfoEntity" />
+        </EntityType>
+        <EntityType Name="StatInfoEntity">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="Health" Type="Int32" Nullable="false" DefaultValue="0" />
+          <Property Name="Magic" Type="Int32" Nullable="false" DefaultValue="0" />
+          <Property Name="Attack" Type="Int32" Nullable="false" DefaultValue="0" />
+          <Property Name="Defense" Type="Int32" Nullable="false" DefaultValue="0" />
+          <Property Name="Stamina" Type="Int32" Nullable="false" DefaultValue="0" />
+          <Property Name="Hunger" Type="Int32" Nullable="false" DefaultValue="0" />
+          <Property Name="Agility" Type="Int32" Nullable="false" DefaultValue="0" />
+          <Property Name="Intelligence" Type="Int32" Nullable="false" DefaultValue="0" />
+          <Property Name="Resistance" Type="Double" Nullable="false" DefaultValue="0" />
+        </EntityType>
+        <EntityType Name="SpecialEntity">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+        </EntityType>
+        <EnumType Name="Target" cg:ExternalTypeName="NinjaHive.Domain.Enums.Target" />
+        <Association Name="EquipmentItemsTiersAssociation">
+          <End Type="NinjaHiveEntities.EquipmentItemEntity" Role="EquipmentItemEntity" Multiplicity="1" />
+          <End Type="NinjaHiveEntities.TierEntity" Role="TierEntity" Multiplicity="*" />
+        </Association>
+        <Association Name="TiersLevelsAssociation">
+          <End Type="NinjaHiveEntities.TierEntity" Role="TierEntity" Multiplicity="1" />
+          <End Type="NinjaHiveEntities.LevelEntity" Role="LevelEntity" Multiplicity="*" />
+        </Association>
+        <Association Name="TiersSkillsAssociation">
+          <End Type="NinjaHiveEntities.TierEntity" Role="TierEntity" Multiplicity="*" />
+          <End Type="NinjaHiveEntities.SkillEntity" Role="SkillEntity" Multiplicity="*" />
+        </Association>
+        <Association Name="SkillsSpecialsAssociation">
+          <End Type="NinjaHiveEntities.SkillEntity" Role="SkillEntity" Multiplicity="*" />
+          <End Type="NinjaHiveEntities.SpecialEntity" Role="SpecialEntity" Multiplicity="*" />
+        </Association>
+        <Association Name="LevelsStatInfoAssociation">
+          <End Type="NinjaHiveEntities.LevelEntity" Role="LevelEntity" Multiplicity="1" />
+          <End Type="NinjaHiveEntities.StatInfoEntity" Role="StatInfoEntity" Multiplicity="1" />
+        </Association>
+        <Association Name="SkillsStatInfoAssociation">
+          <End Type="NinjaHiveEntities.SkillEntity" Role="SkillEntity" Multiplicity="1" />
+          <End Type="NinjaHiveEntities.StatInfoEntity" Role="StatInfoEntity" Multiplicity="1" />
+        </Association>
+        <Association Name="OtherItemsStatInfoAssociation">
+          <End Type="NinjaHiveEntities.OtherItemEntity" Role="OtherItemEntity" Multiplicity="1" />
+          <End Type="NinjaHiveEntities.StatInfoEntity" Role="StatInfoEntity" Multiplicity="1" />
+        </Association>
+        <Association Name="MiscItemsSkillsAssociation">
+          <End Type="NinjaHiveEntities.MiscItemEntity" Role="MiscItemEntity" Multiplicity="1" />
+          <End Type="NinjaHiveEntities.SkillEntity" Role="SkillEntity" Multiplicity="1" />
+        </Association>
+        <Association Name="EquipmentItemsRacesAssociation">
+          <End Type="NinjaHiveEntities.EquipmentItemEntity" Role="EquipmentItemEntity" Multiplicity="*" />
+          <End Type="NinjaHiveEntities.RaceEntity" Role="RaceEntity" Multiplicity="*" />
+        </Association>
+        <Association Name="EquipmentItemsClassesAssociation">
+          <End Type="NinjaHiveEntities.EquipmentItemEntity" Role="EquipmentItemEntity" Multiplicity="*" />
+          <End Type="NinjaHiveEntities.ClassEntity" Role="ClassEntity" Multiplicity="*" />
+        </Association>
+        <Association Name="EquipmentItemsEnhancersAssociation">
+          <End Type="NinjaHiveEntities.EquipmentItemEntity" Role="EquipmentItemEntity" Multiplicity="*" />
+          <End Type="NinjaHiveEntities.OtherItemEntity" Role="OtherItemEntity" Multiplicity="*" />
+        </Association>
+        <Association Name="OtherItemsCrafingItemsAssociation">
+          <End Type="NinjaHiveEntities.OtherItemEntity" Role="OtherItemEntity" Multiplicity="*" />
+          <End Type="NinjaHiveEntities.GameItemEntity" Role="GameItemEntity" Multiplicity="*" />
+        </Association>
+        <Association Name="TiersUpgradeItemsAssociation">
+          <End Type="NinjaHiveEntities.TierEntity" Role="TierEntity" Multiplicity="*" />
+          <End Type="NinjaHiveEntities.GameItemEntity" Role="GameItemEntity" Multiplicity="*" />
+        </Association>
+        <Association Name="TiersCraftingItemsAssociation">
+          <End Type="NinjaHiveEntities.TierEntity" Role="TierEntity" Multiplicity="*" />
+          <End Type="NinjaHiveEntities.GameItemEntity" Role="GameItemEntity" Multiplicity="*" />
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="NinjaHiveEntitiesStoreContainer" CdmEntityContainer="NinjaHiveContext">
+          <EntitySetMapping Name="GameItemEntities">
+            <EntityTypeMapping TypeName="IsTypeOf(NinjaHiveEntities.GameItemEntity)">
+              <MappingFragment StoreEntitySet="GameItems">
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="IsQuestItem" ColumnName="IsQuestItem" />
+                <ScalarProperty Name="IsCrafter" ColumnName="IsCrafter" />
+                <ScalarProperty Name="IsUpgrader" ColumnName="IsUpgrader" />
+                <ScalarProperty Name="Craftable" ColumnName="Craftable" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(NinjaHiveEntities.EquipmentItemEntity)">
+              <MappingFragment StoreEntitySet="EquipmentItems">
+                <ScalarProperty Name="Durability" ColumnName="Durability" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ComplexProperty Name="Slot">
+                  <ScalarProperty Name="BodySlot" ColumnName="BodySlot" />
+                  <ScalarProperty Name="NumberOfSlots" ColumnName="NumberOfSlots" />
+                </ComplexProperty>
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(NinjaHiveEntities.OtherItemEntity)">
+              <MappingFragment StoreEntitySet="OtherItems">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IsEnhancer" ColumnName="IsEnhancer" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(NinjaHiveEntities.MiscItemEntity)">
+              <MappingFragment StoreEntitySet="MiscItems">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TierEntities">
+            <EntityTypeMapping TypeName="IsTypeOf(NinjaHiveEntities.TierEntity)">
+              <MappingFragment StoreEntitySet="Tiers">
+                <ScalarProperty Name="Tier" ColumnName="Tier" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StatInfoEntities">
+            <EntityTypeMapping TypeName="IsTypeOf(NinjaHiveEntities.StatInfoEntity)">
+              <MappingFragment StoreEntitySet="StatInfo">
+                <ScalarProperty Name="Resistance" ColumnName="Resistance" />
+                <ScalarProperty Name="Intelligence" ColumnName="Intelligence" />
+                <ScalarProperty Name="Agility" ColumnName="Agility" />
+                <ScalarProperty Name="Hunger" ColumnName="Hunger" />
+                <ScalarProperty Name="Stamina" ColumnName="Stamina" />
+                <ScalarProperty Name="Defense" ColumnName="Defense" />
+                <ScalarProperty Name="Attack" ColumnName="Attack" />
+                <ScalarProperty Name="Magic" ColumnName="Magic" />
+                <ScalarProperty Name="Health" ColumnName="Health" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RaceEntities">
+            <EntityTypeMapping TypeName="IsTypeOf(NinjaHiveEntities.RaceEntity)">
+              <MappingFragment StoreEntitySet="Races">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClassEntities">
+            <EntityTypeMapping TypeName="IsTypeOf(NinjaHiveEntities.ClassEntity)">
+              <MappingFragment StoreEntitySet="Classes">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LevelEntities">
+            <EntityTypeMapping TypeName="IsTypeOf(NinjaHiveEntities.LevelEntity)">
+              <MappingFragment StoreEntitySet="Levels">
+                <ScalarProperty Name="Threshold" ColumnName="Threshold" />
+                <ScalarProperty Name="Level" ColumnName="Level" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SkillEntities">
+            <EntityTypeMapping TypeName="IsTypeOf(NinjaHiveEntities.SkillEntity)">
+              <MappingFragment StoreEntitySet="Skills">
+                <ScalarProperty Name="Friendly" ColumnName="Friendly" />
+                <ScalarProperty Name="Target" ColumnName="Target" />
+                <ScalarProperty Name="Targets" ColumnName="Targets" />
+                <ScalarProperty Name="Radius" ColumnName="Radius" />
+                <ScalarProperty Name="Range" ColumnName="Range" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SpecialEntities">
+            <EntityTypeMapping TypeName="IsTypeOf(NinjaHiveEntities.SpecialEntity)">
+              <MappingFragment StoreEntitySet="Specials">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="SkillsSpecialsAssociations" TypeName="NinjaHiveEntities.SkillsSpecialsAssociation" StoreEntitySet="SkillsSpecialsAssociation" >
+            <EndProperty Name="SpecialEntity">
+              <ScalarProperty Name="Id" ColumnName="FKSpecialsId" />
+            </EndProperty>
+            <EndProperty Name="SkillEntity">
+              <ScalarProperty Name="Id" ColumnName="FKSkillsId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="TiersSkillsAssociations" TypeName="NinjaHiveEntities.TiersSkillsAssociation" StoreEntitySet="TiersSkillsAssociation" >
+            <EndProperty Name="SkillEntity">
+              <ScalarProperty Name="Id" ColumnName="FKSkillsId" />
+            </EndProperty>
+            <EndProperty Name="TierEntity">
+              <ScalarProperty Name="Id" ColumnName="FKTiersId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="EquipmentItemsClassesAssociations" TypeName="NinjaHiveEntities.EquipmentItemsClassesAssociation" StoreEntitySet="EquipmentItemsClassesAssociation" >
+            <EndProperty Name="ClassEntity">
+              <ScalarProperty Name="Id" ColumnName="FKClassesId" />
+            </EndProperty>
+            <EndProperty Name="EquipmentItemEntity">
+              <ScalarProperty Name="Id" ColumnName="FKEquipmentItemsId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="EquipmentItemsRacesAssociations" TypeName="NinjaHiveEntities.EquipmentItemsRacesAssociation" StoreEntitySet="EquipmentItemsRacesAssociation" >
+            <EndProperty Name="RaceEntity">
+              <ScalarProperty Name="Id" ColumnName="FKRacesId" />
+            </EndProperty>
+            <EndProperty Name="EquipmentItemEntity">
+              <ScalarProperty Name="Id" ColumnName="FKEquipmentItemsId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="EquipmentItemsEnhancersAssociations" TypeName="NinjaHiveEntities.EquipmentItemsEnhancersAssociation" StoreEntitySet="EquipmentItemsEnhancersAssociation" >
+            <EndProperty Name="OtherItemEntity">
+              <ScalarProperty Name="Id" ColumnName="FKEnhancersId" />
+            </EndProperty>
+            <EndProperty Name="EquipmentItemEntity">
+              <ScalarProperty Name="Id" ColumnName="FKEquipmentItemsId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="OtherItemsCrafingItemsAssociations" TypeName="NinjaHiveEntities.OtherItemsCrafingItemsAssociation" StoreEntitySet="OtherItemsCraftingItemsAssociation" >
+            <EndProperty Name="GameItemEntity">
+              <ScalarProperty Name="Id" ColumnName="FKCraftingIngredientsId" />
+            </EndProperty>
+            <EndProperty Name="OtherItemEntity">
+              <ScalarProperty Name="Id" ColumnName="FKOtherItemsId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="TiersCraftingItemsAssociations" TypeName="NinjaHiveEntities.TiersCraftingItemsAssociation" StoreEntitySet="TiersCraftingItemsAssociation" >
+            <EndProperty Name="GameItemEntity">
+              <ScalarProperty Name="Id" ColumnName="FKCraftingIngredientsId" />
+            </EndProperty>
+            <EndProperty Name="TierEntity">
+              <ScalarProperty Name="Id" ColumnName="FKTiersId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="TiersUpgradeItemsAssociations" TypeName="NinjaHiveEntities.TiersUpgradeItemsAssociation" StoreEntitySet="TiersUpgradeItemsAssociation" >
+            <EndProperty Name="GameItemEntity">
+              <ScalarProperty Name="Id" ColumnName="FKUpgradeIngredientsId" />
+            </EndProperty>
+            <EndProperty Name="TierEntity">
+              <ScalarProperty Name="Id" ColumnName="FKTiersId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="LevelsStatInfoAssociations" TypeName="NinjaHiveEntities.LevelsStatInfoAssociation" StoreEntitySet="Levels">
+            <EndProperty Name="StatInfoEntity">
+              <ScalarProperty Name="Id" ColumnName="FKStatInfoId" />
+            </EndProperty>
+            <EndProperty Name="LevelEntity">
+              <ScalarProperty Name="Id" ColumnName="Id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="SkillsStatInfoAssociations" TypeName="NinjaHiveEntities.SkillsStatInfoAssociation" StoreEntitySet="Skills">
+            <EndProperty Name="StatInfoEntity">
+              <ScalarProperty Name="Id" ColumnName="FKStatInfoId" />
+            </EndProperty>
+            <EndProperty Name="SkillEntity">
+              <ScalarProperty Name="Id" ColumnName="Id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="MiscItemsSkillsAssociations" TypeName="NinjaHiveEntities.MiscItemsSkillsAssociation" StoreEntitySet="MiscItems">
+            <EndProperty Name="SkillEntity">
+              <ScalarProperty Name="Id" ColumnName="FKSkillsId" />
+            </EndProperty>
+            <EndProperty Name="MiscItemEntity">
+              <ScalarProperty Name="Id" ColumnName="Id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="OtherItemsStatInfoAssociations" TypeName="NinjaHiveEntities.OtherItemsStatInfoAssociation" StoreEntitySet="OtherItems">
+            <EndProperty Name="StatInfoEntity">
+              <ScalarProperty Name="Id" ColumnName="FKStatInfoId" />
+            </EndProperty>
+            <EndProperty Name="OtherItemEntity">
+              <ScalarProperty Name="Id" ColumnName="Id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="EquipmentItemsTiersAssociations" TypeName="NinjaHiveEntities.EquipmentItemsTiersAssociation" StoreEntitySet="Tiers">
+            <EndProperty Name="TierEntity">
+              <ScalarProperty Name="Id" ColumnName="Id" />
+            </EndProperty>
+            <EndProperty Name="EquipmentItemEntity">
+              <ScalarProperty Name="Id" ColumnName="FKEquipmentItemsId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="TiersLevelsAssociations" TypeName="NinjaHiveEntities.TiersLevelsAssociation" StoreEntitySet="Levels">
+            <EndProperty Name="LevelEntity">
+              <ScalarProperty Name="Id" ColumnName="Id" />
+            </EndProperty>
+            <EndProperty Name="TierEntity">
+              <ScalarProperty Name="Id" ColumnName="FKTiersId" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
