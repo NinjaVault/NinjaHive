@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="9e5a2fa7233a49f5a1d2a7d15a6268c2" Name="Diagram1" ShowGrid="true" DisplayType="false" ZoomLevel="80" >
+        <EntityTypeShape EntityType="NinjaHiveEntities.GameItemEntity" Width="1.625" PointX="78.625" PointY="57.375" />
+        <EntityTypeShape EntityType="NinjaHiveEntities.RaceEntity" Width="1.75" PointX="71" PointY="56.75" FillColor="Green" />
+        <EntityTypeShape EntityType="NinjaHiveEntities.ClassEntity" Width="1.75" PointX="71" PointY="58.5" FillColor="Green" />
+        <EntityTypeShape EntityType="NinjaHiveEntities.OtherItemEntity" Width="1.875" PointX="82.25" PointY="57.375" />
+        <InheritanceConnector EntityType="NinjaHiveEntities.OtherItemEntity" />
+        <EntityTypeShape EntityType="NinjaHiveEntities.MiscItemEntity" Width="1.875" PointX="82.25" PointY="59.125" />
+        <InheritanceConnector EntityType="NinjaHiveEntities.MiscItemEntity" />
+        <EntityTypeShape EntityType="NinjaHiveEntities.EquipmentItemEntity" Width="1.875" PointX="75.25" PointY="57.375" />
+        <InheritanceConnector EntityType="NinjaHiveEntities.EquipmentItemEntity" />
+        <EntityTypeShape EntityType="NinjaHiveEntities.TierEntity" Width="1.75" PointX="75.375" PointY="60.875" />
+        <EntityTypeShape EntityType="NinjaHiveEntities.LevelEntity" Width="1.75" PointX="71.25" PointY="60.875" />
+        <EntityTypeShape EntityType="NinjaHiveEntities.SkillEntity" Width="1.75" PointX="75.375" PointY="64.5" />
+        <EntityTypeShape EntityType="NinjaHiveEntities.StatInfoEntity" Width="1.5" PointX="82.625" PointY="60.875" FillColor="Silver" />
+        <EntityTypeShape EntityType="NinjaHiveEntities.SpecialEntity" Width="1.75" PointX="71.25" PointY="64.5" />
+        <AssociationConnector Association="NinjaHiveEntities.EquipmentItemsTiersAssociation" />
+        <AssociationConnector Association="NinjaHiveEntities.TiersLevelsAssociation" />
+        <AssociationConnector Association="NinjaHiveEntities.TiersSkillsAssociation" />
+        <AssociationConnector Association="NinjaHiveEntities.SkillsSpecialsAssociation" />
+        <AssociationConnector Association="NinjaHiveEntities.LevelsStatInfoAssociation" />
+        <AssociationConnector Association="NinjaHiveEntities.SkillsStatInfoAssociation" />
+        <AssociationConnector Association="NinjaHiveEntities.OtherItemsStatInfoAssociation" />
+        <AssociationConnector Association="NinjaHiveEntities.MiscItemsSkillsAssociation" />
+        <AssociationConnector Association="NinjaHiveEntities.EquipmentItemsRacesAssociation" />
+        <AssociationConnector Association="NinjaHiveEntities.EquipmentItemsClassesAssociation" />
+        <AssociationConnector Association="NinjaHiveEntities.EquipmentItemsEnhancersAssociation" />
+        <AssociationConnector Association="NinjaHiveEntities.OtherItemsCrafingItemsAssociation" />
+        <AssociationConnector Association="NinjaHiveEntities.TiersUpgradeItemsAssociation" />
+        <AssociationConnector Association="NinjaHiveEntities.TiersCraftingItemsAssociation" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

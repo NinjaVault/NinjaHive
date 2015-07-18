@@ -12,7 +12,7 @@ namespace NinjaHive.Domain
     using System;
     using System.Collections.Generic;
     
-    public partial class GameItemEntity
+    public abstract partial class GameItemEntity
     {
         public System.Guid Id { get; set; }
         public string Name { get; set; }
