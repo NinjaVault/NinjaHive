@@ -10,7 +10,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="EquipmentItems">
           <Key>
@@ -49,8 +49,8 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="uniqueidentifier" Nullable="false" StoreGeneratedPattern="None" />
-          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" />
           <Property Name="Category" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Craftable" Type="bit" Nullable="false" />
@@ -97,14 +97,14 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="Skills">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" />
           <Property Name="Range" Type="int" Nullable="false" />
           <Property Name="Radius" Type="int" Nullable="false" />
           <Property Name="Targets" Type="int" Nullable="false" />
@@ -125,7 +125,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="StatInfo">
           <Key>
@@ -175,18 +175,6 @@
           <Property Name="FKTiersId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="FKUpgradeIngredientsId" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
-        <Association Name="FK_EquipmentItemEnhancersAssociation_Enhancers">
-          <End Role="OtherItems" Type="Self.OtherItems" Multiplicity="1" />
-          <End Role="EquipmentItemsEnhancersAssociation" Type="Self.EquipmentItemsEnhancersAssociation" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="OtherItems">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="EquipmentItemsEnhancersAssociation">
-              <PropertyRef Name="FKEnhancersId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_EquipmentItems_GameItems">
           <End Role="GameItems" Type="Self.GameItems" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -234,6 +222,18 @@
             </Principal>
             <Dependent Role="EquipmentItemsClassesAssociation">
               <PropertyRef Name="FKEquipmentItemsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EquipmentItemsEnhancersAssociation_Enhancers">
+          <End Role="OtherItems" Type="Self.OtherItems" Multiplicity="1" />
+          <End Role="EquipmentItemsEnhancersAssociation" Type="Self.EquipmentItemsEnhancersAssociation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OtherItems">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EquipmentItemsEnhancersAssociation">
+              <PropertyRef Name="FKEnhancersId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -501,10 +501,6 @@
           <EntitySet Name="TiersCraftingItemsAssociation" EntityType="Self.TiersCraftingItemsAssociation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TiersSkillsAssociation" EntityType="Self.TiersSkillsAssociation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TiersUpgradeItemsAssociation" EntityType="Self.TiersUpgradeItemsAssociation" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_EquipmentItemEnhancersAssociation_Enhancers" Association="Self.FK_EquipmentItemEnhancersAssociation_Enhancers">
-            <End Role="OtherItems" EntitySet="OtherItems" />
-            <End Role="EquipmentItemsEnhancersAssociation" EntitySet="EquipmentItemsEnhancersAssociation" />
-          </AssociationSet>
           <AssociationSet Name="FK_EquipmentItems_GameItems" Association="Self.FK_EquipmentItems_GameItems">
             <End Role="GameItems" EntitySet="GameItems" />
             <End Role="EquipmentItems" EntitySet="EquipmentItems" />
@@ -520,6 +516,10 @@
           <AssociationSet Name="FK_EquipmentItemsClassesAssociation_EquipmentItems" Association="Self.FK_EquipmentItemsClassesAssociation_EquipmentItems">
             <End Role="EquipmentItems" EntitySet="EquipmentItems" />
             <End Role="EquipmentItemsClassesAssociation" EntitySet="EquipmentItemsClassesAssociation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EquipmentItemsEnhancersAssociation_Enhancers" Association="Self.FK_EquipmentItemsEnhancersAssociation_Enhancers">
+            <End Role="OtherItems" EntitySet="OtherItems" />
+            <End Role="EquipmentItemsEnhancersAssociation" EntitySet="EquipmentItemsEnhancersAssociation" />
           </AssociationSet>
           <AssociationSet Name="FK_EquipmentItemsEnhancersAssociation_EquipmentItems" Association="Self.FK_EquipmentItemsEnhancersAssociation_EquipmentItems">
             <End Role="EquipmentItems" EntitySet="EquipmentItems" />
@@ -677,7 +677,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Name" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
           <Property Name="Category" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="Craftable" Type="Boolean" Nullable="false" />
@@ -691,14 +691,14 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="None" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Name" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
         </EntityType>
         <EntityType Name="ClassEntity">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="None" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Name" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
         </EntityType>
         <EntityType Name="OtherItemEntity" BaseType="NinjaHiveEntities.GameItemEntity" >
           <Property Name="IsEnhancer" Type="Boolean" Nullable="false" />
@@ -749,7 +749,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="None" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Name" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
           <Property Name="Range" Type="Int32" Nullable="false" DefaultValue="0" />
           <Property Name="Radius" Type="Int32" Nullable="false" DefaultValue="0" />
           <Property Name="Targets" Type="Int32" Nullable="false" DefaultValue="1" />
@@ -778,7 +778,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="None" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Name" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
         </EntityType>
         <EnumType Name="Target" cg:ExternalTypeName="NinjaHive.Domain.Enums.Target" />
         <Association Name="EquipmentItemsTiersAssociation">
