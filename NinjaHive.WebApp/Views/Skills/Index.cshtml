@@ -1,0 +1,30 @@
+﻿@using NinjaHive.Contract.DTOs
+@using NinjaHive.WebApp.Controllers
+@using NinjaHive.WebApp.Services
+@model Skill[]
+           
+<div class="row">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            @{ var createUri = UrlProvider<SkillsController>.GetUrl(c => c.Create()); }
+            <a href="@createUri" class="btn btn-default">
+                Create
+            </a>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-3">
+        <div class="list-group">
+            @foreach (var skill in Model)
+            {
+                <button type="button" class="list-group-item">
+                    @skill.Name
+                </button>
+            }
+        </div>
+    </div>
+    <div class="col-md-9">
+        @*skill edit here*@
+    </div>
+</div>

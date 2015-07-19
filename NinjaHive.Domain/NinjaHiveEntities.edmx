@@ -798,19 +798,19 @@
           <End Type="NinjaHiveEntities.SpecialEntity" Role="SpecialEntity" Multiplicity="*" />
         </Association>
         <Association Name="LevelsStatInfoAssociation">
-          <End Type="NinjaHiveEntities.LevelEntity" Role="LevelEntity" Multiplicity="1" />
+          <End Type="NinjaHiveEntities.LevelEntity" Role="LevelEntity" Multiplicity="0..1" />
           <End Type="NinjaHiveEntities.StatInfoEntity" Role="StatInfoEntity" Multiplicity="1" />
         </Association>
         <Association Name="SkillsStatInfoAssociation">
-          <End Type="NinjaHiveEntities.SkillEntity" Role="SkillEntity" Multiplicity="1" />
+          <End Type="NinjaHiveEntities.SkillEntity" Role="SkillEntity" Multiplicity="0..1" />
           <End Type="NinjaHiveEntities.StatInfoEntity" Role="StatInfoEntity" Multiplicity="1" />
         </Association>
         <Association Name="OtherItemsStatInfoAssociation">
-          <End Type="NinjaHiveEntities.OtherItemEntity" Role="OtherItemEntity" Multiplicity="1" />
+          <End Type="NinjaHiveEntities.OtherItemEntity" Role="OtherItemEntity" Multiplicity="0..1" />
           <End Type="NinjaHiveEntities.StatInfoEntity" Role="StatInfoEntity" Multiplicity="1" />
         </Association>
         <Association Name="MiscItemsSkillsAssociation">
-          <End Type="NinjaHiveEntities.MiscItemEntity" Role="MiscItemEntity" Multiplicity="1" />
+          <End Type="NinjaHiveEntities.MiscItemEntity" Role="MiscItemEntity" Multiplicity="0..1" />
           <End Type="NinjaHiveEntities.SkillEntity" Role="SkillEntity" Multiplicity="1" />
         </Association>
         <Association Name="EquipmentItemsRacesAssociation">
@@ -1021,6 +1021,7 @@
             <EndProperty Name="LevelEntity">
               <ScalarProperty Name="Id" ColumnName="Id" />
             </EndProperty>
+            <Condition ColumnName="FKStatInfoId" IsNull="false" />
           </AssociationSetMapping>
           <AssociationSetMapping Name="SkillsStatInfoAssociations" TypeName="NinjaHiveEntities.SkillsStatInfoAssociation" StoreEntitySet="Skills">
             <EndProperty Name="StatInfoEntity">
@@ -1029,6 +1030,7 @@
             <EndProperty Name="SkillEntity">
               <ScalarProperty Name="Id" ColumnName="Id" />
             </EndProperty>
+            <Condition ColumnName="FKStatInfoId" IsNull="false" />
           </AssociationSetMapping>
           <AssociationSetMapping Name="MiscItemsSkillsAssociations" TypeName="NinjaHiveEntities.MiscItemsSkillsAssociation" StoreEntitySet="MiscItems">
             <EndProperty Name="SkillEntity">
@@ -1037,6 +1039,7 @@
             <EndProperty Name="MiscItemEntity">
               <ScalarProperty Name="Id" ColumnName="Id" />
             </EndProperty>
+            <Condition ColumnName="FKSkillsId" IsNull="false" />
           </AssociationSetMapping>
           <AssociationSetMapping Name="OtherItemsStatInfoAssociations" TypeName="NinjaHiveEntities.OtherItemsStatInfoAssociation" StoreEntitySet="OtherItems">
             <EndProperty Name="StatInfoEntity">
@@ -1045,6 +1048,7 @@
             <EndProperty Name="OtherItemEntity">
               <ScalarProperty Name="Id" ColumnName="Id" />
             </EndProperty>
+            <Condition ColumnName="FKStatInfoId" IsNull="false" />
           </AssociationSetMapping>
           <AssociationSetMapping Name="EquipmentItemsTiersAssociations" TypeName="NinjaHiveEntities.EquipmentItemsTiersAssociation" StoreEntitySet="Tiers">
             <EndProperty Name="TierEntity">

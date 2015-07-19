@@ -54,6 +54,7 @@
     <Compile Include="IQuery.cs" />
     <Compile Include="IQueryHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Validations\ValidateObjectAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

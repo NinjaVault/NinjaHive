@@ -224,7 +224,7 @@ CREATE TABLE [dbo].[Levels] (
 GO
 
 CREATE TABLE [dbo].[Skills] (
-    [Id] uniqueidentifier DEFAULT (newid()) NOT NULL,
+    [Id] uniqueidentifier DEFAULT (NEWID()) NOT NULL,
     [Name] nvarchar(max)  NOT NULL,
     [Range] int  NOT NULL,
     [Radius] int  NOT NULL,

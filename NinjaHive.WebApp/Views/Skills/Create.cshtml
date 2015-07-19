@@ -1,0 +1,15 @@
+﻿@using NinjaHive.Contract.DTOs
+@model Skill
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Create a Skill</h2>
+        <p>Create a skill by giving it a name and pressing the button to create it.</p>
+        @using (Html.BeginForm())
+        {
+            @Html.LabelFor(m => m.Name, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+            <input type="submit" value="Create Skill" class="btn btn-default" />
+        }
+    </div>
+</div>

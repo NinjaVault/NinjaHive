@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Owin;
 
@@ -10,11 +11,11 @@ namespace NinjaHive.WebApp.Tests
         [TestMethod]
         public void GetInitializedContainer_Always_ReturnsAContainerThatCanBeVerified()
         {
-            //// Arrange
-            //var container = Bootstrapper.GetInitializedContainer(new FakeOwinApp());
+            // Arrange
+            var container = Bootstrapper.GetInitializedContainer(new FakeOwinApp());
 
-            //// Act
-            //container.Verify();
+            // Act
+            container.Verify();
         }
     }
 
@@ -30,9 +31,9 @@ namespace NinjaHive.WebApp.Tests
             throw new NotImplementedException();
         }
 
-        public System.Collections.Generic.IDictionary<string, object> Properties
+        public IDictionary<string, object> Properties
         {
-            get { throw new NotImplementedException(); }
+            get { return new Dictionary<string, object>(); }
         }
 
         public IAppBuilder Use(object middleware, params object[] args)

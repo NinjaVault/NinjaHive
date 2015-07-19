@@ -66,6 +66,8 @@ namespace NinjaHive.WebApp
                 AppDomain.CurrentDomain.GetAssemblies());
 
             container.RegisterDecorator(typeof (ICommandHandler<>),
+                typeof (ValidationCommandHandlerDecorator<>));
+            container.RegisterDecorator(typeof (ICommandHandler<>),
                 typeof (SaveChangesCommandHandlerDecorator<>));
         }
 
