@@ -97,7 +97,7 @@
                             };
                             }
 
-                            @Html.DropDownList("temp", items, new { @class = "form-control", @style = "max-width: 100%;" })
+                            @Html.DropDownListFor(m => m.Category, items, new { @class = "form-control", @style = "max-width: 100%;" })
                         </td>
                     </tr>
                     <tr style="height: 400px;">
@@ -169,13 +169,13 @@
                                     };
                             }
 
-                            @Html.DropDownList("temp", periods, new { @class = "form-control", @style = "width: 100%; max-width: 200px; float:left;" })
-                            @Html.TextBox("temp", "", new { @type = "number", @style = "width:70px; float:right;", @class = "form-control" })
+                            @Html.DropDownList("temp", periods, new { @class = "form-control", @style = "width: 80%; max-width: 100%; float:left;" })
+                            @Html.TextBox("temp", "", new { @type = "number", @style = "width:19%; float:right;", @class = "form-control" })
                         </td>
                     </tr>
                     <tr>
                         <td style="vertical-align: middle; font-weight:bold;"> Size (required slots) </td>
-                        <td>@Html.TextBox("temp", "", new { @type = "number", @style = "width:100%px;", @class = "form-control" })</td>
+                        <td>@Html.TextBox("temp", "", new { @type = "number", @style = "width:100%px; max-width: 100%;", @class = "form-control" })</td>
                     </tr>
                     <tr>
                         <td style="vertical-align: middle; font-weight:bold;"> Value (worth) </td>
@@ -186,7 +186,6 @@
                             </span>
                             @* want much more of this crazy money but these days we could need a limit *@
                             @Html.TextBox("temp", "", new { @type = "number", @style = "width:100%; max-width: 26%; float.right;", @class = "form-control" })
-
                         </td>
                     </tr>
                 </table>
