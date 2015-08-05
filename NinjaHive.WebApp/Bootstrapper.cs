@@ -57,7 +57,7 @@ namespace NinjaHive.WebApp
             var connectionString = ConfigurationManager.ConnectionStrings["NinjaHiveContext"].ConnectionString;
 
             container.RegisterPerWebRequest<NinjaHiveContext>(
-                () => new NinjaHiveContext(connectionString));
+                () => new NinjaHiveContext(connectionString));  
         }
 
         private static void RegisterCommandHandlers()

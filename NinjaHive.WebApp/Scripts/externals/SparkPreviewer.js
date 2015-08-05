@@ -1,17 +1,16 @@
-// The MIT License (MIT)
-
+// --------------------------------------------------------------------------------
 // Copyright (c) 2015 Ruggero Enrico Visintin
-
+//
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
 // in the Software without restriction, including without limitation the rights
 // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
-
+//
 // The above copyright notice and this permission notice shall be included in
 // all copies or substantial portions of the Software.
-
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -19,134 +18,73 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE. 
+// --------------------------------------------------------------------------------
 
 console.log("SparkViewer.js included");
 
-{
-    var scriptEls = document.getElementsByTagName('script');
-    var thisScriptEl = scriptEls[scriptEls.length - 1];
-    var scriptPath = thisScriptEl.src;
-    var scriptFolder = scriptPath.substr(0, scriptPath.lastIndexOf('/') + 1);
+JRV.setBasePath("../Scripts/externals/");
 
-    console.log(scriptFolder);
+JRV.include("core/Renderer.js");
+JRV.include("core/math/Matrix4.js");
+JRV.include("core/RendererUtils.js");
+JRV.include("core/RenderMaterial.js");
+JRV.include("core/RenderMesh.js");
+JRV.include("core/RenderModel.js");
+JRV.include("core/math/Vector3.js");
 
-    var head = document.getElementsByTagName("head")[0];
+SparkPreviewerMain();
 
-    var subFolders = "core/";
-
-    var js = document.createElement("script");
-    js.type = "text/javascript";
-    js.src = scriptFolder + subFolders + "Renderer.js";
-
-    head.appendChild(js);
-
-    var js = document.createElement("script");
-    js.type = "text/javascript";
-    js.src = scriptFolder + subFolders + "math/Matrix4.js";
-
-    head.appendChild(js);
-
-    var js = document.createElement("script");
-    js.type = "text/javascript";
-    js.src = scriptFolder + subFolders + "RendererUtils.js";
-
-    head.appendChild(js);
-
-    var js = document.createElement("script");
-    js.type = "text/javascript";
-    js.src = scriptFolder + subFolders + "RenderMaterial.js";
-
-    head.appendChild(js);
-
-    var js = document.createElement("script");
-    js.type = "text/javascript";
-    js.src = scriptFolder + subFolders + "RenderMesh.js";
-
-    head.appendChild(js);
-
-    var js = document.createElement("script");
-    js.type = "text/javascript";
-    js.src = scriptFolder + subFolders + "RenderModel.js";
-
-    head.appendChild(js);
-
-    var js = document.createElement("script");
-    js.type = "text/javascript";
-    js.src = scriptFolder + subFolders + "RenderTypes.js";
-
-    head.appendChild(js);
-	
-    var js = document.createElement("script");
-    js.type = "text/javascript";
-    js.src = scriptFolder + subFolders + "math/Vector2.js";
-
-    head.appendChild(js);
-
-    var js = document.createElement("script");
-    js.type = "text/javascript";
-    js.src = scriptFolder + subFolders + "math/Vector3.js";
-
-    head.appendChild(js);
-
-    var js = document.createElement("script");
-    js.type = "text/javascript";
-    js.src = scriptFolder + subFolders + "glMatrix.js";
-
-    head.appendChild(js);
-
-    window.onload = SparkPreviewerMain;
+if (JRV.isMobile.any() && JRV.supportTouch()) {
+    JRV.include("core/input/MobileInputManager.js");
+} else {
+    if (JRV.supportMouse()) {
+        JRV.include("core/input/PcInputManager.js");
+    } else if(JRV.supportTouch()) {
+        JRV.include("core/input/MobileInputManager.js");
+    }
 }
 
-function Application(canvas) {
+JRV.include("core/Camera.js");
+JRV.include("core/utils/ShapeGenerator.js");
+
+function Application(canvas, debugCanvas) {
 	var mCanvas = canvas;
-    var renderer;
+	var renderer;
+	var debugRenderer;
+
+	var inputManager;
 
     var backgroundColor;
     var renderModel;
 
     var litShaderProgram;
     var normalShaderProgram;
-    var diffuseShaderProgram;
-    var fullShaderProgram;
-	
-	var mProjectionMatrix;
+    var lightShaderProgram;
+    	
 	var mModelViewMatrix;
-	var mCameraView;
-	
-	var running;
+	var mArcballCamera;
 
-	var phi = 90 * Math.PI / 180;
-	var theta = 0 * Math.PI / 180;
-	var radius = 10;
+	var running;	
+	var mFps;
+	var mFrameTime;
+	var load = false;
 
-	var mouseDown = false;
-	var oldMouseX;
-	var oldMouseY;
+	var texture;
 
-	var LIT_VERTEX_SHADER_SOURCE =
-        "attribute vec3 position;" 								                     +
-		//"attribute vec3 color;" 								                     +
-        //"attribute vec2 uv;" 									                     +
-		"uniform mat4 modelViewProjectionMatrix;" 				                     +
-       "varying vec3 outColor;"									                     +
-        "void main(void) {" 									                     +
-       "    outColor = position;"      								                 +
-		"   vec4 pos = modelViewProjectionMatrix * vec4(position, 1.0);"             +
-        "   gl_Position = pos;"       	                                             +
-        "}"                                                 	                     ;
-	
-    var LIT_FRAGMENT_SHADER_SOURCE                          	                     =
-        "precision highp float;" 								                     +
-       "varying vec3 outColor;"                                                       +
-        ""                                                                           +
-        "void main(void) {"                                 	                     +
-        "   gl_FragColor = vec4(outColor, 1);" 	                                     +
-        "}"                                                 	                     ;
+	this.init = function () {
+        console.log("mobile: " + JRV.isMobile.any());
 
-    this.init = function () {
         renderer = new Renderer();
         renderer.initWebGL(mCanvas);
-        
+
+        debugRenderer = debugCanvas.getContext("2d");
+
+        debugRenderer.fillStyle = "white";
+        debugRenderer.font = "11px Lucida Console";        
+                
+        mArcballCamera = new ArcballCamera();
+        mArcballCamera.setViewport(45, mCanvas.clientWidth / mCanvas.clientHeight);
+
         initBackground();
         initShaderPrograms();
         initDefaultModel();
@@ -155,10 +93,17 @@ function Application(canvas) {
         renderer.program = litShaderProgram;		
         renderer.init();
 
-        window.addEventListener('resize', onResizeEvent, false);
-        mCanvas.addEventListener('mousedown', handleMouseDown, false);
-        mCanvas.addEventListener('mouseup', handleMouseUp, false);
-        mCanvas.addEventListener('mousemove', handleMouseMove, false);
+        if (JRV.isMobile.any() && JRV.supportTouch()) {
+            inputManager = new MobileInputManager(mCanvas);
+        } else {
+            if (JRV.supportMouse()) {
+                inputManager = new PcInputManager(mCanvas);
+            } else if(supportTouch()){
+                inputManager = new MobileInputManager(mCanvas);
+            }
+        }
+
+        inputManager.init();
     };
 
     this.run = function () {
@@ -172,181 +117,176 @@ function Application(canvas) {
 	
 	var initMatrices = function () {
 	    mModelViewMatrix = Matrix4.create();
-	    mProjectionMatrix = Matrix4.create();
-	    mCameraView = Matrix4.create();
-		
-	    Matrix4.perspective(45, mCanvas.clientWidth / mCanvas.clientHeight, 0.1, 100, mProjectionMatrix);
-
-	    eyeX = radius * Math.sin(theta) * Math.sin(phi);
-	    eyeY = radius * Math.cos(phi);
-	    eyeZ = radius * Math.cos(theta) * Math.sin(phi);
-
-	    Matrix4.lookAt([eyeX, eyeY, eyeZ], [0, 0, 0], [0, 1, 0], mCameraView);
 	};
 
 	var initBackground = function() {
-		backgroundColor = Vector3.create(0.0, 0.0, 0.0);
+		backgroundColor = Vector3.create(1.0, 1.0, 1.0);
 	};
 	
 	var initShaderPrograms = function () {
-		litShaderProgram = initShaderFromString(LIT_VERTEX_SHADER_SOURCE, LIT_FRAGMENT_SHADER_SOURCE, renderer.getGfx());		
+	    initShaderFromFile("src/glsl/global.vertex", "src/glsl/diffuse_lit.fragment", renderer.getGfx(), function (result) {
+	        litShaderProgram = result;
+	    });
+
+	    initShaderFromFile("src/glsl/global.vertex", "src/glsl/normals.fragment", renderer.getGfx(), function (result) {
+	        normalShaderProgram = result;
+	    });
 	};
 	
 	var initDefaultModel = function() {
+	    renderModel = new RenderModel();
+	    renderModel.loadFromObj("Edward_Kenway/Edward_Kenway.obj", renderer.getGfx(), function () {
+	    //renderModel.loadFromObj("modello_prova/Lara_croft.obj", renderer.getGfx(), function () {
+	        var vbo = renderer.getGfx().createBuffer();
 
-	   var vertices = [
-		-1.0, -1.0, -1.0, // 0
-		 1.0, 1.0, -1.0, // 2
-		 1.0, -1.0, -1.0, // 1
-		-1.0, -1.0, -1.0, // 0
-		-1.0, 1.0, -1.0, // 3
-		 1.0, 1.0, -1.0, // 2
+	        renderer.getGfx().bindBuffer(renderer.getGfx().ARRAY_BUFFER, vbo);
+	        renderer.getGfx().bufferData(renderer.getGfx().ARRAY_BUFFER, new Float32Array(renderModel.getRenderMesh().getVerticesSet()), renderer.getGfx().STATIC_DRAW);
 
-		// Y-
-		-1.0, -1.0, -1.0, // 0
-		 1.0, -1.0, -1.0, // 1
-		 1.0, -1.0, 1.0, // 5
-		-1.0, -1.0, -1.0, // 0
-		 1.0, -1.0, 1.0, // 5
-		-1.0, -1.0, 1.0, // 4
-
-		// X+
-		 1.0, -1.0, -1.0, // 1
-		 1.0, 1.0, -1.0, // 2
-		 1.0, 1.0, 1.0, // 6
-		 1.0, -1.0, -1.0, // 1
-		 1.0, 1.0, 1.0, // 6
-		 1.0, -1.0, 1.0, // 5
-
-		// Y+
-		 1.0, 1.0, -1.0, // 2
-		-1.0, 1.0, 1.0, // 7
-		 1.0, 1.0, 1.0, // 6
-		 1.0, 1.0, -1.0, // 2
-		-1.0, 1.0, -1.0, // 3
-		-1.0, 1.0, 1.0, // 7
-
-		// X-
-		-1.0, 1.0, -1.0, // 3
-		-1.0, -1.0, 1.0, // 4
-		-1.0, 1.0, 1.0, // 7
-		-1.0, 1.0, -1.0, // 3
-		-1.0, -1.0, -1.0, // 0
-		-1.0, -1.0, 1.0, // 4
-
-		// Z+		 
-		-1.0, -1.0, 1.0, // 4
-		 1.0, -1.0, 1.0, // 5
-		 1.0, 1.0, 1.0, // 6
-		-1.0, -1.0, 1.0, // 4
-		 1.0, 1.0, 1.0, // 6
-		-1.0, 1.0, 1.0, // 7
-	   ];
-		
-		var renderMesh = new RenderMesh();
-        var vbo = renderer.getGfx().createBuffer();
-
-        renderer.getGfx().bindBuffer(renderer.getGfx().ARRAY_BUFFER, vbo);
-        renderer.getGfx().bufferData(renderer.getGfx().ARRAY_BUFFER, new Float32Array(vertices), renderer.getGfx().STATIC_DRAW);
-
-        renderMesh.setVertexBufferHandle(vbo);
-        renderMesh.setVerticesSet(vertices);        
-
-        var renderMaterial = new RenderMaterial();
-        var renderMaterialTexture = loadTextureFromUrl("img/img.png", renderer.getGfx());
-        renderMaterial.setDiffuseTextureHandle(renderMaterialTexture);
-
-        var materialColor = Vector3.create(0.0, 1.0, 0.0);
-        renderMaterial.setDiffuseColor(materialColor);
-
-        renderModel = new RenderModel();
-        renderModel.setRenderMesh(renderMesh);
-        renderModel.addRenderMaterial(renderMaterial);			
+	        renderModel.getRenderMesh().setVertexBufferHandle(vbo);
+	        load = true;
+	    });
 	};
 	
-	var rotation = 1;
+	lastLoop = new Date();
 
 	var runLoop = function () {
-	
-	    var mvp = Matrix4.create();
+	    var thisLoop = new Date;
 
-	    var eyeX, eyeY, eyeZ;
+	    mFrameTime = thisLoop - lastLoop;
+	    mFps = Math.round(1000 / mFrameTime);
 
-	    eyeX = radius * Math.sin(theta) * Math.sin(phi) + 0;
-	    eyeY = radius * Math.cos(phi);
-	    eyeZ = radius * Math.cos(theta) * Math.sin(phi) + 0;
+	    updateInput();
+	    updateRendering();
 
-	    Matrix4.lookAt([eyeX, eyeY, eyeZ], [0, 0, 0], [0, 1, 0], mCameraView);
+        debugRenderer.clearRect(0, 0, 300, 70);
+        debugRenderer.fillText("Fps: " + mFps, 10, 10);
+        debugRenderer.fillText("Frame Time: " + mFrameTime, 10, 30);
 
-	    Matrix4.multiply(mProjectionMatrix, mCameraView, mvp);        
-	    Matrix4.multiply(mvp, mModelViewMatrix, mvp);
-				
-        var drawCall = new DrawCall();
-        drawCall.vbo = renderModel.getRenderMesh().getVertexBufferHandle();
-        drawCall.shaderProgram = litShaderProgram;
-        drawCall.verticesNumber = 36;
-
-		drawCall.matrixMVP = mvp;
-		drawCall.mvpLocation = renderer.getGfx().getUniformLocation(litShaderProgram, "modelViewProjectionMatrix");
-        
-		drawCall.textureHandle = renderModel.getRenderMaterial(0).getDiffsueTextureHandle;
-
-        renderer.render(0, drawCall);
-		
-		if(running) {
-			window.requestAnimationFrame(runLoop);
-		}
-	};
-
-	var onResizeEvent = function () {
-	    console.log("onResize");
-	    Matrix4.perspective(45, mCanvas.clientWidth / mCanvas.clientHeight, 0.1, 100, mProjectionMatrix);
-	};
-
-	var handleMouseDown = function () {
-	    mouseDown = true;
-	};
-
-	var handleMouseUp = function () {
-	    mouseDown = false;
-	};
-
-	var handleMouseMove = function (e) {
-	    if (mouseDown) {	        
-	        
-	        if ((oldMouseY - e.clientY) > 0) {
-	            if ((phi * 180 / Math.PI) < 170) {
-	                console.log("positive: " + (oldMouseY - e.clientY) + "angle: " + (phi * 180 / Math.PI));
-	                phi += (oldMouseY - e.clientY) * 0.05;	               	                
-	            }
-	        } else if((oldMouseY - e.clientY) < 0){ 
-	            if ((phi * 180 / Math.PI) > 10) {
-	                console.log("negative: " + (oldMouseY - e.clientY) + "angle: " + (phi * 180 / Math.PI));
-	                phi += (oldMouseY - e.clientY) * 0.05;
-	                
-	            }
-	        }
-
-	        theta += (oldMouseX - e.clientX) * 0.05;
-	        console.log((oldMouseX - e.clientX) * 180 / Math.PI ) 
-
+        if (load == false) {
+            debugRenderer.fillText("Loading", 10, 50);
         }
+	
+	    if (running) {
+			window.requestAnimationFrame(runLoop);
+		} else {
+		    return;
+		}
 
-	    oldMouseX = e.clientX;
-	    oldMouseY = e.clientY;
+		lastLoop = thisLoop;
 	};
 
-    return this;
+	window.onresize = function () {
+	    console.log("Resizing");
+	    mArcballCamera.setViewport(45, mCanvas.clientWidth / mCanvas.clientHeight);
+   	};
+
+	var updateRendering = function() 
+	{
+	    var mvp = Matrix4.create();
+	    var camMatrices = mArcballCamera.updateMatrices();
+
+	    Matrix4.multiply(camMatrices[0], camMatrices[1], mvp);
+	    Matrix4.multiply(mvp, mModelViewMatrix, mvp);
+
+	    if (load && litShaderProgram) {
+	            renderer.startFrame(litShaderProgram);	
+	            renderer.getGfx().depthFunc(renderer.getGfx().LESS);
+
+	            for (var i = 0; i < renderModel.getOpaqueMaterials().length; i++) {
+
+	                var drawCall = new DrawCall();
+	                drawCall.vbo = renderModel.getRenderMesh().getVertexBufferHandle();
+	                drawCall.shaderProgram = litShaderProgram;
+
+	                drawCall.verticesNumber = (renderModel.getOpaqueMaterials()[i].getEndIndex()) * 3;
+	                drawCall.verticesStart = (renderModel.getOpaqueMaterials()[i].getStartIndex()) * 3;
+	                drawCall.matrixMVP = mvp;
+
+	                drawCall.mvpLocation = renderer.getGfx().getUniformLocation(litShaderProgram, "modelViewProjectionMatrix");
+	                drawCall.textureHandle = renderModel.getOpaqueMaterials()[i].getDiffuseTextureHandle();
+	                drawCall.textureLocation = renderer.getGfx().getUniformLocation(litShaderProgram, "sampler");
+	                drawCall.alphaLocation = renderer.getGfx().getUniformLocation(litShaderProgram, "alpha");
+	                
+	                drawCall.opacity = renderModel.getOpaqueMaterials()[i].getOpacity();
+
+	                renderer.render(0, drawCall);
+	            }
+
+	            //renderer.getGfx().enable(renderer.getGfx().BLEND);
+	            //renderer.getGfx().blendFuncSeparate(renderer.getGfx().SRC_ALPHA, renderer.getGfx().ONE_MINUS_SRC_ALPHA, renderer.getGfx().ONE, renderer.getGfx().ONE_MINUS_SRC_ALPHA)
+
+                for (var i = 0; i < renderModel.getTransparentMaterials().length; i++) {
+	                var drawCall = new DrawCall();
+	                drawCall.vbo = renderModel.getRenderMesh().getVertexBufferHandle();
+	                drawCall.shaderProgram = litShaderProgram;
+
+	                drawCall.verticesNumber = renderModel.getTransparentMaterials()[i].getEndIndex() * 3;
+	                drawCall.verticesStart = renderModel.getTransparentMaterials()[i].getStartIndex() * 3;
+	                drawCall.matrixMVP = mvp;
+
+	                drawCall.mvpLocation = renderer.getGfx().getUniformLocation(litShaderProgram, "modelViewProjectionMatrix");
+	                drawCall.textureHandle = renderModel.getTransparentMaterials()[i].getDiffuseTextureHandle();
+	                drawCall.textureLocation = renderer.getGfx().getUniformLocation(litShaderProgram, "sampler");
+	                drawCall.alphaLocation = renderer.getGfx().getUniformLocation(litShaderProgram, "alpha");
+
+	                drawCall.opacity = renderModel.getTransparentMaterials()[i].getOpacity();
+	               
+	                renderer.render(0, drawCall);
+	            }
+
+	            renderer.endFrame();
+	            renderer.getGfx().disable(renderer.getGfx().BLEND);
+
+            }
+
+	    }
+
+	var updateInput = function()
+	{
+	    if (inputManager.isLeftMouseDown()) {
+	        var verticalDelta = inputManager.getMouseVerticalDelta();
+	        var horizontalDelta = inputManager.getMouseHorizontalDelta();
+
+            mArcballCamera.rotateY(verticalDelta * 0.02);
+            mArcballCamera.rotateX(horizontalDelta * 0.02);
+	    } else if (inputManager.isRightMouseDown()) {
+	        var horizontalDelta = inputManager.getMouseHorizontalDelta();
+	        var verticalDelta = inputManager.getMouseVerticalDelta();
+
+	        mArcballCamera.translateX(horizontalDelta * 0.05);
+	        mArcballCamera.translateY(-verticalDelta * 0.05);
+	    }
+
+	    if (inputManager.getWheelDelta() != 0) {	        
+	        mArcballCamera.moveRadius(-inputManager.getWheelDelta());
+	    }
+
+	    inputManager.postUpdate();
+	}
+
+	return this;
 }
 
 var APPLICATION;
 
 function SparkPreviewerMain() {
 
-    APPLICATION = new Application(document.getElementById("sparkViewer"));
-    APPLICATION.init();
-    APPLICATION.run();
+    window.onload = function () {
+        var debugCanvas = document.getElementById("sparkViewer").cloneNode();
+
+        debugCanvas.id = "sparkDebugger";
+        debugCanvas.style.zIndex = "100";
+        debugCanvas.style.position = "absolute";
+        debugCanvas.style.left = "0";
+        debugCanvas.style.top = "0";
+        debugCanvas.style.pointerEvents = "none";
+
+        document.body.appendChild(debugCanvas);
+
+        APPLICATION = new Application(document.getElementById("sparkViewer"), debugCanvas);
+        APPLICATION.init();
+        APPLICATION.run();
+    }
 
     return 0;
 }
-

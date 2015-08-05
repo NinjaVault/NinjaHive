@@ -4,6 +4,7 @@
 @*TODO: make a pretty page using Twitter Bootstrap, see: http://getbootstrap.com/*@
 @section JavaScript
 {
+    <script type="text/javascript" src="~/Scripts/externals/core/utils/JRV/JRV.js"></script>
     <script type="text/javascript" src="../../Scripts/externals/SparkPreviewer.js"></script>
 }
 
@@ -23,12 +24,12 @@
             @Html.ActionLink("Open Bufs/Debufs Editor", "Index", Model, new { @class = "btn btn-default", style = "width: 100%; margin-bottom: 10px;" })
         </div>
         <div class="panel-default col-lg-6" style="padding: 0; padding-left: 5px; padding-right: 5px;">
-            <div class="panel panel-heading" style="margin: 0; padding: 0; left: 0; margin-top: 10px; margin-bottom: 10px; min-height: 580px; max-height: 100%;">
+            <div class="panel panel-heading" style="margin: 0; padding: 0; left: 0; margin-top: 10px; margin-bottom: 10px; min-height: 600px; max-height: 100%;">
                 <div class="panel-heading panel-title" style="background: rgb(53, 106, 181); color:white; text-indent: 10px;">
                     General Informations
                 </div>
 
-                <table class="table table-bordered text-right text-uppercase" style="bottom: 0; margin:0; padding:0; min-height: 220px; height: 540px; position: relative;">
+                <table class="table table-bordered text-right text-uppercase" style="bottom: 0; margin:0; padding:0; min-height: 220px; height: 755px; position: relative;">
                     <tr>
                         <td style="vertical-align: middle; font-weight:bold;"> Name </td>
                         <td> @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @style = "max-width: 100%;" })</td>
@@ -180,25 +181,64 @@
                     <tr>
                         <td style="vertical-align: middle; font-weight:bold;"> Value (worth) </td>
                         <td>
-                            @Html.TextBox("temp", "", new { @type = "number", @style = "width:100%px; max-width: 70%; float:left;", @class = "form-control" })
-                            <span style="float: left; margin-left: 5px; margin-right: 5px; padding-top: 15px; position:relative;">
-                                .
-                            </span>
-                            @* want much more of this crazy money but these days we could need a limit *@
-                            @Html.TextBox("temp", "", new { @type = "number", @style = "width:100%; max-width: 26%; float.right;", @class = "form-control" })
+                            @Html.TextBox("temp", "", new { @type = "number", @step = "any", @class = "form-control", @style = "max-width: 100%;" })
                         </td>
                     </tr>
                 </table>
             </div>
 
         </div>
-        <div class="panel-default col-lg-4" style="margin-top: 10px; margin-bottom: 10px; padding: 0; padding-left: 5px; padding-right: 5px; height: 100%;">
-            <div style="padding-bottom: 10px;">
-                <canvas id="sparkViewer" width="800" height="600" style="max-width:100%; display:table-column;">
-                    You have to update your broswer to use the SparkViewer viewer
-                </canvas>
-            </div>
-            <canvas width="800" , height="600" style="width: 100%; min-height: 297px; height: 100%; padding: 0; margin: 0; background-image: url(../../Content/Images/default_image.png); background-size: cover;"></canvas>
+    <div class="panel-default col-lg-4" style="margin-top: 10px; margin-bottom: 10px; padding: 0; padding-left: 5px; padding-right: 5px; height: 100%;">
+        <div style="padding-bottom: 10px;">
+            <canvas id="sparkViewer" width="800" height="600" style="max-width:100%; display:table-column;">
+                You have to update your broswer to use the SparkViewer viewer
+            </canvas>
         </div>
-    }
-</div>
+        <div class="panel-default" style="padding: 0; padding-left: 0; padding-right: 0;">
+            <div class="panel panel-heading" style="margin: 0; padding: 0; left: 0; margin-top: 10px; margin-bottom: 10px; min-height: 430px; max-height: 100%;">
+                <div class="panel-heading panel-title" style="background: rgb(53, 106, 181); color:white; text-indent: 10px;">
+                    Stat Informations
+                </div>
+                <table class="table table-bordered text-right text-uppercase" style="bottom: 0; margin:0; padding:0; min-height: 220px; height: 415px; position: relative;">
+                    <tr>
+                        <td style="width: 30%; font-weight: bold; vertical-align: middle;"> Health </td>
+                        <td style="vertical-align: middle;">@Html.TextBox("temp", "", new { @type = "number", @class = "form-control", @style = "max-width: 100%;" })</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 30%; font-weight: bold; vertical-align: middle;"> Magic </td>
+                        <td style="vertical-align: middle;">@Html.TextBox("temp", "", new { @type = "number", @class = "form-control", @style = "max-width: 100%;" })</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 30%; font-weight: bold; vertical-align: middle;"> Attack </td>
+                        <td style="vertical-align: middle;">@Html.TextBox("temp", "", new { @type = "number", @class = "form-control", @style = "max-width: 100%;" })</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 30%; font-weight: bold; vertical-align: middle;"> Defense </td>
+                        <td style="vertical-align: middle;">@Html.TextBox("temp", "", new { @type = "number", @class = "form-control", @style = "max-width: 100%;" })</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 30%; font-weight: bold; vertical-align: middle;"> Agility </td>
+                        <td style="vertical-align: middle;">@Html.TextBox("temp", "", new { @type = "number", @class = "form-control", @style = "max-width: 100%;" })</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 30%; font-weight: bold; vertical-align: middle;"> Intelligence </td>
+                        <td style="vertical-align: middle;">@Html.TextBox("temp", "", new { @type = "number", @class = "form-control", @style = "max-width: 100%;" })</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 30%; font-weight: bold; vertical-align: middle;"> Hunger </td>
+                        <td style="vertical-align: middle;">@Html.TextBox("temp", "", new { @type = "number", @class = "form-control", @style = "max-width: 100%;" })</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 30%; font-weight: bold; vertical-align: middle;"> Stamina </td>
+                        <td style="vertical-align: middle;">@Html.TextBox("temp", "", new { @type = "number", @class = "form-control", @style = "max-width: 100%;" })</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 30%; font-weight: bold; vertical-align: middle;"> Resistance </td>
+                        <td style="vertical-align: middle;">@Html.TextBox("temp", "", new { @type = "number", @step = "any", @class = "form-control", @style = "max-width: 100%;" })</td>
+                    </tr>
+                </table>            
+            </div>
+            </div>
+        </div>
+        }
+    </div>

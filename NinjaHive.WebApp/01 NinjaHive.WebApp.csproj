@@ -235,7 +235,8 @@
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Scripts\externals\core\Camera.js" />
-    <Content Include="Scripts\externals\core\glMatrix.js" />
+    <Content Include="Scripts\externals\core\input\MobileInputManager.js" />
+    <Content Include="Scripts\externals\core\input\PcInputManager.js" />
     <Content Include="Scripts\externals\core\math\Matrix4.js" />
     <Content Include="Scripts\externals\core\math\Vector2.js" />
     <Content Include="Scripts\externals\core\math\Vector3.js" />
@@ -245,7 +246,8 @@
     <Content Include="Scripts\externals\core\RenderMesh.js" />
     <Content Include="Scripts\externals\core\RenderModel.js" />
     <Content Include="Scripts\externals\core\RenderTypes.js" />
-    <Content Include="Scripts\externals\core\utils\JRVs\JRVs.js" />
+    <Content Include="Scripts\externals\core\utils\JRV\JRV.js" />
+    <Content Include="Scripts\externals\core\utils\ObjLoader.js" />
     <Content Include="Scripts\externals\core\utils\ShapeGenerator.js" />
     <Content Include="Scripts\externals\SparkPreviewer.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
@@ -265,6 +267,18 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Views\Item\Create.cshtml" />
+    <Content Include="Views\Item\Edward_Kenway\Edward_Kenway_Arms_D.png" />
+    <Content Include="Views\Item\Edward_Kenway\Edward_Kenway_Clothes1_D.png" />
+    <Content Include="Views\Item\Edward_Kenway\Edward_Kenway_Clothes2_D.png" />
+    <Content Include="Views\Item\Edward_Kenway\Edward_Kenway_Clothes3_D.png" />
+    <Content Include="Views\Item\Edward_Kenway\Edward_Kenway_Dagger1_D.png" />
+    <Content Include="Views\Item\Edward_Kenway\Edward_Kenway_Dagger2_D.png" />
+    <Content Include="Views\Item\Edward_Kenway\Edward_Kenway_Eye_D.png" />
+    <Content Include="Views\Item\Edward_Kenway\Edward_Kenway_Eye_Reflection_D.png" />
+    <Content Include="Views\Item\Edward_Kenway\Edward_Kenway_Hair_D.png" />
+    <Content Include="Views\Item\Edward_Kenway\Edward_Kenway_Head_D.png" />
+    <Content Include="Views\Item\Edward_Kenway\Edward_Kenway_Mouth_D.png" />
+    <Content Include="Views\Item\Edward_Kenway\Edward_Kenway_Necklace_D.png" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -289,6 +303,12 @@
     <Content Include="Views\Item\Edit.cshtml" />
     <Content Include="Views\Skills\Index.cshtml" />
     <Content Include="Views\Skills\Create.cshtml" />
+    <Content Include="Views\Item\Edward_Kenway\Edward_Kenway.mtl" />
+    <Content Include="Views\Item\Edward_Kenway\Edward_Kenway.obj" />
+    <Content Include="Views\Item\Edward_Kenway\Thumbs.db" />
+    <Content Include="Views\Item\src\glsl\diffuse_lit.fragment" />
+    <Content Include="Views\Item\src\glsl\global.vertex" />
+    <Content Include="Views\Item\src\glsl\normals.fragment" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
