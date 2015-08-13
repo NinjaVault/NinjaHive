@@ -1,0 +1,257 @@
+﻿@using NinjaHive.Contract.DTOs
+@model EquipmentItem
+
+@*TODO: make a pretty page using Twitter Bootstrap, see: http://getbootstrap.com/*@
+@section JavaScript
+{
+    <script type="text/javascript" src="~/Scripts/externals/core/utils/JRV/JRV.js"></script>
+    <script type="text/javascript" src="../../Scripts/externals/SparkPreviewer.js"></script>
+}
+
+
+<div class="">
+    @using (Html.BeginForm())
+    {
+        <header class="modal-header">
+            <h2 class="text-primary " style="font-size: 24px; font-weight:bold; margin-bottom: 0px; vertical-align:bottom; position:relative;">Details: </h2>
+            <div style="position:relative; margin-top: 10px;"><input type="submit" value="Add Item" class="btn btn-default" /></div>
+        </header>
+
+        <div id="verticalMenu" class="panel-default col-lg-2" style="margin-top: 10px; padding: 0; padding-left: 5px; padding-right: 5px; ">
+            @Html.ActionLink("Make Craftable", "Index", Model, new { @class = "btn btn-default", style = "width: 100%; margin-bottom: 10px;" })
+            @Html.ActionLink("Make Enhancable", "Index", Model, new { @class = "btn btn-default", style = "width: 100%; margin-bottom: 10px;" })
+            @Html.ActionLink("Make Upgradable", "Index", Model, new { @class = "btn btn-default", style = "width: 100%; margin-bottom: 10px;" })
+            @Html.ActionLink("Open Bufs/Debufs Editor", "Index", Model, new { @class = "btn btn-default", style = "width: 100%; margin-bottom: 10px;" })
+        </div>
+        <div class="panel-default col-lg-6" style="padding: 0; padding-left: 5px; padding-right: 5px;">
+            <div class="panel panel-heading" style="margin: 0; padding: 0; left: 0; margin-top: 10px; margin-bottom: 10px; min-height: 600px; max-height: 100%;">
+                <div class="panel-heading panel-title" style="background: rgb(53, 106, 181); color:white; text-indent: 10px;">
+                    General Informations
+                </div>
+
+                <table class="table table-bordered text-right text-uppercase" style="bottom: 0; margin:0; padding:0; min-height: 220px; height: 755px; position: relative;">
+                    <tr>
+                        <td style="vertical-align: middle; font-weight:bold;"> Name </td>
+                        <td> @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @style = "max-width: 100%;" })</td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle;  font-weight:bold;"> Category </td>
+                        <td>
+                            @{
+        var items = new List<SelectListItem>
+                            {
+                                new SelectListItem
+                                {
+                                    Text = "Weapon",
+                                    Value= "Weapon",
+                                    Selected= true,
+                                },
+
+                                    new SelectListItem
+                                {
+                                    Text = "Headgear",
+                                    Value= "Head",
+                                    Selected= false,
+                                },
+
+                                    new SelectListItem
+                                {
+                                    Text = "Necklace/pendant",
+                                    Value= "neck",
+                                    Selected= false,
+                                },
+
+                                    new SelectListItem
+                                {
+                                    Text = "Body/Chestpiece",
+                                    Value= "Body",
+                                    Selected= false,
+                                },
+
+                                    new SelectListItem
+                                {
+                                    Text = "Hair Accessories",
+                                    Value= "Hair",
+                                    Selected= false,
+                                },
+
+                                    new SelectListItem
+                                {
+                                    Text = "Hand",
+                                    Value= "Hand",
+                                    Selected= false,
+                                },
+
+                                    new SelectListItem
+                                {
+                                    Text = "Shoes/Boots",
+                                    Value= "feet",
+                                    Selected= false,
+                                },
+
+                                    new SelectListItem
+                                {
+                                    Text = "Shoes/Boots",
+                                    Value= "feet",
+                                    Selected= false,
+                                },
+                            };
+                            }
+
+                            @Html.DropDownListFor(m => m.Category, items, new { @class = "form-control", @style = "max-width: 100%;" })
+                        </td>
+                    </tr>
+                    <tr style="height: 400px;">
+                        <td><span style="top: 7px; position:relative; font-weight:bold;"> Description </span></td>
+                        <td> @Html.TextAreaFor(m => m.Description, new { @class = "form-control", @style = "max-width: 100%; resize:none; min-height: 110px; text-align: justify; text-justify: auto; height: 100%; bottom: 0;" }) </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle; font-weight:bold;"> Type </td>
+                        <td>
+                            @{
+        var types = new List<SelectListItem>
+                                {
+                                    new SelectListItem
+                                    {
+                                        Value = "TypeEquipment",
+                                        Text  = "Equipment",
+                                        Selected= true,
+                                    },
+
+                                        new SelectListItem
+                                    {
+                                        Value = "TypeItem",
+                                        Text  = "Item",
+                                        Selected= false,
+                                    },
+                                };
+                            }
+                            @Html.DropDownList("temp", types, new { @class = "form-control", @style = "max-width: 100%;" })
+                        </td>
+                    </tr>
+                    @*
+                        <tr>
+
+                            <td style="vertical-align: middle; font-weight:bold;"> Improvements </td>
+                            <td style="display: flex; justify-content: space-between; margin-left: 10px; margin-right: 10px; border: none;">
+                                @Html.CheckBox("temp", false)
+                                @Html.CheckBox("temp", false)
+                                @Html.CheckBox("temp", false)
+                                @Html.CheckBox("temp", false)
+                                @Html.CheckBox("temp", false)
+                            </td>
+                        </tr>
+                    *@
+                    <tr>
+                        <td style="vertical-align: middle; font-weight:bold;"> Duration </td>
+                        <td>
+                            @{
+        var periods = new List<SelectListItem> {
+                                        new SelectListItem
+                                        {
+                                            Value = "periodDay",
+                                            Text  = "Day",
+                                            Selected= true,
+                                        },
+
+                                        new SelectListItem
+                                        {
+                                            Value = "periodMonth",
+                                            Text  = "Month",
+                                            Selected= false,
+                                        },
+
+                                        new SelectListItem
+                                        {
+                                            Value = "periodYear",
+                                            Text  = "Year",
+                                            Selected= false,
+                                        }
+                                    };
+                            }
+
+                            @Html.DropDownList("temp", periods, new { @class = "form-control", @style = "width: 80%; max-width: 100%; float:left;" })
+                            @Html.TextBox("temp", "", new { @type = "number", @style = "width:19%; float:right;", @class = "form-control" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle; font-weight:bold;"> Size (required slots) </td>
+                        <td>@Html.TextBox("temp", "", new { @type = "number", @style = "width:100%px; max-width: 100%;", @class = "form-control" })</td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle; font-weight:bold;"> Value (worth) </td>
+                        <td>
+                            @Html.TextBox("temp", "", new { @type = "number", @step = "any", @class = "form-control", @style = "max-width: 100%;" })
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+        <div class="panel-default col-lg-4" style="margin-top: 10px; margin-bottom: 10px; padding: 0; padding-left: 5px; padding-right: 5px; height: 100%;">
+            <div style="padding-bottom: 10px;">
+                <canvas id="sparkViewer" width="800" height="600" style="max-width:100%; display:table-column;">
+                    You have to update your broswer to use the SparkViewer viewer
+                </canvas>
+            </div>
+            @*<div class="panel-default" style="padding: 0; padding-left: 0; padding-right: 0;">
+                    <div class="panel panel-heading" style="margin: 0; padding: 0; left: 0; margin-top: 10px; margin-bottom: 10px; min-height: 430px; max-height: 100%;">
+                        <div class="panel-heading panel-title" style="background: rgb(53, 106, 181); color:white; text-indent: 10px;">
+                            Stat Informations
+                        </div>
+                        <table class="table table-bordered text-right text-uppercase" style="bottom: 0; margin:0; padding:0; min-height: 220px; height: 415px; position: relative;">
+                            <tr>
+                                <td style="width: 30%; font-weight: bold; vertical-align: middle;"> Health </td>
+                                <td style="vertical-align: middle;">@Html.TextBox("temp", "", new { @type = "number", @class = "form-control", @style = "max-width: 100%;" })</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 30%; font-weight: bold; vertical-align: middle;"> Magic </td>
+                                <td style="vertical-align: middle;">@Html.TextBox("temp", "", new { @type = "number", @class = "form-control", @style = "max-width: 100%;" })</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 30%; font-weight: bold; vertical-align: middle;"> Attack </td>
+                                <td style="vertical-align: middle;">@Html.TextBox("temp", "", new { @type = "number", @class = "form-control", @style = "max-width: 100%;" })</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 30%; font-weight: bold; vertical-align: middle;"> Defense </td>
+                                <td style="vertical-align: middle;">@Html.TextBox("temp", "", new { @type = "number", @class = "form-control", @style = "max-width: 100%;" })</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 30%; font-weight: bold; vertical-align: middle;"> Agility </td>
+                                <td style="vertical-align: middle;">@Html.TextBox("temp", "", new { @type = "number", @class = "form-control", @style = "max-width: 100%;" })</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 30%; font-weight: bold; vertical-align: middle;"> Intelligence </td>
+                                <td style="vertical-align: middle;">@Html.TextBox("temp", "", new { @type = "number", @class = "form-control", @style = "max-width: 100%;" })</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 30%; font-weight: bold; vertical-align: middle;"> Hunger </td>
+                                <td style="vertical-align: middle;">@Html.TextBox("temp", "", new { @type = "number", @class = "form-control", @style = "max-width: 100%;" })</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 30%; font-weight: bold; vertical-align: middle;"> Stamina </td>
+                                <td style="vertical-align: middle;">@Html.TextBox("temp", "", new { @type = "number", @class = "form-control", @style = "max-width: 100%;" })</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 30%; font-weight: bold; vertical-align: middle;"> Resistance </td>
+                                <td style="vertical-align: middle;">@Html.TextBox("temp", "", new { @type = "number", @step = "any", @class = "form-control", @style = "max-width: 100%;" })</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>*@
+        </div>
+    }
+</div>
+
+@*<div class="row">
+    <div class="col-md-4">
+        <h2>Add an Item</h2>
+            <p>Create an EquipmentItem by giving the item a name and pressing the button to add it.</p>
+            @using (Html.BeginForm())
+            {
+                @Html.LabelFor(m => m.Name, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                <input type="submit" value="Add Item" class="btn btn-default" />
+            }
+    </div>
+</div>*@

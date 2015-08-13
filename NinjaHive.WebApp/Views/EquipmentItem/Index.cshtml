@@ -1,21 +1,21 @@
 ﻿@using NinjaHive.Contract.DTOs
 @using NinjaHive.WebApp.Controllers
 @using NinjaHive.WebApp.Services
-@model GameItem[]
+@model EquipmentItem[]
 
 <div class="row">
     <div class="col-md-12">
         <br />
         <p>
-            @Html.ActionLink("Create Item", "Create", null, new { @class = "btn btn-default" })
+            @Html.ActionLink("Create Equipment Item", "Create", null, new { @class = "btn btn-default" })
         </p>
         <hr />
         <h4>List of items in the database</h4>
     </div>
     @foreach (var item in Model)
     {
-        var itemId = item.ItemId;
-        var itemDetailsUrl = UrlProvider<ItemController>.GetUrl(c => c.Edit(itemId));
+        var itemId = item.Id;
+        var itemDetailsUrl = UrlProvider<EquipmentItemController>.GetUrl(c => c.Edit(itemId));
         
         <div class="col-md-2">
             <div class="thumbnail">
@@ -25,8 +25,8 @@
                 <div class="caption">
                     <p>@item.Name</p>
                     <p>
-                        @Html.ActionLink("Delete Item", "Delete", item)<br />
-                        @Html.ActionLink("Edit Item", "Edit", item)
+                        @Html.ActionLink("Delete Equipment Item", "Delete", item)<br />
+                        @Html.ActionLink("Edit Equipment Item", "Edit", item)
                     </p>
                 </div>
             </div>

@@ -11,7 +11,7 @@ namespace NinjaHive.WebApp
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            var defaultUri = UrlProvider<ItemController>.GetRouteValues(c => c.Index());
+            var defaultUri = UrlProvider<EquipmentItemController>.GetRouteValues(c => c.Index());
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
