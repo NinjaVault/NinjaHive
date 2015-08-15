@@ -22,6 +22,7 @@ namespace NinjaHive.BusinessLayer.CommandHandlers
                 Name = command.Skill.Name,
                 StatInfo = new StatInfoEntity { Id = Guid.NewGuid() }
             };
+
             this.db.SkillEntities.Add(skill);
         }
     }
