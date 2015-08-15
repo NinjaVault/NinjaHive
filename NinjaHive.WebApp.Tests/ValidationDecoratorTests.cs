@@ -90,6 +90,30 @@ namespace NinjaHive.WebApp.Tests
             Assert.IsTrue(exception is ValidationException);
         }
 
+        [TestMethod]
+        public void ValidateObject_OnPrimitiveType_ValidationThrowsError()
+        {
+            // Arrange
+            var validationCommandHandlerDecorator =
+                new ValidationCommandHandlerDecorator<IFakeCommandInterface>(new FakeDecoratee());
+            var mockupInvalidCommand = new MockupInvalidCommand { NotAnObject = 0 };
+            Exception exception = null;
+
+            // Act
+            try
+            {
+                validationCommandHandlerDecorator.Handle(mockupInvalidCommand);
+            }
+            catch (Exception ex)
+            {
+                exception = ex;
+            }
+
+            // Assert
+            Assert.IsNotNull(exception);
+            Assert.IsTrue(exception is ValidationException);
+        }
+
         #region Mockups
         private interface IFakeCommandInterface {}
         private class FakeDecoratee : ICommandHandler<IFakeCommandInterface>
@@ -107,6 +131,11 @@ namespace NinjaHive.WebApp.Tests
         {
             [Required]
             public string RequiredProperty { get; set; }
+        }
+        private class MockupInvalidCommand : IFakeCommandInterface
+        {
+            [ValidateObject]
+            public int NotAnObject { get; set; }
         }
         #endregion
     }
