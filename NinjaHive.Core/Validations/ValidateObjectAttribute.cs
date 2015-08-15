@@ -4,6 +4,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace NinjaHive.Core.Validations
 {
+    /// <summary>
+    /// This attribute will let a validator perform validation on the properties of the object.
+    /// </summary>
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Field | AttributeTargets.Property, AllowMultiple = false)]
     public class ValidateObjectAttribute : ValidationAttribute
     {
