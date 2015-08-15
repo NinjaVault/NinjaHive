@@ -50,10 +50,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommandHandlers\AddEquipmentItemCommandHandler.cs" />
     <Compile Include="CommandHandlers\AddSkillCommandHandler.cs" />
     <Compile Include="CrossCuttingConcerns\SaveChangesCommandHandlerDecorator.cs" />
     <Compile Include="CrossCuttingConcerns\ValidationCommandHandlerDecorator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QueryHandlers\GetAllEquipmentItemsQueryHandler.cs" />
     <Compile Include="QueryHandlers\GetAllSkillsQueryHandler.cs" />
   </ItemGroup>
   <ItemGroup>
