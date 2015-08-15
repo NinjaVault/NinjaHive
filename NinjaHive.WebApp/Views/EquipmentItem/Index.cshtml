@@ -25,8 +25,8 @@
                 <div class="caption">
                     <p>@item.Name</p>
                     <p>
-                        @Html.ActionLink("Delete Equipment Item", "Delete", item)<br />
-                        @Html.ActionLink("Edit Equipment Item", "Edit", item)
+                        @Html.ActionLink("Delete", "Delete", item)<br />
+                        <a href="@itemDetailsUrl">Edit</a>
                     </p>
                 </div>
             </div>

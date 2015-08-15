@@ -10,11 +10,11 @@
 
 
 <div class="">
-    @using (Html.BeginForm())
+    @using (Html.BeginForm("Index"))
     {
         <header class="modal-header">
             <h2 class="text-primary " style="font-size: 24px; font-weight:bold; margin-bottom: 0px; vertical-align:bottom; position:relative;">Details: </h2>
-            <div style="position:relative; margin-top: 10px;"><input type="submit" value="Add Item" class="btn btn-default" /></div>
+            <div style="position:relative; margin-top: 10px;"><input type="submit" value="Add Item" class="btn btn-default"/></div>
         </header>
 
         <div id="verticalMenu" class="panel-default col-lg-2" style="margin-top: 10px; padding: 0; padding-left: 5px; padding-right: 5px; ">
@@ -32,7 +32,7 @@
                 <table class="table table-bordered text-right text-uppercase" style="bottom: 0; margin:0; padding:0; min-height: 220px; height: 755px; position: relative;">
                     <tr>
                         <td style="vertical-align: middle; font-weight:bold;"> Name </td>
-                        <td> @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @style = "max-width: 100%;" })</td>
+                        <td> @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @style = "max-width: 100%;", @required = "required" })</td>
                     </tr>
                     <tr>
                         <td style="vertical-align: middle;  font-weight:bold;"> Category </td>
@@ -98,12 +98,12 @@
                             };
                             }
 
-                            @Html.DropDownListFor(m => m.Category, items, new { @class = "form-control", @style = "max-width: 100%;" })
+                            @Html.DropDownListFor(m => m.Category, items, new { @class = "form-control", @style = "max-width: 100%;", @required = "required" })
                         </td>
                     </tr>
                     <tr style="height: 400px;">
                         <td><span style="top: 7px; position:relative; font-weight:bold;"> Description </span></td>
-                        <td> @Html.TextAreaFor(m => m.Description, new { @class = "form-control", @style = "max-width: 100%; resize:none; min-height: 110px; text-align: justify; text-justify: auto; height: 100%; bottom: 0;" }) </td>
+                        <td> @Html.TextAreaFor(m => m.Description, new { @class = "form-control", @style = "max-width: 100%; resize:none; min-height: 110px; text-align: justify; text-justify: auto; height: 100%; bottom: 0;", @required = "required" }) </td>
                     </tr>
                     <tr>
                         <td style="vertical-align: middle; font-weight:bold;"> Type </td>
@@ -126,7 +126,7 @@
                                     },
                                 };
                             }
-                            @Html.DropDownList("temp", types, new { @class = "form-control", @style = "max-width: 100%;" })
+                            @Html.DropDownList("temp", types, new { @class = "form-control", @style = "max-width: 100%;", @required = "required" })
                         </td>
                     </tr>
                     @*
@@ -170,18 +170,18 @@
                                     };
                             }
 
-                            @Html.DropDownList("temp", periods, new { @class = "form-control", @style = "width: 80%; max-width: 100%; float:left;" })
-                            @Html.TextBox("temp", "", new { @type = "number", @style = "width:19%; float:right;", @class = "form-control" })
+                            @Html.DropDownList("temp", periods, new { @class = "form-control", @style = "width: 80%; max-width: 100%; float:left;", @required = "required" })
+                            @Html.TextBox("temp", "", new { @type = "number", @style = "width:19%; float:right;", @class = "form-control", @required = "required" })
                         </td>
                     </tr>
                     <tr>
                         <td style="vertical-align: middle; font-weight:bold;"> Size (required slots) </td>
-                        <td>@Html.TextBox("temp", "", new { @type = "number", @style = "width:100%px; max-width: 100%;", @class = "form-control" })</td>
+                        <td>@Html.TextBox("temp", "", new { @type = "number", @style = "width:100%px; max-width: 100%;", @class = "form-control", @required = "required" })</td>
                     </tr>
                     <tr>
                         <td style="vertical-align: middle; font-weight:bold;"> Value (worth) </td>
                         <td>
-                            @Html.TextBox("temp", "", new { @type = "number", @step = "any", @class = "form-control", @style = "max-width: 100%;" })
+                            @Html.TextBox("temp", "", new { @type = "number", @step = "any", @class = "form-control", @style = "max-width: 100%;", @required = "required" })
                         </td>
                     </tr>
                 </table>
