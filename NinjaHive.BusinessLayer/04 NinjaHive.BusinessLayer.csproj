@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="CommandHandlers\AddEquipmentItemCommandHandler.cs" />
     <Compile Include="CommandHandlers\AddSkillCommandHandler.cs" />
+    <Compile Include="CommandHandlers\GetEquipmentItemByIdCommandHandler.cs" />
     <Compile Include="CrossCuttingConcerns\SaveChangesCommandHandlerDecorator.cs" />
     <Compile Include="CrossCuttingConcerns\ValidationCommandHandlerDecorator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

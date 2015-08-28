@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="Commands\AddEquipmentItemCommand.cs" />
     <Compile Include="Commands\AddSkillCommand.cs" />
+    <Compile Include="Commands\GetEquipmentItemByIdCommand.cs" />
     <Compile Include="DTOs\EquipmentItem.cs" />
     <Compile Include="DTOs\GameItem.cs" />
     <Compile Include="DTOs\Skill.cs" />
