@@ -12,12 +12,14 @@ namespace NinjaHive.WebApp.Controllers
     {
         private readonly IQueryHandler<GetAllEquipmentItemsQuery, EquipmentItem[]> equipmentItemsQueryHandler;
         private readonly ICommandHandler<AddEquipmentItemCommand> addEquipmentItemCommandHandler;
+        private readonly IQueryHandler<GetEquipmentItemByIdQuery, EquipmentItem> getEquipmentItemByIdQueryHandler;
 
         // keep it while IQueryHandler implementation is finished
         private readonly EquipmentItem demoEquipmentItem;
 
         public EquipmentItemController(IQueryHandler<GetAllEquipmentItemsQuery, EquipmentItem[]> equipmentItemsQueryHandler,
-            ICommandHandler<AddEquipmentItemCommand> addEquipmentItemCommandHandler)
+                                       ICommandHandler<AddEquipmentItemCommand> addEquipmentItemCommandHandler,
+                                       IQueryHandler<GetEquipmentItemByIdQuery, EquipmentItem> getEquipmentItemByIdQueryHandler)
         {
             this.demoEquipmentItem = new EquipmentItem
             {
@@ -27,6 +29,7 @@ namespace NinjaHive.WebApp.Controllers
 
             this.addEquipmentItemCommandHandler = addEquipmentItemCommandHandler;
             this.equipmentItemsQueryHandler = equipmentItemsQueryHandler;
+            this.getEquipmentItemByIdQueryHandler = getEquipmentItemByIdQueryHandler;
         }
 
         public ActionResult Index()
@@ -42,8 +45,12 @@ namespace NinjaHive.WebApp.Controllers
         }
 
         public ActionResult Edit(Guid itemId)
-        {            
-            var item = this.demoEquipmentItem;           
+        {
+            var item = this.getEquipmentItemByIdQueryHandler.Handle(new GetEquipmentItemByIdQuery
+            {
+                EquipmentItemId = itemId
+            });
+        
             return View(item);
         }
 
