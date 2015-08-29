@@ -21,7 +21,7 @@ namespace NinjaHive.BusinessLayer.QueryHandlers
         {
             EquipmentItemEntity item = (EquipmentItemEntity)db.GameItemEntities.Find(query.EquipmentItemId);
 
-            return new EquipmentItem
+            var equip = new EquipmentItem
             {
                 Id = item.Id,
                 Name = item.Name,
@@ -34,6 +34,8 @@ namespace NinjaHive.BusinessLayer.QueryHandlers
                 Durability = item.Durability,
                 Value = item.Value,
             };
+
+            return equip;
         }
     }
 }
