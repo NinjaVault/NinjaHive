@@ -8,13 +8,18 @@
     <script type="text/javascript" src="../../Scripts/externals/SparkPreviewer.js"></script>
 }
 
-
 <div class="">
     @using (Html.BeginForm())
     {
         <header class="modal-header">
             <h2 class="text-primary " style="font-size: 24px; font-weight:bold; margin-bottom: 0px; vertical-align:bottom; position:relative;">Details: @Model.Name</h2>
-            <div style="position:relative; margin-top: 10px;"><input type="submit" value="Save" name="Save" class="btn btn-default" />@Html.ActionLink("Delete Item", "Delete", Model, new { @class = "btn btn-default", style = "margin-left: 10px;" })</div>
+            <div style="position:relative; margin-top: 10px;">
+
+            @Html.HiddenFor(m => m.Id)         
+            <input type="submit" value="Save" name="Save" class="btn btn-default" />
+            @Html.ActionLink("Delete Item", "Delete", Model, new { @class = "btn btn-default", style = "margin-left: 10px;" })
+            
+            </div>
         </header>
 
         <div id="verticalMenu" class="panel-default col-lg-2" style="margin-top: 10px; padding: 0; padding-left: 5px; padding-right: 5px; ">
