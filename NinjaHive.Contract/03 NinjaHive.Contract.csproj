@@ -42,13 +42,13 @@
   <ItemGroup>
     <Compile Include="Commands\AddEquipmentItemCommand.cs" />
     <Compile Include="Commands\AddSkillCommand.cs" />
-    <Compile Include="Commands\GetEquipmentItemByIdCommand.cs" />
     <Compile Include="DTOs\EquipmentItem.cs" />
     <Compile Include="DTOs\GameItem.cs" />
     <Compile Include="DTOs\Skill.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Queries\GetAllEquipmentItemsQuery.cs" />
     <Compile Include="Queries\GetAllSkillsQuery.cs" />
+    <Compile Include="Queries\GetEquipmentItemByIdQuery.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NinjaHive.Core\06 NinjaHive.Core.csproj">
