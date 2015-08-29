@@ -148,18 +148,18 @@
                         </tr>
                     *@
                     <tr>
-                        <td style="vertical-align: middle; font-weight:bold;"> Duration </td>
+                        <td style="vertical-align: middle; font-weight:bold;"> Durability </td>
                         <td>
                             @{
         var periods = new List<SelectListItem> {
                                         new SelectListItem
                                         {
                                             Value = "periodDay",
-                                            Text  = "Day",
+                                            Text  = "Durability Points",
                                             Selected= true,
                                         },
 
-                                        new SelectListItem
+                                        @*new SelectListItem
                                         {
                                             Value = "periodMonth",
                                             Text  = "Month",
@@ -171,12 +171,12 @@
                                             Value = "periodYear",
                                             Text  = "Year",
                                             Selected= false,
-                                        }
+                                        }*@
                                     };
                             }
 
                             @Html.DropDownList("temp", periods, new { @class = "form-control", @style = "width: 80%; max-width: 100%; float:left;" })
-                            @Html.TextBox("temp", "", new { @type = "number", @style = "width:19%; float:right;", @class = "form-control" })
+                            @Html.TextBoxFor(m => m.Durability, new { @type = "number", @min = "0", @style = "width:19%; float:right;", @class = "form-control" })
                         </td>
                     </tr>
                     <tr>
