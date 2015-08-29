@@ -13,6 +13,7 @@ namespace NinjaHive.WebApp.Controllers
         private readonly IQueryHandler<GetAllEquipmentItemsQuery, EquipmentItem[]> equipmentItemsQueryHandler;
         private readonly ICommandHandler<AddEquipmentItemCommand> addEquipmentItemCommandHandler;
         private readonly ICommandHandler<SaveEquipmentItemCommand> saveEquipmentItemCommandHandler;
+        private readonly ICommandHandler<DeleteEquipmentItemCommand> deleteEquipmentItemCommandHandler;
         private readonly IQueryHandler<GetEquipmentItemByIdQuery, EquipmentItem> getEquipmentItemByIdQueryHandler;
 
         // keep it while IQueryHandler implementation is finished
@@ -21,6 +22,7 @@ namespace NinjaHive.WebApp.Controllers
         public EquipmentItemController(IQueryHandler<GetAllEquipmentItemsQuery, EquipmentItem[]> equipmentItemsQueryHandler,
                                        ICommandHandler<AddEquipmentItemCommand> addEquipmentItemCommandHandler,
                                        ICommandHandler<SaveEquipmentItemCommand> saveEquipmentItemCommandHandler,
+                                       ICommandHandler<DeleteEquipmentItemCommand> deleteEquipmentItemCommandHandler,
                                        IQueryHandler<GetEquipmentItemByIdQuery, EquipmentItem> getEquipmentItemByIdQueryHandler)
         {
             this.demoEquipmentItem = new EquipmentItem
@@ -32,6 +34,7 @@ namespace NinjaHive.WebApp.Controllers
             this.addEquipmentItemCommandHandler = addEquipmentItemCommandHandler;
             this.equipmentItemsQueryHandler = equipmentItemsQueryHandler;
             this.saveEquipmentItemCommandHandler = saveEquipmentItemCommandHandler;
+            this.deleteEquipmentItemCommandHandler = deleteEquipmentItemCommandHandler;
             this.getEquipmentItemByIdQueryHandler = getEquipmentItemByIdQueryHandler;
         }
 
@@ -86,6 +89,11 @@ namespace NinjaHive.WebApp.Controllers
 
         public ActionResult Delete(EquipmentItem equipmentItem)
         {
+            deleteEquipmentItemCommandHandler.Handle(new DeleteEquipmentItemCommand
+            {
+                EquipmentItem = equipmentItem
+            });
+
             var redirectUri = UrlProvider<EquipmentItemController>.GetRouteValues(c => c.Index());
             return RedirectToRoute(redirectUri);
         }
