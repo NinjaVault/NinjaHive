@@ -103,7 +103,7 @@
                     </tr>
                     <tr style="height: 400px;">
                         <td><span style="top: 7px; position:relative; font-weight:bold;"> Description </span></td>
-                        <td> @Html.TextArea("temp", new { @class = "form-control", @style = "max-width: 100%; resize:none; min-height: 110px; text-align: justify; text-justify: auto; height: 100%; bottom: 0;" }) </td>
+                        <td> @Html.TextAreaFor(m => m.Description, new { @class = "form-control", @style = "max-width: 100%; resize:none; min-height: 110px; text-align: justify; text-justify: auto; height: 100%; bottom: 0;" }) </td>
                     </tr>
                     <tr>
                         <td style="vertical-align: middle; font-weight:bold;"> Type </td>
