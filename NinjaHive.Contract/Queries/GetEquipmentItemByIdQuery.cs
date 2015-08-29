@@ -6,6 +6,6 @@ namespace NinjaHive.Contract.Queries
 {
     public class GetEquipmentItemByIdQuery : IQuery<EquipmentItem>
     {
-        public Guid EquipmentItemId;
+        public Guid EquipmentItemId { get; set; }
     }
 }
