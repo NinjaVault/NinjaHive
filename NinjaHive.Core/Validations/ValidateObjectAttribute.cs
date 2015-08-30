@@ -7,7 +7,7 @@ namespace NinjaHive.Core.Validations
     /// <summary>
     /// This attribute will let a validator perform validation on the members of the object.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Field | AttributeTargets.Property, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
     public class ValidateObjectAttribute : ValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
