@@ -18,12 +18,15 @@ namespace NinjaHive.BusinessLayer.QueryHandlers
 
         public Skill[] Handle(GetAllSkillsQuery query)
         {
-            var skills = this.db.SkillEntities;
-            return skills.Select(s => new Skill
-            {
-                Id = s.Id,
-                Name = s.Name
-            }).ToArray();
+            var skills =
+                from skill in this.db.SkillEntities
+                select new Skill
+                {
+                    Id = skill.Id,
+                    Name = skill.Name,
+                };
+
+            return skills.ToArray();
         }
     }
 }

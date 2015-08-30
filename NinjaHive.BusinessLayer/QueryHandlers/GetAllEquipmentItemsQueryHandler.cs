@@ -11,40 +11,35 @@ namespace NinjaHive.BusinessLayer.QueryHandlers
         : IQueryHandler<GetAllEquipmentItemsQuery, EquipmentItem[]>
     {
         private readonly NinjaHiveContext db;
+        private readonly IMapper<EquipmentItemEntity, EquipmentItem> itemMapper; 
 
-        public GetAllEquipmentItemsQueryHandler(NinjaHiveContext db)
+        public GetAllEquipmentItemsQueryHandler(NinjaHiveContext db,
+            IMapper<EquipmentItemEntity, EquipmentItem> itemMapper)
         {
             this.db = db;
+            this.itemMapper = itemMapper;
         }
 
         public EquipmentItem[] Handle(GetAllEquipmentItemsQuery query)
         {
             var equipmentItems = this.GetEquipmentItems();
 
-            return this.MapEquipmentItems(equipmentItems).ToArray();
+            return this.MapEquipmentItems(equipmentItems);
         }
 
-        private IQueryable<EquipmentItemEntity> GetEquipmentItems()
+        private IEnumerable<EquipmentItemEntity> GetEquipmentItems()
         {
             var equipmentItems = this.db.GameItemEntities.OfType<EquipmentItemEntity>();
-            return equipmentItems;
+            return equipmentItems.ToArray(); //load into memory here
         }
 
-        private IEnumerable<EquipmentItem> MapEquipmentItems(IQueryable<EquipmentItemEntity> equipmentItems)
+        private EquipmentItem[] MapEquipmentItems(IEnumerable<EquipmentItemEntity> equipmentItems)
         {
-            return equipmentItems.Select(equipmentItem => new EquipmentItem
-            {
-                Id = equipmentItem.Id,
-                Name = equipmentItem.Name,
-                Category = equipmentItem.Category,
-                Description = equipmentItem.Description,
-                Craftable = equipmentItem.Craftable,
-                UpgradeElement = equipmentItem.IsUpgrader,
-                CraftingElement = equipmentItem.IsCrafter,
-                QuestItem = equipmentItem.IsQuestItem,
-                Value = equipmentItem.Value,
-                Durability = equipmentItem.Durability,
-            });
+            var items =
+                from item in equipmentItems
+                select this.itemMapper.Map(item);
+
+            return items.ToArray();
         }
     }
 }

@@ -96,13 +96,13 @@ namespace NinjaHive.WebApp.Tests
             // Arrange
             var validationCommandHandlerDecorator =
                 new ValidationCommandHandlerDecorator<IFakeCommandInterface>(new FakeDecoratee());
-            var mockupInvalidCommand = new MockupInvalidCommand { NotAnObject = 0 };
+            var mockupPrimitiveTypeCommand = new MockupPrimitiveTypeCommand { NotAnObject = 0 };
             Exception exception = null;
 
             // Act
             try
             {
-                validationCommandHandlerDecorator.Handle(mockupInvalidCommand);
+                validationCommandHandlerDecorator.Handle(mockupPrimitiveTypeCommand);
             }
             catch (Exception ex)
             {
@@ -132,7 +132,7 @@ namespace NinjaHive.WebApp.Tests
             [Required]
             public string RequiredProperty { get; set; }
         }
-        private class MockupInvalidCommand : IFakeCommandInterface
+        private class MockupPrimitiveTypeCommand : IFakeCommandInterface
         {
             [ValidateObject]
             public int NotAnObject { get; set; }

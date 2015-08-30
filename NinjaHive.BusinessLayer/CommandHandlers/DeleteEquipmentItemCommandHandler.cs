@@ -1,5 +1,4 @@
-﻿using System;
-using NinjaHive.Contract.Commands;
+﻿using NinjaHive.Contract.Commands;
 using NinjaHive.Core;
 using NinjaHive.Domain;
 

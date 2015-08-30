@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.DataProtection;
+using NinjaHive.BusinessLayer;
 using NinjaHive.BusinessLayer.CrossCuttingConcerns;
 using NinjaHive.Core;
 using NinjaHive.Domain;
@@ -27,6 +28,8 @@ namespace NinjaHive.WebApp
 
         public static Container Initialize(IAppBuilder app)
         {
+            AutoMapperConfiguration.Configure();
+            
             container = GetInitializedContainer(app);
 
             container.Verify();
@@ -48,6 +51,8 @@ namespace NinjaHive.WebApp
 
             container.RegisterMvcControllers(Assembly.GetExecutingAssembly());
             container.RegisterMvcIntegratedFilterProvider();
+
+            container.RegisterOpenGeneric(typeof(IMapper<,>), typeof(EntitiesAutoMapper<,>), Lifestyle.Singleton);
 
             return container;
         }

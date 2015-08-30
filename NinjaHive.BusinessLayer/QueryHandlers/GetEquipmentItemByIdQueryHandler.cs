@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using NinjaHive.Contract.DTOs;
+﻿using NinjaHive.Contract.DTOs;
 using NinjaHive.Contract.Queries;
 using NinjaHive.Core;
 using NinjaHive.Domain;
@@ -11,31 +9,20 @@ namespace NinjaHive.BusinessLayer.QueryHandlers
         : IQueryHandler<GetEquipmentItemByIdQuery, EquipmentItem>
     {
         private readonly NinjaHiveContext db;
+        private readonly IMapper<EquipmentItemEntity, EquipmentItem> itemMapper;
 
-        public GetEquipmentItemByIdQueryHandler(NinjaHiveContext db)
+        public GetEquipmentItemByIdQueryHandler(NinjaHiveContext db,
+            IMapper<EquipmentItemEntity, EquipmentItem> itemMapper)
         {
             this.db = db;
+            this.itemMapper = itemMapper;
         }
 
         public EquipmentItem Handle(GetEquipmentItemByIdQuery query)
         {
-            EquipmentItemEntity item = (EquipmentItemEntity)db.GameItemEntities.Find(query.EquipmentItemId);
+            var item = (EquipmentItemEntity)db.GameItemEntities.Find(query.EquipmentItemId);
 
-            var equip = new EquipmentItem
-            {
-                Id = item.Id,
-                Name = item.Name,
-                Description = item.Description,
-                Category = item.Category,
-                Craftable = item.Craftable,
-                UpgradeElement = item.IsUpgrader,
-                CraftingElement = item.IsCrafter,
-                QuestItem = item.IsQuestItem,
-                Durability = item.Durability,
-                Value = item.Value,
-            };
-
-            return equip;
+            return this.itemMapper.Map(item);
         }
     }
 }

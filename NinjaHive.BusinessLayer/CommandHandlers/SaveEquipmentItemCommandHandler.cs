@@ -1,5 +1,4 @@
-﻿using System;
-using NinjaHive.Contract.Commands;
+﻿using NinjaHive.Contract.Commands;
 using NinjaHive.Core;
 using NinjaHive.Domain;
 
@@ -16,7 +15,7 @@ namespace NinjaHive.BusinessLayer.CommandHandlers
 
         public void Handle(SaveEquipmentItemCommand command)
         {
-            EquipmentItemEntity item = (EquipmentItemEntity)db.GameItemEntities.Find(command.EquipmentItem.Id);
+            var item = (EquipmentItemEntity)db.GameItemEntities.Find(command.EquipmentItem.Id);
 
             item.Name = command.EquipmentItem.Name;
             item.Description = command.EquipmentItem.Description;
