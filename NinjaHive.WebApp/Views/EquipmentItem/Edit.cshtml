@@ -34,7 +34,7 @@
                     General Informations
                 </div>
 
-                <table class="table table-bordered text-right text-uppercase" style="bottom: 0; margin:0; padding:0; min-height: 220px; height: 755px; position: relative;">
+                <table class="table table-bordered text-right text-uppercase" style="bottom: 0; margin:0; padding:0; min-height: 220px; height: 605px; position: relative;">
                     <tr>
                         <td style="vertical-align: middle; font-weight:bold;"> Name </td>
                         <td> @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @style = "max-width: 100%;" })</td>
@@ -110,30 +110,30 @@
                         <td><span style="top: 7px; position:relative; font-weight:bold;"> Description </span></td>
                         <td> @Html.TextAreaFor(m => m.Description, new { @class = "form-control", @style = "max-width: 100%; resize:none; min-height: 110px; text-align: justify; text-justify: auto; height: 100%; bottom: 0;" }) </td>
                     </tr>
-                    <tr>
-                        <td style="vertical-align: middle; font-weight:bold;"> Type </td>
-                        <td>
-                            @{
-        var types = new List<SelectListItem>
+                    @*<tr>
+                    <td style="vertical-align: middle; font-weight:bold;"> Type </td>
+                    <td>
+                        @{
+    var types = new List<SelectListItem>
+                            {
+                                new SelectListItem
                                 {
-                                    new SelectListItem
-                                    {
-                                        Value = "TypeEquipment",
-                                        Text  = "Equipment",
-                                        Selected= true,
-                                    },
+                                    Value = "TypeEquipment",
+                                    Text  = "Equipment",
+                                    Selected= true,
+                                },
 
-                                        new SelectListItem
-                                    {
-                                        Value = "TypeItem",
-                                        Text  = "Item",
-                                        Selected= false,
-                                    },
-                                };
-                            }
-                            @Html.DropDownList("temp", types, new { @class = "form-control", @style = "max-width: 100%;" })
-                        </td>
-                    </tr>
+                                    new SelectListItem
+                                {
+                                    Value = "TypeItem",
+                                    Text  = "Item",
+                                    Selected= false,
+                                },
+                            };
+                        }
+                        @Html.DropDownList("temp", types, new { @class = "form-control", @style = "max-width: 100%;" })
+                    </td>
+                </tr>*@
                     @*
                         <tr>
 
@@ -179,14 +179,14 @@
                             @Html.TextBoxFor(m => m.Durability, new { @type = "number", @min = "0", @style = "width:19%; float:right;", @class = "form-control" })
                         </td>
                     </tr>
-                    <tr>
+                    @*<tr>
                         <td style="vertical-align: middle; font-weight:bold;"> Size </td>
                         <td>@Html.TextBox("temp", "", new { @type = "number", @style = "width:100%px; max-width: 100%;", @class = "form-control" })</td>
-                    </tr>
+                    </tr>*@
                     <tr>
                         <td style="vertical-align: middle; font-weight:bold;"> Value </td>
                         <td>
-                            @Html.TextBox("temp", "", new { @type = "number", @step = "any", @class = "form-control", @style = "max-width: 100%;" })
+                            @Html.TextBoxFor(m => m.Value, new { @type = "number", @step = "any", @class = "form-control", @style = "max-width: 100%;" })
                         </td>
                     </tr>
                 </table>
