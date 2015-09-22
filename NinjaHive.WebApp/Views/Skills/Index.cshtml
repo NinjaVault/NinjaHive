@@ -4,27 +4,32 @@
 @model Skill[]
            
 <div class="row">
-    <div class="panel panel-default">
-        <div class="panel-body">
-            @{ var createUri = UrlProvider<SkillsController>.GetUrl(c => c.Create()); }
-            <a href="@createUri" class="btn btn-default">
-                Create
-            </a>
+    <div class="col-md-12">
+        <br />
+        <p>
+            @Html.ActionLink("Create Equipment Item", "Create", null, new { @class = "btn btn-default" })
+        </p>
+        <hr />
+        <h4>List of items in the database</h4>
+    </div>
+    @foreach (var item in Model)
+    {
+        var itemId = item.Id;
+        //var itemDetailsUrl = UrlProvider<SkillsController>.GetUrl(c => c.Edit(itemId));
+
+        <div class="col-md-2">
+            <div class="thumbnail">
+               <a href="" class="thumbnail">
+                    <img src="/Content/Images/default_image.png" alt="..." />
+                </a>
+                <div class="caption">
+                    <p>@item.Name</p>
+                    <p>
+                        @*@Html.ActionLink("Delete", "Delete", item)<br />*@
+                        @*<a href="@itemDetailsUrl"> Edit </a>*@
+                    </p>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-3">
-        <div class="list-group">
-            @foreach (var skill in Model)
-            {
-                <button type="button" class="list-group-item">
-                    @skill.Name
-                </button>
-            }
-        </div>
-    </div>
-    <div class="col-md-9">
-        @*skill edit here*@
-    </div>
+    }
 </div>
