@@ -5,6 +5,5 @@ namespace NinjaHive.Contract.Queries
 {
     public class GetAllEquipmentItemsQuery : IQuery<EquipmentItem[]>
     {
-
     }
 }
