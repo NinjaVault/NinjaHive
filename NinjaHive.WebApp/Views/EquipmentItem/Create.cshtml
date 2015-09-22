@@ -10,7 +10,7 @@
 
 
 <div class="">
-    @using (Html.BeginForm("Index"))
+    @using (Html.BeginForm())
     {
         <header class="modal-header">
             <h2 class="text-primary " style="font-size: 24px; font-weight:bold; margin-bottom: 0px; vertical-align:bottom; position:relative;">Details: New Equipment Item </h2>
@@ -29,7 +29,7 @@
                 General Informations
             </div>
 
-            <table class="table table-bordered text-right text-uppercase" style="bottom: 0; margin:0; padding:0; min-height: 220px; height: 755px; position: relative;">
+            <table class="table table-bordered text-right text-uppercase" style="bottom: 0; margin:0; padding:0; min-height: 220px; height: 605px; position: relative;">
                 <tr>
                     <td style="vertical-align: middle; font-weight:bold;"> Name </td>
                     <td> @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @style = "max-width: 100%;" })</td>
@@ -105,7 +105,7 @@
                     <td><span style="top: 7px; position:relative; font-weight:bold;"> Description </span></td>
                     <td> @Html.TextAreaFor(m => m.Description, new { @class = "form-control", @style = "max-width: 100%; resize:none; min-height: 110px; text-align: justify; text-justify: auto; height: 100%; bottom: 0;" }) </td>
                 </tr>
-                <tr>
+                @*<tr>
                     <td style="vertical-align: middle; font-weight:bold;"> Type </td>
                     <td>
                         @{
@@ -128,7 +128,7 @@
                         }
                         @Html.DropDownList("temp", types, new { @class = "form-control", @style = "max-width: 100%;" })
                     </td>
-                </tr>
+                </tr>*@
                 @*
                     <tr>
 
