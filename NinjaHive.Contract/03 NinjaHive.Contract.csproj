@@ -45,7 +45,6 @@
     <Compile Include="Commands\DeleteEquipmentItemCommand.cs" />
     <Compile Include="Commands\SaveEquipmentItemCommand.cs" />
     <Compile Include="DTOs\EquipmentItem.cs" />
-    <Compile Include="DTOs\GameItem.cs" />
     <Compile Include="DTOs\Skill.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Queries\GetAllEquipmentItemsQuery.cs" />
