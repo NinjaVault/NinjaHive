@@ -7,7 +7,7 @@ namespace NinjaHive.Contract.DTOs
     {
         [Required]
         public Guid Id                                      { get; set; }
-        [MinLength(3)]
+        [Required]
         public string Name                                  { get; set; }
         [Required]
         public string Category                              { get; set; }
