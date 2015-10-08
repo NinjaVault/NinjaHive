@@ -15,11 +15,11 @@
     @foreach (var item in Model)
     {
         var itemId = item.Id;
-        //var itemDetailsUrl = UrlProvider<SkillsController>.GetUrl(c => c.Edit(itemId));
+        var itemDetailsUrl = UrlProvider<SkillsController>.GetUrl(c => c.Edit(itemId));
 
         <div class="col-md-2">
             <div class="thumbnail">
-               <a href="" class="thumbnail">
+                <a href="@itemDetailsUrl" class="thumbnail">
                     <img src="/Content/Images/default_image.png" alt="..." />
                 </a>
                 <div class="caption">
