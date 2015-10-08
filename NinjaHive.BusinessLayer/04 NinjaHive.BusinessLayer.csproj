@@ -66,6 +66,7 @@
     <Compile Include="QueryHandlers\GetAllEquipmentItemsQueryHandler.cs" />
     <Compile Include="QueryHandlers\GetAllSkillsQueryHandler.cs" />
     <Compile Include="QueryHandlers\GetEquipmentItemByIdQueryHandler.cs" />
+    <Compile Include="QueryHandlers\GetSkillByIdQueryHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NinjaHive.Contract\03 NinjaHive.Contract.csproj">
