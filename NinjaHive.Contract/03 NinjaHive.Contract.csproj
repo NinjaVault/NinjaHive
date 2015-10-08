@@ -50,6 +50,7 @@
     <Compile Include="Queries\GetAllEquipmentItemsQuery.cs" />
     <Compile Include="Queries\GetAllSkillsQuery.cs" />
     <Compile Include="Queries\GetEquipmentItemByIdQuery.cs" />
+    <Compile Include="Queries\GetSkillByIdQuery.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NinjaHive.Core\06 NinjaHive.Core.csproj">
