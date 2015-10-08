@@ -1,5 +1,6 @@
 ﻿using System;
 using NinjaHive.Contract.Commands;
+using NinjaHive.Contract.DTOs;
 using NinjaHive.Core;
 using NinjaHive.Domain;
 
@@ -20,8 +21,14 @@ namespace NinjaHive.BusinessLayer.CommandHandlers
             {
                 Id = command.Skill.Id,
                 Name = command.Skill.Name,
+                Radius = command.Skill.Radius,
+                Range = command.Skill.Range,
+                Target = (NinjaHive.Domain.Enums.Target)command.Skill.target,
+                Targets = command.Skill.targetCount,
+                Friendly = command.Skill.friendly,
+
                 StatInfo = new StatInfoEntity { Id = Guid.NewGuid() }
-            };
+            };            
 
             this.db.SkillEntities.Add(skill);
         }
