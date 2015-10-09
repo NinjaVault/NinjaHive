@@ -20,7 +20,7 @@ namespace NinjaHive.BusinessLayer.QueryHandlers
 
         public Skill Handle(GetSkillByIdQuery query)
         {
-            var skill = (SkillEntity)db.SkillEntities.Find(query.SkillId);
+            var skill = this.db.SkillEntities.Find(query.SkillId);
 
             return this.skillMapper.Map(skill);
         }

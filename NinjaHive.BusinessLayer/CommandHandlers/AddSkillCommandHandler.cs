@@ -23,9 +23,9 @@ namespace NinjaHive.BusinessLayer.CommandHandlers
                 Name = command.Skill.Name,
                 Radius = command.Skill.Radius,
                 Range = command.Skill.Range,
-                Target = (NinjaHive.Domain.Enums.Target)command.Skill.target,
-                Targets = command.Skill.targetCount,
-                Friendly = command.Skill.friendly,
+                Target = (NinjaHive.Domain.Enums.Target)command.Skill.Target,
+                Targets = command.Skill.TargetCount,
+                Friendly = command.Skill.Friendly,
 
                 StatInfo = new StatInfoEntity { Id = Guid.NewGuid() }
             };            
