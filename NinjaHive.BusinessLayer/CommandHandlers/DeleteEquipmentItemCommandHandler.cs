@@ -1,6 +1,7 @@
 ﻿using NinjaHive.Contract.Commands;
 using NinjaHive.Core;
 using NinjaHive.Domain;
+using NinjaHive.Domain.Extensions;
 
 namespace NinjaHive.BusinessLayer.CommandHandlers
 {
@@ -16,7 +17,8 @@ namespace NinjaHive.BusinessLayer.CommandHandlers
 
         public void Handle(DeleteEquipmentItemCommand command)
         {
-            db.GameItemEntities.Remove(db.GameItemEntities.Find(command.EquipmentItem.Id));
+            var equipmentItem = this.db.GameItemEntities.GetById(command.EquipmentItem.Id);
+            db.GameItemEntities.Remove(equipmentItem);
         }
     }
 }

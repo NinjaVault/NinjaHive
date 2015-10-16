@@ -40,10 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commands\AddEquipmentItemCommand.cs" />
-    <Compile Include="Commands\AddSkillCommand.cs" />
+    <Compile Include="Commands\EditEquipmentItemCommand.cs" />
+    <Compile Include="Commands\EditSkillCommand.cs" />
     <Compile Include="Commands\DeleteEquipmentItemCommand.cs" />
-    <Compile Include="Commands\SaveEquipmentItemCommand.cs" />
     <Compile Include="DTOs\EquipmentItem.cs" />
     <Compile Include="DTOs\Skill.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

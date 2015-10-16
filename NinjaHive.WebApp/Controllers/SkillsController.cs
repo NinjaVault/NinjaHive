@@ -11,14 +11,14 @@ namespace NinjaHive.WebApp.Controllers
     public class SkillsController : Controller
     {
         private readonly IQueryProcessor queryProcessor;
-        private readonly ICommandHandler<AddSkillCommand> addSkillCommandHandler;
+        private readonly ICommandHandler<EditSkillCommand> editSkillCommandHandler;
 
         public SkillsController(
             IQueryProcessor queryProcessor,
-            ICommandHandler<AddSkillCommand> addSkillCommandHandler)
+            ICommandHandler<EditSkillCommand> editSkillCommandHandler)
         {
             this.queryProcessor = queryProcessor;
-            this.addSkillCommandHandler = addSkillCommandHandler;
+            this.editSkillCommandHandler = editSkillCommandHandler;
         }
 
         // GET: Skills
@@ -44,11 +44,8 @@ namespace NinjaHive.WebApp.Controllers
         public ActionResult Create(Skill skill)
         {
             skill.Id = Guid.NewGuid();
-            var command = new AddSkillCommand
-            {
-                Skill = skill,
-            };
-            this.addSkillCommandHandler.Handle(command);
+            var command = new EditSkillCommand(skill, createNew: true);
+            this.editSkillCommandHandler.Handle(command);
 
             var redirectUri = UrlProvider<SkillsController>.GetRouteValues(c => c.Index());
             return RedirectToRoute(redirectUri);

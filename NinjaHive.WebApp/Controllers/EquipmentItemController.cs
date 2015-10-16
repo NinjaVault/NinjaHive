@@ -11,19 +11,16 @@ namespace NinjaHive.WebApp.Controllers
     public class EquipmentItemController : Controller
     {
         private readonly IQueryProcessor queryProcessor;
-        private readonly ICommandHandler<AddEquipmentItemCommand> addEquipmentItemCommandHandler;
-        private readonly ICommandHandler<SaveEquipmentItemCommand> saveEquipmentItemCommandHandler;
+        private readonly ICommandHandler<EditEquipmentItemCommand> editEquipmentItemCommandHandler;
         private readonly ICommandHandler<DeleteEquipmentItemCommand> deleteEquipmentItemCommandHandler;
 
         public EquipmentItemController(
             IQueryProcessor queryProcessor,
-            ICommandHandler<AddEquipmentItemCommand> addEquipmentItemCommandHandler,
-            ICommandHandler<SaveEquipmentItemCommand> saveEquipmentItemCommandHandler,
+            ICommandHandler<EditEquipmentItemCommand> editEquipmentItemCommandHandler,
             ICommandHandler<DeleteEquipmentItemCommand> deleteEquipmentItemCommandHandler)
         {
             this.queryProcessor = queryProcessor;
-            this.addEquipmentItemCommandHandler = addEquipmentItemCommandHandler;
-            this.saveEquipmentItemCommandHandler = saveEquipmentItemCommandHandler;
+            this.editEquipmentItemCommandHandler = editEquipmentItemCommandHandler;
             this.deleteEquipmentItemCommandHandler = deleteEquipmentItemCommandHandler;
         }
 
@@ -49,11 +46,7 @@ namespace NinjaHive.WebApp.Controllers
         [HttpPost]
         public ActionResult Edit(EquipmentItem equipmentItem)
         {
-            var command = new SaveEquipmentItemCommand
-            {
-                EquipmentItem = equipmentItem,
-            };
-            this.saveEquipmentItemCommandHandler.Handle(command);
+            this.EditEquipmentItem(equipmentItem, createNew: false);
 
             var redirectUri = UrlProvider<EquipmentItemController>.GetRouteValues(c => c.Index());
             return RedirectToRoute(redirectUri);
@@ -63,12 +56,7 @@ namespace NinjaHive.WebApp.Controllers
         public ActionResult Create(EquipmentItem equipmentItem)
         {
             equipmentItem.Id = Guid.NewGuid();
-            var command = new AddEquipmentItemCommand
-            {
-                EquipmentItem = equipmentItem,
-            };
-
-            this.addEquipmentItemCommandHandler.Handle(command);
+            this.EditEquipmentItem(equipmentItem, createNew: true);
 
             var redirectUri = UrlProvider<EquipmentItemController>.GetRouteValues(c => c.Index());
             return RedirectToRoute(redirectUri);
@@ -84,6 +72,12 @@ namespace NinjaHive.WebApp.Controllers
 
             var redirectUri = UrlProvider<EquipmentItemController>.GetRouteValues(c => c.Index());
             return RedirectToRoute(redirectUri);
+        }
+
+        private void EditEquipmentItem(EquipmentItem equipmentItem, bool createNew)
+        {
+            var command = new EditEquipmentItemCommand(equipmentItem, createNew);
+            this.editEquipmentItemCommandHandler.Handle(command);
         }
     }
 }

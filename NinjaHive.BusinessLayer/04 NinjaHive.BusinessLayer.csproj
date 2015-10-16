@@ -55,10 +55,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutoMapperConfiguration.cs" />
-    <Compile Include="CommandHandlers\AddEquipmentItemCommandHandler.cs" />
-    <Compile Include="CommandHandlers\AddSkillCommandHandler.cs" />
+    <Compile Include="CommandHandlers\EditEquipmentItemCommandHandler.cs" />
+    <Compile Include="CommandHandlers\EditSkillCommandHandler.cs" />
     <Compile Include="CommandHandlers\DeleteEquipmentItemCommandHandler.cs" />
-    <Compile Include="CommandHandlers\SaveEquipmentItemCommandHandler.cs" />
     <Compile Include="CrossCuttingConcerns\SaveChangesCommandHandlerDecorator.cs" />
     <Compile Include="CrossCuttingConcerns\ValidationCommandHandlerDecorator.cs" />
     <Compile Include="Services\EntitiesAutoMapper.cs" />
