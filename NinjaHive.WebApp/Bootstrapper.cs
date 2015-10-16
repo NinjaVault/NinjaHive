@@ -11,6 +11,7 @@ using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.DataProtection;
 using NinjaHive.BusinessLayer;
 using NinjaHive.BusinessLayer.CrossCuttingConcerns;
+using NinjaHive.BusinessLayer.Services;
 using NinjaHive.Core;
 using NinjaHive.Domain;
 using NinjaHive.WebApp.Models.IdentityModels;
@@ -52,7 +53,8 @@ namespace NinjaHive.WebApp
             container.RegisterMvcControllers(Assembly.GetExecutingAssembly());
             container.RegisterMvcIntegratedFilterProvider();
 
-            container.RegisterOpenGeneric(typeof(IMapper<,>), typeof(EntitiesAutoMapper<,>), Lifestyle.Singleton);
+            container.RegisterOpenGeneric(typeof(IEntityMapper<>), typeof(EntitiesAutoMapper<>), Lifestyle.Singleton);
+            container.RegisterOpenGeneric(typeof(IEntityMapper<,>), typeof(EntitiesAutoMapper<,>), Lifestyle.Singleton);
 
             return container;
         }

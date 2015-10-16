@@ -20,11 +20,11 @@ WriteHeader(codeStringGenerator, fileManager);
 
 foreach (var entity in typeMapper.GetItemsToGenerate<EntityType>(itemCollection))
 {
-    fileManager.StartNewFile(entity.Name + ".cs");
+    // fileManager.StartNewFile(entity.Name + ".cs");
     BeginNamespace(code);
 #>
 <#=codeStringGenerator.UsingDirectives(inHeader: false)#>
-<#=codeStringGenerator.EntityClassOpening(entity)#>
+<#=codeStringGenerator.EntityClassOpening(entity,"NinjaHive.Domain.IEntity")#>
 {
 <#
     var propertiesWithDefaultValues = typeMapper.GetPropertiesWithDefaultValues(entity);
@@ -58,8 +58,10 @@ foreach (var entity in typeMapper.GetItemsToGenerate<EntityType>(itemCollection)
 <#
         }
 #>
+        this.OnCreated();
     }
 
+    partial void OnCreated();
 <#
     }
 
@@ -108,7 +110,7 @@ foreach (var entity in typeMapper.GetItemsToGenerate<EntityType>(itemCollection)
 
 foreach (var complex in typeMapper.GetItemsToGenerate<ComplexType>(itemCollection))
 {
-    fileManager.StartNewFile(complex.Name + ".cs");
+    //fileManager.StartNewFile(complex.Name + ".cs");
     BeginNamespace(code);
 #>
 <#=codeStringGenerator.UsingDirectives(inHeader: false, includeCollections: false)#>
@@ -174,7 +176,7 @@ foreach (var complex in typeMapper.GetItemsToGenerate<ComplexType>(itemCollectio
 
 foreach (var enumType in typeMapper.GetEnumItemsToGenerate(itemCollection))
 {
-    fileManager.StartNewFile(enumType.Name + ".cs");
+    //fileManager.StartNewFile(enumType.Name + ".cs");
     BeginNamespace(code);
 #>
 <#=codeStringGenerator.UsingDirectives(inHeader: false, includeCollections: false)#>
@@ -304,15 +306,18 @@ public class CodeStringGenerator
         return accessibility + (accessibility != "private" ? " virtual" : "");
     }
     
-    public string EntityClassOpening(EntityType entity)
+    public string EntityClassOpening(EntityType entity, string interfaceName = null)
     {
+        string baseTypeName = _typeMapper.GetTypeName(entity.BaseType);
+
         return string.Format(
             CultureInfo.InvariantCulture,
-            "{0} {1}partial class {2}{3}",
+            "{0} {1}partial class {2}{3}{4}",
             Accessibility.ForType(entity),
             _code.SpaceAfter(_code.AbstractOption(entity)),
             _code.Escape(entity),
-            _code.StringBefore(" : ", _typeMapper.GetTypeName(entity.BaseType)));
+            _code.StringBefore(" : ", baseTypeName),
+            _code.StringBefore(baseTypeName == null ? " : " : ", ", interfaceName));
     }
     
     public string EnumOpening(SimpleType enumType)
