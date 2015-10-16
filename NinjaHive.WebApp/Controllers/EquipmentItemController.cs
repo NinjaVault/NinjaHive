@@ -14,16 +14,17 @@ namespace NinjaHive.WebApp.Controllers
         private readonly ICommandHandler<AddEquipmentItemCommand> addEquipmentItemCommandHandler;
         private readonly ICommandHandler<SaveEquipmentItemCommand> saveEquipmentItemCommandHandler;
         private readonly ICommandHandler<DeleteEquipmentItemCommand> deleteEquipmentItemCommandHandler;
-        private readonly IQueryHandler<GetEquipmentItemByIdQuery, EquipmentItem> getEquipmentItemByIdQueryHandler;
+        private readonly IQueryHandler<GetEntityByIdQuery<EquipmentItem>, EquipmentItem> getEquipmentItemByIdQueryHandler;
 
         // keep it while IQueryHandler implementation is finished
         private readonly EquipmentItem demoEquipmentItem;
 
-        public EquipmentItemController(IQueryHandler<GetAllEquipmentItemsQuery, EquipmentItem[]> equipmentItemsQueryHandler,
-                                       ICommandHandler<AddEquipmentItemCommand> addEquipmentItemCommandHandler,
-                                       ICommandHandler<SaveEquipmentItemCommand> saveEquipmentItemCommandHandler,
-                                       ICommandHandler<DeleteEquipmentItemCommand> deleteEquipmentItemCommandHandler,
-                                       IQueryHandler<GetEquipmentItemByIdQuery, EquipmentItem> getEquipmentItemByIdQueryHandler)
+        public EquipmentItemController(
+            IQueryHandler<GetAllEquipmentItemsQuery, EquipmentItem[]> equipmentItemsQueryHandler,
+            ICommandHandler<AddEquipmentItemCommand> addEquipmentItemCommandHandler,
+            ICommandHandler<SaveEquipmentItemCommand> saveEquipmentItemCommandHandler,
+            ICommandHandler<DeleteEquipmentItemCommand> deleteEquipmentItemCommandHandler,
+            IQueryHandler<GetEntityByIdQuery<EquipmentItem>, EquipmentItem> getEquipmentItemByIdQueryHandler)
         {
             this.demoEquipmentItem = new EquipmentItem
             {
@@ -52,10 +53,7 @@ namespace NinjaHive.WebApp.Controllers
 
         public ActionResult Edit(Guid itemId)
         {
-            var item = this.getEquipmentItemByIdQueryHandler.Handle(new GetEquipmentItemByIdQuery
-            {
-                EquipmentItemId = itemId
-            });
+            var item = this.getEquipmentItemByIdQueryHandler.Handle(new GetEntityByIdQuery<EquipmentItem>(itemId));
         
             return View(item);
         }

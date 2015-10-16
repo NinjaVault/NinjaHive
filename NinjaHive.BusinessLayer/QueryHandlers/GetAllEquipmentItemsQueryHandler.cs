@@ -11,10 +11,10 @@ namespace NinjaHive.BusinessLayer.QueryHandlers
         : IQueryHandler<GetAllEquipmentItemsQuery, EquipmentItem[]>
     {
         private readonly NinjaHiveContext db;
-        private readonly IMapper<EquipmentItemEntity, EquipmentItem> itemMapper; 
+        private readonly IEntityMapper<EquipmentItemEntity, EquipmentItem> itemMapper; 
 
         public GetAllEquipmentItemsQueryHandler(NinjaHiveContext db,
-            IMapper<EquipmentItemEntity, EquipmentItem> itemMapper)
+            IEntityMapper<EquipmentItemEntity, EquipmentItem> itemMapper)
         {
             this.db = db;
             this.itemMapper = itemMapper;

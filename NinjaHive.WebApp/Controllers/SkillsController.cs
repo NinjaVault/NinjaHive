@@ -12,15 +12,15 @@ namespace NinjaHive.WebApp.Controllers
     {
         private readonly IQueryHandler<GetAllSkillsQuery, Skill[]> skillsQueryHandler;
         private readonly ICommandHandler<AddSkillCommand> addSkillCommandHandler;
-        private readonly IQueryHandler<GetSkillByIdQuery, Skill> getSkillByIdCommandHandler;
+        private readonly IQueryHandler<GetEntityByIdQuery<Skill>, Skill> getSkillByIdQueryHandler;
 
         public SkillsController(IQueryHandler<GetAllSkillsQuery, Skill[]> skillsQueryHandler,
             ICommandHandler<AddSkillCommand> addSkillCommandHandler,
-            IQueryHandler<GetSkillByIdQuery, Skill> getSkillByIdCommandHandler)
+            IQueryHandler<GetEntityByIdQuery<Skill>, Skill> getSkillByIdQueryHandler)
         {
             this.skillsQueryHandler = skillsQueryHandler;
             this.addSkillCommandHandler = addSkillCommandHandler;
-            this.getSkillByIdCommandHandler = getSkillByIdCommandHandler;
+            this.getSkillByIdQueryHandler = getSkillByIdQueryHandler;
         }
 
         // GET: Skills
@@ -37,10 +37,7 @@ namespace NinjaHive.WebApp.Controllers
 
         public ActionResult Edit(Guid skillId)
         {
-            var skill = this.getSkillByIdCommandHandler.Handle(new GetSkillByIdQuery
-            {
-                SkillId = skillId
-            });
+            var skill = this.getSkillByIdQueryHandler.Handle(new GetEntityByIdQuery<Skill>(skillId));
 
             return View(skill);
         }
