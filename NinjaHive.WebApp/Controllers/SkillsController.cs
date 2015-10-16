@@ -10,23 +10,21 @@ namespace NinjaHive.WebApp.Controllers
 {
     public class SkillsController : Controller
     {
-        private readonly IQueryHandler<GetAllSkillsQuery, Skill[]> skillsQueryHandler;
+        private readonly IQueryProcessor queryProcessor;
         private readonly ICommandHandler<AddSkillCommand> addSkillCommandHandler;
-        private readonly IQueryHandler<GetEntityByIdQuery<Skill>, Skill> getSkillByIdQueryHandler;
 
-        public SkillsController(IQueryHandler<GetAllSkillsQuery, Skill[]> skillsQueryHandler,
-            ICommandHandler<AddSkillCommand> addSkillCommandHandler,
-            IQueryHandler<GetEntityByIdQuery<Skill>, Skill> getSkillByIdQueryHandler)
+        public SkillsController(
+            IQueryProcessor queryProcessor,
+            ICommandHandler<AddSkillCommand> addSkillCommandHandler)
         {
-            this.skillsQueryHandler = skillsQueryHandler;
+            this.queryProcessor = queryProcessor;
             this.addSkillCommandHandler = addSkillCommandHandler;
-            this.getSkillByIdQueryHandler = getSkillByIdQueryHandler;
         }
 
         // GET: Skills
         public ActionResult Index()
         {
-            var skills = this.skillsQueryHandler.Handle(new GetAllSkillsQuery());
+            var skills = this.queryProcessor.Execute(new GetAllSkillsQuery());
             return View(skills);
         }
 
@@ -37,7 +35,7 @@ namespace NinjaHive.WebApp.Controllers
 
         public ActionResult Edit(Guid skillId)
         {
-            var skill = this.getSkillByIdQueryHandler.Handle(new GetEntityByIdQuery<Skill>(skillId));
+            var skill = this.queryProcessor.Execute(new GetEntityByIdQuery<Skill>(skillId));
 
             return View(skill);
         }

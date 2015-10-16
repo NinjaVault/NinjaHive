@@ -17,6 +17,7 @@ using NinjaHive.BusinessLayer.QueryHandlers;
 using NinjaHive.BusinessLayer.Services;
 using NinjaHive.Core;
 using NinjaHive.Core.Decorators;
+using NinjaHive.Core.Services;
 using NinjaHive.Domain;
 using NinjaHive.WebApp.Models.IdentityModels;
 using Owin;
@@ -90,6 +91,8 @@ namespace NinjaHive.WebApp
 
         private static void RegisterQueryHandlers()
         {
+            container.RegisterSingleton<IQueryProcessor, QueryProcessor>();
+
             container.Register(typeof(IQueryHandler<,>), typeof(GetEntityByIdQueryHandler<>));
             container.Register(typeof (IQueryHandler<,>), Bootstrapper.GetAssemblies());
 
