@@ -78,6 +78,8 @@ namespace NinjaHive.WebApp
 
             container.AddRegistration(typeof(NinjaHiveContext), dbContextRegistration);
             container.AddRegistration(typeof(DbContext), dbContextRegistration);
+
+            container.Register(typeof(IRepository<>), typeof(NinjaHiveRepository<>), Lifestyle.Scoped);
         }
 
         private static void RegisterCommandHandlers()
