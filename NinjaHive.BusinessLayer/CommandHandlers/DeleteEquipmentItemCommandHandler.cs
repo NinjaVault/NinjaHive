@@ -1,24 +1,23 @@
 ﻿using NinjaHive.Contract.Commands;
 using NinjaHive.Core;
 using NinjaHive.Domain;
-using NinjaHive.Domain.Extensions;
 
 namespace NinjaHive.BusinessLayer.CommandHandlers
 {
     public class DeleteEquipmentItemCommandHandler 
         : ICommandHandler<DeleteEquipmentItemCommand>
     {
-        private readonly NinjaHiveContext db;
-        
-        public DeleteEquipmentItemCommandHandler(NinjaHiveContext db)
+        private readonly IRepository<EquipmentItemEntity> equipmentItemRepository;
+
+        public DeleteEquipmentItemCommandHandler(IRepository<EquipmentItemEntity> equipmentItemRepository)
         {
-            this.db = db;
+            this.equipmentItemRepository = equipmentItemRepository;
         }
 
         public void Handle(DeleteEquipmentItemCommand command)
         {
-            var equipmentItem = this.db.GameItemEntities.GetById(command.EquipmentItem.Id);
-            db.GameItemEntities.Remove(equipmentItem);
+            var equipmentItem = this.equipmentItemRepository.GetById(command.EquipmentItem.Id);
+            this.equipmentItemRepository.Remove(equipmentItem);
         }
     }
 }

@@ -9,17 +9,17 @@ namespace NinjaHive.BusinessLayer.QueryHandlers
     public class GetAllSkillsQueryHandler
         : IQueryHandler<GetAllSkillsQuery, Skill[]>
     {
-        private readonly NinjaHiveContext db;
+        private readonly IRepository<SkillEntity> skillsRepository;
 
-        public GetAllSkillsQueryHandler(NinjaHiveContext db)
+        public GetAllSkillsQueryHandler(IRepository<SkillEntity> skillsRepository)
         {
-            this.db = db;
+            this.skillsRepository = skillsRepository;
         }
 
         public Skill[] Handle(GetAllSkillsQuery query)
         {
             var skills =
-                from skill in this.db.SkillEntities
+                from skill in this.skillsRepository.Entities
                 select new Skill
                 {
                     Id = skill.Id,

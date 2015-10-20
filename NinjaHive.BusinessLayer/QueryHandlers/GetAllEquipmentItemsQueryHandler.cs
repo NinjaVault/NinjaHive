@@ -10,14 +10,15 @@ namespace NinjaHive.BusinessLayer.QueryHandlers
     public class GetAllEquipmentItemsQueryHandler
         : IQueryHandler<GetAllEquipmentItemsQuery, EquipmentItem[]>
     {
-        private readonly NinjaHiveContext db;
-        private readonly IEntityMapper<EquipmentItemEntity, EquipmentItem> itemMapper; 
+        private readonly IRepository<EquipmentItemEntity> equipmentItemRepository; 
+        private readonly IEntityMapper<EquipmentItemEntity, EquipmentItem> itemMapper;
 
-        public GetAllEquipmentItemsQueryHandler(NinjaHiveContext db,
+        public GetAllEquipmentItemsQueryHandler(
+            IRepository<EquipmentItemEntity> equipmentItemRepository,
             IEntityMapper<EquipmentItemEntity, EquipmentItem> itemMapper)
         {
-            this.db = db;
             this.itemMapper = itemMapper;
+            this.equipmentItemRepository = equipmentItemRepository;
         }
 
         public EquipmentItem[] Handle(GetAllEquipmentItemsQuery query)
@@ -29,8 +30,7 @@ namespace NinjaHive.BusinessLayer.QueryHandlers
 
         private IEnumerable<EquipmentItemEntity> GetEquipmentItems()
         {
-            var equipmentItems = this.db.GameItemEntities.OfType<EquipmentItemEntity>();
-            return equipmentItems.ToArray(); //load into memory here
+            return this.equipmentItemRepository.Entities.ToArray(); //load into memory here
         }
 
         private EquipmentItem[] MapEquipmentItems(IEnumerable<EquipmentItemEntity> equipmentItems)

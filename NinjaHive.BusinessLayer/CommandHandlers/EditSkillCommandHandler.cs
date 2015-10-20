@@ -3,24 +3,23 @@ using NinjaHive.Contract.Commands;
 using NinjaHive.Core;
 using NinjaHive.Domain;
 using NinjaHive.Domain.Enums;
-using NinjaHive.Domain.Extensions;
 
 namespace NinjaHive.BusinessLayer.CommandHandlers
 {
     class EditSkillCommandHandler : ICommandHandler<EditSkillCommand>
     {
-        private readonly NinjaHiveContext db;
+        private readonly IRepository<SkillEntity> skillsRepository;
 
-        public EditSkillCommandHandler(NinjaHiveContext db)
+        public EditSkillCommandHandler(IRepository<SkillEntity> skillsRepository)
         {
-            this.db = db;
+            this.skillsRepository = skillsRepository;
         }
 
         public void Handle(EditSkillCommand command)
         {
             var skill = command.CreateNew
                 ? new SkillEntity()
-                : this.db.SkillEntities.GetById(command.Skill.Id);
+                : this.skillsRepository.GetById(command.Skill.Id);
 
             skill.Id = command.Skill.Id;
             skill.Name = command.Skill.Name;
@@ -34,7 +33,7 @@ namespace NinjaHive.BusinessLayer.CommandHandlers
             if (command.CreateNew)
             {
                 skill.Id = command.Skill.Id;
-                this.db.SkillEntities.Add(skill);
+                this.skillsRepository.Add(skill);
             }
         }
     }

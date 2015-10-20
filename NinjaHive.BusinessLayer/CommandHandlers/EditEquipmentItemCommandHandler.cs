@@ -1,24 +1,23 @@
 ﻿using NinjaHive.Contract.Commands;
 using NinjaHive.Core;
 using NinjaHive.Domain;
-using NinjaHive.Domain.Extensions;
 
 namespace NinjaHive.BusinessLayer.CommandHandlers
 {
     class EditEquipmentItemCommandHandler : ICommandHandler<EditEquipmentItemCommand>
     {
-        private readonly NinjaHiveContext db;
+        private readonly IRepository<EquipmentItemEntity> equipmentItemRepository;
 
-        public EditEquipmentItemCommandHandler(NinjaHiveContext db)
+        public EditEquipmentItemCommandHandler(IRepository<EquipmentItemEntity> equipmentItemRepository)
         {
-            this.db = db;
+            this.equipmentItemRepository = equipmentItemRepository;
         }
 
         public void Handle(EditEquipmentItemCommand command)
         {
             var equipmentItem = command.CreateNew
                 ? new EquipmentItemEntity()
-                : (EquipmentItemEntity) this.db.GameItemEntities.GetById(command.EquipmentItem.Id);
+                : this.equipmentItemRepository.GetById(command.EquipmentItem.Id);
 
             equipmentItem.Name = command.EquipmentItem.Name;
             equipmentItem.Description = command.EquipmentItem.Description;
@@ -33,7 +32,7 @@ namespace NinjaHive.BusinessLayer.CommandHandlers
             if (command.CreateNew)
             {
                 equipmentItem.Id = command.EquipmentItem.Id;
-                this.db.GameItemEntities.Add(equipmentItem);
+                this.equipmentItemRepository.Add(equipmentItem);
             }
         }
     }
