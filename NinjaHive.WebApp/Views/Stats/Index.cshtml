@@ -1,0 +1,35 @@
+﻿@using NinjaHive.Contract.DTOs
+@using NinjaHive.WebApp.Controllers
+@using NinjaHive.WebApp.Services
+@model StatInfo[]
+
+<div class="row">
+    <div class="col-md-12">
+        <br />
+        <p>
+            @Html.ActionLink("Create Stat Info", "Create", null, new { @class = "btn btn-default" })
+        </p>
+        <hr />
+        <h4>List of items in the database</h4>
+    </div>
+    @foreach (var stat in Model)
+    {
+        var statId = stat.Id;
+        var itemDetailsUrl = UrlProvider<StatsController>.GetUrl(c => c.Edit(statId));
+
+        <div class="col-md-2">
+            <div class="thumbnail">
+                <a href="@itemDetailsUrl" class="thumbnail">
+                    <img src="/Content/Images/default_image.png" alt="..." />
+                </a>
+                <div class="caption">
+                    <p></p>
+                    <p>
+                        @Html.ActionLink("Delete", "Delete", stat)<br />
+                        <a href="@itemDetailsUrl"> Edit </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    }
+</div>
