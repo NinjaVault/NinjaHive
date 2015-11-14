@@ -19,15 +19,23 @@
 
         <div class="col-md-2">
             <div class="thumbnail">
-                <a href="@itemDetailsUrl" class="thumbnail">
-                    <img src="/Content/Images/default_image.png" alt="..." />
-                </a>
                 <div class="caption">
-                    <p></p>
-                    <p>
+                        Health: @stat.Health<br/>
+                        Magic: @stat.Magic<br/>
+                        Attack: @stat.Attack<br/>
+                        <div>
+                            Defense: @stat.Defense<br/>
+                            Agility: @stat.Agility<br/>
+                            Intelligence: @stat.Intelligence<br/>
+                            Hunger: @stat.Hunger<br/>
+                            Stamina: @stat.Stamina<br/>
+                            Resistance: @stat.Resistance<br/><br />
+                        </div>
+
+                    @*<a>More...</a><hr style="margin: 0; margin-bottom: 5px;"/>*@
+
                         @Html.ActionLink("Delete", "Delete", stat)<br />
                         <a href="@itemDetailsUrl"> Edit </a>
-                    </p>
                 </div>
             </div>
         </div>
