@@ -17,6 +17,7 @@ namespace NinjaHive.WebApp.Controllers
             example = new StatInfo[1];
             example[0] = new StatInfo();
 
+            example[0].Id = new Guid();
             example[0].Agility = 0;
             example[0].Defense = 10;
             example[0].Health = -23;
@@ -33,9 +34,18 @@ namespace NinjaHive.WebApp.Controllers
             return View();
         }
 
+        [HttpPost]
+        public ActionResult Create(StatInfo stat)
+        {
+            stat.Id = Guid.NewGuid();
+           
+            var redirectUri = UrlProvider<StatsController>.GetRouteValues(c => c.Index());
+            return RedirectToRoute(redirectUri);
+        }
+
         public ActionResult Edit(Guid statId)
         {
-            return View();
+            return View(example[0]);
         }      
     }
 }
