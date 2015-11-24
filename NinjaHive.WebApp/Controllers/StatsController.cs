@@ -10,23 +10,24 @@ namespace NinjaHive.WebApp.Controllers
 {
     public class StatsController : Controller
     {
-        private StatInfo[] example;
+        private readonly IQueryProcessor queryProcessor;
+        private readonly ICommandHandler<EditStatCommand> editStatCommandHandler;
+        private readonly ICommandHandler<DeleteStatCommand> deleteStatCommand;
 
-        public StatsController()
+        public StatsController(
+            IQueryProcessor queryProcessor,
+            ICommandHandler<EditStatCommand> editStatCommandHandler,
+            ICommandHandler<DeleteStatCommand> deleteStatCommand)
         {
-            example = new StatInfo[1];
-            example[0] = new StatInfo();
-
-            example[0].Id = new Guid();
-            example[0].Agility = 0;
-            example[0].Defense = 10;
-            example[0].Health = -23;
-            example[0].Intelligence = 0;
+            this.queryProcessor = queryProcessor;
+            this.editStatCommandHandler = editStatCommandHandler;
+            this.deleteStatCommand = deleteStatCommand;
         }
 
         public ActionResult Index()
         {
-            return View(example);
+            var stats = this.queryProcessor.Execute(new GetAllStatsQuery());
+            return View(stats);
         }
 
         public ActionResult Create()
@@ -38,14 +39,31 @@ namespace NinjaHive.WebApp.Controllers
         public ActionResult Create(StatInfo stat)
         {
             stat.Id = Guid.NewGuid();
-           
+            var command = new EditStatCommand(stat, createNew: true);
+            this.editStatCommandHandler.Handle(command);
+
             var redirectUri = UrlProvider<StatsController>.GetRouteValues(c => c.Index());
             return RedirectToRoute(redirectUri);
         }
 
         public ActionResult Edit(Guid statId)
         {
-            return View(example[0]);
-        }      
+            var stat = this.queryProcessor.Execute(new GetEntityByIdQuery<StatInfo>(statId));
+
+            return View(stat);
+        }
+
+        public ActionResult Delete(StatInfo stat)
+        {
+            var command = new DeleteStatCommand()
+            {
+                Stat = stat
+            };
+
+            deleteStatCommand.Handle(command);
+
+            var redirectUri = UrlProvider<StatsController>.GetRouteValues(c => c.Index());
+            return RedirectToRoute(redirectUri);
+        }
     }
 }
