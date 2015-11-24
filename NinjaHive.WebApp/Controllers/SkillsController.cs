@@ -30,17 +30,17 @@ namespace NinjaHive.WebApp.Controllers
             var skills = this.queryProcessor.Execute(new GetAllSkillsQuery());
             return View(skills);
         }
-
-        public ActionResult Create()
-        {
-            return View();
-        }
-
+      
         public ActionResult Edit(Guid skillId)
         {
             var skill = this.queryProcessor.Execute(new GetEntityByIdQuery<Skill>(skillId));
 
             return View(skill);
+        }
+
+        public ActionResult Create()
+        {
+            return View();
         }
 
         [HttpPost]
@@ -52,7 +52,7 @@ namespace NinjaHive.WebApp.Controllers
 
             var redirectUri = UrlProvider<SkillsController>.GetRouteValues(c => c.Index());
             return RedirectToRoute(redirectUri);
-        }
+        }  
 
         public ActionResult Delete(Skill skill)
         {
