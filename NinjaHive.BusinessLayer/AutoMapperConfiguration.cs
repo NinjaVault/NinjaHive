@@ -19,6 +19,8 @@ namespace NinjaHive.BusinessLayer
             Mapper.CreateMap<SkillEntity, Skill>()
                   .ForMember(destination => destination.TargetCount,
                       options => options.MapFrom(source => source.Targets));
+
+            Mapper.CreateMap<StatInfoEntity, StatInfo>();                
         }
     };
 }
