@@ -13,15 +13,21 @@ namespace NinjaHive.WebApp.Controllers
         private readonly IQueryProcessor queryProcessor;
         private readonly ICommandHandler<EditSkillCommand> editSkillCommandHandler;
         private readonly ICommandHandler<DeleteSkillCommand> deleteSkillCommandHandler;
+        private readonly ICommandHandler<EditStatCommand> editStatCommandHandler;
+        private readonly ICommandHandler<DeleteStatCommand> deleteStatCommand;
 
         public SkillsController(
             IQueryProcessor queryProcessor,
             ICommandHandler<EditSkillCommand> editSkillCommandHandler,
-            ICommandHandler<DeleteSkillCommand> deleteSkillCommandHandler)
+            ICommandHandler<DeleteSkillCommand> deleteSkillCommandHandler,
+            ICommandHandler<EditStatCommand> editStatCommandHandler,
+            ICommandHandler<DeleteStatCommand> deleteStatCommandHandler)
         {
             this.queryProcessor = queryProcessor;
             this.editSkillCommandHandler = editSkillCommandHandler;
             this.deleteSkillCommandHandler = deleteSkillCommandHandler;
+            this.editStatCommandHandler = editStatCommandHandler;
+            this.deleteStatCommand = deleteStatCommand;
         }
 
         // GET: Skills
