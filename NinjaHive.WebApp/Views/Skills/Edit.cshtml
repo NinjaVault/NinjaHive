@@ -1,12 +1,14 @@
-﻿@using NinjaHive.Contract.DTOs
-@model Skill
+﻿@using NinjaHive.WebApp.Models.Skills
+@model SkillViewModel
 
 <div class="">
     @using (Html.BeginForm())
     {
         <header class="modal-header">
             <h2 class="text-primary " style="font-size: 24px; font-weight:bold; margin-bottom: 0px; vertical-align:bottom; position:relative;">Details: New Skill </h2>
-            <div style="position:relative; margin-top: 10px;"><input type="submit" value="Save" class="btn btn-default" /></div>
+            <div style="position:relative; margin-top: 10px;"><input type="submit" value="Save" class="btn btn-default" />
+                @Html.HiddenFor(m => m.StatId) 
+            </div>
         </header>
 
         <div id="verticalMenu" class="panel-default col-lg-2" style="margin-top: 10px; padding: 0; padding-left: 5px; padding-right: 5px; ">
@@ -20,15 +22,15 @@
                 <table class="table table-bordered text-right text-uppercase" style="bottom: 0; margin:0; padding:0; position: relative;">
                     <tr>
                         <td style="vertical-align: middle; font-weight:bold;"> Name </td>
-                        <td> @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @style = "max-width: 100%;" })</td>
+                        <td> @Html.TextBoxFor(m => m.SkillName, new { @class = "form-control", @style = "max-width: 100%;" })</td>
                     </tr>
                     <tr>
                         <td style="vertical-align: middle; font-weight:bold;"> Range </td>
-                        <td> @Html.TextBoxFor(m => m.Range, new { @type = "number", @class = "form-control", @style = "max-width: 100%;" })</td>
+                        <td> @Html.TextBoxFor(m => m.SkillRange, new { @type = "number", @class = "form-control", @style = "max-width: 100%;" })</td>
                     </tr>
                     <tr>
                         <td style="vertical-align: middle; font-weight:bold;"> Radius </td>
-                        <td> @Html.TextBoxFor(m => m.Radius, new { @type = "number", @class = "form-control", @style = "max-width: 100%;" })</td>
+                        <td> @Html.TextBoxFor(m => m.SkillRadius, new { @type = "number", @class = "form-control", @style = "max-width: 100%;" })</td>
                     </tr>
                     <tr>
                         @{
@@ -48,11 +50,11 @@
                         }
 
                         <td style="vertical-align: middle; font-weight:bold;"> Target </td>
-                        <td>@Html.DropDownListFor(m => m.Target, targets, new { @class = "form-control", @style = "max-width: 100%;" })</td>
+                        <td>@Html.DropDownListFor(m => m.SkillTarget, targets, new { @class = "form-control", @style = "max-width: 100%;" })</td>
                     </tr>
                     <tr>
                         <td style="vertical-align: middle; font-weight:bold; padding-left: 10px;"> Target Count </td>
-                        <td> @Html.TextBoxFor(m => m.TargetCount, new { @type = "number", @class = "form-control", @style = "max-width: 100%;" })</td>
+                        <td> @Html.TextBoxFor(m => m.SkillTargetCount, new { @type = "number", @class = "form-control", @style = "max-width: 100%;" })</td>
                     </tr>
                     <tr>
                         <td style="vertical-align: middle; font-weight:bold; padding-left: 10px;"> Friendly </td>
@@ -74,7 +76,7 @@
                                         }
                                 };
                         }
-                        <td>@Html.DropDownListFor(m => m.Friendly, boolean, new { @class = "form-control", @style = "max-width: 100%;" })</td>
+                        <td>@Html.DropDownListFor(m => m.SkillFriendly, boolean, new { @class = "form-control", @style = "max-width: 100%;" })</td>
                     </tr>
                 </table>
             </div>
