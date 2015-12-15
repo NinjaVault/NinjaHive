@@ -8,7 +8,6 @@ namespace NinjaHive.Contract.DTOs
     {
         [NonEmptyGuid]
         public Guid Id { get; set; }
-
         [Required]
         public string Name { get; set; }
 
@@ -17,5 +16,7 @@ namespace NinjaHive.Contract.DTOs
         public int Target { get; set; }
         public int TargetCount { get; set; }
         public bool Friendly { get; set; }
+
+        public Guid StatInfoId { get; set; }
     }
 }
