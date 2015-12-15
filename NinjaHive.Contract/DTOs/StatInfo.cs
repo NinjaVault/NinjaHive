@@ -18,6 +18,5 @@ namespace NinjaHive.Contract.DTOs
         public int Hunger { get; set; }
         public int Stamina { get; set; }
         public double Resistance { get; set; }
-
     }
 }
