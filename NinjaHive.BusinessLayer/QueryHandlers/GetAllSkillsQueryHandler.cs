@@ -10,21 +10,33 @@ namespace NinjaHive.BusinessLayer.QueryHandlers
         : IQueryHandler<GetAllSkillsQuery, Skill[]>
     {
         private readonly IRepository<SkillEntity> skillsRepository;
+        private readonly IEntityMapper<SkillEntity, Skill> skillMapper; 
 
-        public GetAllSkillsQueryHandler(IRepository<SkillEntity> skillsRepository)
+        public GetAllSkillsQueryHandler(
+            IRepository<SkillEntity> skillsRepository,
+            IEntityMapper<SkillEntity, Skill> skillMapper)
         {
             this.skillsRepository = skillsRepository;
+            this.skillMapper = skillMapper;
         }
 
         public Skill[] Handle(GetAllSkillsQuery query)
         {
             var skills =
                 from skill in this.skillsRepository.Entities
-                select new Skill
+                //select this.skillMapper.Map(skill);
+                select new Skill ()
                 {
-                    Id = skill.Id,
+                    StatInfoId = skill.StatInfo.Id,
+                    Friendly = skill.Friendly,
                     Name = skill.Name,
+                    Radius = skill.Radius,
+                    Range = skill.Range,
+                    Target = (int)skill.Target,
+                    TargetCount = skill.Targets,
+                    Id = skill.Id
                 };
+           
 
             return skills.ToArray();
         }
