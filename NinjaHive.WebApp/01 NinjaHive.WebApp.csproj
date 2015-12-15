@@ -206,8 +206,8 @@
     <Compile Include="Controllers\EquipmentItemController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\SkillsController.cs" />
-    <Compile Include="Controllers\StatsController.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\SkillViewModels.cs" />
     <Compile Include="Models\IdentityModels\ApplicationDbContext.cs" />
     <Compile Include="Models\IdentityModels\ApplicationUser.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -297,9 +297,6 @@
     <Content Include="Views\Skills\Index.cshtml" />
     <Content Include="Views\Skills\Create.cshtml" />
     <Content Include="Views\Skills\Edit.cshtml" />
-    <Content Include="Views\Stats\Edit.cshtml" />
-    <Content Include="Views\Stats\Create.cshtml" />
-    <Content Include="Views\Stats\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
