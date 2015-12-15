@@ -15,18 +15,19 @@
     @foreach (var item in Model)
     {
         var itemId = item.Id;
-        var itemDetailsUrl = UrlProvider<SkillsController>.GetUrl(c => c.Edit(itemId));
+        var editUrl = UrlProvider<SkillsController>.GetUrl(c => c.Edit(itemId));
+        var deleteUrl = UrlProvider<SkillsController>.GetUrl(c => c.Delete(itemId));
 
         <div class="col-md-2">
             <div class="thumbnail">
-                <a href="@itemDetailsUrl" class="thumbnail">
+                <a href="@editUrl" class="thumbnail">
                     <img src="/Content/Images/default_image.png" alt="..." />
                 </a>
                 <div class="caption">
                     <p>@item.Name</p>
                     <p>
-                        @Html.ActionLink("Delete", "Delete", item)<br />
-                        <a href="@itemDetailsUrl"> Edit </a>
+                        <a href="@deleteUrl"> Delete </a><br/>
+                        <a href="@editUrl"> Edit </a>
                     </p>
                 </div>
             </div>
