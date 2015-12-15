@@ -16,7 +16,7 @@ namespace NinjaHive.BusinessLayer.CommandHandlers
 
         public void Handle(DeleteSkillCommand command)
         {
-            var skillItem = this.skillEntityRepository.GetById(command.Skill.Id);
+            var skillItem = this.skillEntityRepository.GetById(command.Skill.Id);   
             this.skillEntityRepository.Remove(skillItem);
         }
     }
