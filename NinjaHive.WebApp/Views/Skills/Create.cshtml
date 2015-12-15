@@ -1,5 +1,5 @@
-﻿@using NinjaHive.Contract.DTOs
-@model Skill
+﻿@using NinjaHive.WebApp.Models.Skills
+@model SkillViewModel
 
 <div class="">
     @using (Html.BeginForm())
@@ -20,15 +20,15 @@
                 <table class="table table-bordered text-right text-uppercase" style="bottom: 0; margin:0; padding:0; position: relative;">
                     <tr>
                         <td style="vertical-align: middle; font-weight:bold;"> Name </td>
-                        <td> @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @style = "max-width: 100%;" })</td>
+                        <td> @Html.TextBoxFor(m => m.SkillName, new { @class = "form-control", @style = "max-width: 100%;" })</td>
                     </tr>
                     <tr>
                         <td style="vertical-align: middle; font-weight:bold;"> Range </td>
-                        <td> @Html.TextBoxFor(m => m.Range, new { @type = "number", @class = "form-control", @style = "max-width: 100%;" })</td>
+                        <td> @Html.TextBoxFor(m => m.SkillRange, new { @type = "number", @class = "form-control", @style = "max-width: 100%;" })</td>
                     </tr>
                     <tr>
                         <td style="vertical-align: middle; font-weight:bold;"> Radius </td>
-                        <td> @Html.TextBoxFor(m => m.Radius, new { @type = "number", @class = "form-control", @style = "max-width: 100%;" })</td>
+                        <td> @Html.TextBoxFor(m => m.SkillRadius, new { @type = "number", @class = "form-control", @style = "max-width: 100%;" })</td>
                     </tr>
                     <tr>
                         @{
@@ -47,11 +47,11 @@
                         }
 
                         <td style="vertical-align: middle; font-weight:bold;"> Target </td>
-                        <td>@Html.DropDownListFor(m => m.Target, targets, new { @class = "form-control", @style = "max-width: 100%;" })</td>
+                        <td>@Html.DropDownListFor(m => m.SkillTarget, targets, new { @class = "form-control", @style = "max-width: 100%;" })</td>
                     </tr>
                     <tr>
                         <td style="vertical-align: middle; font-weight:bold; padding-left: 10px;"> Target Count </td>
-                        <td> @Html.TextBoxFor(m => m.TargetCount, new { @type = "number", @class = "form-control", @style = "max-width: 100%;" })</td>
+                        <td> @Html.TextBoxFor(m => m.SkillTargetCount, new { @type = "number", @class = "form-control", @style = "max-width: 100%;" })</td>
                     </tr>
                     <tr>
                         <td style="vertical-align: middle; font-weight:bold; padding-left: 10px;"> Friendly </td>
@@ -73,31 +73,11 @@
                                         }
                                 };                                
                         }
-                        <td>@Html.DropDownListFor(m => m.Friendly, boolean, new { @class = "form-control", @style = "max-width: 100%;" })</td>
+                        <td>@Html.DropDownListFor(m => m.SkillFriendly, boolean, new { @class = "form-control", @style = "max-width: 100%;" })</td>
                     </tr>
                 </table>
             </div>
 
         </div>
-        <div class="panel-default col-lg-4" style="margin-top: 10px; margin-bottom: 10px; padding: 0; padding-left: 5px; padding-right: 5px; height: 100%;">
-            <div style="padding-bottom: 10px;">
-                <canvas id="sparkViewer" width="800" height="600" style="max-width:100%; display:table-column;">
-                    You have to update your broswer to use the SparkViewer viewer
-                </canvas>
-            </div>
-        </div>
     }
 </div>
-
-@*<div class="row">
-        <div class="col-md-4">
-            <h2>Add an Item</h2>
-                <p>Create an EquipmentItem by giving the item a name and pressing the button to add it.</p>
-                @using (Html.BeginForm())
-                {
-                    @Html.LabelFor(m => m.Name, new { @class = "control-label" })
-                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
-                    <input type="submit" value="Add Item" class="btn btn-default" />
-                }
-        </div>
-    </div>*@
