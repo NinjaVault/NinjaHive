@@ -7,6 +7,7 @@ using NinjaHive.WebApp.Models;
 namespace NinjaHive.WebApp.Controllers
 {
     [Authorize]
+    [RequireHttps]
     public class AccountController : BaseController
     {
         private readonly IAuthenticationManager authenticationManager;
