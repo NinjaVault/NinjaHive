@@ -4,12 +4,11 @@ namespace NinjaHive.WebApp.Models
 {
     public class LoginViewModel
     {
-        [Required]
-        [Display(Name = "Email")]
-        [EmailAddress]
-        public string Email { get; set; }
+        [Required(ErrorMessage = "{0} is required")]
+        [Display(Name = "Username")]
+        public string Username { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "{0} is required")]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }

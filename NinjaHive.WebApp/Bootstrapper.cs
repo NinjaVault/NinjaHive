@@ -19,7 +19,7 @@ using NinjaHive.Core;
 using NinjaHive.Core.Decorators;
 using NinjaHive.Core.Services;
 using NinjaHive.Domain;
-using NinjaHive.WebApp.Models.IdentityModels;
+using NinjaHive.WebApp.Services;
 using Owin;
 using SimpleInjector;
 using SimpleInjector.Advanced;
@@ -68,6 +68,7 @@ namespace NinjaHive.WebApp
         {
             container.RegisterSingleton(typeof (IEntityMapper<>), typeof (EntitiesAutoMapper<>));
             container.RegisterSingleton(typeof (IEntityMapper<,>), typeof (EntitiesAutoMapper<,>));
+            container.Register<IWebUserContext, HttpWebUserContext>(Lifestyle.Scoped);
         }
 
         private static void RegisterNinjaHiveDatabase()
@@ -106,10 +107,10 @@ namespace NinjaHive.WebApp
             container.RegisterSingleton(app);
 
             container.RegisterPerWebRequest<ApplicationUserManager>();
-            container.RegisterPerWebRequest<ApplicationSignInManager>();
-            
+
+            var connectionString = ConfigurationManager.ConnectionStrings["Identity"].ConnectionString;
             container.RegisterPerWebRequest(
-                () => new ApplicationDbContext("DefaultConnection"));
+                () => new ApplicationDbContext(connectionString));
 
             container.RegisterPerWebRequest<IUserStore<ApplicationUser>>(
                 () => new UserStore<ApplicationUser>(container.GetInstance<ApplicationDbContext>()));
@@ -128,22 +129,22 @@ namespace NinjaHive.WebApp
             // Configure validation logic for usernames
             manager.UserValidator = new UserValidator<ApplicationUser>(manager)
             {
-                AllowOnlyAlphanumericUserNames = false,
-                RequireUniqueEmail = true
+                AllowOnlyAlphanumericUserNames = true,
+                RequireUniqueEmail = false,
             };
 
             // Configure validation logic for passwords
             manager.PasswordValidator = new PasswordValidator
             {
                 RequiredLength = 6,
-                RequireNonLetterOrDigit = true,
-                RequireDigit = true,
-                RequireLowercase = true,
-                RequireUppercase = true,
+                RequireNonLetterOrDigit = false,
+                RequireDigit = false,
+                RequireLowercase = false,
+                RequireUppercase = false,
             };
 
             // Configure user lockout defaults
-            manager.UserLockoutEnabledByDefault = true;
+            manager.UserLockoutEnabledByDefault = false;
             manager.DefaultAccountLockoutTimeSpan = TimeSpan.FromMinutes(5);
             manager.MaxFailedAccessAttemptsBeforeLockout = 5;
 

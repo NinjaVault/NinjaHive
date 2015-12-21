@@ -1,7 +1,7 @@
 ﻿using System.Web.Mvc;
 using System.Web.Routing;
 using NinjaHive.WebApp.Controllers;
-using NinjaHive.WebApp.Services;
+using NinjaHive.WebApp.Helpes;
 
 namespace NinjaHive.WebApp
 {
@@ -10,8 +10,8 @@ namespace NinjaHive.WebApp
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-
-            var defaultUri = UrlProvider<EquipmentItemController>.GetRouteValues(c => c.Index());
+            routes.MapMvcAttributeRoutes();
+            var defaultUri = UrlProvider<ItemsController>.GetRouteValues(c => c.Index());
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

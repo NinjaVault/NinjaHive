@@ -6,7 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace NinjaHive.WebApp.Services
+namespace NinjaHive.WebApp.Helpes
 {
     public static class UrlProvider<TController> where TController : Controller
     {

@@ -203,16 +203,13 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\EquipmentItemController.cs" />
-    <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\SkillsController.cs" />
-    <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\SkillViewModels.cs" />
-    <Compile Include="Models\IdentityModels\ApplicationDbContext.cs" />
-    <Compile Include="Models\IdentityModels\ApplicationUser.cs" />
-    <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\ItemsController.cs" />
+    <Compile Include="Extensions\ClaimsIdentityExtensions.cs" />
+    <Compile Include="Models\AccountViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\UrlProvider.cs" />
+    <Compile Include="Helpes\UrlProvider.cs" />
+    <Compile Include="Services\HttpWebUserContext.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -239,22 +236,6 @@
     <None Include="Properties\PublishProfiles\NinjaHive.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
-    <Content Include="Scripts\externals\core\Camera.js" />
-    <Content Include="Scripts\externals\core\input\MobileInputManager.js" />
-    <Content Include="Scripts\externals\core\input\PcInputManager.js" />
-    <Content Include="Scripts\externals\core\math\Matrix4.js" />
-    <Content Include="Scripts\externals\core\math\Vector2.js" />
-    <Content Include="Scripts\externals\core\math\Vector3.js" />
-    <Content Include="Scripts\externals\core\Renderer.js" />
-    <Content Include="Scripts\externals\core\RendererUtils.js" />
-    <Content Include="Scripts\externals\core\RenderMaterial.js" />
-    <Content Include="Scripts\externals\core\RenderMesh.js" />
-    <Content Include="Scripts\externals\core\RenderModel.js" />
-    <Content Include="Scripts\externals\core\RenderTypes.js" />
-    <Content Include="Scripts\externals\core\utils\JRV\JRV.js" />
-    <Content Include="Scripts\externals\core\utils\ObjLoader.js" />
-    <Content Include="Scripts\externals\core\utils\ShapeGenerator.js" />
-    <Content Include="Scripts\externals\SparkPreviewer.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js" />
     <Content Include="Scripts\jquery-2.1.4.min.map" />
@@ -271,7 +252,6 @@
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Views\EquipmentItem\Create.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -281,26 +261,14 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\EquipmentItem\Index.cshtml" />
+    <Content Include="Views\Shared\General\_Layout.cshtml" />
+    <Content Include="Views\Items\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
-    <Content Include="Views\Manage\ChangePassword.cshtml" />
-    <Content Include="Views\Manage\Index.cshtml" />
-    <Content Include="Views\Manage\ManageLogins.cshtml" />
-    <Content Include="Views\Manage\SetPassword.cshtml" />
-    <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
-    <Content Include="Views\Shared\Lockout.cshtml" />
-    <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\EquipmentItem\Edit.cshtml" />
-    <Content Include="Views\Skills\Index.cshtml" />
-    <Content Include="Views\Skills\Create.cshtml" />
-    <Content Include="Views\Skills\Edit.cshtml" />
+    <Content Include="Views\Shared\General\_NavbarNavPartial.cshtml" />
+    <Content Include="Views\Shared\General\_LoginPartial.cshtml" />
+    <Content Include="Views\Errors\DefaultError.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
@@ -322,9 +290,6 @@
       <Project>{93e5e378-93e2-4117-b76d-a972e378caef}</Project>
       <Name>05 NinjaHive.Domain</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

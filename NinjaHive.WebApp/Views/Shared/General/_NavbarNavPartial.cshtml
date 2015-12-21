@@ -1,0 +1,10 @@
+﻿@if (Request.IsAuthenticated)
+{
+    var controller = ViewContext.RouteData.Values["Controller"].ToString();
+
+    <ul class="nav navbar-nav">
+        <li class="active">
+            @Html.ActionLink("Home", "Index", "EquipmentItem")
+        </li>
+    </ul>
+}

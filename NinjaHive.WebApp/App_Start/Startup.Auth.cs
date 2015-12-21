@@ -3,7 +3,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
-using NinjaHive.WebApp.Models.IdentityModels;
+using NinjaHive.WebApp.Extensions;
 using Owin;
 using SimpleInjector;
 
@@ -24,14 +24,27 @@ namespace NinjaHive.WebApp
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
                 LoginPath = new PathString("/Account/Login"),
+                SlidingExpiration = true,
+                ExpireTimeSpan = TimeSpan.FromMinutes(60),
                 Provider = new CookieAuthenticationProvider
                 {
                     // Enables the application to validate the security stamp when the user logs in.
-                    // This is a security feature which is used when you change a password or add an external login to your account.  
-                    OnValidateIdentity = SecurityStampValidator.OnValidateIdentity<ApplicationUserManager, ApplicationUser>(
-                        validateInterval: TimeSpan.FromMinutes(30),
-                        regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager))
-                }
+                    // This is a security feature which is used when you change a password or add an external login to your account.
+                    OnValidateIdentity = async (context) =>
+                        {
+                            await SecurityStampValidator.OnValidateIdentity<ApplicationUserManager, ApplicationUser>(
+                                validateInterval: TimeSpan.FromMinutes(5),
+                                regenerateIdentity: (manager, user) =>
+                                    user.GenerateUserIdentityAsync(manager, context.Identity.GetIsPersistent())
+                            )(context);
+
+                            var newResponseGrant = context.OwinContext.Authentication.AuthenticationResponseGrant;
+                            if (newResponseGrant != null)
+                            {
+                                newResponseGrant.Properties.IsPersistent = context.Identity.GetIsPersistent();
+                            }
+                        }
+                },
             });            
         }
     }
