@@ -219,6 +219,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Images\default_image.png" />
+    <Content Include="Content\Win8Loader.css" />
     <Content Include="favicon.ico" />
     <Content Include="Content\Site.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -269,6 +270,7 @@
     <Content Include="Views\Shared\General\_LoginPartial.cshtml" />
     <Content Include="Views\Errors\DefaultError.cshtml" />
     <Content Include="Views\Items\Create.cshtml" />
+    <Content Include="Views\Shared\General\_LoadingPartial.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
