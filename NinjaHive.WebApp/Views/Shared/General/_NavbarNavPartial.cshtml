@@ -1,10 +1,12 @@
-﻿@if (Request.IsAuthenticated)
-{
-    var controller = ViewContext.RouteData.Values["Controller"].ToString();
+﻿@using NinjaHive.WebApp.Controllers
+@using NinjaHive.WebApp.Extensions
 
+@if (Request.IsAuthenticated)
+{
     <ul class="nav navbar-nav">
         <li class="active">
-            @Html.ActionLink("Home", "Index", "EquipmentItem")
+            @{ var homeAnchor = Html.HtmlActionLink<ItemsController>("Home", c => c.Index()); }
+            @homeAnchor
         </li>
     </ul>
 }

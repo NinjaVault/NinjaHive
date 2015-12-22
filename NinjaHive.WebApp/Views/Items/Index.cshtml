@@ -1,3 +1,23 @@
-﻿<div class="row">
-    <p>Hello World</p>
+﻿@using NinjaHive.WebApp.Controllers
+@using NinjaHive.WebApp.Extensions
+
+<div class="row">
+    <div class="page-header">
+        <h2>Equipment Items</h2>
+
+        @{ var createUrl = Url.Action<ItemsController>(c => c.Create()); }
+        <a class="btn btn-primary" href="@createUrl" role="button">
+            Create
+        </a>
+        <div class="btn-group" role="group">
+            <a class="btn btn-warning" href="#" role="button" disabled="disabled">Edit</a>
+            <a class="btn btn-danger" href="#" role="button" disabled="disabled">Delete</a>
+        </div>
+    </div>
+
+    <div id="ninjahive-content-container">
+        <div id="ninjahive-content">
+
+        </div>
+    </div>
 </div>
