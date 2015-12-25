@@ -52,10 +52,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EntityEditHandler.cs" />
     <Compile Include="Enums\BodySlots.cs" />
     <Compile Include="Enums\Targets.cs" />
     <Compile Include="Extensions\DbSetExtensions.cs" />
     <Compile Include="IEntity.cs" />
+    <Compile Include="IEntityEditHandler.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="NinjaHiveContext.cs" />
     <Compile Include="NinjaHiveEntities.Context.cs">
@@ -99,6 +101,12 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NinjaHive.Core\06 NinjaHive.Core.csproj">
+      <Project>{1087016a-3d9a-41b4-8893-13d56f7d7f75}</Project>
+      <Name>06 NinjaHive.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

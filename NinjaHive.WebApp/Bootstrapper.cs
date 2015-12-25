@@ -68,18 +68,21 @@ namespace NinjaHive.WebApp
         {
             container.RegisterSingleton(typeof (IEntityMapper<>), typeof (EntitiesAutoMapper<>));
             container.RegisterSingleton(typeof (IEntityMapper<,>), typeof (EntitiesAutoMapper<,>));
-            container.Register<IWebUserContext, HttpWebUserContext>(Lifestyle.Scoped);
+            container.Register<IUserContext, HttpWebUserContext>(Lifestyle.Scoped);
+            container.RegisterSingleton<ITimeProvider, SystemTimeProvider>();
         }
 
         private static void RegisterNinjaHiveDatabase()
         {
             var connectionString = ConfigurationManager.ConnectionStrings["NinjaHiveContext"].ConnectionString;
 
-            var dbContextRegistration = Lifestyle.Scoped.CreateRegistration(() => new NinjaHiveContext(connectionString), container);
+            var dbContextRegistration = Lifestyle.Scoped.CreateRegistration(
+                () => new NinjaHiveContext(connectionString), container);
 
             container.AddRegistration(typeof(NinjaHiveContext), dbContextRegistration);
             container.AddRegistration(typeof(DbContext), dbContextRegistration);
 
+            container.Register<IEntityEditHandler, EntityEditHandler>(Lifestyle.Scoped);
             container.Register(typeof(IRepository<>), typeof(NinjaHiveRepository<>), Lifestyle.Scoped);
         }
 

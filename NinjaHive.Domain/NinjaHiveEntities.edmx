@@ -11,6 +11,10 @@
           </Key>
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="255" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="EditedOn" Type="datetime" Nullable="false" />
+          <Property Name="EditedBy" Type="nvarchar" MaxLength="255" Nullable="false" />
         </EntityType>
         <EntityType Name="EquipmentItems">
           <Key>
@@ -58,6 +62,10 @@
           <Property Name="IsCrafter" Type="bit" Nullable="false" />
           <Property Name="IsQuestItem" Type="bit" Nullable="false" />
           <Property Name="Value" Type="int" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="EditedOn" Type="datetime" Nullable="false" />
+          <Property Name="EditedBy" Type="nvarchar" MaxLength="255" Nullable="false" />
         </EntityType>
         <EntityType Name="Levels">
           <Key>
@@ -68,6 +76,10 @@
           <Property Name="Threshold" Type="int" Nullable="false" />
           <Property Name="FKTiersId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="FKStatInfoId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="EditedOn" Type="datetime" Nullable="false" />
+          <Property Name="EditedBy" Type="nvarchar" MaxLength="255" Nullable="false" />
         </EntityType>
         <EntityType Name="MiscItems">
           <Key>
@@ -98,6 +110,10 @@
           </Key>
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="255" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="EditedOn" Type="datetime" Nullable="false" />
+          <Property Name="EditedBy" Type="nvarchar" MaxLength="255" Nullable="false" />
         </EntityType>
         <EntityType Name="Skills">
           <Key>
@@ -111,6 +127,10 @@
           <Property Name="Target" Type="int" Nullable="false" />
           <Property Name="Friendly" Type="bit" Nullable="false" />
           <Property Name="FKStatInfoId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="EditedOn" Type="datetime" Nullable="false" />
+          <Property Name="EditedBy" Type="nvarchar" MaxLength="255" Nullable="false" />
         </EntityType>
         <EntityType Name="SkillsSpecialsAssociation">
           <Key>
@@ -126,6 +146,10 @@
           </Key>
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="255" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="EditedOn" Type="datetime" Nullable="false" />
+          <Property Name="EditedBy" Type="nvarchar" MaxLength="255" Nullable="false" />
         </EntityType>
         <EntityType Name="StatInfo">
           <Key>
@@ -141,6 +165,10 @@
           <Property Name="Agility" Type="int" Nullable="false" />
           <Property Name="Intelligence" Type="int" Nullable="false" />
           <Property Name="Resistance" Type="float" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="EditedOn" Type="datetime" Nullable="false" />
+          <Property Name="EditedBy" Type="nvarchar" MaxLength="255" Nullable="false" />
         </EntityType>
         <EntityType Name="Tiers">
           <Key>
@@ -150,6 +178,10 @@
           <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Tier" Type="int" Nullable="false" />
           <Property Name="FKEquipmentItemsId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="EditedOn" Type="datetime" Nullable="false" />
+          <Property Name="EditedBy" Type="nvarchar" MaxLength="255" Nullable="false" />
         </EntityType>
         <EntityType Name="TiersCraftingItemsAssociation">
           <Key>
@@ -685,6 +717,7 @@
           <Property Name="IsCrafter" Type="Boolean" Nullable="false" />
           <Property Name="IsQuestItem" Type="Boolean" Nullable="false" />
           <Property Name="Value" Type="Int32" Nullable="false" />
+          <Property Name="EditInfo" Type="NinjaHiveEntities.EditInfo" Nullable="false" />
         </EntityType>
         <EntityType Name="RaceEntity">
           <Key>
@@ -692,6 +725,7 @@
           </Key>
           <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="None" />
           <Property Name="Name" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="EditInfo" Type="NinjaHiveEntities.EditInfo" Nullable="false" />
         </EntityType>
         <EntityType Name="ClassEntity">
           <Key>
@@ -699,6 +733,7 @@
           </Key>
           <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="None" />
           <Property Name="Name" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="EditInfo" Type="NinjaHiveEntities.EditInfo" Nullable="false" />
         </EntityType>
         <EntityType Name="OtherItemEntity" BaseType="NinjaHiveEntities.GameItemEntity" >
           <Property Name="IsEnhancer" Type="Boolean" Nullable="false" />
@@ -733,6 +768,7 @@
           <NavigationProperty Name="Skills" Relationship="NinjaHiveEntities.TiersSkillsAssociation" FromRole="TierEntity" ToRole="SkillEntity" />
           <NavigationProperty Name="UpgradeIngredients" Relationship="NinjaHiveEntities.TiersUpgradeItemsAssociation" FromRole="TierEntity" ToRole="GameItemEntity" />
           <NavigationProperty Name="CraftingIngredients" Relationship="NinjaHiveEntities.TiersCraftingItemsAssociation" FromRole="TierEntity" ToRole="GameItemEntity" />
+          <Property Name="EditInfo" Type="NinjaHiveEntities.EditInfo" Nullable="false" />
         </EntityType>
         <EntityType Name="LevelEntity">
           <Key>
@@ -743,6 +779,7 @@
           <Property Name="Threshold" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Tier" Relationship="NinjaHiveEntities.TiersLevelsAssociation" FromRole="LevelEntity" ToRole="TierEntity" />
           <NavigationProperty Name="StatInfo" Relationship="NinjaHiveEntities.LevelsStatInfoAssociation" FromRole="LevelEntity" ToRole="StatInfoEntity" />
+          <Property Name="EditInfo" Type="NinjaHiveEntities.EditInfo" Nullable="false" />
         </EntityType>
         <EntityType Name="SkillEntity">
           <Key>
@@ -757,6 +794,7 @@
           <Property Name="Friendly" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Specials" Relationship="NinjaHiveEntities.SkillsSpecialsAssociation" FromRole="SkillEntity" ToRole="SpecialEntity" />
           <NavigationProperty Name="StatInfo" Relationship="NinjaHiveEntities.SkillsStatInfoAssociation" FromRole="SkillEntity" ToRole="StatInfoEntity" />
+          <Property Name="EditInfo" Type="NinjaHiveEntities.EditInfo" Nullable="false" />
         </EntityType>
         <EntityType Name="StatInfoEntity">
           <Key>
@@ -772,6 +810,7 @@
           <Property Name="Agility" Type="Int32" Nullable="false" DefaultValue="0" />
           <Property Name="Intelligence" Type="Int32" Nullable="false" DefaultValue="0" />
           <Property Name="Resistance" Type="Double" Nullable="false" DefaultValue="0" />
+          <Property Name="EditInfo" Type="NinjaHiveEntities.EditInfo" Nullable="false" />
         </EntityType>
         <EntityType Name="SpecialEntity">
           <Key>
@@ -779,6 +818,7 @@
           </Key>
           <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="None" />
           <Property Name="Name" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="EditInfo" Type="NinjaHiveEntities.EditInfo" Nullable="false" />
         </EntityType>
         <EnumType Name="Target" cg:ExternalTypeName="NinjaHive.Domain.Enums.Target" />
         <Association Name="EquipmentItemsTiersAssociation">
@@ -837,6 +877,12 @@
           <End Type="NinjaHiveEntities.TierEntity" Role="TierEntity" Multiplicity="*" />
           <End Type="NinjaHiveEntities.GameItemEntity" Role="GameItemEntity" Multiplicity="*" />
         </Association>
+        <ComplexType Name="EditInfo">
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="String" Name="CreatedBy" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="EditedOn" Nullable="false" Precision="3" />
+          <Property Type="String" Name="EditedBy" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -855,6 +901,12 @@
                 <ScalarProperty Name="Category" ColumnName="Category" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+                <ComplexProperty Name="EditInfo">
+                  <ScalarProperty Name="EditedBy" ColumnName="EditedBy" />
+                  <ScalarProperty Name="EditedOn" ColumnName="EditedOn" />
+                  <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                  <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                </ComplexProperty>
               </MappingFragment>
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(NinjaHiveEntities.EquipmentItemEntity)">
@@ -885,6 +937,12 @@
                 <ScalarProperty Name="Tier" ColumnName="Tier" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+                <ComplexProperty Name="EditInfo">
+                  <ScalarProperty Name="EditedBy" ColumnName="EditedBy" />
+                  <ScalarProperty Name="EditedOn" ColumnName="EditedOn" />
+                  <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                  <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                </ComplexProperty>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -901,6 +959,12 @@
                 <ScalarProperty Name="Magic" ColumnName="Magic" />
                 <ScalarProperty Name="Health" ColumnName="Health" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+                <ComplexProperty Name="EditInfo">
+                  <ScalarProperty Name="EditedBy" ColumnName="EditedBy" />
+                  <ScalarProperty Name="EditedOn" ColumnName="EditedOn" />
+                  <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                  <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                </ComplexProperty>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -909,6 +973,12 @@
               <MappingFragment StoreEntitySet="Races">
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+                <ComplexProperty Name="EditInfo">
+                  <ScalarProperty Name="EditedBy" ColumnName="EditedBy" />
+                  <ScalarProperty Name="EditedOn" ColumnName="EditedOn" />
+                  <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                  <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                </ComplexProperty>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -917,6 +987,12 @@
               <MappingFragment StoreEntitySet="Classes">
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+                <ComplexProperty Name="EditInfo">
+                  <ScalarProperty Name="EditedBy" ColumnName="EditedBy" />
+                  <ScalarProperty Name="EditedOn" ColumnName="EditedOn" />
+                  <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                  <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                </ComplexProperty>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -926,6 +1002,12 @@
                 <ScalarProperty Name="Threshold" ColumnName="Threshold" />
                 <ScalarProperty Name="Level" ColumnName="Level" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+                <ComplexProperty Name="EditInfo">
+                  <ScalarProperty Name="EditedBy" ColumnName="EditedBy" />
+                  <ScalarProperty Name="EditedOn" ColumnName="EditedOn" />
+                  <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                  <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                </ComplexProperty>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -939,6 +1021,12 @@
                 <ScalarProperty Name="Range" ColumnName="Range" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+                <ComplexProperty Name="EditInfo">
+                  <ScalarProperty Name="EditedBy" ColumnName="EditedBy" />
+                  <ScalarProperty Name="EditedOn" ColumnName="EditedOn" />
+                  <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                  <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                </ComplexProperty>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -947,6 +1035,12 @@
               <MappingFragment StoreEntitySet="Specials">
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+                <ComplexProperty Name="EditInfo">
+                  <ScalarProperty Name="EditedBy" ColumnName="EditedBy" />
+                  <ScalarProperty Name="EditedOn" ColumnName="EditedOn" />
+                  <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                  <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                </ComplexProperty>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -14,8 +14,17 @@ namespace NinjaHive.Domain
     
     public partial class ClassEntity : NinjaHive.Domain.IEntity
     {
+        public ClassEntity()
+        {
+            this.EditInfo = new EditInfo();
+            this.OnCreated();
+        }
+    
+        partial void OnCreated();
         public System.Guid Id { get; set; }
         public string Name { get; set; }
+    
+        public EditInfo EditInfo { get; set; }
     }
 }
 namespace NinjaHive.Domain
@@ -53,6 +62,13 @@ namespace NinjaHive.Domain
     
     public abstract partial class GameItemEntity : NinjaHive.Domain.IEntity
     {
+        public GameItemEntity()
+        {
+            this.EditInfo = new EditInfo();
+            this.OnCreated();
+        }
+    
+        partial void OnCreated();
         public System.Guid Id { get; set; }
         public string Name { get; set; }
         public string Category { get; set; }
@@ -62,6 +78,8 @@ namespace NinjaHive.Domain
         public bool IsCrafter { get; set; }
         public bool IsQuestItem { get; set; }
         public int Value { get; set; }
+    
+        public EditInfo EditInfo { get; set; }
     }
 }
 namespace NinjaHive.Domain
@@ -71,9 +89,18 @@ namespace NinjaHive.Domain
     
     public partial class LevelEntity : NinjaHive.Domain.IEntity
     {
+        public LevelEntity()
+        {
+            this.EditInfo = new EditInfo();
+            this.OnCreated();
+        }
+    
+        partial void OnCreated();
         public System.Guid Id { get; set; }
         public int Level { get; set; }
         public int Threshold { get; set; }
+    
+        public EditInfo EditInfo { get; set; }
     
         public virtual TierEntity Tier { get; set; }
         public virtual StatInfoEntity StatInfo { get; set; }
@@ -117,8 +144,17 @@ namespace NinjaHive.Domain
     
     public partial class RaceEntity : NinjaHive.Domain.IEntity
     {
+        public RaceEntity()
+        {
+            this.EditInfo = new EditInfo();
+            this.OnCreated();
+        }
+    
+        partial void OnCreated();
         public System.Guid Id { get; set; }
         public string Name { get; set; }
+    
+        public EditInfo EditInfo { get; set; }
     }
 }
 namespace NinjaHive.Domain
@@ -134,6 +170,7 @@ namespace NinjaHive.Domain
             this.Radius = 0;
             this.Targets = 1;
             this.Specials = new HashSet<SpecialEntity>();
+            this.EditInfo = new EditInfo();
             this.OnCreated();
         }
     
@@ -146,6 +183,8 @@ namespace NinjaHive.Domain
         public NinjaHive.Domain.Enums.Target Target { get; set; }
         public bool Friendly { get; set; }
     
+        public EditInfo EditInfo { get; set; }
+    
         public virtual ICollection<SpecialEntity> Specials { get; set; }
         public virtual StatInfoEntity StatInfo { get; set; }
     }
@@ -157,8 +196,17 @@ namespace NinjaHive.Domain
     
     public partial class SpecialEntity : NinjaHive.Domain.IEntity
     {
+        public SpecialEntity()
+        {
+            this.EditInfo = new EditInfo();
+            this.OnCreated();
+        }
+    
+        partial void OnCreated();
         public System.Guid Id { get; set; }
         public string Name { get; set; }
+    
+        public EditInfo EditInfo { get; set; }
     }
 }
 namespace NinjaHive.Domain
@@ -179,6 +227,7 @@ namespace NinjaHive.Domain
             this.Agility = 0;
             this.Intelligence = 0;
             this.Resistance = 0D;
+            this.EditInfo = new EditInfo();
             this.OnCreated();
         }
     
@@ -193,6 +242,8 @@ namespace NinjaHive.Domain
         public int Agility { get; set; }
         public int Intelligence { get; set; }
         public double Resistance { get; set; }
+    
+        public EditInfo EditInfo { get; set; }
     }
 }
 namespace NinjaHive.Domain
@@ -208,6 +259,7 @@ namespace NinjaHive.Domain
             this.Skills = new HashSet<SkillEntity>();
             this.UpgradeIngredients = new HashSet<GameItemEntity>();
             this.CraftingIngredients = new HashSet<GameItemEntity>();
+            this.EditInfo = new EditInfo();
             this.OnCreated();
         }
     
@@ -216,11 +268,25 @@ namespace NinjaHive.Domain
         public string Name { get; set; }
         public int Tier { get; set; }
     
+        public EditInfo EditInfo { get; set; }
+    
         public virtual EquipmentItemEntity EquipmentItem { get; set; }
         public virtual ICollection<LevelEntity> Levels { get; set; }
         public virtual ICollection<SkillEntity> Skills { get; set; }
         public virtual ICollection<GameItemEntity> UpgradeIngredients { get; set; }
         public virtual ICollection<GameItemEntity> CraftingIngredients { get; set; }
+    }
+}
+namespace NinjaHive.Domain
+{
+    using System;
+    
+    public partial class EditInfo
+    {
+        public System.DateTime CreatedOn { get; set; }
+        public string CreatedBy { get; set; }
+        public System.DateTime EditedOn { get; set; }
+        public string EditedBy { get; set; }
     }
 }
 namespace NinjaHive.Domain

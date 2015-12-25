@@ -1,8 +1,8 @@
 ﻿namespace NinjaHive.Core
 {
-    public interface IWebUserContext
+    public interface IUserContext
     {
-        string UserName { get; }
         string Id { get; }
+        string UserName { get; }
     }
 }

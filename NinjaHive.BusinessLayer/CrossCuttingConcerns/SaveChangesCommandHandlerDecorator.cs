@@ -1,4 +1,5 @@
-﻿using System.Data.Entity.Validation;
+﻿using System.Data.Entity;
+using System.Data.Entity.Validation;
 using NinjaHive.Core;
 using NinjaHive.Domain;
 
@@ -8,13 +9,16 @@ namespace NinjaHive.BusinessLayer.CrossCuttingConcerns
         : ICommandHandler<TCommand>
     {
         private readonly ICommandHandler<TCommand> decoratee;
-        private readonly NinjaHiveContext databaseContext;
+        private readonly IEntityEditHandler entityEditHandler;
+        private readonly DbContext databaseContext;
 
         public SaveChangesCommandHandlerDecorator(
             ICommandHandler<TCommand> decoratee,
-            NinjaHiveContext databaseContext)
+            IEntityEditHandler entityEditHandler,
+            DbContext databaseContext)
         {
             this.decoratee = decoratee;
+            this.entityEditHandler = entityEditHandler;
             this.databaseContext = databaseContext;
         }
 
@@ -24,6 +28,7 @@ namespace NinjaHive.BusinessLayer.CrossCuttingConcerns
 
             try
             {
+                this.entityEditHandler.SaveEditInfo();
                 this.databaseContext.SaveChanges();
             }
             catch (DbEntityValidationException validationException)
