@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 namespace NinjaHive.Core.Validations
 {
     /// <summary>
-    /// Use on Guids to validate that the Guid may not be empty.
+    /// Use on Guids to validate that the Guid cannot be empty.
     /// </summary>
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
     public class NonEmptyGuidAttribute : ValidationAttribute

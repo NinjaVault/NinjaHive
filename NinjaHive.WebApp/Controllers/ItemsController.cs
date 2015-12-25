@@ -33,7 +33,7 @@ namespace NinjaHive.WebApp.Controllers
         [HttpPost]
         public ActionResult Create(GameItemModel model)
         {
-            //if (ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 var item = new GameItemModel
                 {
