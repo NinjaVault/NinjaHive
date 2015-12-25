@@ -208,7 +208,9 @@
     <Compile Include="Extensions\ClaimsIdentityExtensions.cs" />
     <Compile Include="Extensions\UrlExtensions.cs" />
     <Compile Include="Helpes\Partials.cs" />
+    <Compile Include="Helpes\RegEx.cs" />
     <Compile Include="Models\AccountViewModel.cs" />
+    <Compile Include="Models\GameItemModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpes\UrlProvider.cs" />
     <Compile Include="Services\HttpWebUserContext.cs" />

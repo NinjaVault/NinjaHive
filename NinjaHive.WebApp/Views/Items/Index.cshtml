@@ -4,12 +4,13 @@
 
 <div class="row">
     <div class="page-header">
-        <h2>Equipment Items</h2>
-
-        @{ var createUrl = Url.Action<ItemsController>(c => c.Create()); }
-        <a class="btn btn-primary" href="@createUrl" role="button">
-            Create
-        </a>
+        <h2>
+            Game Items
+            @{ var createUrl = Url.Action<ItemsController>(c => c.Create()); }
+            <a class="btn btn-primary" href="@createUrl" role="button">
+                Create
+            </a>
+        </h2>
     </div>
 
     <div id="ninjahive-content-container">
@@ -24,7 +25,7 @@
 
 @section Scripts {
     <script>
-        $(function() {
+        $(function () {
             $("#ninjahive-content").empty();
             $("#ninjahive-content-container .loading").show();
 
@@ -33,13 +34,13 @@
                 url: "@getUrl",
                 cache: false,
                 dataType: "html",
-                success: function(responseData) {
+                success: function (responseData) {
                     $("#ninjahive-content").html(responseData);
                 },
-                error: function() {
+                error: function () {
                     $("#ninjahive-content").html('@Html.Partial(Partials.AjaxError)'); //TODO: accept newlines Html.Raw?
                 },
-                complete: function() {
+                complete: function () {
                     $("#ninjahive-content-container .loading").hide();
                 }
             };

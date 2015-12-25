@@ -4,10 +4,15 @@ using NinjaHive.Core.Validations;
 
 namespace NinjaHive.Contract.Commands
 {
-    public class DeleteEquipmentItemCommand
+    public class AddGameItemCommand
     {
+        public AddGameItemCommand(GameItem item)
+        {
+            this.Item = item;
+        }
+
         [Required]
         [ValidateObject]
-        public GameItem EquipmentItem { get; set; }
+        public GameItem Item { get; set; }
     }
 }

@@ -5,7 +5,7 @@
 {
     <ul class="nav navbar-nav">
         <li class="active">
-            @{ var homeAnchor = Html.HtmlActionLink<ItemsController>("Home", c => c.Index()); }
+            @{ var homeAnchor = Html.HtmlActionLink<ItemsController>("Items", c => c.Index()); }
             @homeAnchor
         </li>
     </ul>

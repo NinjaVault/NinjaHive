@@ -40,12 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commands\DeleteSkillCommand.cs" />
-    <Compile Include="Commands\DeleteStatCommand.cs" />
-    <Compile Include="Commands\EditEquipmentItemCommand.cs" />
-    <Compile Include="Commands\EditSkillCommand.cs" />
-    <Compile Include="Commands\DeleteEquipmentItemCommand.cs" />
-    <Compile Include="Commands\EditStatCommand.cs" />
+    <Compile Include="Commands\AddGameItemCommand.cs" />
     <Compile Include="DTOs\GameItem.cs" />
     <Compile Include="DTOs\Skill.cs" />
     <Compile Include="DTOs\StatInfo.cs" />
