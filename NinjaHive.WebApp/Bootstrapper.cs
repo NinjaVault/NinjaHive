@@ -76,6 +76,11 @@ namespace NinjaHive.WebApp
         {
             var connectionString = ConfigurationManager.ConnectionStrings["NinjaHiveContext"].ConnectionString;
 
+#if DEBUG
+            connectionString += "MultipleActiveResultSets=True;App=NinjaHiveContext";
+            connectionString = BuildEntityConnectionString(connectionString, "NinjaHiveEntities");
+#endif
+
             var dbContextRegistration = Lifestyle.Scoped.CreateRegistration(
                 () => new NinjaHiveContext(connectionString), container);
 
@@ -165,5 +170,19 @@ namespace NinjaHive.WebApp
         {
             return AppDomain.CurrentDomain.GetAssemblies();
         }
+
+#if DEBUG
+        public static string BuildEntityConnectionString(string connectionString, string modelName)
+        {
+            var builder = new System.Data.Entity.Core.EntityClient.EntityConnectionStringBuilder
+            {
+                Metadata = string.Format("res://*/{0}.csdl|res://*/{0}.ssdl|res://*/{0}.msl", modelName),
+                Provider = "System.Data.SqlClient",
+                ProviderConnectionString = connectionString
+            };
+
+            return builder.ToString();
+        }
+#endif
     }
 }

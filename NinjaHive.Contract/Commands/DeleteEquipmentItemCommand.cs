@@ -8,6 +8,6 @@ namespace NinjaHive.Contract.Commands
     {
         [Required]
         [ValidateObject]
-        public EquipmentItem EquipmentItem { get; set; }
+        public GameItem EquipmentItem { get; set; }
     }
 }

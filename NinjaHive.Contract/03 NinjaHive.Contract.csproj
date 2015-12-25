@@ -46,11 +46,11 @@
     <Compile Include="Commands\EditSkillCommand.cs" />
     <Compile Include="Commands\DeleteEquipmentItemCommand.cs" />
     <Compile Include="Commands\EditStatCommand.cs" />
-    <Compile Include="DTOs\EquipmentItem.cs" />
+    <Compile Include="DTOs\GameItem.cs" />
     <Compile Include="DTOs\Skill.cs" />
     <Compile Include="DTOs\StatInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Queries\GetAllEquipmentItemsQuery.cs" />
+    <Compile Include="Queries\GetAllGameItemsQuery.cs" />
     <Compile Include="Queries\GetAllSkillsQuery.cs" />
     <Compile Include="Queries\GetAllStatsQuery.cs" />
     <Compile Include="Queries\GetEntityByIdQuery.cs" />

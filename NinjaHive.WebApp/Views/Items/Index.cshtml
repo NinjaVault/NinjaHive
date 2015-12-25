@@ -24,3 +24,30 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        $(function() {
+            $("#ninjahive-content").empty();
+            $("#ninjahive-content-container .loading").show();
+
+            var options = {
+                @{ var getUrl = Url.Action<ItemsController>(c => c.GetGameItems()); }
+                url: "@getUrl",
+                cache: false,
+                dataType: "html",
+                success: function(responseData) {
+                    $("#ninjahive-content").html(responseData);
+                },
+                error: function() {
+                    $("#ninjahive-content").html('@Html.Partial("General/_AjaxErrorPartial")'); //TODO: accept newlines Html.Raw?
+                },
+                complete: function() {
+                    $("#ninjahive-content-container .loading").hide();
+                }
+            };
+
+            $.ajax(options);
+        });
+    </script>
+}

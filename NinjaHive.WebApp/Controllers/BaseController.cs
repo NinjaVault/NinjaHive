@@ -10,5 +10,10 @@ namespace NinjaHive.WebApp.Controllers
             var homeUrl = UrlProvider<ItemsController>.GetUrl(c => c.Index());
             return Redirect(homeUrl);
         }
+
+        protected virtual ActionResult NoResults()
+        {
+            return PartialView("General/_NoResultsPartial");
+        }
     }
 }

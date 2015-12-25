@@ -6,7 +6,7 @@ namespace NinjaHive.Contract.Commands
 {
     public class EditEquipmentItemCommand
     {
-        public EditEquipmentItemCommand(EquipmentItem equipmentItem, bool createNew)
+        public EditEquipmentItemCommand(GameItem equipmentItem, bool createNew)
         {
             this.EquipmentItem = equipmentItem;
             this.CreateNew = createNew;
@@ -14,7 +14,7 @@ namespace NinjaHive.Contract.Commands
 
         [Required]
         [ValidateObject]
-        public EquipmentItem EquipmentItem { get; set; }
+        public GameItem EquipmentItem { get; set; }
 
         public bool CreateNew { get; set; }
     }

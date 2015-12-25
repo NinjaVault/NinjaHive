@@ -704,7 +704,7 @@
             <End Role="GameItemEntity" EntitySet="GameItemEntities" />
           </AssociationSet>
           </EntityContainer>
-        <EntityType Name="GameItemEntity" Abstract="true">
+        <EntityType Name="GameItemEntity" Abstract="false">
           <Key>
             <PropertyRef Name="Id" />
           </Key>

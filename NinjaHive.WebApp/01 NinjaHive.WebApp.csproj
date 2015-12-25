@@ -271,6 +271,9 @@
     <Content Include="Views\Errors\DefaultError.cshtml" />
     <Content Include="Views\Items\Create.cshtml" />
     <Content Include="Views\Shared\General\_LoadingPartial.cshtml" />
+    <Content Include="Views\Shared\General\_NoResultsPartial.cshtml" />
+    <Content Include="Views\Shared\General\_AjaxErrorPartial.cshtml" />
+    <Content Include="Views\Items\_GameItemsPartial.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
