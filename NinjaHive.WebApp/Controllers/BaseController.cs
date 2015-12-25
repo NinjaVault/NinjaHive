@@ -13,7 +13,7 @@ namespace NinjaHive.WebApp.Controllers
 
         protected virtual ActionResult NoResults()
         {
-            return PartialView("General/_NoResultsPartial");
+            return PartialView(Partials.NoResults);
         }
     }
 }

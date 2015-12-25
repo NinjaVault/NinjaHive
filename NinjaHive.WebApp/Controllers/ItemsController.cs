@@ -2,6 +2,7 @@
 using System.Web.Mvc;
 using NinjaHive.Contract.Queries;
 using NinjaHive.Core;
+using NinjaHive.WebApp.Helpes;
 
 namespace NinjaHive.WebApp.Controllers
 {
@@ -32,7 +33,7 @@ namespace NinjaHive.WebApp.Controllers
 
             if (gameItems.Any())
             {
-                return this.PartialView("_GameItemsPartial", gameItems);
+                return this.PartialView(Partials.GameItems, gameItems);
             }
 
             return base.NoResults();

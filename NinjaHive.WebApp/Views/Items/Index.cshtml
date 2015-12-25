@@ -1,5 +1,6 @@
 ﻿@using NinjaHive.WebApp.Controllers
 @using NinjaHive.WebApp.Extensions
+@using NinjaHive.WebApp.Helpes
 
 <div class="row">
     <div class="page-header">
@@ -9,15 +10,11 @@
         <a class="btn btn-primary" href="@createUrl" role="button">
             Create
         </a>
-        <div class="btn-group" role="group">
-            <a class="btn btn-warning" href="#" role="button" disabled="disabled">Edit</a>
-            <a class="btn btn-danger" href="#" role="button" disabled="disabled">Delete</a>
-        </div>
     </div>
 
     <div id="ninjahive-content-container">
         <div class="loading">
-            @Html.Partial("General/_LoadingPartial")
+            @Html.Partial(Partials.Loading)
         </div>
         <div id="ninjahive-content">
 
@@ -40,7 +37,7 @@
                     $("#ninjahive-content").html(responseData);
                 },
                 error: function() {
-                    $("#ninjahive-content").html('@Html.Partial("General/_AjaxErrorPartial")'); //TODO: accept newlines Html.Raw?
+                    $("#ninjahive-content").html('@Html.Partial(Partials.AjaxError)'); //TODO: accept newlines Html.Raw?
                 },
                 complete: function() {
                     $("#ninjahive-content-container .loading").hide();

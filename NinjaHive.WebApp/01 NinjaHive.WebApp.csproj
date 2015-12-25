@@ -207,6 +207,7 @@
     <Compile Include="Controllers\ItemsController.cs" />
     <Compile Include="Extensions\ClaimsIdentityExtensions.cs" />
     <Compile Include="Extensions\UrlExtensions.cs" />
+    <Compile Include="Helpes\Partials.cs" />
     <Compile Include="Models\AccountViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpes\UrlProvider.cs" />
