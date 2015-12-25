@@ -1,4 +1,4 @@
-﻿namespace NinjaHive.WebApp.Helpes
+﻿namespace NinjaHive.Core.Helpers
 {
     public static class RegEx
     {

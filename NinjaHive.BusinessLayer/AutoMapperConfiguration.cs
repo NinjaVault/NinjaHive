@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using NinjaHive.Contract.DTOs;
+using NinjaHive.Contract.Models;
 using NinjaHive.Domain;
 
 namespace NinjaHive.BusinessLayer
@@ -8,15 +8,7 @@ namespace NinjaHive.BusinessLayer
     {
         public static void Configure()
         {
-            Mapper.CreateMap<GameItemEntity, GameItem>();
-
-            Mapper.CreateMap<SkillEntity, Skill>()
-                  .ForMember(destination => destination.TargetCount,
-                      options => options.MapFrom(source => source.Targets))
-                  .ForMember(destination => destination.StatInfoId,
-                      options => options.MapFrom(source => source.StatInfo.Id));
-
-            Mapper.CreateMap<StatInfoEntity, StatInfo>();                
+            Mapper.CreateMap<GameItemEntity, GameItemModel>();
         }
     };
 }

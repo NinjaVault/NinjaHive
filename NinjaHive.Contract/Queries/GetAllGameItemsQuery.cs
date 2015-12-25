@@ -1,9 +1,9 @@
-﻿using NinjaHive.Contract.DTOs;
+﻿using NinjaHive.Contract.Models;
 using NinjaHive.Core;
 
 namespace NinjaHive.Contract.Queries
 {
-    public class GetAllGameItemsQuery : IQuery<GameItem[]>
+    public class GetAllGameItemsQuery : IQuery<GameItemModel[]>
     {
     }
 }

@@ -60,6 +60,7 @@
   <ItemGroup>
     <Compile Include="Decorators\LifetimeScopeCommandHandlerProxy.cs" />
     <Compile Include="Decorators\LifetimeScopeQueryHandlerProxy.cs" />
+    <Compile Include="Helpers\RegEx.cs" />
     <Compile Include="ICommandHandler.cs" />
     <Compile Include="IEntityMapper.cs" />
     <Compile Include="IMapper.cs" />

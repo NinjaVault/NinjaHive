@@ -1,11 +1,10 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
 using NinjaHive.Contract.Commands;
-using NinjaHive.Contract.DTOs;
+using NinjaHive.Contract.Models;
 using NinjaHive.Contract.Queries;
 using NinjaHive.Core;
 using NinjaHive.WebApp.Helpes;
-using NinjaHive.WebApp.Models;
 
 namespace NinjaHive.WebApp.Controllers
 {
@@ -34,9 +33,9 @@ namespace NinjaHive.WebApp.Controllers
         [HttpPost]
         public ActionResult Create(GameItemModel model)
         {
-            if (ModelState.IsValid)
+            //if (ModelState.IsValid)
             {
-                var item = new GameItem
+                var item = new GameItemModel
                 {
                     Name = model.Name,
                     Description = model.Description,

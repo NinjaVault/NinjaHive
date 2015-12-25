@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using NinjaHive.Contract.DTOs;
+using NinjaHive.Contract.Models;
 using NinjaHive.Contract.Queries;
 using NinjaHive.Core;
 using NinjaHive.Domain;
@@ -8,20 +8,20 @@ using NinjaHive.Domain;
 namespace NinjaHive.BusinessLayer.QueryHandlers
 {
     public class GetAllGameItemsQueryHandler
-        : IQueryHandler<GetAllGameItemsQuery, GameItem[]>
+        : IQueryHandler<GetAllGameItemsQuery, GameItemModel[]>
     {
         private readonly IRepository<GameItemEntity> itemRepository;
-        private readonly IEntityMapper<GameItemEntity, GameItem> itemMapper;
+        private readonly IEntityMapper<GameItemEntity, GameItemModel> itemMapper;
 
         public GetAllGameItemsQueryHandler(
             IRepository<GameItemEntity> itemRepository,
-            IEntityMapper<GameItemEntity, GameItem> itemMapper)
+            IEntityMapper<GameItemEntity, GameItemModel> itemMapper)
         {
             this.itemMapper = itemMapper;
             this.itemRepository = itemRepository;
         }
 
-        public GameItem[] Handle(GetAllGameItemsQuery query)
+        public GameItemModel[] Handle(GetAllGameItemsQuery query)
         {
             var items = this.GetGameItems();
 
@@ -33,7 +33,7 @@ namespace NinjaHive.BusinessLayer.QueryHandlers
             return this.itemRepository.Entities.ToArray(); //load into memory here
         }
 
-        private GameItem[] MapGameItems(IEnumerable<GameItemEntity> equipmentItems)
+        private GameItemModel[] MapGameItems(IEnumerable<GameItemEntity> equipmentItems)
         {
             var items =
                 from item in equipmentItems

@@ -61,7 +61,6 @@
     <Compile Include="Services\EntitiesAutoMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueryHandlers\GetAllGameItemsQueryHandler.cs" />
-    <Compile Include="QueryHandlers\GetAllSkillsQueryHandler.cs" />
     <Compile Include="QueryHandlers\GetEntityByIdQueryHandler.cs" />
   </ItemGroup>
   <ItemGroup>

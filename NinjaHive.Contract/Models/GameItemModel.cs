@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using NinjaHive.WebApp.Helpes;
+using NinjaHive.Core.Helpers;
 
-namespace NinjaHive.WebApp.Models
+namespace NinjaHive.Contract.Models
 {
     public class GameItemModel
     {
