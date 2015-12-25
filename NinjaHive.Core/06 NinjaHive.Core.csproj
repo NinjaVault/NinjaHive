@@ -69,6 +69,7 @@
     <Compile Include="IQueryProcessor.cs" />
     <Compile Include="ITimeProvider.cs" />
     <Compile Include="IUserContext.cs" />
+    <Compile Include="IWriteOnlyRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\QueryProcessor.cs" />
     <Compile Include="Services\SystemTimeProvider.cs" />

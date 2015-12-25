@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Entity;
+using System.Data.Entity.Core.EntityClient;
 using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
@@ -70,6 +71,7 @@ namespace NinjaHive.WebApp
             container.RegisterSingleton(typeof (IEntityMapper<,>), typeof (EntitiesAutoMapper<,>));
             container.Register<IUserContext, HttpWebUserContext>(Lifestyle.Scoped);
             container.RegisterSingleton<ITimeProvider, SystemTimeProvider>();
+            container.RegisterSingleton(typeof(IWriteOnlyRepository<>), typeof(WriteOnlyCommandRepository<>));
         }
 
         private static void RegisterNinjaHiveDatabase()
@@ -174,7 +176,7 @@ namespace NinjaHive.WebApp
 #if DEBUG
         public static string BuildEntityConnectionString(string connectionString, string modelName)
         {
-            var builder = new System.Data.Entity.Core.EntityClient.EntityConnectionStringBuilder
+            var builder = new EntityConnectionStringBuilder
             {
                 Metadata = string.Format("res://*/{0}.csdl|res://*/{0}.ssdl|res://*/{0}.msl", modelName),
                 Provider = "System.Data.SqlClient",

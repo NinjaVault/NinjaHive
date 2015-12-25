@@ -59,6 +59,7 @@ namespace NinjaHive.WebApp.Tests
             Assert.IsTrue(failed);
         }
 
+        [TestMethod]
         public void PerformValidation_GameItemNameWithInvalidCharacters_ThrowsValidationError()
         {
             // Arrange
@@ -93,11 +94,11 @@ namespace NinjaHive.WebApp.Tests
     {
         public MockAddGameItemCommand(GameItemModel item)
         {
-            this.Item = new AddGameItemCommand(item);
+            this.Item = new CreateEntityCommand<GameItemModel>(item);
         }
 
         [ValidateObject]
-        public AddGameItemCommand Item { get; private set; }
+        public CreateEntityCommand<GameItemModel> Item { get; private set; }
     }
 
     public class MockAddGameItemCommandHandler : ICommandHandler<MockAddGameItemCommand>

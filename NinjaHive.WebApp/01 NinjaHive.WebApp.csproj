@@ -212,6 +212,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpes\UrlProvider.cs" />
     <Compile Include="Services\HttpWebUserContext.cs" />
+    <Compile Include="Services\WriteOnlyCommandRepository.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>

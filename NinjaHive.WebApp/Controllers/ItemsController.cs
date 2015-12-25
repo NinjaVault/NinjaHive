@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
-using NinjaHive.Contract.Commands;
 using NinjaHive.Contract.Models;
 using NinjaHive.Contract.Queries;
 using NinjaHive.Core;
@@ -12,12 +11,13 @@ namespace NinjaHive.WebApp.Controllers
     public class ItemsController : BaseController
     {
         private readonly IQueryProcessor queryProcessor;
-        private readonly ICommandHandler<AddGameItemCommand> commandHandler;
+        private readonly IWriteOnlyRepository<GameItemModel> repository; 
 
-        public ItemsController(IQueryProcessor queryProcessor, ICommandHandler<AddGameItemCommand> commandHandler)
+        public ItemsController(IQueryProcessor queryProcessor,
+            IWriteOnlyRepository<GameItemModel> repository)
         {
             this.queryProcessor = queryProcessor;
-            this.commandHandler = commandHandler;
+            this.repository = repository;
         }
 
         public ActionResult Index()
@@ -40,7 +40,7 @@ namespace NinjaHive.WebApp.Controllers
                     Name = model.Name,
                     Description = model.Description,
                 };
-                this.commandHandler.Handle(new AddGameItemCommand(item));
+                this.repository.Create(item);
 
                 return RedirectToRoute(UrlProvider<ItemsController>.GetRouteValues(c => c.Index()));
             }

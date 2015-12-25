@@ -55,7 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutoMapperConfiguration.cs" />
-    <Compile Include="CommandHandlers\AddGameItemCommandHandler.cs" />
+    <Compile Include="CommandHandlers\GameItemCommandHandler.cs" />
     <Compile Include="CrossCuttingConcerns\SaveChangesCommandHandlerDecorator.cs" />
     <Compile Include="CrossCuttingConcerns\ValidationCommandHandlerDecorator.cs" />
     <Compile Include="Services\EntitiesAutoMapper.cs" />
