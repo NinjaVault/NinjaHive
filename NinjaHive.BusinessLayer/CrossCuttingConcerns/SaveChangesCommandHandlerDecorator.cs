@@ -28,6 +28,7 @@ namespace NinjaHive.BusinessLayer.CrossCuttingConcerns
 
             try
             {
+                this.entityEditHandler.AddIdIfNotExist();
                 this.entityEditHandler.SaveEditInfo();
                 this.databaseContext.SaveChanges();
             }

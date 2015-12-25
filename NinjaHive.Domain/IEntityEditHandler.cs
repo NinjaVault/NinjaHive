@@ -3,5 +3,6 @@
     public interface IEntityEditHandler
     {
         void SaveEditInfo();
+        void AddIdIfNotExist();
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using NinjaHive.Core;
@@ -25,6 +26,19 @@ namespace NinjaHive.Domain
         {
             this.UpdateAddedEntities();
             this.UpdateModifiedEntities();
+        }
+
+        public void AddIdIfNotExist()
+        {
+            var addedEntitiesWithNoIds =
+                this.GetChangeTrackersEntries(EntityState.Added)
+                    .OfType<IEntity>()
+                    .Where(entity => entity.Id == Guid.Empty);
+
+            foreach (var entity in addedEntitiesWithNoIds)
+            {
+                entity.Id = Guid.NewGuid();
+            }
         }
 
         private void UpdateAddedEntities()
