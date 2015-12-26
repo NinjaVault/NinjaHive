@@ -1,0 +1,58 @@
+﻿@using NinjaHive.Contract.Models
+@model GameItemModel
+
+<div class="col-md-6">
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Name, new { @class = "col-md-4 control-label" })
+        <div class="col-md-8">
+            @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Category, new { @class = "col-md-4 control-label" })
+        <div class="col-md-8">
+            @Html.TextBoxFor(m => m.Category, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Category, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Value, new { @class = "col-md-4 control-label" })
+        <div class="col-md-8">
+            @Html.TextBoxFor(m => m.Value, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Value, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Description, new { @class = "col-md-4 control-label" })
+        <div class="col-md-8">
+            @Html.TextAreaFor(m => m.Description, 4, 0, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
+        </div>
+    </div>
+</div>
+<div class="col-md-6">
+    <div class="form-group">
+        @Html.CheckBoxFor(m => m.IsUpgrader)
+        @Html.LabelFor(m => m.IsUpgrader, new { @class = "control-label" })
+    </div>
+    <br/>
+    <div class="form-group">
+        @Html.CheckBoxFor(m => m.IsCrafter)
+        @Html.LabelFor(m => m.IsCrafter, new { @class = "control-label" })
+    </div>
+    <br />
+    <div class="form-group">
+        @Html.CheckBoxFor(m => m.Craftable)
+        @Html.LabelFor(m => m.Craftable, new { @class = "control-label" })
+    </div>
+    <br />
+    <div class="form-group">
+        @Html.CheckBoxFor(m => m.IsQuestItem)
+        @Html.LabelFor(m => m.IsQuestItem, new { @class = "control-label" })
+    </div>
+</div>

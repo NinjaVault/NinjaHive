@@ -1,5 +1,5 @@
 ﻿using System.Web.Mvc;
-using NinjaHive.WebApp.Helpes;
+using NinjaHive.WebApp.Helpers;
 
 namespace NinjaHive.WebApp.Controllers
 {

@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
 using System.Web.Routing;
-using NinjaHive.WebApp.Helpes;
+using NinjaHive.WebApp.Helpers;
 
 namespace NinjaHive.WebApp.Extensions
 {

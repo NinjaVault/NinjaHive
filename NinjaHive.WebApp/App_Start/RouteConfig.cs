@@ -1,7 +1,7 @@
 ﻿using System.Web.Mvc;
 using System.Web.Routing;
 using NinjaHive.WebApp.Controllers;
-using NinjaHive.WebApp.Helpes;
+using NinjaHive.WebApp.Helpers;
 
 namespace NinjaHive.WebApp
 {

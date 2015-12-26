@@ -1,4 +1,4 @@
-﻿namespace NinjaHive.WebApp.Helpes
+﻿namespace NinjaHive.WebApp.Helpers
 {
     public static class Partials
     {
@@ -11,5 +11,6 @@
 
         //Items
         public const string GameItems = "_GameItemsPartial";
+        public const string EditGameItem = "_EditGameItemPartial";
     }
 }

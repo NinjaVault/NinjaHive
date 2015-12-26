@@ -1,9 +1,10 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using NinjaHive.Contract.Models;
 using NinjaHive.Contract.Queries;
 using NinjaHive.Core;
-using NinjaHive.WebApp.Helpes;
+using NinjaHive.WebApp.Helpers;
 
 namespace NinjaHive.WebApp.Controllers
 {
@@ -35,13 +36,7 @@ namespace NinjaHive.WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                var item = new GameItemModel
-                {
-                    Name = model.Name,
-                    Description = model.Description,
-                };
-                this.repository.Create(item);
-
+                this.repository.Create(model);
                 return RedirectToRoute(UrlProvider<ItemsController>.GetRouteValues(c => c.Index()));
             }
 

@@ -23,12 +23,12 @@ namespace NinjaHive.BusinessLayer.CommandHandlers
             {
                 Name = command.Model.Name,
                 Description = command.Model.Description,
-                Category = "Category",
-                Craftable = false,
-                IsCrafter = false,
-                IsQuestItem = false,
-                IsUpgrader = false,
-                Value = 0,
+                Category = command.Model.Category,
+                Craftable = command.Model.Craftable,
+                IsCrafter = command.Model.IsCrafter,
+                IsQuestItem = command.Model.IsQuestItem,
+                IsUpgrader = command.Model.IsUpgrader,
+                Value = command.Model.Value,
             };
 
             this.itemRepository.Add(item);
