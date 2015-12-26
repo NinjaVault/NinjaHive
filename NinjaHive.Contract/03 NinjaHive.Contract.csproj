@@ -43,6 +43,7 @@
     <Compile Include="Commands\CreateEntityCommand.cs" />
     <Compile Include="Commands\DeleteEntityCommand.cs" />
     <Compile Include="Commands\UpdateEntityCommand.cs" />
+    <Compile Include="IModel.cs" />
     <Compile Include="Models\GameItemModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Queries\GetAllGameItemsQuery.cs" />

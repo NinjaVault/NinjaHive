@@ -31,13 +31,32 @@ namespace NinjaHive.WebApp.Controllers
             return View();
         }
 
+        public ActionResult Edit(Guid id)
+        {
+            var query = new GetEntityByIdQuery<GameItemModel>(id);
+            var model = this.queryProcessor.Execute(query);
+            return View(model);
+        }
+
         [HttpPost]
         public ActionResult Create(GameItemModel model)
         {
             if (ModelState.IsValid)
             {
                 this.repository.Create(model);
-                return RedirectToRoute(UrlProvider<ItemsController>.GetRouteValues(c => c.Index()));
+                return base.Home();
+            }
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Edit(GameItemModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                this.repository.Update(model);
+                return base.Home();
             }
 
             return View();

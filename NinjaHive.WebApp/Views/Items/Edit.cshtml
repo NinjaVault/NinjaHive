@@ -1,0 +1,24 @@
+﻿@using NinjaHive.Contract.Models;
+@using NinjaHive.WebApp.Helpers
+@model GameItemModel
+
+<div class="row">
+    <div class="page-header">
+        <h2>
+            Game Item <small>Edit</small>
+        </h2>
+    </div>
+
+    @{ Html.BeginForm("Edit", "Items", FormMethod.Post, new { @class = "form-horizontal", role = "form" }); }
+    @Html.AntiForgeryToken()
+
+    @Html.Partial(Partials.EditGameItem, Model)
+
+    <div class="form-group">
+        <div class="col-md-offset-10 col-md-2">
+            <input type="submit" class="btn btn-primary" value="Save changes" />
+        </div>
+    </div>
+
+    @{ Html.EndForm(); }
+</div>

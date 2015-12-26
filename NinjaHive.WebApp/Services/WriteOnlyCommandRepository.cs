@@ -1,4 +1,5 @@
 ﻿using System;
+using NinjaHive.Contract;
 using NinjaHive.Contract.Commands;
 using NinjaHive.Core;
 
@@ -6,7 +7,7 @@ namespace NinjaHive.WebApp.Services
 {
     public class WriteOnlyCommandRepository<TModel>
         : IWriteOnlyRepository<TModel>
-        where TModel : class
+        where TModel : class, IModel
     {
         private readonly ICommandHandler<CreateEntityCommand<TModel>> createHandler;
         private readonly ICommandHandler<UpdateEntityCommand<TModel>> updateHandler;
@@ -28,9 +29,9 @@ namespace NinjaHive.WebApp.Services
             this.createHandler.Handle(command);
         }
 
-        public void Update(Guid id, TModel model)
+        public void Update(TModel model)
         {
-            var command = new UpdateEntityCommand<TModel>(id, model);
+            var command = new UpdateEntityCommand<TModel>(model.Id, model);
             this.updateHandler.Handle(command);
         }
 

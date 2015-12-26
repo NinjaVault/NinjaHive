@@ -1,10 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using NinjaHive.Core.Helpers;
 
 namespace NinjaHive.Contract.Models
 {
-    public class GameItemModel
+    public class GameItemModel : IModel
     {
+        public Guid Id { get; set; }
+
         [Required(ErrorMessage="{0} is required")]
         [StringLength(255, MinimumLength = 3, ErrorMessage = "{0}, minimum: {2}, maximum: {1}")]
         [RegularExpression(RegEx.AlphaNum, ErrorMessage = "Alphanumerics only")]
@@ -23,9 +26,12 @@ namespace NinjaHive.Contract.Models
 
         [Display(Name = "Upgrade element")]
         public bool IsUpgrader { get; set; }
+
         [Display(Name = "Craft element")]
         public bool IsCrafter { get; set; }
+
         public bool Craftable { get; set; }
+
         [Display(Name = "Quest item")]
         public bool IsQuestItem { get; set; }
     }
