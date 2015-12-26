@@ -39,6 +39,7 @@ namespace NinjaHive.WebApp.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(GameItemModel model)
         {
             if (ModelState.IsValid)
@@ -51,6 +52,7 @@ namespace NinjaHive.WebApp.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(GameItemModel model)
         {
             if (ModelState.IsValid)
