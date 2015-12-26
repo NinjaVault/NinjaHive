@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 
 namespace NinjaHive.Domain
 {
@@ -9,6 +8,5 @@ namespace NinjaHive.Domain
         IQueryable<TEntity> Entities { get; }
         void Add(TEntity entity);
         void Remove(TEntity entity);
-        TEntity GetById(Guid id);
     }
 }

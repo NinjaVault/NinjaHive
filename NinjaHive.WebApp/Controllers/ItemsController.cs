@@ -62,6 +62,12 @@ namespace NinjaHive.WebApp.Controllers
             return View();
         }
 
+        public ActionResult Delete(Guid id)
+        {
+            this.repository.Delete(id);
+            return base.Home();
+        }
+
         public ActionResult GetGameItems()
         {
             var query = new GetAllGameItemsQuery();

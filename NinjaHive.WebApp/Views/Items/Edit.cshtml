@@ -1,4 +1,5 @@
 ﻿@using NinjaHive.Contract.Models;
+@using NinjaHive.WebApp.Controllers
 @using NinjaHive.WebApp.Helpers
 @model GameItemModel
 
@@ -9,16 +10,35 @@
         </h2>
     </div>
 
+    <div class="col-md-offset-10">
+        <button id="deleteItem" type="button" class="btn btn-danger">Delete</button>
+    </div>
+
     @{ Html.BeginForm("Edit", "Items", FormMethod.Post, new { @class = "form-horizontal", role = "form" }); }
     @Html.AntiForgeryToken()
 
     @Html.Partial(Partials.EditGameItem, Model)
 
     <div class="form-group">
-        <div class="col-md-offset-10 col-md-2">
+        <div class="col-md-12">
             <input type="submit" class="btn btn-primary" value="Save changes" />
         </div>
     </div>
 
     @{ Html.EndForm(); }
 </div>
+
+@section Scripts {
+    <script>
+    $(function() {
+        $("#deleteItem").click(function() {
+            var result = true; //TODO: model dialog box: are you sure?
+
+            if (result) {
+                @{ var deleteUrl = UrlProvider<ItemsController>.GetUrl(c => c.Delete(Model.Id)); }
+                window.location.href = "@deleteUrl";
+                }
+            });
+        });
+    </script>
+}

@@ -1,8 +1,8 @@
-﻿using System;
-using NinjaHive.Contract.Commands;
+﻿using NinjaHive.Contract.Commands;
 using NinjaHive.Contract.Models;
 using NinjaHive.Core;
 using NinjaHive.Domain;
+using NinjaHive.Domain.Extensions;
 
 namespace NinjaHive.BusinessLayer.CommandHandlers
 {
@@ -27,7 +27,7 @@ namespace NinjaHive.BusinessLayer.CommandHandlers
 
         public void Handle(UpdateEntityCommand<GameItemModel> command)
         {
-            var entity = this.itemRepository.GetById(command.Id);
+            var entity = this.itemRepository.FindById(command.Id);
             this.UpdateItem(entity, command.Model);
         }
 
@@ -45,7 +45,7 @@ namespace NinjaHive.BusinessLayer.CommandHandlers
 
         public void Handle(DeleteEntityCommand<GameItemModel> command)
         {
-            throw new System.NotImplementedException();
+            this.itemRepository.RemoveById(command.Id);
         }
     }
 }

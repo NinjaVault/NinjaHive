@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using NinjaHive.Domain.Extensions;
+﻿using System.Linq;
 
 namespace NinjaHive.Domain
 {
@@ -26,11 +24,6 @@ namespace NinjaHive.Domain
         public void Remove(TEntity entity)
         {
             this.db.Set<TEntity>().Remove(entity);
-        }
-
-        public TEntity GetById(Guid id)
-        {
-            return this.db.Set<TEntity>().GetById(id);
         }
     }
 }
