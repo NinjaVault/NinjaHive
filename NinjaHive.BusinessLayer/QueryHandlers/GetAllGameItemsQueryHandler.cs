@@ -37,6 +37,7 @@ namespace NinjaHive.BusinessLayer.QueryHandlers
         {
             var items =
                 from item in equipmentItems
+                orderby item.Category.Name, item.Name
                 select this.itemMapper.Map(item);
 
             return items.ToArray();

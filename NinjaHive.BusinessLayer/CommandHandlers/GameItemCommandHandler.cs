@@ -12,10 +12,13 @@ namespace NinjaHive.BusinessLayer.CommandHandlers
         ICommandHandler<DeleteEntityCommand<GameItemModel>>
     {
         private readonly IRepository<GameItemEntity> itemRepository;
+        private readonly IRepository<CategoryEntity> categoryRepository; 
 
-        public GameItemCommandHandler(IRepository<GameItemEntity> itemRepository)
+        public GameItemCommandHandler(IRepository<GameItemEntity> itemRepository,
+            IRepository<CategoryEntity> categoryRepository)
         {
             this.itemRepository = itemRepository;
+            this.categoryRepository = categoryRepository;
         }
 
         public void Handle(CreateEntityCommand<GameItemModel> command)
@@ -35,7 +38,7 @@ namespace NinjaHive.BusinessLayer.CommandHandlers
         {
             entity.Name = model.Name;
             entity.Description = model.Description;
-            entity.Category = model.Category;
+            entity.Category = this.categoryRepository.FindById(model.CategoryId);
             entity.Value = model.Value;
             entity.Craftable = model.Craftable;
             entity.IsQuestItem = model.IsQuestItem;

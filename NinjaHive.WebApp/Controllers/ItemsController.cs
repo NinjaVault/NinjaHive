@@ -5,6 +5,7 @@ using NinjaHive.Contract.Models;
 using NinjaHive.Contract.Queries;
 using NinjaHive.Core;
 using NinjaHive.WebApp.Helpers;
+using NinjaHive.WebApp.Models;
 
 namespace NinjaHive.WebApp.Controllers
 {
@@ -28,6 +29,22 @@ namespace NinjaHive.WebApp.Controllers
 
         public ActionResult Create()
         {
+            var model = new GameItemModel();
+            var viewModel = this.PrepareViewModel(model);
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(GameItemViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                viewModel.UpdateCategory();
+                this.repository.Create(viewModel.GameItem);
+                return base.Home();
+            }
+
             return View();
         }
 
@@ -35,29 +52,18 @@ namespace NinjaHive.WebApp.Controllers
         {
             var query = new GetEntityByIdQuery<GameItemModel>(id);
             var model = this.queryProcessor.Execute(query);
-            return View(model);
+            var viewModel = this.PrepareViewModel(model);
+            return this.View(viewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(GameItemModel model)
+        public ActionResult Edit(GameItemViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                this.repository.Create(model);
-                return base.Home();
-            }
-
-            return View();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(GameItemModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                this.repository.Update(model);
+                viewModel.UpdateCategory();
+                this.repository.Update(viewModel.GameItem);
                 return base.Home();
             }
 
@@ -82,6 +88,18 @@ namespace NinjaHive.WebApp.Controllers
             }
 
             return base.NoResults();
+        }
+
+        private GameItemViewModel PrepareViewModel(GameItemModel model)
+        {
+            var categoryViewModel = this.InitializeAndGetCategories();
+            return new GameItemViewModel(model, categoryViewModel);
+        }
+
+        private CategoryViewModel InitializeAndGetCategories()
+        {
+            var categories = this.queryProcessor.Execute(new GetAllCategoriesQuery());
+            return new CategoryViewModel(categories);
         }
     }
 }

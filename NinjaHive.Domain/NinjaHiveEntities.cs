@@ -12,6 +12,26 @@ namespace NinjaHive.Domain
     using System;
     using System.Collections.Generic;
     
+    public partial class CategoryEntity : NinjaHive.Domain.IEntity
+    {
+        public CategoryEntity()
+        {
+            this.EditInfo = new EditInfo();
+            this.OnCreated();
+        }
+    
+        partial void OnCreated();
+        public System.Guid Id { get; set; }
+        public string Name { get; set; }
+    
+        public EditInfo EditInfo { get; set; }
+    }
+}
+namespace NinjaHive.Domain
+{
+    using System;
+    using System.Collections.Generic;
+    
     public partial class ClassEntity : NinjaHive.Domain.IEntity
     {
         public ClassEntity()
@@ -71,7 +91,6 @@ namespace NinjaHive.Domain
         partial void OnCreated();
         public System.Guid Id { get; set; }
         public string Name { get; set; }
-        public string Category { get; set; }
         public string Description { get; set; }
         public bool Craftable { get; set; }
         public bool IsUpgrader { get; set; }
@@ -80,6 +99,8 @@ namespace NinjaHive.Domain
         public int Value { get; set; }
     
         public EditInfo EditInfo { get; set; }
+    
+        public virtual CategoryEntity Category { get; set; }
     }
 }
 namespace NinjaHive.Domain

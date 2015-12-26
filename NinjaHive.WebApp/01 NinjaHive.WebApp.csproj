@@ -209,6 +209,8 @@
     <Compile Include="Extensions\UrlExtensions.cs" />
     <Compile Include="Helpers\Partials.cs" />
     <Compile Include="Models\AccountViewModel.cs" />
+    <Compile Include="Models\CategoryViewModel.cs" />
+    <Compile Include="Models\GameItemViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\UrlProvider.cs" />
     <Compile Include="Services\HttpWebUserContext.cs" />

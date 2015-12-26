@@ -33,6 +33,8 @@
         <AssociationConnector Association="NinjaHiveEntities.OtherItemsCrafingItemsAssociation" />
         <AssociationConnector Association="NinjaHiveEntities.TiersUpgradeItemsAssociation" />
         <AssociationConnector Association="NinjaHiveEntities.TiersCraftingItemsAssociation" />
+        <EntityTypeShape EntityType="NinjaHiveEntities.CategoryEntity" Width="1.625" PointX="78.625" PointY="55" />
+        <AssociationConnector Association="NinjaHiveEntities.FK_GameItems_Category" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -206,4 +206,30 @@ ALTER TABLE [dbo].[StatInfo]
 ALTER COLUMN [EditedBy] nvarchar(255) NOT NULL
 GO
 
+-- Alper Aslan 12/26/2015: Categories table for Game items
+CREATE TABLE [dbo].[Categories]
+(
+    [Id]			uniqueidentifier  NOT NULL,
+    [Name]			nvarchar(255)  NOT NULL,
+    [CreatedOn]		datetime  NOT NULL,
+    [CreatedBy]		nvarchar(255)  NOT NULL,
+    [EditedOn]		datetime  NOT NULL,
+    [EditedBy]		nvarchar(255)  NOT NULL,
+
+    CONSTRAINT [PK_Categories] PRIMARY KEY CLUSTERED ([Id] ASC)
+    WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[Categories] ADD  CONSTRAINT [DF_Categories_Id]  DEFAULT (newid()) FOR [Id]
+GO
+
+DELETE FROM [dbo].[GameItems]
+ALTER TABLE [dbo].[GameItems] DROP COLUMN [Category]
+GO
+
+ALTER TABLE [dbo].[GameItems] ADD [Category] uniqueidentifier NOT NULL;
+ALTER TABLE [dbo].[GameItems] WITH CHECK ADD CONSTRAINT [FK_GameItems_Category] FOREIGN KEY([Category])
+REFERENCES [dbo].[Categories] ([Id])
+GO
+
 -- [name] [date]: [description]

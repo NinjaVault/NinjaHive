@@ -1,4 +1,5 @@
 ﻿@using NinjaHive.WebApp.Helpers
+@model NinjaHive.WebApp.Models.GameItemViewModel
 
 <div class="row">
     <div class="page-header">
@@ -10,7 +11,7 @@
     @{ Html.BeginForm("Create", "Items", FormMethod.Post, new { @class = "form-horizontal", role = "form" }); }
     @Html.AntiForgeryToken()
 
-    @Html.Partial(Partials.EditGameItem)
+    @Html.Partial(Partials.EditGameItem, Model)
 
     <div class="form-group">
         <div class="col-md-12">

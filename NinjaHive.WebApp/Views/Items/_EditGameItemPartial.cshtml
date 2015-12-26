@@ -1,58 +1,57 @@
-﻿@using NinjaHive.Contract.Models
-@model GameItemModel
+﻿@model NinjaHive.WebApp.Models.GameItemViewModel
 
 <div class="col-md-6">
 
     <div class="form-group">
-        @Html.LabelFor(m => m.Name, new { @class = "col-md-4 control-label" })
+        @Html.LabelFor(m => m.GameItem.Name, new { @class = "col-md-4 control-label" })
         <div class="col-md-8">
-            @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+            @Html.TextBoxFor(m => m.GameItem.Name, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.GameItem.Name, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(m => m.Category, new { @class = "col-md-4 control-label" })
+        @Html.LabelFor(m => m.Category.SelectedCategoryId, new { @class = "col-md-4 control-label" })
         <div class="col-md-8">
-            @Html.TextBoxFor(m => m.Category, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.Category, "", new { @class = "text-danger" })
+            @Html.DropDownListFor(m => m.Category.SelectedCategoryId, Model.Category.Categories, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Category.SelectedCategoryId, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(m => m.Value, new { @class = "col-md-4 control-label" })
+        @Html.LabelFor(m => m.GameItem.Value, new { @class = "col-md-4 control-label" })
         <div class="col-md-8">
-            @Html.TextBoxFor(m => m.Value, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.Value, "", new { @class = "text-danger" })
+            @Html.TextBoxFor(m => m.GameItem.Value, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.GameItem.Value, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(m => m.Description, new { @class = "col-md-4 control-label" })
+        @Html.LabelFor(m => m.GameItem.Description, new { @class = "col-md-4 control-label" })
         <div class="col-md-8">
-            @Html.TextAreaFor(m => m.Description, 4, 0, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
+            @Html.TextAreaFor(m => m.GameItem.Description, 4, 0, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.GameItem.Description, "", new { @class = "text-danger" })
         </div>
     </div>
 </div>
 <div class="col-md-6">
     <div class="form-group">
-        @Html.CheckBoxFor(m => m.IsUpgrader)
-        @Html.LabelFor(m => m.IsUpgrader, new { @class = "control-label" })
+        @Html.CheckBoxFor(m => m.GameItem.IsUpgrader)
+        @Html.LabelFor(m => m.GameItem.IsUpgrader, new { @class = "control-label" })
     </div>
     <br/>
     <div class="form-group">
-        @Html.CheckBoxFor(m => m.IsCrafter)
-        @Html.LabelFor(m => m.IsCrafter, new { @class = "control-label" })
+        @Html.CheckBoxFor(m => m.GameItem.IsCrafter)
+        @Html.LabelFor(m => m.GameItem.IsCrafter, new { @class = "control-label" })
     </div>
     <br />
     <div class="form-group">
-        @Html.CheckBoxFor(m => m.Craftable)
-        @Html.LabelFor(m => m.Craftable, new { @class = "control-label" })
+        @Html.CheckBoxFor(m => m.GameItem.Craftable)
+        @Html.LabelFor(m => m.GameItem.Craftable, new { @class = "control-label" })
     </div>
     <br />
     <div class="form-group">
-        @Html.CheckBoxFor(m => m.IsQuestItem)
-        @Html.LabelFor(m => m.IsQuestItem, new { @class = "control-label" })
+        @Html.CheckBoxFor(m => m.GameItem.IsQuestItem)
+        @Html.LabelFor(m => m.GameItem.IsQuestItem, new { @class = "control-label" })
     </div>
 </div>
