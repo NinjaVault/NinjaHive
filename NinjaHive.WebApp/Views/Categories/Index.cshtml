@@ -1,0 +1,34 @@
+﻿@using NinjaHive.Contract.Models
+@using NinjaHive.WebApp.Helpers
+@model IEnumerable<NinjaHive.Contract.Models.CategoryModel>
+
+<div class="row">
+    <div class="page-header">
+        <h2>Categories</h2>
+    </div>
+
+    <div id="ninjahive-content-container">
+        <div id="ninjahive-content">
+            <div class="col-md-4">
+                <ul class="list-group">
+                    @foreach (var category in Model)
+                    {
+                        <li class="list-group-item">
+                            @category.Name
+                        </li>
+                    }
+                    @if (!Model.Any())
+                    {
+                        <li class="list-group-item list-group-item-danger">
+                            No categories
+                        </li>
+                    }
+                </ul>
+            </div>
+
+            <div class="col-md-8">
+                @Html.Partial(Partials.CategoryForm, new CategoryModel())
+            </div>
+        </div>
+    </div>
+</div>
