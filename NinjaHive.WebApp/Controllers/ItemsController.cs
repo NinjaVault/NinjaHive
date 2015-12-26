@@ -64,6 +64,7 @@ namespace NinjaHive.WebApp.Controllers
             return View();
         }
 
+        [HttpPost] //TODO: anti forgery
         public ActionResult Delete(Guid id)
         {
             this.repository.Delete(id);

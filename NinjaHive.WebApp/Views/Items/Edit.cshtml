@@ -30,13 +30,18 @@
 
 @section Scripts {
     <script>
-    $(function() {
-        $("#deleteItem").click(function() {
-            var result = true; //TODO: model dialog box: are you sure?
+        $(function() {
+            $("#deleteItem").click(function() {
+                var result = true; //TODO: model dialog box: are you sure?
 
-            if (result) {
-                @{ var deleteUrl = UrlProvider<ItemsController>.GetUrl(c => c.Delete(Model.Id)); }
-                window.location.href = "@deleteUrl";
+                if (result) {
+                    @{
+                        var deleteUrl = UrlProvider<ItemsController>.GetUrl(c => c.Delete(Model.Id));
+                        var redirectUrl = UrlProvider<ItemsController>.GetUrl(c => c.Index());
+                    }
+                    $.post("@deleteUrl", function() {
+                        window.location.href = "@redirectUrl";
+                    });
                 }
             });
         });

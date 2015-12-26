@@ -5,7 +5,7 @@ namespace NinjaHive.WebApp.Controllers
 {
     public abstract class BaseController : Controller
     {
-        protected virtual ActionResult Home()
+        protected virtual RedirectResult Home()
         {
             var homeUrl = UrlProvider<ItemsController>.GetUrl(c => c.Index());
             return Redirect(homeUrl);
