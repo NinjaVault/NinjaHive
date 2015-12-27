@@ -11,8 +11,8 @@
         NinjaHive
         @if (System.Configuration.ConfigurationManager.AppSettings.Get("isTestEnvironment") == "true")
         {
-            var version = typeof(NinjaHive.WebApp.Startup).Assembly.GetName().Version;
-            @version
+            var version = typeof(Startup).Assembly.GetName().Version;
+            @String.Format("v{0}.{1}.{2}.alpha", version.Major, version.Minor, version.Build)
         }
     </title>
 
