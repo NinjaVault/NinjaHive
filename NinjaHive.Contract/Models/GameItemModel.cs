@@ -19,6 +19,7 @@ namespace NinjaHive.Contract.Models
         public string Description { get; set; }
 
         [NonEmptyGuid]
+        [Display(Name = "Category")]
         public Guid CategoryId { get; set; }
 
         [Required(ErrorMessage = "{0} is required")]

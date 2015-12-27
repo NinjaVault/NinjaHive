@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Web.Mvc;
 using NinjaHive.Contract.Models;
@@ -40,12 +41,11 @@ namespace NinjaHive.WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                viewModel.UpdateCategory();
                 this.repository.Create(viewModel.GameItem);
                 return base.Home();
             }
-
-            return View();
+            viewModel.categories = this.GetCategories();
+            return View(viewModel);
         }
 
         public ActionResult Edit(Guid id)
@@ -62,7 +62,6 @@ namespace NinjaHive.WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                viewModel.UpdateCategory();
                 this.repository.Update(viewModel.GameItem);
                 return base.Home();
             }
@@ -92,14 +91,17 @@ namespace NinjaHive.WebApp.Controllers
 
         private GameItemViewModel PrepareViewModel(GameItemModel model)
         {
-            var categoryViewModel = this.InitializeAndGetCategories();
-            return new GameItemViewModel(model, categoryViewModel);
+            var categories = this.GetCategories();
+            return new GameItemViewModel
+            {
+                categories = categories,
+                GameItem = model,
+            };
         }
 
-        private CategoryViewModel InitializeAndGetCategories()
+        private ReadOnlyCollection<CategoryModel> GetCategories()
         {
-            var categories = this.queryProcessor.Execute(new GetAllCategoriesQuery());
-            return new CategoryViewModel(categories);
+            return this.queryProcessor.Execute(new GetAllCategoriesQuery());
         }
     }
 }

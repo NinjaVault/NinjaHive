@@ -1,23 +1,18 @@
-﻿using NinjaHive.Contract.Models;
+﻿using System.Collections.Generic;
+using System.Web.Mvc;
+using NinjaHive.Contract.Models;
 
 namespace NinjaHive.WebApp.Models
 {
     public class GameItemViewModel
     {
-        public GameItemViewModel(
-            GameItemModel gameItem,
-            CategoryViewModel category)
-        {
-            this.GameItem = gameItem;
-            this.Category = category;
-        }
+        public GameItemModel GameItem { get; set; }
 
-        public GameItemModel GameItem { get; private set; }
-        public CategoryViewModel Category { get; private set; }
+        public IReadOnlyCollection<CategoryModel> categories;
 
-        public void UpdateCategory()
+        public IEnumerable<SelectListItem> Categories
         {
-            this.GameItem.CategoryId = this.Category.SelectedCategoryId;
+            get { return new SelectList(this.categories ?? new List<CategoryModel>(), "Id", "Name"); }
         }
     }
 }
