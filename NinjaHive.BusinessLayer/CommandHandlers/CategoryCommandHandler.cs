@@ -2,6 +2,7 @@
 using NinjaHive.Contract.Models;
 using NinjaHive.Core;
 using NinjaHive.Domain;
+using NinjaHive.Domain.Extensions;
 
 namespace NinjaHive.BusinessLayer.CommandHandlers
 {
@@ -34,7 +35,7 @@ namespace NinjaHive.BusinessLayer.CommandHandlers
 
         public void Handle(DeleteEntityCommand<CategoryModel> command)
         {
-            throw new System.NotImplementedException();
+            this.repository.RemoveById(command.Id);
         }
     }
 }

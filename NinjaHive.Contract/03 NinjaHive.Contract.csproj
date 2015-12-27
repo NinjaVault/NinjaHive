@@ -50,6 +50,7 @@
     <Compile Include="Queries\GetAllCategoriesQuery.cs" />
     <Compile Include="Queries\GetAllGameItemsQuery.cs" />
     <Compile Include="Queries\GetEntityByIdQuery.cs" />
+    <Compile Include="Queries\GetLinkedGameItemNamesQuery.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NinjaHive.Core\06 NinjaHive.Core.csproj">

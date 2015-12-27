@@ -31,6 +31,7 @@ namespace NinjaHive.BusinessLayer.QueryHandlers
         {
             var categories =
                 from category in this.repository.Entities.ToArray() //load into memory
+                orderby category.Name
                 select this.mapper.Map(category);
 
             return categories.ToList(); 

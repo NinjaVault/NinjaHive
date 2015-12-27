@@ -923,6 +923,7 @@
           <Property Name="Id" Type="Guid" Nullable="false" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="EditInfo" Type="NinjaHiveEntities.EditInfo" Nullable="false" />
+          <NavigationProperty Name="GameItems" Relationship="NinjaHiveEntities.FK_GameItems_Category" FromRole="Categories" ToRole="GameItemEntity" />
         </EntityType>
         <Association Name="FK_GameItems_Category">
           <End Type="NinjaHiveEntities.CategoryEntity" Role="Categories" Multiplicity="1" />

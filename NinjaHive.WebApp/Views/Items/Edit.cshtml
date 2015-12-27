@@ -35,7 +35,7 @@
 
                 if (result) {
                     @{
-                        var deleteUrl = UrlProvider<ItemsController>.GetUrl(c => c.Delete(Model.Id));
+                        var deleteUrl = UrlProvider<ItemsController>.GetUrl(c => c.Delete(Model.GameItem.Id));
                         var redirectUrl = UrlProvider<ItemsController>.GetUrl(c => c.Index());
                     }
                     $.post("@deleteUrl", function() {

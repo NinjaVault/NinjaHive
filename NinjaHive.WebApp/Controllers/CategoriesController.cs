@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 using NinjaHive.Contract.Models;
 using NinjaHive.Contract.Queries;
 using NinjaHive.Core;
@@ -33,6 +34,20 @@ namespace NinjaHive.WebApp.Controllers
                 this.repository.Create(model);
             }
             return Redirect(UrlProvider<CategoriesController>.GetUrl(c => c.Index()));
+        }
+
+        [HttpPost]
+        public ActionResult Delete(Guid id)
+        {
+            this.repository.Delete(id);
+            return base.Home();
+        }
+
+        [HttpPost]
+        public JsonResult GetLinkedGameItems(Guid id)
+        {
+            var linkedGameItems = this.queryProcessor.Execute(new GetLinkedGameItemNamesQuery(id));
+            return Json(linkedGameItems);
         }
     }
 }

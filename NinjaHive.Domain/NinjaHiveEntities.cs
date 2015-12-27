@@ -16,6 +16,7 @@ namespace NinjaHive.Domain
     {
         public CategoryEntity()
         {
+            this.GameItems = new HashSet<GameItemEntity>();
             this.EditInfo = new EditInfo();
             this.OnCreated();
         }
@@ -25,6 +26,8 @@ namespace NinjaHive.Domain
         public string Name { get; set; }
     
         public EditInfo EditInfo { get; set; }
+    
+        public virtual ICollection<GameItemEntity> GameItems { get; set; }
     }
 }
 namespace NinjaHive.Domain

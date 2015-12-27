@@ -1,6 +1,6 @@
 ﻿@using NinjaHive.Contract.Models
 @using NinjaHive.WebApp.Helpers
-@model IEnumerable<NinjaHive.Contract.Models.CategoryModel>
+@model IEnumerable<CategoryModel>
 
 <div class="row">
     <div class="page-header">
@@ -10,20 +10,21 @@
     <div id="ninjahive-content-container">
         <div id="ninjahive-content">
             <div class="col-md-4">
-                <ul class="list-group">
+                <div class="list-group" id="categories">
                     @foreach (var category in Model)
                     {
-                        <li class="list-group-item">
+                        <a href="#" class="list-group-item">
                             @category.Name
-                        </li>
+                            <span id="@category.Id" class="glyphicon glyphicon-remove" style="float: right"></span>
+                        </a>
                     }
-                    @if (!Model.Any())
-                    {
-                        <li class="list-group-item list-group-item-danger">
-                            No categories
-                        </li>
-                    }
-                </ul>
+                </div>
+                @if (!Model.Any())
+                {
+                    <div class="alert alert-danger" role="alert">
+                        No Categories
+                    </div>
+                }
             </div>
 
             <div class="col-md-8">
@@ -32,3 +33,26 @@
         </div>
     </div>
 </div>
+
+@Scripts.Render("~/bundles/extensions")
+
+@section Scripts{
+    <script>
+        $(function() {
+            $(".glyphicon-remove").on("click", function (e) {
+                var id = e.target.id;
+                @*TODO: prevent crsf*@
+                $.post("Categories/GetLinkedGameItems/" + id, function (data) {
+                    if (data != null && !data.length) {
+                        $.post("Categories/Delete/" + id, function() {
+                            $(e.target).parent().remove();
+                        });
+                    } else {
+                        //TODO: nice model dialog with list of gameitems
+                        alert("Cannot delete category because it is linked to game items");
+                    }
+                });
+            });
+        });
+    </script>
+}
