@@ -21,6 +21,7 @@ namespace NinjaHive.Contract.Models
         [NonEmptyGuid]
         [Display(Name = "Category")]
         public Guid CategoryId { get; set; }
+        public string CategoryName { get; set; }
 
         [Required(ErrorMessage = "{0} is required")]
         [Range(0, int.MaxValue, ErrorMessage = "Please enter valid integer for {0}. Minimum: {1}")]
