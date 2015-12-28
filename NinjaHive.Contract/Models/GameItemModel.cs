@@ -11,7 +11,7 @@ namespace NinjaHive.Contract.Models
 
         [Required(ErrorMessage="{0} is required")]
         [StringLength(255, MinimumLength = 3, ErrorMessage = "{0}, minimum: {2}, maximum: {1}")]
-        [RegularExpression(RegEx.AlphaNum, ErrorMessage = "Alphanumerics only")]
+        [RegularExpression(RegEx.AlphaNumSpace, ErrorMessage = "Alphanumerics and spaces only")]
         public string Name { get; set; }
 
         [Required(ErrorMessage = "{0} is required")]
