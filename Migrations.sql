@@ -232,4 +232,19 @@ ALTER TABLE [dbo].[GameItems] WITH CHECK ADD CONSTRAINT [FK_GameItems_Category] 
 REFERENCES [dbo].[Categories] ([Id])
 GO
 
+-- Alper Aslan 12/28/2015: Errors table for exception logging
+CREATE TABLE [dbo].[Errors]
+(
+    [Id]			uniqueidentifier  NOT NULL,
+    [Message]		nvarchar(max)  NOT NULL,
+    [CreatedOn]		datetime  NOT NULL,
+    [CreatedBy]		nvarchar(255)  NOT NULL,
+
+    CONSTRAINT [PK_Errors] PRIMARY KEY CLUSTERED ([Id] ASC)
+    WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[Errors] ADD  CONSTRAINT [DF_Errors_Id]  DEFAULT (newid()) FOR [Id]
+GO
+
 -- [name] [date]: [description]

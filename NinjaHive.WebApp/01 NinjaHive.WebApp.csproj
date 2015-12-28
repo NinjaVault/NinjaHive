@@ -208,6 +208,7 @@
     <Compile Include="Controllers\ItemsController.cs" />
     <Compile Include="Extensions\ClaimsIdentityExtensions.cs" />
     <Compile Include="Extensions\UrlExtensions.cs" />
+    <Compile Include="Filters\LogExceptionFilterAttribute.cs" />
     <Compile Include="Helpers\Partials.cs" />
     <Compile Include="Models\AccountViewModel.cs" />
     <Compile Include="Models\GameItemViewModel.cs" />
