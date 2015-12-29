@@ -8,33 +8,33 @@ using NinjaHive.Domain;
 
 namespace NinjaHive.BusinessLayer.QueryHandlers
 {
-    public class GetAllCategoriesQueryHandler : IQueryHandler<GetAllCategoriesQuery, ReadOnlyCollection<CategoryModel>>
+    public class GetAllCategoriesQueryHandler
+        : IQueryHandler<GetAllCategoriesQuery, MainCategoryModel[]>
     {
-        private readonly IRepository<CategoryEntity> repository;
-        private readonly IEntityMapper<CategoryEntity, CategoryModel> mapper;
+        private readonly IRepository<MainCategoryEntity> repository;
+        private readonly IEntityMapper<MainCategoryEntity, MainCategoryModel> mainCategoryMapper;
 
         public GetAllCategoriesQueryHandler(
-            IRepository<CategoryEntity> repository,
-            IEntityMapper<CategoryEntity, CategoryModel> mapper)
+            IRepository<MainCategoryEntity> repository,
+            IEntityMapper<MainCategoryEntity, MainCategoryModel> mainCategoryMapper)
         {
             this.repository = repository;
-            this.mapper = mapper;
+            this.mainCategoryMapper = mainCategoryMapper;
         }
 
-        public ReadOnlyCollection<CategoryModel> Handle(GetAllCategoriesQuery query)
+        public MainCategoryModel[] Handle(GetAllCategoriesQuery query)
         {
-            var categories = this.MapCategories();
-            return new ReadOnlyCollection<CategoryModel>(categories);
+            return this.GetMainCategories();
         }
 
-        private IList<CategoryModel> MapCategories()
+        private MainCategoryModel[] GetMainCategories()
         {
             var categories =
                 from category in this.repository.Entities.ToArray() //load into memory
                 orderby category.Name
-                select this.mapper.Map(category);
+                select this.mainCategoryMapper.Map(category);
 
-            return categories.ToList(); 
+            return categories.ToArray(); 
         }
     }
 }

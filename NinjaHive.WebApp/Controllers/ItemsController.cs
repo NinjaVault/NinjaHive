@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using NinjaHive.Contract.Models;
@@ -99,9 +99,10 @@ namespace NinjaHive.WebApp.Controllers
             };
         }
 
-        private ReadOnlyCollection<CategoryModel> GetCategories()
+        private IEnumerable<SubCategoryModel> GetCategories()
         {
-            return this.queryProcessor.Execute(new GetAllCategoriesQuery());
+            return this.queryProcessor.Execute(new GetAllCategoriesQuery())
+                                      .SelectMany(c => c.SubCategories);
         }
     }
 }

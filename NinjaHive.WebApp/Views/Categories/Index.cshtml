@@ -1,6 +1,7 @@
 ﻿@using NinjaHive.Contract.Models
+@using NinjaHive.WebApp.Controllers
 @using NinjaHive.WebApp.Helpers
-@model IEnumerable<CategoryModel>
+@model IReadOnlyCollection<MainCategoryModel>
 
 <div class="row">
     <div class="page-header">
@@ -9,26 +10,69 @@
 
     <div id="ninjahive-content-container">
         <div id="ninjahive-content">
-            <div class="col-md-4">
-                <div class="list-group" id="categories">
+
+            <!--forms-->
+            <div class="row">
+
+                <!--main form-->
+                <div class="col-md-6">
+                    @Html.Partial(Partials.MainCategoryForm, new MainCategoryModel())
+                </div>
+
+                <!--sub form-->
+                <div class="col-md-6">
                     @foreach (var category in Model)
                     {
-                        <a href="#" class="list-group-item">
-                            @category.Name
-                            <span id="@category.Id" class="glyphicon glyphicon-remove" style="float: right"></span>
-                        </a>
+                        <span class="subCategoryForm" data-parent-id="@category.Id">
+                            @Html.Partial(Partials.SubCategoryForm, new SubCategoryModel
+                            {
+                                MainCategoryId = category.Id,
+                            })
+                        </span>
                     }
                 </div>
-                @if (!Model.Any())
-                {
-                    <div class="alert alert-danger" role="alert">
-                        No Categories
-                    </div>
-                }
             </div>
 
-            <div class="col-md-8">
-                @Html.Partial(Partials.CategoryForm, new CategoryModel())
+            <br />
+
+            <!--content-->
+            <div class="row">
+
+                <!--main content-->
+                <div class="col-md-6">
+                    <div class="list-group" id="mainCategories">
+                        @foreach (var category in Model)
+                        {
+                            <a href="#" class="list-group-item mainCategory" data-id="@category.Id">
+                                @category.Name
+                                <span data-id="@category.Id" class="glyphicon glyphicon-remove" style="float: right"></span>
+                            </a>
+                        }
+                    </div>
+                    @if (!Model.Any())
+                    {
+                        <div class="alert alert-danger" role="alert">
+                            No Categories
+                        </div>
+                    }
+                </div>
+
+                <!--sub content-->
+                <div class="col-md-6">
+                    @foreach (var category in Model)
+                    {
+                        <div class="list-group subCategories" data-parent-id="@category.Id">
+                            @foreach (var subCategory in category.SubCategories)
+                            {
+                                <a href="#" class="list-group-item" data-id="@subCategory.Id">
+                                    @subCategory.Name
+                                    <span data-id="@subCategory.Id" class="glyphicon glyphicon-remove" style="float: right"></span>
+                                </a>
+                            }
+                        </div>
+                    }
+                </div>
+
             </div>
         </div>
     </div>
@@ -39,14 +83,44 @@
 @section Scripts{
     <script>
         $(function() {
-            $(".glyphicon-remove").on("click", function (e) {
-                var id = e.target.id;
-                @*TODO: prevent crsf*@
-                $.post("Categories/GetLinkedGameItems/" + id, function (data) {
+            $(".subCategoryForm, .subCategories").hide();
+            $(".subCategoryForm:first-child, .subCategories:first-child").show();
+            $("#mainCategories .mainCategory:first-child").addClass("active");
+
+            $(".mainCategory").click(function(e) {
+                var mainCategoryId = $(this).data("id");
+                var attributeSelector = "[data-parent-id=\"" + mainCategoryId + "\"]";
+                $(".subCategoryForm, .subCategories").hide();
+                $(".subCategoryForm" + attributeSelector + ", .subCategories" + attributeSelector).show();
+            });
+
+
+            @{ var deleteUrl = UrlProvider<CategoriesController>.GetParameterlessUrl(c => c.Delete(Guid.Empty, false)); }
+
+            $("#mainCategories .glyphicon-remove").on("click", function (e) {
+                var id = $(this).data("id");
+
+                if ($(".subCategories[data-parent-id=\"" + id + "\"]:has(*)").length) {
+                    //TODO: nice model dialog
+                    alert("Cannot delete category because there are subcategories");
+                } else {
+                    $.post("@deleteUrl", { id: id, isMainCategory: true }, function () {
+                        $(e.target).parent().remove();
+                    });
+                }
+            });
+
+            $(".subCategories .glyphicon-remove").on("click", function(e) {
+                var id = $(this).data("id");
+
+                @{ var getGameItems = UrlProvider<CategoriesController>.GetParameterlessUrl(c => c.GetLinkedGameItems(Guid.Empty)); }
+                $.post("@getGameItems", { id: id }, function(data) {
                     if (data != null && !data.length) {
-                        $.post("Categories/Delete/" + id, function() {
+
+                        $.post("@deleteUrl", { id: id, isMainCategory: false }, function() {
                             $(e.target).parent().remove();
                         });
+
                     } else {
                         //TODO: nice model dialog with list of gameitems
                         alert("Cannot delete category because it is linked to game items");

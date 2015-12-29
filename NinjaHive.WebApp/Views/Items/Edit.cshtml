@@ -1,4 +1,5 @@
 ﻿@using NinjaHive.WebApp.Controllers
+@using NinjaHive.WebApp.Extensions
 @using NinjaHive.WebApp.Helpers
 @model NinjaHive.WebApp.Models.GameItemViewModel
 
@@ -13,7 +14,7 @@
         <button id="deleteItem" type="button" class="btn btn-danger">Delete</button>
     </div>
 
-    @{ Html.BeginForm("Edit", "Items", FormMethod.Post, new { @class = "form-horizontal", role = "form" }); }
+    @{ Html.BeginForm<ItemsController>(c => c.Edit(null), new { @class = "form-horizontal", role = "form" }); }
     @Html.AntiForgeryToken()
 
     @Html.Partial(Partials.EditGameItem, Model)

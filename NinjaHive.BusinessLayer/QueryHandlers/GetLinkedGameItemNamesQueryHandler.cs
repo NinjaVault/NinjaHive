@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using NinjaHive.Contract.Queries;
 using NinjaHive.Core;
 using NinjaHive.Domain;
@@ -9,9 +10,9 @@ namespace NinjaHive.BusinessLayer.QueryHandlers
     public class GetLinkedGameItemNamesQueryHandler
         : IQueryHandler<GetLinkedGameItemNamesQuery, string[]>
     {
-        private readonly IRepository<CategoryEntity> repository;
+        private readonly IRepository<SubCategoryEntity> repository;
 
-        public GetLinkedGameItemNamesQueryHandler(IRepository<CategoryEntity> repository)
+        public GetLinkedGameItemNamesQueryHandler(IRepository<SubCategoryEntity> repository)
         {
             this.repository = repository;
         }

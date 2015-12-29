@@ -14,6 +14,7 @@
         public const string EditGameItem = "_EditGameItemPartial";
 
         //Categories
-        public const string CategoryForm = "_CategoryFormPartial";
+        public const string MainCategoryForm = "_MainCategoryFormPartial";
+        public const string SubCategoryForm = "_SubCategoryFormPartial";
     }
 }

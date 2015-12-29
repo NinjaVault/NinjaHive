@@ -8,11 +8,11 @@ namespace NinjaHive.WebApp.Models
     {
         public GameItemModel GameItem { get; set; }
 
-        public IReadOnlyCollection<CategoryModel> categories;
+        public IEnumerable<SubCategoryModel> categories;
 
         public IEnumerable<SelectListItem> Categories
         {
-            get { return new SelectList(this.categories ?? new List<CategoryModel>(), "Id", "Name"); }
+            get { return new SelectList(this.categories ?? new List<SubCategoryModel>(), "Id", "Name"); }
         }
     }
 }

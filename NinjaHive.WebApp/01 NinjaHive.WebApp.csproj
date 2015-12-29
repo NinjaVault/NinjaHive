@@ -207,6 +207,7 @@
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\ItemsController.cs" />
     <Compile Include="Extensions\ClaimsIdentityExtensions.cs" />
+    <Compile Include="Extensions\FormExtensions.cs" />
     <Compile Include="Extensions\UrlExtensions.cs" />
     <Compile Include="Filters\LogExceptionFilterAttribute.cs" />
     <Compile Include="Helpers\Partials.cs" />
@@ -283,7 +284,8 @@
     <Content Include="Views\Items\_EditGameItemPartial.cshtml" />
     <Content Include="Views\Items\Edit.cshtml" />
     <Content Include="Views\Categories\Index.cshtml" />
-    <Content Include="Views\Categories\_CategoryFormPartial.cshtml" />
+    <Content Include="Views\Categories\_MainCategoryFormPartial.cshtml" />
+    <Content Include="Views\Categories\_SubCategoryFormPartial.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

@@ -11,12 +11,17 @@ namespace NinjaHive.WebApp.Controllers
     public class CategoriesController : BaseController
     {
         private readonly IQueryProcessor queryProcessor;
-        private readonly IWriteOnlyRepository<CategoryModel> repository; 
+        private readonly IWriteOnlyRepository<MainCategoryModel> mainCategoryRepository;
+        private readonly IWriteOnlyRepository<SubCategoryModel> subCategoryRepository;
 
-        public CategoriesController(IQueryProcessor queryProcessor, IWriteOnlyRepository<CategoryModel> repository)
+        public CategoriesController(
+            IQueryProcessor queryProcessor,
+            IWriteOnlyRepository<MainCategoryModel> mainCategoryRepository,
+            IWriteOnlyRepository<SubCategoryModel> subCategoryRepository)
         {
             this.queryProcessor = queryProcessor;
-            this.repository = repository;
+            this.mainCategoryRepository = mainCategoryRepository;
+            this.subCategoryRepository = subCategoryRepository;
         }
 
         public ActionResult Index()
@@ -27,19 +32,36 @@ namespace NinjaHive.WebApp.Controllers
 
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public ActionResult Index(CategoryModel model)
+        public ActionResult AddMainCategory(MainCategoryModel model)
         {
             if (ModelState.IsValid)
             {
-                this.repository.Create(model);
+                this.mainCategoryRepository.Create(model);
             }
             return Redirect(UrlProvider<CategoriesController>.GetUrl(c => c.Index()));
         }
 
         [HttpPost]
-        public ActionResult Delete(Guid id)
+        public ActionResult AddSubCategory(SubCategoryModel model)
         {
-            this.repository.Delete(id);
+            if (ModelState.IsValid)
+            {
+                this.subCategoryRepository.Create(model);
+            }
+            return Redirect(UrlProvider<CategoriesController>.GetUrl(c => c.Index()));
+        }
+
+        [HttpPost]
+        public ActionResult Delete(Guid id, bool isMainCategory)
+        {
+            if (isMainCategory)
+            {
+                this.mainCategoryRepository.Delete(id);
+            }
+            else
+            {
+                this.subCategoryRepository.Delete(id);
+            }
             return base.Home();
         }
 

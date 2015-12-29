@@ -247,4 +247,37 @@ GO
 ALTER TABLE [dbo].[Errors] ADD  CONSTRAINT [DF_Errors_Id]  DEFAULT (newid()) FOR [Id]
 GO
 
+-- Alper Aslan 12/28/2015: Sub- and Main Categories
+EXEC sp_rename '[dbo].[Categories]', 'SubCategories';
+GO
+EXEC sp_rename N'[dbo].[PK_Categories]', N'PK_SubCategories', N'OBJECT'
+GO
+EXEC sp_rename N'[dbo].[DF_Categories_Id]', N'DF_SubCategories_Id', N'OBJECT'
+GO
+
+CREATE TABLE [dbo].[MainCategories]
+(
+    [Id]			uniqueidentifier  NOT NULL,
+    [Name]			nvarchar(255)  NOT NULL,
+    [CreatedOn]		datetime  NOT NULL,
+    [CreatedBy]		nvarchar(255)  NOT NULL,
+    [EditedOn]		datetime  NOT NULL,
+    [EditedBy]		nvarchar(255)  NOT NULL,
+
+    CONSTRAINT [PK_MainCategory] PRIMARY KEY CLUSTERED ([Id] ASC)
+    WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[MainCategories] ADD  CONSTRAINT [DF_MainCategory_Id]  DEFAULT (newid()) FOR [Id]
+GO
+
+DELETE FROM [dbo].[GameItems]
+DELETE FROM [dbo].[SubCategories]
+GO
+
+ALTER TABLE [dbo].[SubCategories] ADD [MainCategory] uniqueidentifier NOT NULL;
+ALTER TABLE [dbo].[SubCategories] WITH CHECK ADD CONSTRAINT [FK_SubCategory_MainCategory] FOREIGN KEY([MainCategory])
+REFERENCES [dbo].[MainCategories] ([Id])
+GO
+
 -- [name] [date]: [description]
