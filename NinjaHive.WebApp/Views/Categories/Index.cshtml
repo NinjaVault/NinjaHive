@@ -1,5 +1,6 @@
 ﻿@using NinjaHive.Contract.Models
 @using NinjaHive.WebApp.Controllers
+@using NinjaHive.WebApp.Extensions
 @using NinjaHive.WebApp.Helpers
 @model IReadOnlyCollection<MainCategoryModel>
 
@@ -45,7 +46,7 @@
                         {
                             <a href="#" class="list-group-item mainCategory" data-id="@category.Id">
                                 @category.Name
-                                <span data-id="@category.Id" class="glyphicon glyphicon-remove" style="float: right"></span>
+                                <span data-id="@category.Id" class="glyphicon glyphicon-trash" style="float: right"></span>
                             </a>
                         }
                     </div>
@@ -65,8 +66,12 @@
                             @foreach (var subCategory in category.SubCategories)
                             {
                                 <a href="#" class="list-group-item" data-id="@subCategory.Id">
-                                    @subCategory.Name
-                                    <span data-id="@subCategory.Id" class="glyphicon glyphicon-remove" style="float: right"></span>
+                                    <span class="name">@subCategory.Name</span>
+                                    <span class="input">
+                                        <input data-id="@subCategory.Id" data-parent-id="@subCategory.MainCategoryId" type="text" class="form-control" style="display: inline;">
+                                        <span class="glyphicon glyphicon-ok save"></span>
+                                    </span>
+                                    <span data-id="@subCategory.Id" class="glyphicon glyphicon-trash" style="float: right"></span>
                                 </a>
                             }
                         </div>
@@ -82,12 +87,12 @@
 
 @section Scripts{
     <script>
-        $(function() {
+        $(function () {
             $(".subCategoryForm, .subCategories").hide();
             $(".subCategoryForm:first-child, .subCategories:first-child").show();
             $("#mainCategories .mainCategory:first-child").addClass("active");
 
-            $(".mainCategory").click(function(e) {
+            $(".mainCategory").click(function (e) {
                 var mainCategoryId = $(this).data("id");
                 var attributeSelector = "[data-parent-id=\"" + mainCategoryId + "\"]";
                 $(".subCategoryForm, .subCategories").hide();
@@ -97,7 +102,7 @@
 
             @{ var deleteUrl = UrlProvider<CategoriesController>.GetParameterlessUrl(c => c.Delete(Guid.Empty, false)); }
 
-            $("#mainCategories .glyphicon-remove").on("click", function (e) {
+            $("#mainCategories .glyphicon-trash").on("click", function (e) {
                 var id = $(this).data("id");
 
                 if ($(".subCategories[data-parent-id=\"" + id + "\"]:has(*)").length) {
@@ -110,14 +115,14 @@
                 }
             });
 
-            $(".subCategories .glyphicon-remove").on("click", function(e) {
+            $(".subCategories .glyphicon-trash").on("click", function (e) {
                 var id = $(this).data("id");
 
                 @{ var getGameItems = UrlProvider<CategoriesController>.GetParameterlessUrl(c => c.GetLinkedGameItems(Guid.Empty)); }
-                $.post("@getGameItems", { id: id }, function(data) {
+                $.post("@getGameItems", { id: id }, function (data) {
                     if (data != null && !data.length) {
 
-                        $.post("@deleteUrl", { id: id, isMainCategory: false }, function() {
+                        $.post("@deleteUrl", { id: id, isMainCategory: false }, function () {
                             $(e.target).parent().remove();
                         });
 
@@ -126,6 +131,52 @@
                         alert("Cannot delete category because it is linked to game items");
                     }
                 });
+            });
+
+            var lastClick = null;
+            $(".subCategories .input").hide();
+            $(".subCategories .list-group-item").click(function (e) {
+                var input = $(this).children(".input");
+                if (lastClick === $(this).data("id")) {
+                    input.children(":text").select();
+                    return;
+                }
+                if (lastClick != null) {
+                    var groupItem = ".list-group-item[data-id=\"" + lastClick + "\"]";
+                    $(groupItem + " .name").show();
+                    $(groupItem + " .input").hide();
+                }
+                lastClick = $(this).data("id");
+                var name = $(this).children(".name");
+
+                name.hide();
+                input.show();
+                input.children(":text").val(name.html());
+                input.children(":text").select();
+            });
+
+            $(".save").click(function (e) {
+                var id = $(this).prev().data("id");
+                var mainId = $(this).prev().data("parent-id");
+                var name = $(this).prev().val();
+                var options = {
+                    @{ var url = Url.Action<CategoriesController>(c => c.EditSubCategory(null)); }
+                    url: "@url",
+                    type: "POST",
+                    cache: false,
+                    data: {Id: id, Name: name, MainCategoryId: mainId},
+                    success: function (responseData) {
+                        $(this).parent().prev().val(name);
+                        alert('saved');
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        alert('error occurred. contact system admin');
+                    },
+                    complete: function () {
+                    }
+                };
+
+                $.ajax(options);
             });
         });
     </script>

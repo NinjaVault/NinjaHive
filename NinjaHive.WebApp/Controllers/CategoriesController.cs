@@ -52,6 +52,16 @@ namespace NinjaHive.WebApp.Controllers
         }
 
         [HttpPost]
+        public ActionResult EditSubCategory(SubCategoryModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                this.subCategoryRepository.Update(model);
+            }
+            return base.Home();
+        }
+
+        [HttpPost]
         public ActionResult Delete(Guid id, bool isMainCategory)
         {
             if (isMainCategory)
