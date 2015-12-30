@@ -73,7 +73,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\QueryProcessor.cs" />
     <Compile Include="Services\SystemTimeProvider.cs" />
+    <Compile Include="Validations\ValidationCumulativeResults.cs" />
     <Compile Include="Validations\NonEmptyGuidAttribute.cs" />
+    <Compile Include="Validations\ValidateObjectDeepAttribute.cs" />
     <Compile Include="Validations\ValidateObjectAttribute.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -89,6 +89,8 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Exceptions\ExpectedExceptionWithMessageAttribute.cs" />
+    <Compile Include="Mocks\Contract\AddGameItemCommand.cs" />
     <Compile Include="ContractValidationTests.cs" />
     <Compile Include="ValidationDecoratorTests.cs" />
     <Compile Include="WebAppBootstrapperTests.cs" />
@@ -115,6 +117,9 @@
       <Project>{34EE914C-BC5F-4EB2-8E12-03E9DBA4179D}</Project>
       <Name>01 NinjaHive.WebApp</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using NinjaHive.Core;
 
 namespace NinjaHive.BusinessLayer.CrossCuttingConcerns
@@ -16,8 +17,15 @@ namespace NinjaHive.BusinessLayer.CrossCuttingConcerns
 
         public void Handle(TCommand command)
         {
+            List<ValidationResult> outResults = new List<ValidationResult>();
+
             var validationContext = new ValidationContext(command);
-            Validator.ValidateObject(command, validationContext, validateAllProperties: true);
+            Validator.TryValidateObject(command, validationContext, outResults, validateAllProperties: true);
+
+            if(outResults.Count > 0)
+            {
+                throw new ValidationException(outResults[0].ToString());
+            }
 
             this.decoratee.Handle(command);
         }

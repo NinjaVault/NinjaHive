@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Owin;
 
+using NinjaHive.WebApp;
+
 namespace NinjaHive.WebApp.Tests
 {
     [TestClass]

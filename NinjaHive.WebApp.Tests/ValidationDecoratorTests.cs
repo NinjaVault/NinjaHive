@@ -25,26 +25,15 @@ namespace NinjaHive.WebApp.Tests
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ValidationException))]
         public void ValidateObject_ObjectMissesRequiredMember_ValidationThrowsError()
         {
             // Arrange
             var validationCommandHandlerDecorator = this.ValidationDecorator;
             var mockupCommand = new MockupRequiredCommand {RequiredProperty = null};
-            Exception exception = null;
 
             // Act
-            try
-            {
-                validationCommandHandlerDecorator.Handle(mockupCommand);
-            }
-            catch(Exception ex)
-            {
-                exception = ex;
-            }
-            
-            // Assert
-            Assert.IsNotNull(exception);
-            Assert.IsTrue(exception is ValidationException);
+            validationCommandHandlerDecorator.Handle(mockupCommand);
         }
 
         [TestMethod]
@@ -63,50 +52,28 @@ namespace NinjaHive.WebApp.Tests
         }
 
         [TestMethod]
+        [ExpectedExceptionWithMessage(typeof(ValidationException), "RequiredProperty field is required", MatchSubstring = true)]
         public void ValidateObjectWithComplexProperty_ComplexMemberMissesRequiredMember_ValidationThrowsError()
         {
             // Arrange
             var validationCommandHandlerDecorator = this.ValidationDecorator;
             var mockupRequiredCommand = new MockupRequiredCommand { RequiredProperty = null };
             var mockupComplexCommand = new MockupComplexCommand { ComplexProperty = mockupRequiredCommand };
-            Exception exception = null;
 
             // Act
-            try
-            {
-                validationCommandHandlerDecorator.Handle(mockupComplexCommand);
-            }
-            catch (Exception ex)
-            {
-                exception = ex;
-            }
-
-            // Assert
-            Assert.IsNotNull(exception);
-            Assert.IsTrue(exception is ValidationException);
+            validationCommandHandlerDecorator.Handle(mockupComplexCommand);
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ValidationException))]
         public void ValidateObject_OnPrimitiveType_ValidationThrowsError()
         {
             // Arrange
             var validationCommandHandlerDecorator = this.ValidationDecorator;
             var mockupPrimitiveTypeCommand = new MockupPrimitiveTypeCommand { NotAnObject = 0 };
-            Exception exception = null;
 
             // Act
-            try
-            {
-                validationCommandHandlerDecorator.Handle(mockupPrimitiveTypeCommand);
-            }
-            catch (Exception ex)
-            {
-                exception = ex;
-            }
-
-            // Assert
-            Assert.IsNotNull(exception);
-            Assert.IsTrue(exception is ValidationException);
+            validationCommandHandlerDecorator.Handle(mockupPrimitiveTypeCommand);
         }
 
         [TestMethod]
@@ -123,49 +90,27 @@ namespace NinjaHive.WebApp.Tests
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ValidationException))]
         public void NonEmptyGuid_GuidIsEmpty_ValidationFails()
         {
             // Arrange
             var validationCommandHandlerDecorator = this.ValidationDecorator;
             var mockupGuidCommand = new MockupGuidCommand();
-            Exception exception = null;
 
             // Act
-            try
-            {
-                validationCommandHandlerDecorator.Handle(mockupGuidCommand);
-            }
-            catch (Exception ex)
-            {
-                exception = ex;
-            }
-
-            // Assert
-            Assert.IsNotNull(exception);
-            Assert.IsTrue(exception is ValidationException);
+            validationCommandHandlerDecorator.Handle(mockupGuidCommand);
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ValidationException))]
         public void NonEmptyGuid_AttributeUsageOnNonGuidType_ValidationFails()
         {
             // Arrange
             var validationCommandHandlerDecorator = this.ValidationDecorator;
             var mockupGuidCommand = new MockupNonGuidCommand();
-            Exception exception = null;
 
             // Act
-            try
-            {
-                validationCommandHandlerDecorator.Handle(mockupGuidCommand);
-            }
-            catch (Exception ex)
-            {
-                exception = ex;
-            }
-
-            // Assert
-            Assert.IsNotNull(exception);
-            Assert.IsTrue(exception is ValidationException);
+            validationCommandHandlerDecorator.Handle(mockupGuidCommand);
         }
 
         private ValidationCommandHandlerDecorator<IFakeCommandInterface> ValidationDecorator
@@ -188,7 +133,7 @@ namespace NinjaHive.WebApp.Tests
         }
         private class MockupComplexCommand : IFakeCommandInterface
         {
-            [ValidateObject]
+            [ValidateObjectDeep]
             public IFakeCommandInterface ComplexProperty { get; set; }
         }
         private class MockupRequiredCommand : IFakeCommandInterface

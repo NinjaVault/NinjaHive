@@ -12,7 +12,7 @@ namespace NinjaHive.Contract.Commands
         }
 
         [Required]
-        [ValidateObject]
+        [ValidateObjectDeep]
         public TModel Model { get; private set; }
     }
 }

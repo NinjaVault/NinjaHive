@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NinjaHive.BusinessLayer.CrossCuttingConcerns;
 using NinjaHive.Contract.Commands;
@@ -12,24 +13,26 @@ namespace NinjaHive.WebApp.Tests
     public class ContractValidationTests
     {
         [TestMethod]
-        public void PerformValidation_CreateValidGameItem_ThrowsValidationError()
+        [ExpectedExceptionWithMessage(typeof(ValidationException), "Category is required", MatchSubstring = true)]
+        public void PerformValidation_CreateItemWithoutCategory_ThrowsValidationError()
         {
             // Arrange
             var item = new GameItemModel
             {
                 Name = "Valid",
-                Description = "Valid description",
+                Description = "Valid description"
             };
-            var command = new MockAddGameItemCommand(item);
+            var command = new Mocks.Contract.AddGameItemCommand(item);
 
-            var fakeHandler = new MockAddGameItemCommandHandler();
-            var handler = new ValidationCommandHandlerDecorator<MockAddGameItemCommand>(fakeHandler);
+            var fakeHandler = new Mocks.Contract.AddGameItemCommandHandler();
+            var handler = new ValidationCommandHandlerDecorator<Mocks.Contract.AddGameItemCommand>(fakeHandler);
 
             // Act
             handler.Handle(command);
         }
 
         [TestMethod]
+        [ExpectedExceptionWithMessage(typeof(ValidationException), "Name is required", MatchSubstring = true)]
         public void PerformValidation_GameItemWithEmptyName_ThrowsValidationError()
         {
             // Arrange
@@ -38,28 +41,17 @@ namespace NinjaHive.WebApp.Tests
                 Name = string.Empty,
                 Description = "Valid description",
             };
-            var command = new MockAddGameItemCommand(item);
+            var command = new Mocks.Contract.AddGameItemCommand(item);
 
-            var fakeHandler = new MockAddGameItemCommandHandler();
-            var handler = new ValidationCommandHandlerDecorator<MockAddGameItemCommand>(fakeHandler);
-
-            var failed = false;
+            var fakeHandler = new Mocks.Contract.AddGameItemCommandHandler();
+            var handler = new ValidationCommandHandlerDecorator<Mocks.Contract.AddGameItemCommand>(fakeHandler);
 
             // Act
-            try
-            {
-                handler.Handle(command);
-            }
-            catch(ValidationException exception)
-            {
-                failed = true;
-            }
-
-            // Assert
-            Assert.IsTrue(failed);
+            handler.Handle(command);
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ValidationException))]
         public void PerformValidation_GameItemNameWithInvalidCharacters_ThrowsValidationError()
         {
             // Arrange
@@ -68,43 +60,13 @@ namespace NinjaHive.WebApp.Tests
                 Name = "1n val!d",
                 Description = "Valid description",
             };
-            var command = new MockAddGameItemCommand(item);
+            var command = new Mocks.Contract.AddGameItemCommand(item);
 
-            var fakeHandler = new MockAddGameItemCommandHandler();
-            var handler = new ValidationCommandHandlerDecorator<MockAddGameItemCommand>(fakeHandler);
-
-            var failed = false;
+            var fakeHandler = new Mocks.Contract.AddGameItemCommandHandler();
+            var handler = new ValidationCommandHandlerDecorator<Mocks.Contract.AddGameItemCommand>(fakeHandler);
 
             // Act
-            try
-            {
-                handler.Handle(command);
-            }
-            catch (ValidationException exception)
-            {
-                failed = true;
-            }
-
-            // Assert
-            Assert.IsTrue(failed);
-        }
-    }
-
-    public class MockAddGameItemCommand
-    {
-        public MockAddGameItemCommand(GameItemModel item)
-        {
-            this.Item = new CreateEntityCommand<GameItemModel>(item);
-        }
-
-        [ValidateObject]
-        public CreateEntityCommand<GameItemModel> Item { get; private set; }
-    }
-
-    public class MockAddGameItemCommandHandler : ICommandHandler<MockAddGameItemCommand>
-    {
-        public void Handle(MockAddGameItemCommand command)
-        {
+            handler.Handle(command);
         }
     }
 }
