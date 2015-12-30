@@ -9,6 +9,8 @@ namespace NinjaHive.BusinessLayer
         public static void Configure()
         {
             Mapper.CreateMap<GameItemEntity, GameItemModel>();
+            Mapper.CreateMap<MainCategoryEntity, MainCategoryModel>();
+            Mapper.CreateMap<SubCategoryEntity, SubCategoryModel>();
         }
     };
 }

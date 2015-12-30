@@ -37,7 +37,7 @@
                 success: function (responseData) {
                     $("#ninjahive-content").html(responseData);
                 },
-                error: function () {
+                error: function (jqXHR, textStatus, errorThrown) {
                     $("#ninjahive-content").html('@Html.Partial(Partials.AjaxError)'); //TODO: accept newlines Html.Raw?
                 },
                 complete: function () {

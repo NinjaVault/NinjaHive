@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using NinjaHive.Contract.Models;
 using NinjaHive.Contract.Queries;
 using NinjaHive.Core;
 using NinjaHive.WebApp.Helpers;
+using NinjaHive.WebApp.Models;
 
 namespace NinjaHive.WebApp.Controllers
 {
@@ -28,36 +30,39 @@ namespace NinjaHive.WebApp.Controllers
 
         public ActionResult Create()
         {
-            return View();
+            var model = new GameItemModel();
+            var viewModel = this.PrepareViewModel(model);
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(GameItemViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                this.repository.Create(viewModel.GameItem);
+                return base.Home();
+            }
+            viewModel.categories = this.GetCategories();
+            return View(viewModel);
         }
 
         public ActionResult Edit(Guid id)
         {
             var query = new GetEntityByIdQuery<GameItemModel>(id);
             var model = this.queryProcessor.Execute(query);
-            return View(model);
+            var viewModel = this.PrepareViewModel(model);
+            return this.View(viewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(GameItemModel model)
+        public ActionResult Edit(GameItemViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                this.repository.Create(model);
-                return base.Home();
-            }
-
-            return View();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(GameItemModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                this.repository.Update(model);
+                this.repository.Update(viewModel.GameItem);
                 return base.Home();
             }
 
@@ -82,6 +87,22 @@ namespace NinjaHive.WebApp.Controllers
             }
 
             return base.NoResults();
+        }
+
+        private GameItemViewModel PrepareViewModel(GameItemModel model)
+        {
+            var categories = this.GetCategories();
+            return new GameItemViewModel
+            {
+                categories = categories,
+                GameItem = model,
+            };
+        }
+
+        private IEnumerable<SubCategoryModel> GetCategories()
+        {
+            return this.queryProcessor.Execute(new GetAllCategoriesQuery())
+                                      .SelectMany(c => c.SubCategories);
         }
     }
 }

@@ -1,0 +1,23 @@
+﻿@using NinjaHive.Contract.Models
+@using NinjaHive.WebApp.Controllers
+@using NinjaHive.WebApp.Extensions
+@model MainCategoryModel
+
+@using (Html.BeginForm<CategoriesController>(c => c.AddMainCategory(Model)))
+{
+    //Html.AntiForgeryToken();
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Name, new { @class = "control-label col-md-12" })
+        <div class="col-md-6">
+            @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-4">
+            <input type="submit" class="btn btn-primary" value="Add main category" />
+        </div>
+    </div>
+}

@@ -72,16 +72,17 @@ namespace NinjaHive.WebApp
             container.Register<IUserContext, HttpWebUserContext>(Lifestyle.Scoped);
             container.RegisterSingleton<ITimeProvider, SystemTimeProvider>();
             container.RegisterSingleton(typeof(IWriteOnlyRepository<>), typeof(WriteOnlyCommandRepository<>));
+            container.RegisterSingleton<ILogger, DatabaseLogger>();
         }
 
         private static void RegisterNinjaHiveDatabase()
         {
             var connectionString = ConfigurationManager.ConnectionStrings["NinjaHiveContext"].ConnectionString;
+            container.RegisterSingleton<IConnectionFactory>(new SqlConnectionFactory(connectionString));
 
-#if DEBUG
+            //this here is required because of EF's UnintentionalCodeFirstException
             connectionString += "MultipleActiveResultSets=True;App=NinjaHiveContext";
             connectionString = BuildEntityConnectionString(connectionString, "NinjaHiveEntities");
-#endif
 
             var dbContextRegistration = Lifestyle.Scoped.CreateRegistration(
                 () => new NinjaHiveContext(connectionString), container);
@@ -173,7 +174,6 @@ namespace NinjaHive.WebApp
             return AppDomain.CurrentDomain.GetAssemblies();
         }
 
-#if DEBUG
         public static string BuildEntityConnectionString(string connectionString, string modelName)
         {
             var builder = new EntityConnectionStringBuilder
@@ -185,6 +185,5 @@ namespace NinjaHive.WebApp
 
             return builder.ToString();
         }
-#endif
     }
 }

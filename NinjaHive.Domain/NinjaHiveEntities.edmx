@@ -55,7 +55,6 @@
           </Key>
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="nvarchar" MaxLength="255" />
-          <Property Name="Category" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Craftable" Type="bit" Nullable="false" />
           <Property Name="IsUpgrader" Type="bit" Nullable="false" />
@@ -66,6 +65,7 @@
           <Property Name="CreatedBy" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="EditedOn" Type="datetime" Nullable="false" />
           <Property Name="EditedBy" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Category" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <EntityType Name="Levels">
           <Key>
@@ -76,6 +76,17 @@
           <Property Name="Threshold" Type="int" Nullable="false" />
           <Property Name="FKTiersId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="FKStatInfoId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="EditedOn" Type="datetime" Nullable="false" />
+          <Property Name="EditedBy" Type="nvarchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MainCategories">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="CreatedBy" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="EditedOn" Type="datetime" Nullable="false" />
@@ -169,6 +180,18 @@
           <Property Name="CreatedBy" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="EditedOn" Type="datetime" Nullable="false" />
           <Property Name="EditedBy" Type="nvarchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SubCategories">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="EditedOn" Type="datetime" Nullable="false" />
+          <Property Name="EditedBy" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="MainCategory" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <EntityType Name="Tiers">
           <Key>
@@ -305,6 +328,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_GameItems_Category">
+          <End Role="SubCategories" Type="Self.SubCategories" Multiplicity="1" />
+          <End Role="GameItems" Type="Self.GameItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubCategories">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GameItems">
+              <PropertyRef Name="Category" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Level_StatInfo">
           <End Role="StatInfo" Type="Self.StatInfo" Multiplicity="1" />
           <End Role="Levels" Type="Self.Levels" Multiplicity="*" />
@@ -429,6 +464,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_SubCategory_MainCategory">
+          <End Role="MainCategories" Type="Self.MainCategories" Multiplicity="1" />
+          <End Role="SubCategories" Type="Self.SubCategories" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MainCategories">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SubCategories">
+              <PropertyRef Name="MainCategory" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Tiers_Levels">
           <End Role="Tiers" Type="Self.Tiers" Multiplicity="1" />
           <End Role="Levels" Type="Self.Levels" Multiplicity="*" />
@@ -521,6 +568,7 @@
           <EntitySet Name="EquipmentItemsRacesAssociation" EntityType="Self.EquipmentItemsRacesAssociation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GameItems" EntityType="Self.GameItems" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Levels" EntityType="Self.Levels" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MainCategories" EntityType="Self.MainCategories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MiscItems" EntityType="Self.MiscItems" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OtherItems" EntityType="Self.OtherItems" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OtherItemsCraftingItemsAssociation" EntityType="Self.OtherItemsCraftingItemsAssociation" Schema="dbo" store:Type="Tables" />
@@ -529,6 +577,7 @@
           <EntitySet Name="SkillsSpecialsAssociation" EntityType="Self.SkillsSpecialsAssociation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Specials" EntityType="Self.Specials" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StatInfo" EntityType="Self.StatInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SubCategories" EntityType="Self.SubCategories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tiers" EntityType="Self.Tiers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TiersCraftingItemsAssociation" EntityType="Self.TiersCraftingItemsAssociation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TiersSkillsAssociation" EntityType="Self.TiersSkillsAssociation" Schema="dbo" store:Type="Tables" />
@@ -564,6 +613,10 @@
           <AssociationSet Name="FK_EquipmentItemsRacesAssociation_Races" Association="Self.FK_EquipmentItemsRacesAssociation_Races">
             <End Role="Races" EntitySet="Races" />
             <End Role="EquipmentItemsRacesAssociation" EntitySet="EquipmentItemsRacesAssociation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GameItems_Category" Association="Self.FK_GameItems_Category">
+            <End Role="SubCategories" EntitySet="SubCategories" />
+            <End Role="GameItems" EntitySet="GameItems" />
           </AssociationSet>
           <AssociationSet Name="FK_Level_StatInfo" Association="Self.FK_Level_StatInfo">
             <End Role="StatInfo" EntitySet="StatInfo" />
@@ -604,6 +657,10 @@
           <AssociationSet Name="FK_SkillsSpecialsAssociation_Specials" Association="Self.FK_SkillsSpecialsAssociation_Specials">
             <End Role="Specials" EntitySet="Specials" />
             <End Role="SkillsSpecialsAssociation" EntitySet="SkillsSpecialsAssociation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubCategory_MainCategory" Association="Self.FK_SubCategory_MainCategory">
+            <End Role="MainCategories" EntitySet="MainCategories" />
+            <End Role="SubCategories" EntitySet="SubCategories" />
           </AssociationSet>
           <AssociationSet Name="FK_Tiers_Levels" Association="Self.FK_Tiers_Levels">
             <End Role="Tiers" EntitySet="Tiers" />
@@ -703,6 +760,16 @@
             <End Role="TierEntity" EntitySet="TierEntities" />
             <End Role="GameItemEntity" EntitySet="GameItemEntities" />
           </AssociationSet>
+          <EntitySet Name="MainCategories" EntityType="NinjaHiveEntities.MainCategoryEntity" />
+          <EntitySet Name="SubCategories" EntityType="NinjaHiveEntities.SubCategoryEntity" />
+          <AssociationSet Name="FK_GameItems_Category1" Association="NinjaHiveEntities.FK_GameItems_Category1">
+            <End Role="SubCategories" EntitySet="SubCategories" />
+            <End Role="GameItemEntity" EntitySet="GameItemEntities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubCategory_MainCategory" Association="NinjaHiveEntities.FK_SubCategory_MainCategory">
+            <End Role="MainCategories" EntitySet="MainCategories" />
+            <End Role="SubCategories" EntitySet="SubCategories" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="GameItemEntity" Abstract="false">
           <Key>
@@ -710,7 +777,6 @@
           </Key>
           <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
-          <Property Name="Category" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="Craftable" Type="Boolean" Nullable="false" />
           <Property Name="IsUpgrader" Type="Boolean" Nullable="false" />
@@ -718,6 +784,7 @@
           <Property Name="IsQuestItem" Type="Boolean" Nullable="false" />
           <Property Name="Value" Type="Int32" Nullable="false" />
           <Property Name="EditInfo" Type="NinjaHiveEntities.EditInfo" Nullable="false" />
+          <NavigationProperty Name="SubCategory" Relationship="NinjaHiveEntities.FK_GameItems_Category1" FromRole="GameItemEntity" ToRole="SubCategories" />
         </EntityType>
         <EntityType Name="RaceEntity">
           <Key>
@@ -883,6 +950,33 @@
           <Property Type="DateTime" Name="EditedOn" Nullable="false" Precision="3" />
           <Property Type="String" Name="EditedBy" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
         </ComplexType>
+        <EntityType Name="MainCategoryEntity">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="SubCategories" Relationship="NinjaHiveEntities.FK_SubCategory_MainCategory" FromRole="MainCategories" ToRole="SubCategories" />
+          <Property Name="EditInfo" Type="NinjaHiveEntities.EditInfo" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SubCategoryEntity">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="GameItems" Relationship="NinjaHiveEntities.FK_GameItems_Category1" FromRole="SubCategories" ToRole="GameItemEntity" />
+          <NavigationProperty Name="MainCategory" Relationship="NinjaHiveEntities.FK_SubCategory_MainCategory" FromRole="SubCategories" ToRole="MainCategories" />
+          <Property Name="EditInfo" Type="NinjaHiveEntities.EditInfo" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_GameItems_Category1">
+          <End Type="NinjaHiveEntities.SubCategoryEntity" Role="SubCategories" Multiplicity="1" />
+          <End Type="NinjaHiveEntities.GameItemEntity" Role="GameItemEntity" Multiplicity="*" />
+        </Association>
+        <Association Name="FK_SubCategory_MainCategory">
+          <End Type="NinjaHiveEntities.MainCategoryEntity" Role="MainCategories" Multiplicity="1" />
+          <End Type="NinjaHiveEntities.SubCategoryEntity" Role="SubCategories" Multiplicity="*" />
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -898,7 +992,6 @@
                 <ScalarProperty Name="IsUpgrader" ColumnName="IsUpgrader" />
                 <ScalarProperty Name="Craftable" ColumnName="Craftable" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Category" ColumnName="Category" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ComplexProperty Name="EditInfo">
@@ -1158,6 +1251,50 @@
             </EndProperty>
             <EndProperty Name="TierEntity">
               <ScalarProperty Name="Id" ColumnName="FKTiersId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="MainCategories">
+            <EntityTypeMapping TypeName="NinjaHiveEntities.MainCategoryEntity">
+              <MappingFragment StoreEntitySet="MainCategories">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ComplexProperty Name="EditInfo">
+                  <ScalarProperty Name="EditedBy" ColumnName="EditedBy" />
+                  <ScalarProperty Name="EditedOn" ColumnName="EditedOn" />
+                  <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                  <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                </ComplexProperty>
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SubCategories">
+            <EntityTypeMapping TypeName="NinjaHiveEntities.SubCategoryEntity">
+              <MappingFragment StoreEntitySet="SubCategories">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ComplexProperty Name="EditInfo">
+                  <ScalarProperty Name="EditedBy" ColumnName="EditedBy" />
+                  <ScalarProperty Name="EditedOn" ColumnName="EditedOn" />
+                  <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                  <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                </ComplexProperty>
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="FK_GameItems_Category1" TypeName="NinjaHiveEntities.FK_GameItems_Category1" StoreEntitySet="GameItems">
+            <EndProperty Name="GameItemEntity">
+              <ScalarProperty Name="Id" ColumnName="Id" />
+            </EndProperty>
+            <EndProperty Name="SubCategories">
+              <ScalarProperty Name="Id" ColumnName="Category" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="FK_SubCategory_MainCategory" TypeName="NinjaHiveEntities.FK_SubCategory_MainCategory" StoreEntitySet="SubCategories">
+            <EndProperty Name="SubCategories">
+              <ScalarProperty Name="Id" ColumnName="Id" />
+            </EndProperty>
+            <EndProperty Name="MainCategories">
+              <ScalarProperty Name="Id" ColumnName="MainCategory" />
             </EndProperty>
           </AssociationSetMapping>
         </EntityContainerMapping>

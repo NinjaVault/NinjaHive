@@ -71,7 +71,6 @@ namespace NinjaHive.Domain
         partial void OnCreated();
         public System.Guid Id { get; set; }
         public string Name { get; set; }
-        public string Category { get; set; }
         public string Description { get; set; }
         public bool Craftable { get; set; }
         public bool IsUpgrader { get; set; }
@@ -80,6 +79,8 @@ namespace NinjaHive.Domain
         public int Value { get; set; }
     
         public EditInfo EditInfo { get; set; }
+    
+        public virtual SubCategoryEntity SubCategory { get; set; }
     }
 }
 namespace NinjaHive.Domain
@@ -104,6 +105,29 @@ namespace NinjaHive.Domain
     
         public virtual TierEntity Tier { get; set; }
         public virtual StatInfoEntity StatInfo { get; set; }
+    }
+}
+namespace NinjaHive.Domain
+{
+    using System;
+    using System.Collections.Generic;
+    
+    public partial class MainCategoryEntity : NinjaHive.Domain.IEntity
+    {
+        public MainCategoryEntity()
+        {
+            this.SubCategories = new HashSet<SubCategoryEntity>();
+            this.EditInfo = new EditInfo();
+            this.OnCreated();
+        }
+    
+        partial void OnCreated();
+        public System.Guid Id { get; set; }
+        public string Name { get; set; }
+    
+        public EditInfo EditInfo { get; set; }
+    
+        public virtual ICollection<SubCategoryEntity> SubCategories { get; set; }
     }
 }
 namespace NinjaHive.Domain
@@ -244,6 +268,30 @@ namespace NinjaHive.Domain
         public double Resistance { get; set; }
     
         public EditInfo EditInfo { get; set; }
+    }
+}
+namespace NinjaHive.Domain
+{
+    using System;
+    using System.Collections.Generic;
+    
+    public partial class SubCategoryEntity : NinjaHive.Domain.IEntity
+    {
+        public SubCategoryEntity()
+        {
+            this.GameItems = new HashSet<GameItemEntity>();
+            this.EditInfo = new EditInfo();
+            this.OnCreated();
+        }
+    
+        partial void OnCreated();
+        public System.Guid Id { get; set; }
+        public string Name { get; set; }
+    
+        public EditInfo EditInfo { get; set; }
+    
+        public virtual ICollection<GameItemEntity> GameItems { get; set; }
+        public virtual MainCategoryEntity MainCategory { get; set; }
     }
 }
 namespace NinjaHive.Domain

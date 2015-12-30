@@ -4,12 +4,24 @@
 @model IEnumerable<GameItemModel>
 
 <div class="list-group">
-    @foreach (var item in Model)
-    {
-        var url = UrlProvider<ItemsController>.GetUrl(c => c.Edit(item.Id));
-        <a href="@url" class="list-group-item">
-            <h4 class="list-group-item-heading">@item.Name</h4>
-            <p class="list-group-item-text">@item.Description</p>
-        </a>
-    }
+        @foreach (var mainGroup in Model.GroupBy(m => m.SubCategoryMainCategoryName))
+        {
+            <h3>@mainGroup.Key</h3>
+            foreach (var subGroup in mainGroup.GroupBy(m => m.SubCategoryName))
+            {
+                <div class="panel panel-default">
+                    <div class="panel-heading">@subGroup.Key</div>
+                    <div class="panel-body">
+                        @foreach (var item in subGroup)
+                        {
+                            var url = UrlProvider<ItemsController>.GetUrl(c => c.Edit(item.Id));
+                            <a href="@url" class="list-group-item">
+                                <h4 class="list-group-item-heading">@item.Name</h4>
+                                <p class="list-group-item-text">@item.Description</p>
+                            </a>
+                        }
+                    </div>
+                </div>
+            }
+        }
 </div>

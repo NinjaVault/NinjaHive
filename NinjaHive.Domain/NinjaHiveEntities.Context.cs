@@ -33,5 +33,7 @@ namespace NinjaHive.Domain
         public virtual DbSet<SkillEntity> SkillEntities { get; set; }
         public virtual DbSet<StatInfoEntity> StatInfoEntities { get; set; }
         public virtual DbSet<SpecialEntity> SpecialEntities { get; set; }
+        public virtual DbSet<MainCategoryEntity> MainCategories { get; set; }
+        public virtual DbSet<SubCategoryEntity> SubCategories { get; set; }
     }
 }

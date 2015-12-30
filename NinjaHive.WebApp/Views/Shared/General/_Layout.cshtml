@@ -11,8 +11,8 @@
         NinjaHive
         @if (System.Configuration.ConfigurationManager.AppSettings.Get("isTestEnvironment") == "true")
         {
-            var version = typeof(NinjaHive.WebApp.Startup).Assembly.GetName().Version;
-            @version
+            var version = typeof(Startup).Assembly.GetName().Version;
+            @String.Format("v{0}.{1}.{2}.alpha", version.Major, version.Minor, version.Build)
         }
     </title>
 
@@ -20,6 +20,7 @@
     @Scripts.Render("~/bundles/modernizr")
 
     @RenderSection("JavaScript", required: false)
+
 
     <script type="text/javascript">
         var appInsights = window.appInsights || function (config) {
@@ -46,7 +47,8 @@
 </head>
 
 <body>
-
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             
@@ -76,9 +78,7 @@
             </p>
         </footer>
     </div>
-
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
+    
     @RenderSection("scripts", required: false)
 </body>
 </html>

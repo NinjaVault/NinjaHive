@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using NinjaHive.Core.Helpers;
+using NinjaHive.Core.Validations;
 
 namespace NinjaHive.Contract.Models
 {
@@ -10,15 +11,20 @@ namespace NinjaHive.Contract.Models
 
         [Required(ErrorMessage="{0} is required")]
         [StringLength(255, MinimumLength = 3, ErrorMessage = "{0}, minimum: {2}, maximum: {1}")]
-        [RegularExpression(RegEx.AlphaNum, ErrorMessage = "Alphanumerics only")]
+        [RegularExpression(RegEx.AlphaNumSpace, ErrorMessage = "Alphanumerics and spaces only")]
         public string Name { get; set; }
 
         [Required(ErrorMessage = "{0} is required")]
         [StringLength(255, MinimumLength = 3, ErrorMessage = "{0}, minimum: {2}, maximum: {1}")]
         public string Description { get; set; }
 
-        [Required(ErrorMessage = "{0} is required")]
-        public string Category { get; set; }
+        [NonEmptyGuid]
+        [Display(Name = "Category")]
+        public Guid CategoryId { get; set; }
+
+        //conventions for automapper
+        public string SubCategoryName { get; set; }
+        public string SubCategoryMainCategoryName { get; set; }
 
         [Required(ErrorMessage = "{0} is required")]
         [Range(0, int.MaxValue, ErrorMessage = "Please enter valid integer for {0}. Minimum: {1}")]
