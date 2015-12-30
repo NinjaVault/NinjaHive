@@ -1,4 +1,6 @@
 ﻿@using Microsoft.AspNet.Identity
+@using NinjaHive.WebApp.Controllers
+@using NinjaHive.WebApp.Extensions
 @if (Request.IsAuthenticated)
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
@@ -13,8 +15,9 @@
                         <span class="caret"></span>
                     </a>
 
+                    @{ var changePasswordLink = Html.ActionLink<AccountController>("Change password", c => c.ChangePassword(), new { role = "menuitem", tabindex = -1 }); }
                     <ul class="dropdown-menu" id="dropdown" role="menu">
-                        @*TODO change password*@
+                        <li>@changePasswordLink</li>
                         <li class="divider"></li>
                         <li><a role="menuitem" tabindex="-1" href="javascript:document.getElementById('logoutForm').submit()">Sign out</a></li>
                     </ul>
@@ -23,7 +26,7 @@
         </div>
 
         <ul class="nav navbar-nav navbar-right visible-xs">
-            @*TODO change password*@
+            <li>@changePasswordLink</li>
             <li><a role="menuitem" tabindex="-1" href="javascript:document.getElementById('logoutForm').submit()">Sign out</a></li>
         </ul>
     }

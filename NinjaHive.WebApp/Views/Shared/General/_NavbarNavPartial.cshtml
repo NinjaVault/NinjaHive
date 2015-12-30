@@ -6,11 +6,11 @@
     @*TODO: 'active' placement*@
     <ul class="nav navbar-nav">
         <li class="active">
-            @{ var itemsAnchor = Html.HtmlActionLink<ItemsController>("Items", c => c.Index()); }
+            @{ var itemsAnchor = Html.ActionLink<ItemsController>("Items", c => c.Index()); }
             @itemsAnchor
         </li>
         <li class="">
-            @{ var categoriesAnchor = Html.HtmlActionLink<CategoriesController>("Categories", c => c.Index()); }
+            @{ var categoriesAnchor = Html.ActionLink<CategoriesController>("Categories", c => c.Index()); }
             @categoriesAnchor
         </li>
     </ul>

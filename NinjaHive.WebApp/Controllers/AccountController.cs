@@ -2,6 +2,7 @@
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
+using NinjaHive.WebApp.Helpers;
 using NinjaHive.WebApp.Models;
 
 namespace NinjaHive.WebApp.Controllers
@@ -54,6 +55,54 @@ namespace NinjaHive.WebApp.Controllers
             this.authenticationManager.SignOut(DefaultAuthenticationTypes.ExternalCookie);
             this.authenticationManager.SignIn(new AuthenticationProperties { IsPersistent = isPersistent },
                         await user.GenerateUserIdentityAsync(this.userManager, isPersistent));
+        }
+
+        public ActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ChangePassword(ManageUserViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var userId = this.User.Identity.GetUserId();
+                var result =
+                    await this.userManager.ChangePasswordAsync(userId, viewModel.OldPassword, viewModel.NewPassword);
+
+                if (result.Succeeded)
+                {
+                    this.authenticationManager.SignOut();
+                    return Redirect(UrlProvider<AccountController>.GetUrl(c => c.ChangePasswordConfirmation()));
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error);
+                }
+                return this.View();
+            }
+
+            return View(viewModel);
+        }
+
+        public ActionResult ChangePasswordConfirmation()
+        {
+            return View();
+        }
+
+        [Authorize]
+        public async Task<JsonResult> ValidatePassword(string newPassword)
+        {
+            var result = await this.userManager.PasswordValidator.ValidateAsync(newPassword);
+
+            return result.Succeeded
+                ? this.Json(true, JsonRequestBehavior.AllowGet)
+                : this.Json(
+                    "The new password must meet the following requirements:\r\n" + string.Join("\r\n", result.Errors),
+                    JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
