@@ -17,7 +17,7 @@ namespace NinjaHive.Contract.Commands
         public Guid Id { get; private set; }
 
         [Required]
-        [ValidateObject]
+        [ValidateObjectDeep]
         public TModel Model { get; private set; }
     }
 }

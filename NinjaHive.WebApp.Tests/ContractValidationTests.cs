@@ -1,11 +1,8 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NinjaHive.BusinessLayer.CrossCuttingConcerns;
-using NinjaHive.Contract.Commands;
 using NinjaHive.Contract.Models;
-using NinjaHive.Core;
-using NinjaHive.Core.Validations;
+using NinjaHive.WebApp.Tests.Exceptions;
 
 namespace NinjaHive.WebApp.Tests
 {
@@ -13,7 +10,7 @@ namespace NinjaHive.WebApp.Tests
     public class ContractValidationTests
     {
         [TestMethod]
-        [ExpectedExceptionWithMessage(typeof(ValidationException), "Category is required", MatchSubstring = true)]
+        [ExpectedExceptionWithMessage(typeof(ValidationException), "The field 'CategoryId' in 'NinjaHive.Contract.Models.GameItemModel' is invalid!", MatchSubstring = true)]
         public void PerformValidation_CreateItemWithoutCategory_ThrowsValidationError()
         {
             // Arrange

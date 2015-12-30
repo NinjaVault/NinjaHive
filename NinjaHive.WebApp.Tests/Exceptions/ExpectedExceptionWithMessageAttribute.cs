@@ -1,24 +1,29 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace NinjaHive.WebApp.Tests
+namespace NinjaHive.WebApp.Tests.Exceptions
 {
 
-    [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
+    [AttributeUsage(AttributeTargets.Method)]
     public sealed class ExpectedExceptionWithMessageAttribute : ExpectedExceptionBaseAttribute
     {
 
-        public ExpectedExceptionWithMessageAttribute(Type exceptionType,string messageExpected):
-            base()
+        public ExpectedExceptionWithMessageAttribute(
+            Type exceptionType,
+            string messageExpected)
         {
-            ExceptionType = exceptionType;
-            ExceptionMessage = messageExpected;
+            this.ExceptionType = exceptionType;
+            this.ExceptionMessage = messageExpected;
         }
-        public ExpectedExceptionWithMessageAttribute(Type exceptionType, string messageExpected, string noExceptionMessage):
-            base(noExceptionMessage)
+
+        public ExpectedExceptionWithMessageAttribute(
+            Type exceptionType,
+            string messageExpected,
+            string noExceptionMessage)
+            : base(noExceptionMessage)
         {
-            ExceptionType = exceptionType;
-            ExceptionMessage = messageExpected;
+            this.ExceptionType = exceptionType;
+            this.ExceptionMessage = messageExpected;
         }
 
         public bool MatchSubstring { get; set; }
@@ -29,24 +34,30 @@ namespace NinjaHive.WebApp.Tests
 
         protected override void Verify(Exception exception)
         {
-            RethrowIfAssertException(exception);
+            this.RethrowIfAssertException(exception);
+
             try
             {
-                Assert.IsInstanceOfType(exception, ExceptionType, "Exception type does not match.");
-                if (MatchSubstring)
-                    Assert.IsTrue(exception.Message.Contains(ExceptionMessage),
-                        string.Format("Exception message does not contain the expected string. Given: {0} | Expected: {1}",
+                Assert.IsInstanceOfType(exception, this.ExceptionType, "Exception type does not match.");
+                if (this.MatchSubstring)
+                {
+                    Assert.IsTrue(exception.Message.Contains(this.ExceptionMessage),
+                        string.Format(
+                            "Exception message does not contain the expected string. Given: {0} | Expected: {1}",
                             exception.Message,
-                            ExceptionMessage));
+                            this.ExceptionMessage));
+                }
                 else
-                    Assert.AreEqual(exception.Message, ExceptionMessage,
+                {
+                    Assert.AreEqual(exception.Message, this.ExceptionMessage,
                         string.Format("Exception message does not match the expected string. Given: {0} | Expected: {1}",
                             exception.Message,
-                            ExceptionMessage));
+                            this.ExceptionMessage));
+                }
             }
-            catch (AssertFailedException err)
+            catch (AssertFailedException failedException)
             {
-                RethrowIfAssertException(err);
+                this.RethrowIfAssertException(failedException);
             }
         }
     }

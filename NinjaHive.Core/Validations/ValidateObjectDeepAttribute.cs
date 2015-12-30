@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Reflection;
-using System.Linq;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -14,27 +11,26 @@ namespace NinjaHive.Core.Validations
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
     public class ValidateObjectDeepAttribute : ValidationAttribute
     {
-        static string memberKey = "members";
-
-        
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             try
             {
                 // Prevent infinite recursion by keeping track of what we've hit so far
                 if (validationContext.Items.ContainsKey(value))
+                {
                     return ValidationResult.Success;
+                }
                 validationContext.Items.Add(value, true);
 
 
-                Collection<ValidationResult> outResults = new Collection<ValidationResult>();
+                var outResults = new Collection<ValidationResult>();
                 // Try validation again, but keep our Items list
                 Validator.TryValidateObject(value, new ValidationContext(value, validationContext.Items),
                     outResults, validateAllProperties: true);
 
                 if(outResults.Count > 0)
                 {
-                    ValidationCumulativeResults validationResult = new ValidationCumulativeResults(
+                    var validationResult = new ValidationCumulativeResults(
                         string.Format("The field {0} in {1} is not valid.",
                             validationContext.MemberName,
                             validationContext.ObjectType.Name),

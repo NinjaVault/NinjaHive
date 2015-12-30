@@ -5,15 +5,16 @@ using System.ComponentModel.DataAnnotations;
 
 namespace NinjaHive.Core.Validations
 {
-    public class ValidationCumulativeResults: ValidationResult
+    public class ValidationCumulativeResults : ValidationResult
     {
-        Collection<ValidationResult> resultsCollection;
+        private readonly ICollection<ValidationResult> resultsCollection;
 
         public ValidationCumulativeResults(string errorMessage)
             : base(errorMessage)
         {
             resultsCollection = new Collection<ValidationResult>();
         }
+
         public ValidationCumulativeResults(string errorMessage, IEnumerable<ValidationResult> results)
             : base(errorMessage)
         {
@@ -25,6 +26,7 @@ namespace NinjaHive.Core.Validations
         {
             resultsCollection = new Collection<ValidationResult>();
         }
+
         public ValidationCumulativeResults(string errorMessage, IEnumerable<string> memberNames, IEnumerable<ValidationResult> results)
             : base(errorMessage, memberNames)
         {
@@ -40,17 +42,22 @@ namespace NinjaHive.Core.Validations
         public void AddResult(ValidationResult result)
         {
             if (result == null)
+            {
                 throw new ArgumentNullException("result");
+            }
 
             resultsCollection.Add(result);
         }
+
         public void AddResults(IEnumerable<ValidationResult> results)
         {
             if (results == null)
                 throw new ArgumentNullException("results");
 
-            foreach(ValidationResult result in results)
+            foreach (var result in results)
+            {
                 resultsCollection.Add(result);
+            }
         }
 
         public IEnumerable<ValidationResult> ResultsCollection

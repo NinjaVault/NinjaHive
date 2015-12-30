@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using NinjaHive.Core;
 
@@ -17,7 +17,7 @@ namespace NinjaHive.BusinessLayer.CrossCuttingConcerns
 
         public void Handle(TCommand command)
         {
-            List<ValidationResult> outResults = new List<ValidationResult>();
+            var outResults = new Collection<ValidationResult>();
 
             var validationContext = new ValidationContext(command);
             Validator.TryValidateObject(command, validationContext, outResults, validateAllProperties: true);
