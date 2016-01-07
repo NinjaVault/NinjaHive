@@ -41,6 +41,17 @@ namespace NinjaHive.WebApp.Controllers
             return Redirect(UrlProvider<CategoriesController>.GetUrl(c => c.Index()));
         }
 
+         [HttpPost]
+        public ActionResult EditMainCategory(MainCategoryModel model)
+        {
+             if(ModelState.IsValid)
+             {
+                 this.mainCategoryRepository.Update(model);
+             }
+
+            return base.Home();
+        }
+
         [HttpPost]
         public ActionResult AddSubCategory(SubCategoryModel model)
         {
@@ -49,7 +60,7 @@ namespace NinjaHive.WebApp.Controllers
                 this.subCategoryRepository.Create(model);
             }
             return Redirect(UrlProvider<CategoriesController>.GetUrl(c => c.Index()));
-        }
+        }       
 
         [HttpPost]
         public ActionResult EditSubCategory(SubCategoryModel model)
