@@ -45,8 +45,13 @@
                         @foreach (var category in Model)
                         {
                             <a href="#" class="list-group-item mainCategory" data-id="@category.Id">
-                                @category.Name
+                                <span class="name">@category.Name</span>
+                                <span class="input">
+                                    <input data-id="@category.Id" type="text" class="form-control" style="display: inline;">
+                                    <span class="glyphicon glyphicon-ok save"></span>
+                                </span>
                                 <span data-id="@category.Id" class="glyphicon glyphicon-trash" style="float: right"></span>
+                                <span data-id="@category.Id" class="glyphicon glyphicon-pencil" style="float: right; margin-right: 5px;"></span>
                             </a>
                         }
                     </div>
@@ -98,6 +103,12 @@
                 var attributeSelector = "[data-parent-id=\"" + mainCategoryId + "\"]";
                 $(".subCategoryForm, .subCategories").hide();
                 $(".subCategoryForm" + attributeSelector + ", .subCategories" + attributeSelector).show();
+
+                if (mainLastClick.data("id") !== mainCategoryId) {
+                    mainLastClick.prev().prev().hide();
+                    mainLastClick.prev().prev().prev().show();
+                    mainLastClick.show();
+                }
             });
 
 
@@ -143,8 +154,32 @@
                 });
             });
 
+            var mainLastClick = null;
             var lastClick = null;
+            $(".mainCategory .input").hide();
             $(".subCategories .input").hide();
+            $(".mainCategory .glyphicon-pencil").click(function (e) {
+                var input = $(this).prev().prev();
+                var name = input.prev();
+                var glypho = $(this);
+
+                if (mainLastClick === $(this)) {
+                    return;
+                } if (mainLastClick != null) {
+                    mainLastClick.prev().prev().hide();
+                    mainLastClick.prev().prev().prev().show();
+                    mainLastClick.show();
+                }
+
+                mainLastClick = $(this);
+
+                name.hide();
+                glypho.hide();
+                input.show();
+                input.children(":text").val(name.html());
+                input.children(":text").select();
+            });
+
             $(".subCategories .list-group-item").click(function (e) {
                 var input = $(this).children(".input");
                 if (lastClick === $(this).data("id")) {
@@ -165,7 +200,7 @@
                 input.children(":text").select();
             });
 
-            $(".save").click(function (e) {
+            $(".subCategories .save").click(function (e) {
                 var id = $(this).prev().data("id");
                 var mainId = $(this).prev().data("parent-id");
                 var name = $(this).prev().val();
@@ -183,6 +218,34 @@
                         alert('error occurred. contact system admin');
                     },
                     complete: function () {
+                    }
+                };
+
+                $.ajax(options);
+            });
+
+            $(".mainCategory .save").click(function (e) {
+                var id = $(this).prev().data("id");
+                var name = $(this).prev().val();
+
+                var options = {
+                    @{ var mainUrl = Url.Action<CategoriesController>(c => c.EditMainCategory(null)); }
+                    url: "@mainUrl",
+                    type: "POST",
+                    cache: false,
+                    data: { Id: id, Name: name },
+
+                    success: function (responseData) {                    
+                        alert('saved:' + id);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        alert('error occurred. contact system admin');
+                    },
+
+                    complete: function () {
+                        mainLastClick.prev().prev().hide();
+                        mainLastClick.prev().prev().prev().show();
+                        mainLastClick.show();
                     }
                 };
 
