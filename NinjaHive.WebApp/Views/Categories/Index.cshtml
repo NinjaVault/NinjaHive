@@ -45,8 +45,13 @@
                         @foreach (var category in Model)
                         {
                             <a href="#" class="list-group-item mainCategory" data-id="@category.Id">
-                                @category.Name
+                                <span class="name">@category.Name</span>   
+                                <span class="input">
+                                    <input data-id="@category.Id" type="text" class="form-control" style="display: inline;">
+                                    <span class="glyphicon glyphicon-ok save"></span>
+                                </span>                             
                                 <span data-id="@category.Id" class="glyphicon glyphicon-trash" style="float: right"></span>
+                                <span data-id="@category.Id" class="glyphicon glyphicon-pencil" style="float: right; margin-right: 5px;"></span>
                             </a>
                         }
                     </div>
@@ -87,97 +92,160 @@
 
 @section Scripts{
     <script>
-        $(function () {
+    $(function () {
+        $(".subCategoryForm, .subCategories").hide();
+        $(".subCategoryForm:first-child, .subCategories:first-child").show();
+        $("#mainCategories .mainCategory:first-child").addClass("active");
+
+        $(".mainCategory").click(function (e) {
+            var mainCategoryId = $(this).data("id");
+            var attributeSelector = "[data-parent-id=\"" + mainCategoryId + "\"]";
             $(".subCategoryForm, .subCategories").hide();
-            $(".subCategoryForm:first-child, .subCategories:first-child").show();
-            $("#mainCategories .mainCategory:first-child").addClass("active");
+            $(".subCategoryForm" + attributeSelector + ", .subCategories" + attributeSelector).show();
 
-            $(".mainCategory").click(function (e) {
-                var mainCategoryId = $(this).data("id");
-                var attributeSelector = "[data-parent-id=\"" + mainCategoryId + "\"]";
-                $(".subCategoryForm, .subCategories").hide();
-                $(".subCategoryForm" + attributeSelector + ", .subCategories" + attributeSelector).show();
-            });
+            if (mainLastClick.data("id") !== mainCategoryId) {
+                mainLastClick.prev().prev().hide();
+                mainLastClick.prev().prev().prev().show();
+                mainLastClick.show();
+            }
+        });
 
 
-            @{ var deleteUrl = UrlProvider<CategoriesController>.GetParameterlessUrl(c => c.Delete(Guid.Empty, false)); }
+        @{ var deleteUrl = UrlProvider<CategoriesController>.GetParameterlessUrl(c => c.Delete(Guid.Empty, false)); }
 
-            $("#mainCategories .glyphicon-trash").on("click", function (e) {
-                var id = $(this).data("id");
+        $("#mainCategories .glyphicon-trash").on("click", function (e) {
+            var id = $(this).data("id");
 
-                if ($(".subCategories[data-parent-id=\"" + id + "\"]:has(*)").length) {
-                    //TODO: nice model dialog
-                    alert("Cannot delete category because there are subcategories");
-                } else {
-                    $.post("@deleteUrl", { id: id, isMainCategory: true }, function () {
+            if ($(".subCategories[data-parent-id=\"" + id + "\"]:has(*)").length) {
+                //TODO: nice model dialog
+                alert("Cannot delete category because there are subcategories");
+            } else {
+                $.post("@deleteUrl", { id: id, isMainCategory: true }, function () {
+                    $(e.target).parent().remove();
+                });
+            }
+        });
+
+
+        $(".subCategories .glyphicon-trash").on("click", function (e) {
+            var id = $(this).data("id");
+
+            @{ var getGameItems = UrlProvider<CategoriesController>.GetParameterlessUrl(c => c.GetLinkedGameItems(Guid.Empty)); }
+            $.post("@getGameItems", { id: id }, function (data) {
+                if (data != null && !data.length) {
+
+                    $.post("@deleteUrl", { id: id, isMainCategory: false }, function () {
                         $(e.target).parent().remove();
                     });
+
+                } else {
+                    //TODO: nice model dialog with list of gameitems
+                    alert("Cannot delete category because it is linked to game items");
                 }
-            });
-
-            $(".subCategories .glyphicon-trash").on("click", function (e) {
-                var id = $(this).data("id");
-
-                @{ var getGameItems = UrlProvider<CategoriesController>.GetParameterlessUrl(c => c.GetLinkedGameItems(Guid.Empty)); }
-                $.post("@getGameItems", { id: id }, function (data) {
-                    if (data != null && !data.length) {
-
-                        $.post("@deleteUrl", { id: id, isMainCategory: false }, function () {
-                            $(e.target).parent().remove();
-                        });
-
-                    } else {
-                        //TODO: nice model dialog with list of gameitems
-                        alert("Cannot delete category because it is linked to game items");
-                    }
-                });
-            });
-
-            var lastClick = null;
-            $(".subCategories .input").hide();
-            $(".subCategories .list-group-item").click(function (e) {
-                var input = $(this).children(".input");
-                if (lastClick === $(this).data("id")) {
-                    input.children(":text").select();
-                    return;
-                }
-                if (lastClick != null) {
-                    var groupItem = ".list-group-item[data-id=\"" + lastClick + "\"]";
-                    $(groupItem + " .name").show();
-                    $(groupItem + " .input").hide();
-                }
-                lastClick = $(this).data("id");
-                var name = $(this).children(".name");
-
-                name.hide();
-                input.show();
-                input.children(":text").val(name.html());
-                input.children(":text").select();
-            });
-
-            $(".save").click(function (e) {
-                var id = $(this).prev().data("id");
-                var mainId = $(this).prev().data("parent-id");
-                var name = $(this).prev().val();
-                var options = {
-                    @{ var url = Url.Action<CategoriesController>(c => c.EditSubCategory(null)); }
-                    url: "@url",
-                    type: "POST",
-                    cache: false,
-                    data: {Id: id, Name: name, MainCategoryId: mainId},
-                    success: function (responseData) {
-                        $(this).parent().prev().val(name);
-                        alert('saved');
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
-                        alert('error occurred. contact system admin');
-                    },
-                    complete: function () {
-                    }
-                };
-
-                $.ajax(options);
             });
         });
+
+        var mainLastClick = null;
+        var lastClick = null;
+        $(".mainCategory .input").hide();
+        $(".subCategories .input").hide();
+
+        $(".mainCategory .glyphicon-pencil").click(function (e) {
+            var input = $(this).prev().prev();
+            var name = input.prev();
+            var glypho = $(this);
+
+            if (mainLastClick === $(this)) {
+                return;
+            } if (mainLastClick != null) {
+                mainLastClick.prev().prev().hide();
+                mainLastClick.prev().prev().prev().show();
+                mainLastClick.show();
+            }
+
+            mainLastClick = $(this);
+
+            name.hide();
+            glypho.hide();
+            input.show();
+            input.children(":text").val(name.html());
+            input.children(":text").select();
+        });
+
+        $(".subCategories .list-group-item").click(function (e) {
+            var input = $(this).children(".input");
+
+            if (lastClick === $(this).data("id")) {
+                input.children(":text").select();
+                return;
+            }
+
+            if (lastClick != null) {
+                var groupItem = ".list-group-item[data-id=\"" + lastClick + "\"]";
+                $(groupItem + " .name").show();
+                $(groupItem + " .input").hide();
+            }
+
+            lastClick = $(this).data("id");
+            var name = $(this).children(".name");
+
+            name.hide();
+            input.show();
+            input.children(":text").val(name.html());
+            input.children(":text").select();
+        });
+
+        $(".subCategories .save").click(function (e) {
+            var id = $(this).prev().data("id");
+            var mainId = $(this).prev().data("parent-id");
+            var name = $(this).prev().val();
+            var options = {
+                @{ var url = Url.Action<CategoriesController>(c => c.EditSubCategory(null)); }
+                url: "@url",
+                type: "POST",
+                cache: false,
+                data: { Id: id, Name: name, MainCategoryId: mainId },
+                success: function (responseData) {
+                    $(this).parent().prev().val(name);
+                    alert('saved');
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert('error occurred. contact system admin');
+                },
+
+                complete: function () {
+                    $(this).parent().prev().val(name);
+                }
+            };
+
+            $.ajax(options);
+        });
+
+        $(".mainCategory .save").click(function (e) {
+            var id = $(this).prev().data("id");
+            var name = $(this).prev().val();
+
+            var options = {
+                @{ var mainUrl = Url.Action<CategoriesController>(c => c.EditMainCategory(null)); }
+                url: "@mainUrl",
+                type: "POST",
+                cache: false,
+                data: { Id: id, Name: name },
+
+                success: function (responseData) {                    
+                    alert('saved:' + name);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert('error occurred. contact system admin');
+                },
+
+                complete: function () {
+                    //$(this).parent().prev().val(name);
+                }
+            };
+
+            $.ajax(options);
+        });
+    });
     </script>
 }
