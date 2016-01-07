@@ -84,6 +84,7 @@
 </div>
 
 @Scripts.Render("~/bundles/extensions")
+@Scripts.Render("~/bundles/ninjahive");
 
 @section Scripts{
     <script>
@@ -105,9 +106,18 @@
             $("#mainCategories .glyphicon-trash").on("click", function (e) {
                 var id = $(this).data("id");
 
-                if ($(".subCategories[data-parent-id=\"" + id + "\"]:has(*)").length) {
-                    //TODO: nice model dialog
-                    alert("Cannot delete category because there are subcategories");
+                var $subCategories = $(".subCategories[data-parent-id=\"" + id + "\"]:has(*)");
+
+                if ($subCategories.length) {
+                    
+                    var alertDialog = ninjaHive.modal.alertDialog("Cannot Complete", "Cannot delete category because there are subcategories", true);
+                    var content = "<ul>";
+                    $subCategories.each(function (index, element) {
+                            content += "<li>" + element.id + "</li>";
+                        });
+                    content += "</ul>";
+                    alertDialog.setDynamicContent(content);
+
                 } else {
                     $.post("@deleteUrl", { id: id, isMainCategory: true }, function () {
                         $(e.target).parent().remove();
@@ -127,8 +137,8 @@
                         });
 
                     } else {
-                        //TODO: nice model dialog with list of gameitems
-                        alert("Cannot delete category because it is linked to game items");
+                        var alertDialog = ninjaHive.modal.alertDialog("Cannot Complete", "Cannot delete category because it is linked to game items", true);
+                        alertDialog.setDynamicContent(data);
                     }
                 });
             });

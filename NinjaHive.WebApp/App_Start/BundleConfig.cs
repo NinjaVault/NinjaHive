@@ -25,6 +25,9 @@ namespace NinjaHive.WebApp
             bundles.Add(new ScriptBundle("~/bundles/extensions").Include(
                 "~/Scripts/BootstrapExtensions/ListGroupExtensions.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/ninjahive").Include(
+                "~/Scripts/NinjaHive/NinjaHive_GenericModal.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                 "~/Content/Win8Loader.css",
                 "~/Content/bootstrap.css",
