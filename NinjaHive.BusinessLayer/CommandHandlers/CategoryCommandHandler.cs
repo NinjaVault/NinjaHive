@@ -37,7 +37,8 @@ namespace NinjaHive.BusinessLayer.CommandHandlers
 
         public void Handle(UpdateEntityCommand<MainCategoryModel> command)
         {
-            throw new System.NotImplementedException();
+            var entity = this.mainCategoryRepository.FindById(command.Id);
+            entity.Name = command.Model.Name;
         }
 
         public void Handle(DeleteEntityCommand<MainCategoryModel> command)
