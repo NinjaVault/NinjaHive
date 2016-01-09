@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01 NinjaHive.WebApp", "NinjaHive.WebApp\01 NinjaHive.WebApp.csproj", "{34EE914C-BC5F-4EB2-8E12-03E9DBA4179D}"
 EndProject
@@ -24,8 +24,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "05 NinjaHive.Domain", "Ninj
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SqlScripts", "SqlScripts", "{EE3EA988-EAC2-4156-84E6-AA14EA3E4120}"
 	ProjectSection(SolutionItems) = preProject
+		Create.sql = Create.sql
 		Migrations.sql = Migrations.sql
-		Restore.sql = Restore.sql
 	EndProjectSection
 EndProject
 Global
