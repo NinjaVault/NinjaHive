@@ -10,7 +10,7 @@ ninjaHive.categoryPage = ninjaHive.categoryPage || {};
         var lastMainCategory = null;
         var lastSubCategory = null;
 
-        // global variable to let modification from outside the namespace
+        // global variables to let modification from outside the namespace
         this.subCategoryFormClassName;
         this.mainCategoryFormIdName;
         this.subCategoryGroupClassName;
@@ -35,12 +35,15 @@ ninjaHive.categoryPage = ninjaHive.categoryPage || {};
                 for (var i = 0; i < _domElement.children.length; i++) {
                     if (_domElement.children[i].className == "input") {
                         _domElement.children[i].style.display = "inline";
-                        this.activate();
+                    } else if (_domElement.children[i].className == "name") {
+                        _domElement.children[i].style.display = "none";
                     }
                 }
+
+                this.activate();
             }
 
-            this.saveEdit = function () {
+            this.sendToServer = function () {
 
             }
 
@@ -48,6 +51,8 @@ ninjaHive.categoryPage = ninjaHive.categoryPage || {};
                 for (var i = 0; i < _domElement.children.length; i++) {
                     if (_domElement.children[i].className == "input") {
                         _domElement.children[i].style.display = "none";
+                    } else if (_domElement.children[i].className == "name") {
+                        _domElement.children[i].style.display = "inline";
                     }
                 }
             }
@@ -128,6 +133,18 @@ ninjaHive.categoryPage = ninjaHive.categoryPage || {};
 
             this.hide = function () {
                 _domElement.style.display = "none";
+            }
+
+            this.sendToServer = function () {
+
+            }
+
+            this.startEdit = function () {
+
+            }
+
+            this.endEdit = function () {
+
             }
 
             return this;
@@ -254,6 +271,8 @@ ninjaHive.categoryPage = ninjaHive.categoryPage || {};
         }
 
         this.onSubCategoryDelete = function (sender) {
+
+            // implement server comunication
 
         }
 
