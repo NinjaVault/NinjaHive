@@ -24,7 +24,7 @@
                 <div class="col-md-6">
                     @foreach (var category in Model)
                     {
-                        <span class="subCategoryForm" data-parent-id="@category.Id">
+                        <span class="subCategoryForm" data-parent-id="@category.Id" style="display: none;">
                             @Html.Partial(Partials.SubCategoryForm, new SubCategoryModel
                             {
                                 MainCategoryId = category.Id,
@@ -44,14 +44,14 @@
                     <div class="list-group" id="mainCategories">
                         @foreach (var category in Model)
                         {
-                            <a href="#" class="list-group-item mainCategory" data-id="@category.Id">
+                            <a href="#" class="list-group-item mainCategory" data-id="@category.Id" onclick="ninjaHive.categoryPage.onMainCategoryClick(this);">
                                 <span class="name">@category.Name</span>
-                                <span class="input">
+                                <span class="input" style="display:none;">
                                     <input data-id="@category.Id" type="text" class="form-control" style="display: inline;">
                                     <span class="glyphicon glyphicon-ok save"></span>
                                 </span>
                                 <span data-id="@category.Id" class="glyphicon glyphicon-trash" style="float: right"></span>
-                                <span data-id="@category.Id" class="glyphicon glyphicon-pencil" style="float: right; margin-right: 5px;"></span>
+                                <span data-id="@category.Id" class="glyphicon glyphicon-pencil" style="float: right; margin-right: 5px; z-index: 100;" onclick="ninjaHive.categoryPage.onMainCategoryEdit(this.parentElement);"></span>
                             </a>
                         }
                     </div>
@@ -67,12 +67,12 @@
                 <div class="col-md-6">
                     @foreach (var category in Model)
                     {
-                        <div class="list-group subCategories" data-parent-id="@category.Id">
+                        <div class="list-group subCategories" data-parent-id="@category.Id" style="display:none;">
                             @foreach (var subCategory in category.SubCategories)
                             {
-                                <a href="#" class="list-group-item" data-id="@subCategory.Id">
+                                <a href="#" class="list-group-item subCategory" data-id="@subCategory.Id" data-parent-id="@subCategory.MainCategoryId">
                                     <span class="name">@subCategory.Name</span>
-                                    <span class="input">
+                                    <span class="input" style="display:none;">
                                         <input data-id="@subCategory.Id" data-parent-id="@subCategory.MainCategoryId" type="text" class="form-control" style="display: inline;">
                                         <span class="glyphicon glyphicon-ok save"></span>
                                     </span>
@@ -93,21 +93,36 @@
 
 @section Scripts{
     <script>
-        $(function () {
-            $(".subCategoryForm, .subCategories").hide();
-            $(".subCategoryForm:first-child, .subCategories:first-child").show();
-            $("#mainCategories .mainCategory:first-child").addClass("active");
+        //$(function () {
 
-            $(".mainCategory").click(function (e) {
+        (function () {
+            ninjaHive.categoryPage.subCategoryFormClassName = "subCategoryForm";
+            ninjaHive.categoryPage.mainCategoryFormIdName = "mainCategory";
+            ninjaHive.categoryPage.subCategoryGroupClassName = "subCategories";
+
+            var mainCategoryForm = new ninjaHive.categoryPage.MainCategoryForm(document.getElementById("mainCategories"));
+            var firstMainCategory = mainCategoryForm.getChildren()[0];
+
+            firstMainCategory.activate();
+            firstMainCategory.showSubCategoryForm();
+            firstMainCategory.getSubCategoryForm().showSubCategories();
+
+
+            //$("#mainCategories .mainCategory:first-child").addClass("active");
+
+            @*$(".mainCategory").click(function (e) {
                 var mainCategoryId = $(this).data("id");
                 var attributeSelector = "[data-parent-id=\"" + mainCategoryId + "\"]";
                 $(".subCategoryForm, .subCategories").hide();
+
                 $(".subCategoryForm" + attributeSelector + ", .subCategories" + attributeSelector).show();
 
-                if (mainLastClick.data("id") !== mainCategoryId) {
-                    mainLastClick.prev().prev().hide();
-                    mainLastClick.prev().prev().prev().show();
-                    mainLastClick.show();
+                if (mainLastClick != null) {
+                    if (mainLastClick.data("id") !== mainCategoryId) {
+                        mainLastClick.prev().prev().hide();
+                        mainLastClick.prev().prev().prev().show();
+                        mainLastClick.show();
+                    }
                 }
             });
 
@@ -120,12 +135,12 @@
                 var $subCategories = $(".subCategories[data-parent-id=\"" + id + "\"]:has(*)");
 
                 if ($subCategories.length) {
-                    
+
                     var alertDialog = ninjaHive.modal.alertDialog("Cannot Complete", "Cannot delete category because there are subcategories", true);
                     var content = "<ul>";
                     $subCategories.each(function (index, element) {
-                            content += "<li>" + element.id + "</li>";
-                        });
+                        content += "<li>" + element.id + "</li>";
+                    });
                     content += "</ul>";
                     alertDialog.setDynamicContent(content);
 
@@ -206,51 +221,52 @@
                 var name = $(this).prev().val();
                 var options = {
                     @{ var url = Url.Action<CategoriesController>(c => c.EditSubCategory(null)); }
-                    url: "@url",
-                    type: "POST",
-                    cache: false,
-                    data: {Id: id, Name: name, MainCategoryId: mainId},
-                    success: function (responseData) {
-                        $(this).parent().prev().val(name);
-                        alert('saved');
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
-                        alert('error occurred. contact system admin');
-                    },
-                    complete: function () {
-                    }
-                };
+                url: "@url",
+            type: "POST",
+            cache: false,
+            data: {Id: id, Name: name, MainCategoryId: mainId},
+            success: function (responseData) {
+                $(this).parent().prev().val(name);
+                alert('saved');
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                alert('error occurred. contact system admin');
+            },
+            complete: function () {
+            }
+        };
 
-                $.ajax(options);
-            });
+    $.ajax(options);
+});
 
-            $(".mainCategory .save").click(function (e) {
-                var id = $(this).prev().data("id");
-                var name = $(this).prev().val();
+$(".mainCategory .save").click(function (e) {
+    var id = $(this).prev().data("id");
+    var name = $(this).prev().val();
 
-                var options = {
-                    @{ var mainUrl = Url.Action<CategoriesController>(c => c.EditMainCategory(null)); }
-                    url: "@mainUrl",
-                    type: "POST",
-                    cache: false,
-                    data: { Id: id, Name: name },
+    var options = {
+        @{ var mainUrl = Url.Action<CategoriesController>(c => c.EditMainCategory(null)); }
+    url: "@mainUrl",
+type: "POST",
+cache: false,
+data: { Id: id, Name: name },
 
-                    success: function (responseData) {                    
-                        alert('saved:' + id);
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
-                        alert('error occurred. contact system admin');
-                    },
+success: function (responseData) {
+    alert('saved:' + id);
+},
+error: function (jqXHR, textStatus, errorThrown) {
+    alert('error occurred. contact system admin');
+},
 
-                    complete: function () {
-                        mainLastClick.prev().prev().hide();
-                        mainLastClick.prev().prev().prev().show();
-                        mainLastClick.show();
-                    }
-                };
+complete: function () {
+    mainLastClick.prev().prev().hide();
+    mainLastClick.prev().prev().prev().show();
+    mainLastClick.show();
+}
+};
 
-                $.ajax(options);
-            });
-        });
+$.ajax(options);
+});*@
+            //});
+        })();
     </script>
 }
