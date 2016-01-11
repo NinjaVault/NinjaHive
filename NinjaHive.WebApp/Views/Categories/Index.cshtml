@@ -50,7 +50,7 @@
                                     <input data-id="@category.Id" type="text" class="form-control" style="display: inline;">
                                     <span class="glyphicon glyphicon-ok save"></span>
                                 </span>
-                                <span data-id="@category.Id" class="glyphicon glyphicon-trash" style="float: right"></span>
+                                <span data-id="@category.Id" class="glyphicon glyphicon-trash" style="float: right" onclick="ninjaHive.categoryPage.onMainCategoryDelete(this.parentElement);"></span>
                                 <span data-id="@category.Id" class="glyphicon glyphicon-pencil" style="float: right; margin-right: 5px; z-index: 100;" onclick="ninjaHive.categoryPage.onMainCategoryEdit(this.parentElement);"></span>
                             </a>
                         }
