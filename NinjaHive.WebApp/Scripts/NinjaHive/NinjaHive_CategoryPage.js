@@ -57,16 +57,56 @@ ninjaHive.categoryPage = ninjaHive.categoryPage || {};
             }
 
             this.saveEdit = function () {
-                var HttpRequest = new XMLHttpRequest();
             }
 
             this.httpEdit = function () {
+                var HttpRequest = new XMLHttpRequest();
 
             }
 
-            this.httpDelete = function () {
+            this.httpDelete = function (successCallback, failureCallback) {
+                if (typeof successCallback != "function" && successCallback != undefined) {
+                    throw new TypeError("SubCategoryNode::httpDelete - @param successCallback is not a function");
+                    return false;
+                }
 
+                if (typeof failureCallback != "function" && failureCallback != undefined) {
+                    throw new TypeError("SubCategoryNode::httpDelete - @param failureCallback is not a function");
+                    return false;
+                }
+
+                if (this.getSubCategoryForm().getSubCategories().length > 0) {
+                    if (failureCallback != undefined) {
+                        failureCallback();
+                    }
+
+                    return false;
+                }
+
+                var elementId = _domElement.getAttribute("data-id");
+                var mainId = _domElement.getAttribute("data-parent-id");
+                var elementName;
+
+                for (var i = 0; i < _domElement.children.length; i++) {
+                    if (_domElement.children[i].className == "name" || _domElement.children[i].className == "name active") {
+                        elementName = _domElement.children[i];
+                    }
+                }
+
+                var http = new XMLHttpRequest();
+                http.open("POST", CP.deleteUrl);
+
+                var data = new FormData();
+                data.append("Id", elementId);
+                data.append("IsMainCategory", true);
+
+                http.send(data);
+
+                if (successCallback != undefined) {
+                    successCallback();
+                }
             }
+            
 
             this.endEdit = function () {
                 _editing = false;
@@ -351,6 +391,19 @@ ninjaHive.categoryPage = ninjaHive.categoryPage || {};
                 _domElement.style.display = "block";
             }
 
+            this.getSubCategories = function () {
+                var elements = document.getElementsByClassName("subCategory");
+                var result = [];
+
+                for (var i = 0; i < elements.length; i++) {
+                    if (elements[i].getAttribute("data-parent-id") == _domElement.getAttribute("data-parent-id")) {
+                        result.push(new CP.SubCategoryNode(elements[i]));
+                    }
+                }
+
+                return result;
+            }
+
             this.showSubCategories = function () {
                 var elements = document.getElementsByClassName(CP.subCategoryGroupClassName);
 
@@ -431,7 +484,6 @@ ninjaHive.categoryPage = ninjaHive.categoryPage || {};
                     lastMainCategory.getSubCategoryForm().hideSubCategories();
                     lastMainCategory.hideSubCategoryForm();
                     lastMainCategory.endEdit();
-                    //lastMainCategory.deactivate();
                 }
             } else {
                 CP.hideAllSubCategoryForms();
@@ -440,13 +492,21 @@ ninjaHive.categoryPage = ninjaHive.categoryPage || {};
 
             mainCategory.getSubCategoryForm().showSubCategories();
             mainCategory.showSubCategoryForm();
-            //mainCategory.activate();
 
             lastMainCategory = mainCategory;
         }
 
         this.onMainCategoryDelete = function (sender) {
-
+            var mainCategory = new ninjaHive.categoryPage.MainCategoryNode(sender);
+            mainCategory.httpDelete(
+                function () {
+                    mainCategory.toDomElement().remove();
+                }, 
+            
+                function () {
+                    var alertDialog = ninjaHive.modal.alertDialog("Cannot Complete", "Cannot delete category because it has subcategories in it", false);
+                }
+            );
         }
 
         
