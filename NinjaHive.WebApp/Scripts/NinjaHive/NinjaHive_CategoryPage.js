@@ -17,6 +17,7 @@ ninjaHive.categoryPage = ninjaHive.categoryPage || {};
         this.mainCategoryFormIdName             = null;
         this.subCategoryGroupClassName          = null;
 
+        // has to be initialized
         this.deleteUrl                          = null;
         this.editUrl                            = null;
         this.getGameItemsUrl                    = null;
@@ -275,6 +276,17 @@ ninjaHive.categoryPage = ninjaHive.categoryPage || {};
             }
 
             this.httpDelete = function (successCallback, failureCallback) {
+
+                if (typeof successCallback != "function" && successCallback != undefined) {
+                    throw new TypeError("SubCategoryNode::httpDelete - @param successCallback is not a function");
+                    return false;
+                }
+
+                if (typeof failureCallback != "function" && failureCallback != undefined) {
+                    throw new TypeError("SubCategoryNode::httpDelete - @param failureCallback is not a function");
+                    return false;
+                }
+
                 var elementId = _domElement.getAttribute("data-id");
 
                 // first check
@@ -290,9 +302,13 @@ ninjaHive.categoryPage = ninjaHive.categoryPage || {};
                     toCheck = toCheck.toString().slice(1);
                     toCheck = toCheck.toString().slice(0, toCheck.toString().search("]"));
 
+                    // if the check fails it makes more sense exit
+                    // from the method
                     if (toCheck == null || toCheck.length > 0) {
-                        failureCallback();
-                        return;
+                        if(failureCallback != undefined) {
+                            failureCallback();
+                        }
+                        return false;
                     }
 
                     var mainId = _domElement.getAttribute("data-parent-id");
@@ -313,7 +329,9 @@ ninjaHive.categoryPage = ninjaHive.categoryPage || {};
 
                     http.send(data);
 
-                    successCallback();
+                    if (successCallback != undefined) {
+                        successCallback();
+                    }
                 }
 
                 check.send(checkData);
@@ -482,11 +500,10 @@ ninjaHive.categoryPage = ninjaHive.categoryPage || {};
             subCategory.httpDelete(
                 function () {
                     subCategory.toDomElement().remove();
-                }, 
-                
+                },
+
                 function () {
                     var alertDialog = ninjaHive.modal.alertDialog("Cannot Complete", "Cannot delete category because it is linked to game items", false);
-                    alertDialog.setDynamicContent(data);
                 }
             );
         }
