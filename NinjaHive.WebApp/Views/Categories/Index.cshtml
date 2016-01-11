@@ -70,13 +70,13 @@
                         <div class="list-group subCategories" data-parent-id="@category.Id" style="display:none;">
                             @foreach (var subCategory in category.SubCategories)
                             {
-                                <a href="#" class="list-group-item subCategory" data-id="@subCategory.Id" data-parent-id="@subCategory.MainCategoryId">
+                                <a href="#" class="list-group-item subCategory" data-id="@subCategory.Id" data-parent-id="@subCategory.MainCategoryId" onclick="ninjaHive.categoryPage.onSubCategoryClick(this)">
                                     <span class="name">@subCategory.Name</span>
                                     <span class="input" style="display:none;">
                                         <input data-id="@subCategory.Id" data-parent-id="@subCategory.MainCategoryId" type="text" class="form-control" style="display: inline;">
-                                        <span class="glyphicon glyphicon-ok save"></span>
+                                        <span class="glyphicon glyphicon-ok save" onclick="ninjaHive.categoryPage.onSubCategorySaveEdit(this.parentElement.parentElement);"></span>
                                     </span>
-                                    <span data-id="@subCategory.Id" class="glyphicon glyphicon-trash" style="float: right"></span>
+                                    <span data-id="@subCategory.Id" class="glyphicon glyphicon-trash" style="float: right" onclick="ninjaHive.categoryPage.onSubCategoryDelete(this.parentElement)"></span>
                                 </a>
                             }
                         </div>
@@ -93,24 +93,32 @@
 
 @section Scripts{
     <script>
-        //$(function () {
+    //$(function () {
 
-        (function () {
-            ninjaHive.categoryPage.subCategoryFormClassName = "subCategoryForm";
-            ninjaHive.categoryPage.mainCategoryFormIdName = "mainCategory";
-            ninjaHive.categoryPage.subCategoryGroupClassName = "subCategories";
+    (function () {
+        ninjaHive.categoryPage.subCategoryFormClassName = "subCategoryForm";
+        ninjaHive.categoryPage.mainCategoryFormIdName = "mainCategory";
+        ninjaHive.categoryPage.subCategoryGroupClassName = "subCategories";
 
-            var mainCategoryForm = new ninjaHive.categoryPage.MainCategoryForm(document.getElementById("mainCategories"));
-            var firstMainCategory = mainCategoryForm.getChildren()[0];
+        @{ var editUrl = Url.Action<CategoriesController>(c => c.EditSubCategory(null)); }
+        @{ var deleteUrl = UrlProvider<CategoriesController>.GetParameterlessUrl(c => c.Delete(Guid.Empty, false)); }
+        @{ var getGameItemsUrl = UrlProvider<CategoriesController>.GetParameterlessUrl(c => c.GetLinkedGameItems(Guid.Empty)); }
 
-            firstMainCategory.activate();
-            firstMainCategory.showSubCategoryForm();
-            firstMainCategory.getSubCategoryForm().showSubCategories();
+        ninjaHive.categoryPage.editUrl = "@editUrl";
+        ninjaHive.categoryPage.deleteUrl = "@deleteUrl";
+        ninjaHive.categoryPage.getGameItemsUrl = "@getGameItemsUrl";
+
+        var mainCategoryForm = new ninjaHive.categoryPage.MainCategoryForm(document.getElementById("mainCategories"));
+        var firstMainCategory = mainCategoryForm.getChildren()[0];
+
+        firstMainCategory.activate();
+        firstMainCategory.showSubCategoryForm();
+        firstMainCategory.getSubCategoryForm().showSubCategories();
 
 
-            //$("#mainCategories .mainCategory:first-child").addClass("active");
+        //$("#mainCategories .mainCategory:first-child").addClass("active");
 
-            @*$(".mainCategory").click(function (e) {
+        @*$(".mainCategory").click(function (e) {
                 var mainCategoryId = $(this).data("id");
                 var attributeSelector = "[data-parent-id=\"" + mainCategoryId + "\"]";
                 $(".subCategoryForm, .subCategories").hide();
@@ -266,7 +274,7 @@ complete: function () {
 
 $.ajax(options);
 });*@
-            //});
-        })();
-    </script>
+        //});
+    })();
+</script>
 }
