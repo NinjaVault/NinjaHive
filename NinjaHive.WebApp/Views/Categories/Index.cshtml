@@ -48,7 +48,7 @@
                                 <span class="name">@category.Name</span>
                                 <span class="input" style="display:none;">
                                     <input data-id="@category.Id" type="text" class="form-control" style="display: inline;">
-                                    <span class="glyphicon glyphicon-ok save"></span>
+                                    <span class="glyphicon glyphicon-ok save" onclick="ninjaHive.categoryPage.onMainCategorySave(this.parentElement.parentElement);"></span>
                                 </span>
                                 <span data-id="@category.Id" class="glyphicon glyphicon-trash" style="float: right" onclick="ninjaHive.categoryPage.onMainCategoryDelete(this.parentElement);"></span>
                                 <span data-id="@category.Id" class="glyphicon glyphicon-pencil" style="float: right; margin-right: 5px; z-index: 100;" onclick="ninjaHive.categoryPage.onMainCategoryEdit(this.parentElement);"></span>
@@ -103,10 +103,12 @@
         @{ var editUrl = Url.Action<CategoriesController>(c => c.EditSubCategory(null)); }
         @{ var deleteUrl = UrlProvider<CategoriesController>.GetParameterlessUrl(c => c.Delete(Guid.Empty, false)); }
         @{ var getGameItemsUrl = UrlProvider<CategoriesController>.GetParameterlessUrl(c => c.GetLinkedGameItems(Guid.Empty)); }
+        @{ var editUrlMainCategory = Url.Action<CategoriesController>(c => c.EditMainCategory(null));}
 
-        ninjaHive.categoryPage.editUrl = "@editUrl";
+        ninjaHive.categoryPage.editUrlSubCategory = "@editUrl";
         ninjaHive.categoryPage.deleteUrl = "@deleteUrl";
         ninjaHive.categoryPage.getGameItemsUrl = "@getGameItemsUrl";
+        ninjaHive.categoryPage.editUrlMainCategory = "@editUrlMainCategory";
 
         var mainCategoryForm = new ninjaHive.categoryPage.MainCategoryForm(document.getElementById("mainCategories"));
         var firstMainCategory = mainCategoryForm.getChildren()[0];
