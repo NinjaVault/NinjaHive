@@ -19,13 +19,23 @@ ninjaHive.categoryPage = ninjaHive.categoryPage || {};
 
         // has to be initialized
         this.deleteUrl                          = null;
-        this.editUrl                            = null;
+        this.editUrlSubCategory                 = null;
+        this.editUrlMainCategory                = null;
         this.getGameItemsUrl                    = null;
 
         this.MainCategoryNode = function (domElement) {
             var _domElement = domElement;
             var _editing = false;
             
+            this.equals = function (other) {
+                if (typeof other != typeof this) {
+                    throw new TypeError("MainCategoryNode::equals - @param other is not of type MainCategoryNode");
+                    return false;
+                }
+
+                return _domElement.getAttribute("data-id") == other.toDomElement().getAttribute("data-id");
+            }
+
             this.isEditing = function () {
                 return _editing;
             }
@@ -47,21 +57,66 @@ ninjaHive.categoryPage = ninjaHive.categoryPage || {};
             this.startEdit = function () {
                 _editing = true;
 
+                var inputElement;
+                var nameElement;
+
                 for (var i = 0; i < _domElement.children.length; i++) {
                     if (_domElement.children[i].className == "input" || _domElement.children[i].className == "input active") {
-                        _domElement.children[i].style.display = "inline";
+                        inputElement = _domElement.children[i];
+                        inputElement.style.display = "inline";
+
+                        inputElement = inputElement.children[0];
                     } else if (_domElement.children[i].className == "name" || _domElement.children[i].className == "name active") {
-                        _domElement.children[i].style.display = "none";
+                        nameElement = _domElement.children[i];
+                        nameElement.style.display = "none";
                     }
                 }
+
+                // this is only to improve the appareance
+                inputElement.value = "";
+                inputElement.placeholder = nameElement.innerHTML;
+                inputElement.focus();
             }
 
             this.saveEdit = function () {
+                var nameElement;
+                var inputElement;
+
+                for (var i = 0; i < _domElement.children.length; i++) {
+                    if (_domElement.children[i].className == "input" || _domElement.children[i].className == "input active") {
+                        inputElement = _domElement.children[i].children[0];
+                    } else if (_domElement.children[i].className == "name" || _domElement.children[i].className == "name active") {
+                        nameElement = _domElement.children[i];
+                    }
+                }
+
+                if (inputElement.value.length > 0) {
+                    nameElement.innerHTML = inputElement.value;
+                }
             }
 
             this.httpEdit = function () {
-                var HttpRequest = new XMLHttpRequest();
+                var elementId = _domElement.getAttribute("data-id");
+                var mainId = _domElement.getAttribute("data-parent-id");
+                var elementName;
 
+                for (var i = 0; i < _domElement.children.length; i++) {
+                    if (_domElement.children[i].className == "name" || _domElement.children[i].className == "name active") {
+                        elementName = _domElement.children[i];
+                    }
+                }
+
+                var http = new XMLHttpRequest();
+                http.open("POST", CP.editUrlMainCategory);
+
+                console.log(elementId);
+                console.log(elementName);
+
+                var data = new FormData();
+                data.append("Id", elementId);
+                data.append("Name", elementName.innerHTML);
+
+                http.send(data);
             }
 
             this.httpDelete = function (successCallback, failureCallback) {
@@ -107,7 +162,6 @@ ninjaHive.categoryPage = ninjaHive.categoryPage || {};
                 }
             }
             
-
             this.endEdit = function () {
                 _editing = false;
 
@@ -190,9 +244,7 @@ ninjaHive.categoryPage = ninjaHive.categoryPage || {};
         this.SubCategoryNode = function (domElement) {            
             var _domElement = domElement;
             var _editing = false;
-
-
-            
+           
             this.equals = function (other) {
                 if (typeof other != typeof this) {                   
                     throw new TypeError("SubCategoryNode::equals - @param other is not of type SubCategoryNode");
@@ -305,12 +357,11 @@ ninjaHive.categoryPage = ninjaHive.categoryPage || {};
                 }                               
 
                 var http = new XMLHttpRequest();
-                http.open("POST", CP.editUrl);
+                http.open("POST", CP.editUrlMainCategory);
 
                 var data = new FormData();
                 data.append("Id", elementId);
                 data.append("Name", elementName.innerHTML);
-                data.append("MainCategoryId", mainId);
 
                 http.send(data);
             }
@@ -456,8 +507,9 @@ ninjaHive.categoryPage = ninjaHive.categoryPage || {};
         this.onMainCategoryClick = function (sender) {            
             var mainCategory = new ninjaHive.categoryPage.MainCategoryNode(sender);
      
-            if (lastMainCategory != null) {
-                if (lastMainCategory.toDomElement() != mainCategory.toDomElement()) {
+            if (lastMainCategory != null && lastMainCategory != -1) {
+                if (!lastMainCategory.equals(mainCategory)) {
+
                     lastMainCategory.getSubCategoryForm().hideSubCategories();
                     lastMainCategory.hideSubCategoryForm();
                     lastMainCategory.endEdit();
@@ -477,23 +529,36 @@ ninjaHive.categoryPage = ninjaHive.categoryPage || {};
 
         this.onMainCategoryEdit = function(sender) {
             var mainCategory = new ninjaHive.categoryPage.MainCategoryNode(sender);
-            mainCategory.startEdit();
 
-            if (lastMainCategory != null) {
-                if (lastMainCategory.toDomElement() != mainCategory.toDomElement()) {
+            if (lastMainCategory != null && lastMainCategory != -1) {
+                if (!lastMainCategory.equals(mainCategory)) {
                     lastMainCategory.getSubCategoryForm().hideSubCategories();
                     lastMainCategory.hideSubCategoryForm();
-                    lastMainCategory.endEdit();
+
+                    //if (lastMainCategory.isEditing()) {
+                        lastMainCategory.endEdit();
+                    //}
                 }
             } else {
                 CP.hideAllSubCategoryForms();
                 CP.hideAllSubCategories();
+
             }
 
+            mainCategory.startEdit();
             mainCategory.getSubCategoryForm().showSubCategories();
             mainCategory.showSubCategoryForm();
 
             lastMainCategory = mainCategory;
+        }
+
+        this.onMainCategorySave = function (sender) {
+            var mainCategory = CP.MainCategoryNode(sender);
+            mainCategory.endEdit();
+            mainCategory.saveEdit();
+            mainCategory.httpEdit();
+
+            lastMainCategory = -1;
         }
 
         this.onMainCategoryDelete = function (sender) {
@@ -508,7 +573,6 @@ ninjaHive.categoryPage = ninjaHive.categoryPage || {};
                 }
             );
         }
-
         
         // SubCategory event handling global functions
 
