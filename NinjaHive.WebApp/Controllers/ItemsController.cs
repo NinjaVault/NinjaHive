@@ -69,7 +69,8 @@ namespace NinjaHive.WebApp.Controllers
             return View();
         }
 
-        [HttpPost] //TODO: anti forgery
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Delete(Guid id)
         {
             this.repository.Delete(id);
@@ -103,6 +104,16 @@ namespace NinjaHive.WebApp.Controllers
         {
             return this.queryProcessor.Execute(new GetAllCategoriesQuery())
                                       .SelectMany(c => c.SubCategories);
+        }
+
+        [HttpGet]
+        public JsonResult IsNameAvailable(string itemName)
+        {
+            bool exists = this.queryProcessor.Execute(new GetAllGameItemsQuery())
+                .Where(c => c.Name == itemName )
+                .Any();
+
+            return Json(!exists, JsonRequestBehavior.AllowGet);
         }
     }
 }
