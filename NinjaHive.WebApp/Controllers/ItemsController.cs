@@ -95,12 +95,12 @@ namespace NinjaHive.WebApp.Controllers
         private GameItemViewModel PrepareViewModel(GameItemModel model)
         {
             var mainCategories = this.GetMainCategories();
-            var firstCategory = mainCategories.First();
+            var firstCategory = mainCategories.Count() > 0 ? mainCategories.First().SubCategories : null;
             
             return new GameItemViewModel
             {
                 mainCategories = mainCategories,
-                categories = firstCategory.SubCategories,
+                categories = firstCategory,
                 GameItem = model,
             };
         }
