@@ -111,11 +111,13 @@
         ninjaHive.categoryPage.editUrlMainCategory = "@editUrlMainCategory";
 
         var mainCategoryForm = new ninjaHive.categoryPage.MainCategoryForm(document.getElementById("mainCategories"));
-        var firstMainCategory = mainCategoryForm.getChildren()[0];
+        if (mainCategoryForm.getChildren().length > 0) {
+            var firstMainCategory = mainCategoryForm.getChildren()[0];
 
-        firstMainCategory.activate();
-        firstMainCategory.showSubCategoryForm();
-        firstMainCategory.getSubCategoryForm().showSubCategories();
+            firstMainCategory.activate();
+            firstMainCategory.showSubCategoryForm();
+            firstMainCategory.getSubCategoryForm().showSubCategories();
+        }
     })();
 </script>
 }
