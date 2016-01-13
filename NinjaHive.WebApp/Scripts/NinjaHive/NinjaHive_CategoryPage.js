@@ -130,9 +130,15 @@ ninjaHive.categoryPage = ninjaHive.categoryPage || {};
                     return false;
                 }
 
-                if (this.getSubCategoryForm().getSubCategories().length > 0) {
+                var subCategories = this.getSubCategoryForm().getSubCategories();
+                if (subCategories.length > 0) {
                     if (failureCallback != undefined) {
-                        failureCallback();
+                        var data = [];
+                        for (var i = 0; i < subCategories.length; ++i)
+                        {
+                            data[i] = subCategories[i].getName();
+                        }
+                        failureCallback(data);
                     }
 
                     return false;
@@ -397,7 +403,7 @@ ninjaHive.categoryPage = ninjaHive.categoryPage || {};
                     // from the method
                     if (toCheck == null || toCheck.length > 0) {
                         if(failureCallback != undefined) {
-                            failureCallback();
+                            failureCallback( JSON.parse(check.responseText) );
                         }
                         return false;
                     }
@@ -426,6 +432,10 @@ ninjaHive.categoryPage = ninjaHive.categoryPage || {};
                 }
 
                 check.send(checkData);
+            }
+            this.getName = function()
+            {
+                return _domElement.getElementsByClassName("name")[0].innerHTML;
             }
 
             return this;
@@ -568,8 +578,16 @@ ninjaHive.categoryPage = ninjaHive.categoryPage || {};
                     mainCategory.toDomElement().remove();
                 }, 
             
-                function () {
-                    var alertDialog = ninjaHive.modal.alertDialog("Cannot Complete", "Cannot delete category because it has subcategories in it", false);
+                function (data) {
+                    var alertDialog = ninjaHive.modal.alertDialog("Cannot Complete", "Cannot delete category because it has subcategories in it", true);
+                    var list = document.createElement('ul');
+                    for(var i=0;i<data.length;++i)
+                    {
+                        var listItem = document.createElement("li");
+                        listItem.innerHTML = data[i];
+                        list.appendChild(listItem);
+                    }
+                    alertDialog.setDynamicContent(list);
                 }
             );
         }
@@ -626,8 +644,16 @@ ninjaHive.categoryPage = ninjaHive.categoryPage || {};
                     subCategory.toDomElement().remove();
                 },
 
-                function () {
-                    var alertDialog = ninjaHive.modal.alertDialog("Cannot Complete", "Cannot delete category because it is linked to game items", false);
+                function (arrayItems) {
+                    var alertDialog = ninjaHive.modal.alertDialog("Cannot Complete", "Cannot delete category because it is linked to game items", true);
+                    var list = document.createElement("ul");
+                    for(var i=0;i<arrayItems.length;++i)
+                    {
+                        var listItem = document.createElement("li");
+                        listItem.innerHTML = arrayItems[i];
+                        list.appendChild(listItem);
+                    }
+                    alertDialog.setDynamicContent(list);
                 }
             );
         }
