@@ -575,7 +575,7 @@ ninjaHive.categoryPage = ninjaHive.categoryPage || {};
             var mainCategory = new ninjaHive.categoryPage.MainCategoryNode(sender);
             mainCategory.httpDelete(
                 function () {
-                    mainCategory.toDomElement().remove();
+                    mainCategory.toDomElement().parentElement.removeChild(mainCategory.toDomElement());
                 }, 
             
                 function (data) {
@@ -641,7 +641,7 @@ ninjaHive.categoryPage = ninjaHive.categoryPage || {};
             var subCategory = new CP.SubCategoryNode(sender);
             subCategory.httpDelete(
                 function () {
-                    subCategory.toDomElement().remove();
+                    subCategory.toDomElement().parentElement.removeChild(subCategory.toDomElement());
                 },
 
                 function (arrayItems) {
