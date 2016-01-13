@@ -95,7 +95,7 @@ namespace NinjaHive.WebApp.Controllers
         private GameItemViewModel PrepareViewModel(GameItemModel model)
         {
             var mainCategories = this.GetMainCategories();
-            var firstCategory = mainCategories.Count() > 0 ? mainCategories.First().SubCategories : null;
+            var firstCategory = mainCategories.Any() ? mainCategories.First().SubCategories : null;
             
             return new GameItemViewModel
             {
@@ -108,7 +108,7 @@ namespace NinjaHive.WebApp.Controllers
         private IEnumerable<MainCategoryModel> GetMainCategories()
         {
             return this.queryProcessor.Execute(new GetAllCategoriesQuery())
-                .Where(c => c.SubCategories.Count() > 0);
+                       .Where(c => c.SubCategories.Any());
         }
 
         private IEnumerable<SubCategoryModel> GetCategories()
@@ -121,7 +121,7 @@ namespace NinjaHive.WebApp.Controllers
         public JsonResult GetMainCategory(string main)
         {
             var category = this.queryProcessor.Execute(new GetAllCategoriesQuery())
-                                .First(c => c.Name.Equals(main));
+                               .First(c => c.Name.Equals(main));
             return Json(category, JsonRequestBehavior.AllowGet);
         }
 
@@ -129,17 +129,17 @@ namespace NinjaHive.WebApp.Controllers
         public JsonResult GetSubCategories(Guid parent)
         {
             var subCategories = this.queryProcessor.Execute(new GetAllCategoriesQuery())
-                                      .First(c => c.Id == parent)
-                                      .SubCategories;
+                                    .First(c => c.Id == parent)
+                                    .SubCategories;
             return Json(subCategories, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
         public JsonResult IsNameAvailable(string itemName)
         {
-            bool exists = this.queryProcessor.Execute(new GetAllGameItemsQuery())
-                .Where(c => c.Name == itemName )
-                .Any();
+            var exists = this.queryProcessor
+                             .Execute(new GetAllGameItemsQuery())
+                             .Any(c => c.Name == itemName);
 
             return Json(!exists, JsonRequestBehavior.AllowGet);
         }

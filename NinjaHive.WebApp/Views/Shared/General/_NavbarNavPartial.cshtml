@@ -5,27 +5,29 @@
 @if (Request.IsAuthenticated)
 {
     <ul class="nav navbar-nav">
-        @{ string currentPage = Request.Url.AbsolutePath;
-           var actionLinks = new Dictionary<string,MvcHtmlString>{
+        @{
+            var currentPage = Request.Url.AbsolutePath;
+            var actionLinks = new Dictionary<string, MvcHtmlString>
+            {
                 {"Items", Html.ActionLink<ItemsController>("Items", c => c.Index())},
                 {"Categories", Html.ActionLink<CategoriesController>("Categories", c => c.Index())}
-           };
-           
-           string pageCategory = ViewContext.RouteData.Values["Controller"].ToString();
-        
-           foreach (var pair in actionLinks)
-           {
-               if (pageCategory == pair.Key)
-               {
-                   @:<li class="active">
-               }
-               else
-               {
-                   @:<li>
-               }
-               @pair.Value
-               @:</li>
-           }
+            };
+
+            string pageCategory = ViewContext.RouteData.Values["Controller"].ToString();
+
+            foreach (var pair in actionLinks)
+            {
+                if (pageCategory == pair.Key)
+                {
+                    @:<li class="active">
+                }
+                else
+                {
+                    @:<li>
+                }
+                @pair.Value
+                @:</li>
+            }
         }
     </ul>
 }
