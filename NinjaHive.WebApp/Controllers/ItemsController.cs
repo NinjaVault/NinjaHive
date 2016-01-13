@@ -44,6 +44,8 @@ namespace NinjaHive.WebApp.Controllers
                 this.repository.Create(viewModel.GameItem);
                 return base.Home();
             }
+
+            viewModel.mainCategories = this.GetMainCategories();
             viewModel.categories = this.GetCategories();
             return View(viewModel);
         }
@@ -92,18 +94,44 @@ namespace NinjaHive.WebApp.Controllers
 
         private GameItemViewModel PrepareViewModel(GameItemModel model)
         {
-            var categories = this.GetCategories();
+            var mainCategories = this.GetMainCategories();
+            var firstCategory = mainCategories.First();
+            
             return new GameItemViewModel
             {
-                categories = categories,
+                mainCategories = mainCategories,
+                categories = firstCategory.SubCategories,
                 GameItem = model,
             };
+        }
+
+        private IEnumerable<MainCategoryModel> GetMainCategories()
+        {
+            return this.queryProcessor.Execute(new GetAllCategoriesQuery())
+                .Where(c => c.SubCategories.Count() > 0);
         }
 
         private IEnumerable<SubCategoryModel> GetCategories()
         {
             return this.queryProcessor.Execute(new GetAllCategoriesQuery())
                                       .SelectMany(c => c.SubCategories);
+        }
+
+        [HttpGet]
+        public JsonResult GetMainCategory(string main)
+        {
+            var category = this.queryProcessor.Execute(new GetAllCategoriesQuery())
+                                .First(c => c.Name.Equals(main));
+            return Json(category, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult GetSubCategories(Guid parent)
+        {
+            var subCategories = this.queryProcessor.Execute(new GetAllCategoriesQuery())
+                                      .First(c => c.Id == parent)
+                                      .SubCategories;
+            return Json(subCategories, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
