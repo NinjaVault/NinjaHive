@@ -6,116 +6,18 @@ var ninjaHive = ninjaHive || {};
 	var _btnSubmitClass = 'btn-primary';
 	var _btnCancelClass = 'btn-default';
 
-/*==================================
-*	Cross-browser code
-*---------------------------------------------------------
-*		One-time setup cross browser code
+
+/*==========================================
+*		class ModalManager()
+*-----------------------------------------------------------------
+*		Allows for code interfacing with modals.
+*       Creates, manages, and manipulates existing modals on the page
 */
-NH.addEventListener;
-NH.setAttribute;
-NH.getAttribute;
-
-// For speed gains, we pre-determine these functions
-if(window.addEventListener)
-{
-	// Suports common addEventListener
-	NH.addEventListener = function(obj, evt, func)
-	{
-		if(evt.toLowerCase() == "domcontentloaded")
-		{
-			// If the DOM is already loaded, go ahead and call this
-			if(document.readyState == "interactive")
-			{
-				func();
-				return;
-			}
-		}
-		obj.addEventListener(evt, func);
-	};
-	NH.setAttribute = function(obj,attribute,value)
-	{
-		obj.setAttribute(attribute, value);
-	};
-	NH.getAttribute = function(obj, attribute)
-	{
-		return obj.getAttribute(attribute);
-	};
-}
-else
-{
-	// Requires attachEvent, also probably doesn't support DOMContentLoaded
-	NH.addEventListener = function(obj, evt, func)
-	{
-		if(evt.toLowerCase() == "domcontentloaded")
-		{
-			// If the DOM is already loaded, go ahead and call this
-			if(document.readyState == "interactive")
-			{
-				func();
-				return;
-			}
-			
-			obj.attachEvent("onreadystatechange", function(event)
-			{
-				if(document.readyState == "interactive") func(event);
-			});
-		}
-		else
-			obj.attachEvent("on"+evt, func);
-	};
-	NH.setAttribute = function(obj,attribute,value)
-	{
-		// Take advantage of how all objects in JS are maps
-		obj[attribute] = value;
-	};
-	NH.getAttribute = function(obj, attribute)
-	{
-		return obj[attribute];
-	};
-}
-
-NH.setAttributes = function(obj, data)
-{
-	if(typeof data == "string")
-	{
-		data = data.split(",");
-	}
-	
-	if(typeof data == "object")
-	{
-		for(var i=0;i<data.length;++i)
-		{
-			var pair = data[i].split(":");
-			NH.setAttribute(obj, pair[0].trim(), pair[1].trim());
-		}
-	}
-	else
-		throw new TypeError("setAttributes: Invalid data provided.");
-}
-NH.clearChildren = function(node)
-{
-	while(node.firstChild)
-		node.removeChild(node.firstChild);
-}
-
-
-
 function ModalManager()
 {
 // private:
 	var _modalList = [];
-	
-	var _selectUnusedModal = function()
-	{
-		var n=_modalList.length;
-		for(var i=0;i<n;++i)
-		{
-			var modal = _modalList[i];
-			if(!modal.isOpen())
-				return modal;
-		}
-		return null;
-	}
+
 	var _pageHasOpenModal = function()
 	{
 		
@@ -170,10 +72,12 @@ function ModalManager()
 	*/
 	this.agreeDialog = function(title, body, dynamicContent)
 	{
-		dynamicContent = dynamicContent != undefined ? dynamicContent : false;
+	    var buttonArgs = [{'button': 'all', 'visible': false},
+            {'button':'submit', 'label':'I Agree','visible':true,'className':_btnSubmitClass},
+            {'button':'cancel', 'label':'I Do Not Agree','visible':true,'className':_btnCancelClass}];
+	    
 	
-		return this.genericDialog(title, body, dynamicContent,
-			{'button': 'all', 'visible': false},   {'button':'submit', 'label':'I Agree','visible':true,'className':_btnSubmitClass},    {'button':'cancel', 'label':'I Do Not Agree','visible':true,'className':_btnCancelClass});
+	    return this.genericDialog.apply(this, NH.mergeArrays(arguments, buttonArgs));
 	};
 	
 	/*=============================
@@ -185,10 +89,11 @@ function ModalManager()
 	*/
 	this.confirmDialog = function(title, body, dynamicContent)
 	{
-		dynamicContent = dynamicContent != undefined ? dynamicContent : false;
+	    var buttonArgs = [{'button': 'all', 'visible': false},
+            {'button':'submit', 'label':'Ok','visible':true,'className':_btnSubmitClass},
+            {'button':'cancel', 'label':'Cancel','visible':true,'className':_btnCancelClass}];
 	
-		return this.genericDialog(title,body, dynamicContent,
-			{'button': 'all', 'visible': false},   {'button':'submit', 'label':'Ok','visible':true,'className':_btnSubmitClass},    {'button':'cancel', 'label':'Cancel','visible':true,'className':_btnCancelClass});
+	    return this.genericDialog.apply(this, NH.mergeArrays(arguments, buttonArgs));
 	};
 	
 	
@@ -201,10 +106,11 @@ function ModalManager()
 	*/
 	this.questionDialog = function(title, body, dynamicContent)
 	{
-		dynamicContent = dynamicContent != undefined ? dynamicContent : false;
+	    var buttonArgs = [{'button': 'all', 'visible': false},
+            {'button':'submit', 'label':'Yes','visible':true,'className':_btnSubmitClass},
+            {'button':'cancel', 'label':'No','visible':true,'className':_btnCancelClass}];
 	
-		return this.genericDialog(title, body, dynamicContent,
-			{'button': 'all', 'visible': false},   {'button':'submit', 'label':'Yes','visible':true,'className':_btnSubmitClass},    {'button':'cancel', 'label':'No','visible':true,'className':_btnCancelClass});
+	    return this.genericDialog.apply(this, NH.mergeArrays(arguments, buttonArgs));
 	};
 	
 	/*=============================
@@ -216,10 +122,10 @@ function ModalManager()
 	*/
 	this.alertDialog = function(title, body, dynamicContent)
 	{
-		dynamicContent = dynamicContent != undefined ? dynamicContent : false;
+	    var buttonArgs = [{'button': 'all', 'visible': false},
+            {'button':'submit', 'label':'Ok','visible':true,'className':_btnSubmitClass}];
 	
-		return this.genericDialog(title, body, dynamicContent,
-			{'button': 'all', 'visible': false},   {'button':'submit', 'label':'Ok','visible':true,'className':_btnSubmitClass});
+	    return this.genericDialog.apply(this, NH.mergeArrays(arguments, buttonArgs));
 	};
 }
 
@@ -233,7 +139,7 @@ function ModalManager()
 */
 function GenericModal(parent)
 {
-	var ModalState = {'CLOSED':0,'OPEN':1,'ACTION_CLOSED':2};
+	var ModalState = {CLOSED:0,    OPEN:1,    ACTION_CLOSED:2};
 	
 	var self = this;
 // private members:
@@ -458,13 +364,19 @@ function GenericModal(parent)
 	*/
 	this.showDialog = function(title, body, dynamicContent)
 	{
-		dynamicContent = (dynamicContent != undefined) ? dynamicContent : false;
+	    var buttonStart = 3;
+	    var dynamic = dynamicContent;
+	    if (dynamicContent === undefined || typeof dynamicContent != "boolean")
+	    {
+	        dynamic = false;
+	        buttonStart = 2;
+	    }
 	
 		_setTitle(title);
 		_setBody(body);
 		
 		
-		if(dynamicContent)
+		if (dynamic)
 		{
 			_setDynamicContent("Loading...");
 			_showDynamicContent();
@@ -475,7 +387,7 @@ function GenericModal(parent)
 		}
 		
 		// If there are more arguments than named above, the rest SHOULD BE button options
-		for(var i=3;i<arguments.length;++i)
+		for(var i=buttonStart; i<arguments.length;++i)
 		{
 			var options = arguments[i];
 			if(  !_footer.setButtonOptions(options)  )
@@ -505,6 +417,11 @@ function GenericModal(parent)
 
 
 
+/*==========================================
+*		class ModalHeader()
+*-----------------------------------------------------------------
+*		Handles the title and close of the modal
+*/
 GenericModal.ModalHeader = function(parent)
 {
 	if(!parent)
@@ -550,6 +467,11 @@ GenericModal.ModalHeader = function(parent)
 
 
 
+/*==========================================
+*		class ModalBody()
+*-----------------------------------------------------------------
+*		Handles the content and dynamic content of the modal
+*/
 GenericModal.ModalBody = function(parent)
 {
 	if(!parent)
@@ -605,7 +527,7 @@ GenericModal.ModalBody = function(parent)
 		else if(typeof newContent == "object")
 		{
 			// If it's an array:
-			if(newContent.toString() == ([]).ToString())
+			if(newContent.toString() == [].toString())
 			{
 				for(var i=0;i<newContent.length;++i)
 				{
@@ -640,6 +562,11 @@ GenericModal.ModalBody = function(parent)
 
 
 
+/*==========================================
+*		class ModalButton()
+*-----------------------------------------------------------------
+*		Handles the button options, appearance, and functionality for the modal
+*/
 GenericModal.ModalButton = function(type, label, visible, className, parent)
 {
 // private:
@@ -776,6 +703,12 @@ GenericModal.ModalButton = function(type, label, visible, className, parent)
 	})(this)
 }
 
+
+/*==========================================
+*		class ModalFooter()
+*-----------------------------------------------------------------
+*		Manages the modal's buttons and events
+*/
 GenericModal.ModalFooter = function(parent)
 {
 	if(!parent)
@@ -792,11 +725,6 @@ GenericModal.ModalFooter = function(parent)
 			parent.getContainer().appendChild(_container);
 		
 		_generateButtons();
-	}
-	
-	this.getParentModal = function()
-	{
-		return parent;
 	}
 	
 	var _generateButtons = function(arrOptions)
@@ -878,6 +806,9 @@ GenericModal.ModalFooter = function(parent)
 	}
 	
 // public:
+	this.getParentModal = function () {
+	    return parent;
+	}
 	this.buttonCount = function()
 	{
 		return _buttons.length;
@@ -1009,20 +940,6 @@ GenericModal.ModalFooter = function(parent)
 	}
 	_generate();
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
