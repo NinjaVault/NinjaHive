@@ -26,6 +26,7 @@
     @{ Html.EndForm(); }
 
     <script>
-        ninjaHive.enforceUniqueValue(document.forms["createItemForm"],"GameItem.Name","/Items/IsNameAvailable");
+        @{var validateUrl = UrlProvider<ItemsController>.GetUrl(c => c.IsNameAvailable(""));}
+        ninjaHive.enforceUniqueValue(document.forms["createItemForm"], "GameItem.Name", "@validateUrl");
     </script>
 </div>
