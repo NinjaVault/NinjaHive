@@ -1,17 +1,31 @@
 ﻿@using NinjaHive.WebApp.Controllers
 @using NinjaHive.WebApp.Extensions
+@using NinjaHive.WebApp.Helpers
 
 @if (Request.IsAuthenticated)
 {
-    @*TODO: 'active' placement*@
     <ul class="nav navbar-nav">
-        <li class="active">
-            @{ var itemsAnchor = Html.ActionLink<ItemsController>("Items", c => c.Index()); }
-            @itemsAnchor
-        </li>
-        <li class="">
-            @{ var categoriesAnchor = Html.ActionLink<CategoriesController>("Categories", c => c.Index()); }
-            @categoriesAnchor
-        </li>
+        @{ string currentPage = Request.Url.AbsolutePath;
+           var actionLinks = new Dictionary<string,MvcHtmlString>{
+                {"Items", Html.ActionLink<ItemsController>("Items", c => c.Index())},
+                {"Categories", Html.ActionLink<CategoriesController>("Categories", c => c.Index())}
+           };
+           
+           string pageCategory = ViewContext.RouteData.Values["Controller"].ToString();
+        
+           foreach (var pair in actionLinks)
+           {
+               if (pageCategory == pair.Key)
+               {
+                   @:<li class="active">
+               }
+               else
+               {
+                   @:<li>
+               }
+               @pair.Value
+               @:</li>
+           }
+        }
     </ul>
 }
