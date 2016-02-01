@@ -107,41 +107,34 @@ namespace NinjaHive.WebApp.Controllers
 
         private IEnumerable<MainCategoryModel> GetMainCategories()
         {
-            return this.queryProcessor.Execute(new GetAllCategoriesQuery())
-                       .Where(c => c.SubCategories.Any());
+            return this.queryProcessor.Execute(new GetMainCategoriesQuery { HasSubCategory = "" });
         }
 
         private IEnumerable<SubCategoryModel> GetCategories()
         {
-            return this.queryProcessor.Execute(new GetAllCategoriesQuery())
-                                      .SelectMany(c => c.SubCategories);
+            return this.queryProcessor.Execute(new GetSubCategoriesQuery());
+        }
+
+
+        [HttpGet]
+        public JsonResult GetMainCategoriesJson(GetMainCategoriesQuery query)
+        {
+            var categories = this.queryProcessor.Execute(query);
+            return Json(categories, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
-        public JsonResult GetMainCategory(string main)
+        public JsonResult GetSubCategoriesJson(GetSubCategoriesQuery query)
         {
-            var category = this.queryProcessor.Execute(new GetAllCategoriesQuery())
-                               .First(c => c.Name.Equals(main));
-            return Json(category, JsonRequestBehavior.AllowGet);
-        }
-
-        [HttpGet]
-        public JsonResult GetSubCategories(Guid parent)
-        {
-            var subCategories = this.queryProcessor.Execute(new GetAllCategoriesQuery())
-                                    .First(c => c.Id == parent)
-                                    .SubCategories;
+            var subCategories = this.queryProcessor.Execute(query);
             return Json(subCategories, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
-        public JsonResult IsNameAvailable(string itemName)
+        public JsonResult GetItemsJson(GetItemsQuery query)
         {
-            var exists = this.queryProcessor
-                             .Execute(new GetAllGameItemsQuery())
-                             .Any(c => c.Name == itemName);
-
-            return Json(!exists, JsonRequestBehavior.AllowGet);
+            var items = this.queryProcessor.Execute(query);
+            return Json(items, JsonRequestBehavior.AllowGet);
         }
     }
 }

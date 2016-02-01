@@ -112,7 +112,7 @@
             var element = form[elementName];
 
             var ajax = new XMLHttpRequest();
-            ajax.open("GET", validationUrl + "?itemName=" + element.value, true);
+            ajax.open("GET", validationUrl + "?Name=" + element.value, true);
             ajax.send();
             ajax.onreadystatechange = function ()
             {
@@ -120,8 +120,8 @@
                     var error = element.nextElementSibling;
                     if (ajax.status == 200)
                     {
-                        var unique = JSON.parse(ajax.responseText);
-                        if (unique)
+                        var exists = JSON.parse(ajax.responseText).length;
+                        if (!exists || exists == 0)
                         {
                             form.submit();
                         }

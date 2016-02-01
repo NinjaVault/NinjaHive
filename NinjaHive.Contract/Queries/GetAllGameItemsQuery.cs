@@ -5,5 +5,6 @@ namespace NinjaHive.Contract.Queries
 {
     public class GetAllGameItemsQuery : IQuery<GameItemModel[]>
     {
+        
     }
 }

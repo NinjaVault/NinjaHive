@@ -17,7 +17,7 @@
     <div class="form-group">
         @Html.LabelFor(m => m.GameItem.CategoryId, new { @class = "col-md-4 control-label" })
         <div class="col-md-8">
-            @Html.DropDownList("_mainCategorySelect", Model.MainCategories, new { @class = "form-control", onChange = "swapSubCategories(this)", id="gameItemMainCategorySelect" })
+            @Html.DropDownList("_mainCategorySelect", Model.MainCategories, new { @class = "form-control", onChange = "ninjaHive.swapSubCategories(this)", id="gameItemMainCategorySelect" })
             @Html.DropDownListFor(m => m.GameItem.CategoryId, Model.Categories, new { @class = "form-control" })
             @Html.ValidationMessageFor(m => m.GameItem.CategoryId, "", new { @class = "text-danger" })
         </div>
@@ -63,103 +63,16 @@
 </div>
 
 
-@{var subCategoryRequest = UrlProvider<ItemsController>.GetUrl(c => c.GetSubCategories(Guid.Empty));
-var parentCategoryRequest = UrlProvider<ItemsController>.GetUrl(c => c.GetMainCategory(""));
+@{var subCategoryRequest = UrlProvider<ItemsController>.GetUrl(c => c.GetSubCategoriesJson(null));
+var parentCategoryRequest = UrlProvider<ItemsController>.GetUrl(c => c.GetMainCategoriesJson(null));
 
 bool hasCategory = Model.GameItem.SubCategoryName != null;}
 
+<script src="~/Scripts/NinjaHive/NinjaHive_EditGameItemScripts.js"></script>
 <script>
-    function swapSubCategories(main, subCategories)
-    {
-        var form = main.form;
-        var subSelect = form["GameItem.CategoryId"];
-        
-        changeSelectOptions(subSelect, subCategories || []);
-        if(!subCategories)
-        {
-            var ajax = new XMLHttpRequest();
-            var requestUrl = "@subCategoryRequest"
-            ajax.open("GET", requestUrl.substring(0, requestUrl.indexOf('?parent=')+8)+main.value, true);
-
-            ajax.onreadystatechange = function()
-            {
-                if(ajax.readyState == 4)
-                {
-                    if(ajax.status == 200)
-                    {
-                        changeSelectOptions(subSelect, JSON.parse(ajax.responseText));
-                    }
-                    else
-                    {
-                        console.log(ajax.responseText);
-                    }
-                }
-            }
-            ajax.send();
-        }
-    }
-    function changeSelectOptions(select, options, defaultName)
-    {
-        // Clear the sub-categories drop-down
-        while (select.firstChild)
-            select.removeChild(select.firstChild);
-
-
-        if(options.length == 0)
-        {
-            options.push({Id:"@Guid.Empty", Name:"Loading"});
-        }
-        var defaultIndex = 0;
-        for(var i=0;i<options.length; ++i)
-        {
-            var option = document.createElement("option");
-            option.value = options[i].Id;
-            option.innerHTML = options[i].Name;
-            if(options[i].Name == defaultName)
-                defaultIndex = i;
-            select.appendChild(option);
-        }
-        select.options[defaultIndex].selected = true;
-    }
-
-    function setMainCategory(mainSelect, categoryLabel, subCategoryLabel)
-    {
-        var ajax = new XMLHttpRequest();
-        var requestUrl = "@parentCategoryRequest";
-        ajax.open("GET", requestUrl + "?main=" + categoryLabel, true);
-
-        ajax.onreadystatechange = function()
-        {
-            if(ajax.readyState == 4)
-            {
-                if(ajax.status == 200)
-                {
-                    var category = JSON.parse(ajax.responseText);
-                    selectOptionWithLabel(mainSelect, categoryLabel);
-                    changeSelectOptions(mainSelect.form["GameItem.CategoryId"],category.SubCategories,subCategoryLabel);
-                }
-                else
-                {
-                    console.log(ajax.responseText);
-                }
-            }
-        }
-        ajax.send();
-    }
-    function selectOptionWithLabel(select, optionLabel)
-    {
-        var options = select.getElementsByTagName("option");
-        for(var i=0;i<options.length;++i)
-        {
-            if(options[i].innerHTML.indexOf(optionLabel) >= 0)
-            {
-                options[i].selected = true;
-                return true;
-            }
-        }
-        return false;
-    }
+    ninjaHive.requestUrl.subCategories = "@subCategoryRequest";
+    ninjaHive.requestUrl.mainCategories = "@parentCategoryRequest";
 
     if(@hasCategory.ToString().ToLower())
-        setMainCategory(document.getElementById("gameItemMainCategorySelect"), "@Model.GameItem.SubCategoryMainCategoryName", "@Model.GameItem.SubCategoryName");
+        ninjaHive.setMainCategory(document.getElementById("gameItemMainCategorySelect"), "@Model.GameItem.SubCategoryMainCategoryName", "@Model.GameItem.SubCategoryName");
 </script>

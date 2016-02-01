@@ -43,6 +43,7 @@
     <Compile Include="Commands\CreateEntityCommand.cs" />
     <Compile Include="Commands\DeleteEntityCommand.cs" />
     <Compile Include="Commands\UpdateEntityCommand.cs" />
+    <Compile Include="Extensions\ParameterVisitor.cs" />
     <Compile Include="IModel.cs" />
     <Compile Include="Models\MainCategoryModel.cs" />
     <Compile Include="Models\SubCategoryModel.cs" />
@@ -51,7 +52,10 @@
     <Compile Include="Queries\GetAllCategoriesQuery.cs" />
     <Compile Include="Queries\GetAllGameItemsQuery.cs" />
     <Compile Include="Queries\GetEntityByIdQuery.cs" />
+    <Compile Include="Queries\GetItemsQuery.cs" />
     <Compile Include="Queries\GetLinkedGameItemNamesQuery.cs" />
+    <Compile Include="Queries\GetMainCategoriesQuery.cs" />
+    <Compile Include="Queries\GetSubCategoriesQuery.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NinjaHive.Core\06 NinjaHive.Core.csproj">
