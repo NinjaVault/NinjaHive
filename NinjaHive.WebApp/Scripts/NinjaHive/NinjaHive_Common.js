@@ -108,38 +108,80 @@
 
     NH.enforceUniqueValue = function(form, elementName, validationUrl)
     {
-        NH.addEventListener(form, "submit", function (evt) {
-            var element = form[elementName];
 
-            var ajax = new XMLHttpRequest();
-            ajax.open("GET", validationUrl + "?Name=" + element.value, true);
-            ajax.send();
-            ajax.onreadystatechange = function ()
-            {
-                if (ajax.readyState == 4) {
-                    var error = element.nextElementSibling;
-                    if (ajax.status == 200)
-                    {
-                        var exists = JSON.parse(ajax.responseText).length;
-                        if (!exists || exists == 0)
-                        {
-                            form.submit();
-                        }
-                        else
-                        {
-                            error.innerHTML = "This value already exists.";
-                        }
-                    }
-                    else
-                    {
-                        error.innerHTML = "An error has occured trying to validate this name. Please try again later.";
-                    }
-                }
-            }
-
+        NH.addEventListener(form, "submit", function (evt)
+        {
             evt.preventDefault();
+
+            var element = form[elementName];
+            var error = element.nextElementSibling;
+
+            var ajax = NH.createHttpRequest("GET", validationUrl + "?Name=" + element.value);
+            ajax.onSuccess= function (event, ajax)
+            {
+                var exists = JSON.parse(ajax.responseText).length;
+                if (!exists || exists == 0)
+                {
+                    form.submit();
+                }
+                else
+                {
+                    error.innerHTML = "This value already exists.";
+                }
+            };
+            ajax.onError = function (event, ajax)
+            {
+                error.innerHTML = "An error has occured trying to validate this name. Please try again later.";
+            };
+            ajax.send();
+
             return false;
         });
 
+    }
+    
+    /*
+     sendVerifiableForm(form, requestUrl)
+     sendVerifiableForm(form, requestUrl, callbackOptions)
+     sendVerifiableForm(form, additionalData, requestUrl, callbackOptions)
+     */
+    NH.sendVerifiableForm = function (form)
+    {
+        var callbackOptions = {};
+        var customData = {};
+        var requestUrl = arguments[1];
+
+        if (arguments.length >= 3)
+        {
+            if (arguments.length >= 4)
+            {
+                customData = arguments[1];
+                requestUrl = arguments[2];
+                callbackOptions = arguments[3];
+            }
+            else
+            {
+                callbackOptions = arguments[2];
+            }
+        }
+
+        var data = customData;
+
+        // compile the form into the custom data
+        var fields = form.elements;
+        for (var i = 0; i < fields.length; ++i)
+        {
+            var name = NH.getAttribute(fields[i],"name");
+            if (name && name != "")
+            {
+                data[name] = fields[i].value;
+            }
+        }
+        //data.__RequestVerificationToken = form["__RequestVerificationToken"].value;
+
+        var ajax = NH.createHttpRequest("POST", requestUrl, true);
+        ajax.setCallbacks(callbackOptions);
+        ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        ajax.send(data);
     }
 })(ninjaHive);

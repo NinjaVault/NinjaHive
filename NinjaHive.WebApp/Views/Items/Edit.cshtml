@@ -41,26 +41,20 @@
                             var deleteUrl = UrlProvider<ItemsController>.GetUrl(c => c.Delete(Model.GameItem.Id));
                             var redirectUrl = UrlProvider<ItemsController>.GetUrl(c => c.Index());
                         }
-
                         var itemForm = document.forms['itemEditForm'];
-                        $.ajax({
-                            url: "@deleteUrl",
-                            type: 'POST',
-                            data: {
-                                __RequestVerificationToken: itemForm['__RequestVerificationToken'].value,
-                                id: itemForm['GameItem.Id'].value
-                            },
-                            success: function(data, status, ajax)
-                            {
-                                ninjaHive.modal.alertDialog("SUCCESS!","Redirecting...");
-                                window.location.href = "@redirectUrl";
-                            },
-                            error: function(ajax, status, error)
-                            {
-                                ninjaHive.modal.alertDialog("An Error Has Occurred", "There was an error processing your request. Please try again later.");
-                                console.log("RequestError:" + error);
-                            }
-                        });
+                        ninjaHive.sendVerifiableForm(itemForm, "@deleteUrl",
+                                 {
+                                     onSuccess: function(evt, ajax)
+                                     {
+                                         ninjaHive.modal.alertDialog("SUCCESS!", "Redirecting...");
+                                         window.location.href = "@redirectUrl";
+                                     },
+                                     onError: function(evt, ajax)
+                                     {
+                                         ninjaHive.modal.alertDialog("An Error Has Occurred", "There was an error processing your request. Please try again later.");
+                                         console.log("RequestError:" + ajax.responseText);
+                                     }
+                                 });
                     });
             });
         });

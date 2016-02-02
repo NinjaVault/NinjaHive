@@ -26,6 +26,7 @@ namespace NinjaHive.WebApp
                 "~/Scripts/BootstrapExtensions/ListGroupExtensions.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/ninjahive").Include(
+                "~/Scripts/NinjaHive/NinjaHive_Ajax.js",
                 "~/Scripts/NinjaHive/NinjaHive_Common.js",
                 "~/Scripts/NinjaHive/NinjaHive_GenericModal.js",
                 "~/Scripts/NinjaHive/NinjaHive_CategoryPage.js"));
