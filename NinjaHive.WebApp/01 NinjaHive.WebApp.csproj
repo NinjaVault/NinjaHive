@@ -259,7 +259,6 @@
     <Content Include="Scripts\NinjaHive\NinjaHive_Ajax.js" />
     <Content Include="Scripts\NinjaHive\NinjaHive_CategoryPage.js" />
     <Content Include="Scripts\NinjaHive\NinjaHive_Common.js" />
-    <Content Include="Scripts\NinjaHive\NinjaHive_DOMQuery.js" />
     <Content Include="Scripts\NinjaHive\NinjaHive_DynamicObjectTemplate.js" />
     <Content Include="Scripts\NinjaHive\NinjaHive_EditableElementManager.js" />
     <Content Include="Scripts\NinjaHive\NinjaHive_EditGameItemScripts.js" />
