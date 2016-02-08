@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Web.Mvc;
+using System.Linq;
 using NinjaHive.Contract.Models;
 using NinjaHive.Contract.Queries;
 using NinjaHive.Core;
 using NinjaHive.WebApp.Helpers;
+using NinjaHive.WebApp.Extensions;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace NinjaHive.WebApp.Controllers
 {
@@ -31,7 +35,7 @@ namespace NinjaHive.WebApp.Controllers
         }
 
         [HttpPost]
-        //[ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         public ActionResult AddMainCategory(MainCategoryModel model)
         {
             if (ModelState.IsValid)
@@ -41,56 +45,71 @@ namespace NinjaHive.WebApp.Controllers
             return Redirect(UrlProvider<CategoriesController>.GetUrl(c => c.Index()));
         }
 
-         [HttpPost]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult EditMainCategory(MainCategoryModel model)
         {
-             if(ModelState.IsValid)
-             {
-                 this.mainCategoryRepository.Update(model);
-             }
+            if(ModelState.IsValid)
+            {
+                this.mainCategoryRepository.Update(model);
 
-            return base.Home();
+                var mainCategories = this.queryProcessor.Execute(new GetMainCategoriesQuery());
+                return this.JsonSuccess(mainCategories);
+            }
+            return this.JsonFailure( ModelState.GetErrorsAsArray() );
+            //return Json(errors, JsonRequestBehavior.DenyGet);
+            //return base.Home();
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult AddSubCategory(SubCategoryModel model)
         {
             if (ModelState.IsValid)
             {
                 this.subCategoryRepository.Create(model);
+
+                var subCategories = this.queryProcessor.Execute(new GetSubCategoriesQuery { ParentId = model.MainCategoryId });
+                return this.JsonSuccess(subCategories, JsonRequestBehavior.DenyGet);
             }
-            return Redirect(UrlProvider<CategoriesController>.GetUrl(c => c.Index()));
-        }       
+            return this.JsonFailure(ModelState.GetErrorsAsArray());
+            //return Redirect(UrlProvider<CategoriesController>.GetUrl(c => c.Index()));
+        }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult EditSubCategory(SubCategoryModel model)
         {
             if (ModelState.IsValid)
             {
                 this.subCategoryRepository.Update(model);
+
+                var subCategories = this.queryProcessor.Execute(new GetSubCategoriesQuery { ParentId = model.MainCategoryId });
+                return this.JsonSuccess( subCategories );
             }
-            return base.Home();
+            return this.JsonFailure( ModelState.GetErrorsAsArray() );
+            //return base.Home();
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Delete(Guid id, bool isMainCategory)
         {
             if (isMainCategory)
             {
                 this.mainCategoryRepository.Delete(id);
+                var mainCategories = this.queryProcessor.Execute(new GetMainCategoriesQuery() );
+                return this.JsonSuccess(mainCategories);
             }
-            else
-            {
-                this.subCategoryRepository.Delete(id);
-            }
-            return base.Home();
+            this.subCategoryRepository.Delete(id);
+            return this.JsonSuccess(true);
         }
 
         [HttpPost]
         public JsonResult GetLinkedGameItems(Guid id)
         {
             var linkedGameItems = this.queryProcessor.Execute(new GetLinkedGameItemNamesQuery(id));
-            return Json(linkedGameItems);
+            return Json(linkedGameItems, JsonRequestBehavior.DenyGet);
         }
     }
 }
