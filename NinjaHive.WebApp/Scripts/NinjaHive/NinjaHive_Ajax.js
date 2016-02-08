@@ -13,7 +13,7 @@ var ninjaHive = ninjaHive || {};
         else
             this.httpRequest = new ActiveXObject("Microsoft.XMLHTTP");
 
-
+        this.responseText = "";
         this.open = function (requestType, uri, async)
         {
             this.httpRequest.open(requestType, uri, async);
@@ -22,31 +22,36 @@ var ninjaHive = ninjaHive || {};
 
         this.send = function (data)
         {
+            var val = null;
             if (data == undefined)
             {
-                return this.httpRequest.send();
+                val = this.httpRequest.send();
             }
             else if (typeof data == "string")
             {
-                return this.httpRequest.send(data);
+                val = this.httpRequest.send(data);
             }
-
-            var request = "";
-            for (var i = 0; i < arguments.length; ++i)
+            else
             {
-                data = arguments[i];
-                if (typeof data == "object" && !(data instanceof Array))
+                var request = "";
+                for (var i = 0; i < arguments.length; ++i)
                 {
-                    request += _objectToKeyValueString(data);
+                    data = arguments[i];
+                    if (typeof data == "object" && !(data instanceof Array))
+                    {
+                        request += _objectToKeyValueString(data);
+                    }
+                    else
+                    {
+                        throw new TypeError("Incompatible ajax send data type " + (typeof data) + " for argument " + i);
+                    }
                 }
-                else
-                {
-                    throw new TypeError("Incompatible ajax send data type " + (typeof data) + " for argument " + i);
-                }
+                return this.send(request);
             }
-            console.log("Sending "+request);
-            return this.send(request);
+            this.responseText = this.httpRequest.responseText;
+            return val;
         }
+
         this.setRequestHeader = function(headerType, data)
         {
             this.httpRequest.setRequestHeader(headerType, data);
@@ -63,6 +68,7 @@ var ninjaHive = ninjaHive || {};
 
         function _updateEvent(evt)
         {
+            self.responseText = self.httpRequest.responseText;
             if (self.onReadyStateChange)
             {
                 self.onReadyStateChange(evt);
@@ -82,7 +88,6 @@ var ninjaHive = ninjaHive || {};
                     console.log("Error!");
                     if (self.onError)
                     {
-                        console.log("Submitting error!");
                         self.onError(evt, self.httpRequest);
                     }
                 }

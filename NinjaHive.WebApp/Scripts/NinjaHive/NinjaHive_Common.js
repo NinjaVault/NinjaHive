@@ -12,7 +12,9 @@
     // For speed gains, we pre-determine these functions
     if (window.addEventListener) {
         // Suports common addEventListener
-        NH.addEventListener = function (obj, evt, func) {
+        NH.addEventListener = function (obj, evt, func, useCapture)
+        {
+            useCapture = useCapture === undefined ? false : useCapture;
             if (evt.toLowerCase() == "domcontentloaded") {
                 // If the DOM is already loaded, go ahead and call this
                 if (document.readyState == "interactive") {
@@ -20,13 +22,22 @@
                     return;
                 }
             }
-            obj.addEventListener(evt, func);
+            obj.addEventListener(evt, func, useCapture);
         };
+        NH.removeEventListener = function(obj, evt, func, useCapture)
+        {
+            useCapture = useCapture === undefined ? false : useCapture;
+            obj.removeEventListener(evt, func, useCapture);
+        }
         NH.setAttribute = function (obj, attribute, value) {
             obj.setAttribute(attribute, value);
         };
         NH.getAttribute = function (obj, attribute) {
             return obj.getAttribute(attribute);
+        };
+        NH.removeAttribute = function (obj, attribute)
+        {
+            return obj.removeAttribute(attribute);
         };
     }
     else {
@@ -38,7 +49,6 @@
                     func();
                     return;
                 }
-
                 obj.attachEvent("onreadystatechange", function (event) {
                     if (document.readyState == "interactive") func(event);
                 });
@@ -46,12 +56,24 @@
             else
                 obj.attachEvent("on" + evt, func);
         };
+        NH.removeEventListener = function(obj, evt, func)
+        {
+            if (evt.toLowerCase() == "domcontentloaded")
+                obj.detachEvent("onreadystatechange", func);
+            else
+                obj.detachEvent("on" + evt, func);
+        }
         NH.setAttribute = function (obj, attribute, value) {
             // Take advantage of how all objects in JS are maps
             obj[attribute] = value;
         };
         NH.getAttribute = function (obj, attribute) {
             return obj[attribute];
+        };
+        NH.removeAttribute = function (obj, attribute)
+        {
+            obj[attribute] = "";
+            delete obj[attribute];
         };
     }
 
@@ -72,6 +94,38 @@
     NH.clearChildren = function (node) {
         while (node.firstChild)
             node.removeChild(node.firstChild);
+    }
+
+    NH.moveChildren = function(destNode, sourceNode, checkEachFunc)
+    {
+        NH.clearChildren(destNode);
+        checkEachFunc = checkEachFunc || function () { };
+
+        while (sourceNode.hasChildNodes())
+        {
+            var node = sourceNode.firstChild;
+
+            if (!checkEachFunc(node) !== false)
+                destNode.appendChild(node);
+        }
+    }
+    NH.removeFromParent = function (element)
+    {
+        if (element.parentNode)
+        {
+            element.parentNode.removeChild(element);
+            return true;
+        }
+        return false;
+    }
+    NH.containsNode = function(containerElem, checkElem)
+    {
+        var elem = checkElem.parentNode;
+        while(elem != containerElem && elem != null)
+        {
+            elem = elem.parentNode;
+        }
+        return elem == containerElem;
     }
     NH.cloneArray = function(array)
     {
@@ -171,17 +225,18 @@
         var fields = form.elements;
         for (var i = 0; i < fields.length; ++i)
         {
-            var name = NH.getAttribute(fields[i],"name");
+            var name = NH.getAttribute(fields[i], "name");
             if (name && name != "")
             {
                 data[name] = fields[i].value;
             }
         }
-        //data.__RequestVerificationToken = form["__RequestVerificationToken"].value;
+
 
         var ajax = NH.createHttpRequest("POST", requestUrl, true);
         ajax.setCallbacks(callbackOptions);
         ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         ajax.send(data);
+        return ajax;
     }
 })(ninjaHive);

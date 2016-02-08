@@ -5,7 +5,7 @@
 
 @using (Html.BeginForm<CategoriesController>(c => c.AddMainCategory(Model)))
 {
-    //Html.AntiForgeryToken();
+    @Html.AntiForgeryToken();
 
     <div class="form-group">
         @Html.LabelFor(m => m.Name, new { @class = "control-label col-md-12" })

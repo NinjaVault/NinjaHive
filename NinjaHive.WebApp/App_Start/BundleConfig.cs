@@ -29,7 +29,8 @@ namespace NinjaHive.WebApp
                 "~/Scripts/NinjaHive/NinjaHive_Ajax.js",
                 "~/Scripts/NinjaHive/NinjaHive_Common.js",
                 "~/Scripts/NinjaHive/NinjaHive_GenericModal.js",
-                "~/Scripts/NinjaHive/NinjaHive_CategoryPage.js"));
+                "~/Scripts/NinjaHive/NinjaHive_DynamicObjectTemplate.js",
+                "~/Scripts/NinjaHive/NinjaHive_EditableElementManager.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                 "~/Content/Win8Loader.css",

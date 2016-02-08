@@ -3,8 +3,9 @@
 @using NinjaHive.WebApp.Extensions
 @model SubCategoryModel
 
-@using (Html.BeginForm<CategoriesController>(c => c.AddSubCategory(Model)))
+@using (Html.BeginForm<CategoriesController>(c => c.AddSubCategory(Model), new { name="addSubCategory" }))
 {
+    @Html.AntiForgeryToken()
     @Html.HiddenFor(m => m.MainCategoryId)
     
     <div class="form-group">

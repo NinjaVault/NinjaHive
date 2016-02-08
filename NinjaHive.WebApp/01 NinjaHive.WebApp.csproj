@@ -206,6 +206,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\ItemsController.cs" />
+    <Compile Include="Extensions\JsonResults.cs" />
     <Compile Include="Extensions\ClaimsIdentityExtensions.cs" />
     <Compile Include="Extensions\FormExtensions.cs" />
     <Compile Include="Extensions\UrlExtensions.cs" />
@@ -258,6 +259,9 @@
     <Content Include="Scripts\NinjaHive\NinjaHive_Ajax.js" />
     <Content Include="Scripts\NinjaHive\NinjaHive_CategoryPage.js" />
     <Content Include="Scripts\NinjaHive\NinjaHive_Common.js" />
+    <Content Include="Scripts\NinjaHive\NinjaHive_DOMQuery.js" />
+    <Content Include="Scripts\NinjaHive\NinjaHive_DynamicObjectTemplate.js" />
+    <Content Include="Scripts\NinjaHive\NinjaHive_EditableElementManager.js" />
     <Content Include="Scripts\NinjaHive\NinjaHive_EditGameItemScripts.js" />
     <Content Include="Scripts\NinjaHive\NinjaHive_GenericModal.js" />
     <Content Include="Scripts\npm.js" />

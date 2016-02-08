@@ -4,6 +4,7 @@
 @using NinjaHive.WebApp.Helpers
 @model IReadOnlyCollection<MainCategoryModel>
 
+
 <div class="row">
     <div class="page-header">
         <h2>Categories</h2>
@@ -22,15 +23,9 @@
 
                 <!--sub form-->
                 <div class="col-md-6">
-                    @foreach (var category in Model)
-                    {
-                        <span class="subCategoryForm" data-parent-id="@category.Id" style="display: none;">
-                            @Html.Partial(Partials.SubCategoryForm, new SubCategoryModel
-                            {
-                                MainCategoryId = category.Id,
-                            })
-                        </span>
-                    }
+                    <span class="subCategoryForm">
+                        @Html.Partial(Partials.SubCategoryForm, new SubCategoryModel())
+                    </span>
                 </div>
             </div>
 
@@ -41,46 +36,60 @@
 
                 <!--main content-->
                 <div class="col-md-6">
+                @using (Html.BeginForm<CategoriesController>(c => c.EditMainCategory(null), new { name = "mainEditValidation" }))
+                {
+                    @Html.AntiForgeryToken();
+                }
+                @using (Html.BeginForm<CategoriesController>(c => c.Delete(Guid.Empty,true), new { name = "mainDeleteValidation" }))
+                {
+                    @Html.AntiForgeryToken();
+                }
                     <div class="list-group" id="mainCategories">
-                        @foreach (var category in Model)
-                        {
-                            <a href="#" class="list-group-item mainCategory" data-id="@category.Id" onclick="ninjaHive.categoryPage.onMainCategoryClick(this);">
-                                <span class="name">@category.Name</span>
-                                <span class="input" style="display:none;">
-                                    <input data-id="@category.Id" type="text" class="form-control" style="display: inline;">
-                                    <span class="glyphicon glyphicon-ok save" onclick="ninjaHive.categoryPage.onMainCategorySave(this.parentElement.parentElement);"></span>
-                                </span>
-                                <span data-id="@category.Id" class="glyphicon glyphicon-trash" style="float: right" onclick="ninjaHive.categoryPage.onMainCategoryDelete(this.parentElement);"></span>
-                                <span data-id="@category.Id" class="glyphicon glyphicon-pencil" style="float: right; margin-right: 5px; z-index: 100;" onclick="ninjaHive.categoryPage.onMainCategoryEdit(this.parentElement);"></span>
-                            </a>
-                        }
-                    </div>
-                    @if (!Model.Any())
-                    {
-                        <div class="alert alert-danger" role="alert">
-                            No Categories
+
+                        <div id="template_mainCategoryDisplay">
+                            <span class="name">{Name}</span>
+                            <span class="glyphicon glyphicon-trash" style="float: right" onclick="page.mainCategoryManager.deleteNode($(this).parents('.list-group-item')[0]);"></span>
+                            <span class="glyphicon glyphicon-pencil" style="float: right; margin-right: 5px; z-index: 100;" onclick="var list = $(this).parents('.list-group-item')[0];page.mainCategoryManager.editNode(list);list.click();"></span>
                         </div>
-                    }
+
+                        <form id="template_mainCategoryEdit">
+                            <input name="Name" type="text" class="form-control" style="display: inline;" value="{Name}" />
+
+                            <button type="submit"><span class="glyphicon glyphicon-ok save"></span></button>
+                            <button name="delete" style="float: right"><span class="glyphicon glyphicon-trash"></span></button>
+                            <button name="cancel" style="float: right; margin-right: 5px; z-index: 100;"><span class="glyphicon glyphicon-remove"></span></button>
+                        </form>
+                    </div>
+
+                    <div class="alert alert-danger noCategoriesWarning" role="alert">
+                        No Categories
+                    </div>
                 </div>
 
                 <!--sub content-->
                 <div class="col-md-6">
-                    @foreach (var category in Model)
-                    {
-                        <div class="list-group subCategories" data-parent-id="@category.Id" style="display:none;">
-                            @foreach (var subCategory in category.SubCategories)
-                            {
-                                <a href="#" class="list-group-item subCategory" data-id="@subCategory.Id" data-parent-id="@subCategory.MainCategoryId" onclick="ninjaHive.categoryPage.onSubCategoryClick(this)">
-                                    <span class="name">@subCategory.Name</span>
-                                    <span class="input" style="display:none;">
-                                        <input data-id="@subCategory.Id" data-parent-id="@subCategory.MainCategoryId" type="text" class="form-control" style="display: inline;">
-                                        <span class="glyphicon glyphicon-ok save" onclick="ninjaHive.categoryPage.onSubCategorySaveEdit(this.parentElement.parentElement);"></span>
-                                    </span>
-                                    <span data-id="@subCategory.Id" class="glyphicon glyphicon-trash" style="float: right" onclick="ninjaHive.categoryPage.onSubCategoryDelete(this.parentElement)"></span>
-                                </a>
-                            }
+                @using (Html.BeginForm<CategoriesController>(c => c.EditSubCategory(null), new { name = "subEditValidation" }))
+                {
+                    @Html.AntiForgeryToken();
+                }
+                @using (Html.BeginForm<CategoriesController>(c => c.Delete(Guid.Empty, false), new { name = "subDeleteValidation" }))
+                {
+                    @Html.AntiForgeryToken();
+                }
+                    <div id="subCategories" class="list-group subCategories">
+                        <div id="template_subCategoryDisplay">
+                            <span class="name">{Name}</span>
+                            <span class="glyphicon glyphicon-trash" style="float: right" onclick="page.subCategoryManager.deleteNode($(this).parents('.list-group-item')[0]);"></span>
+                            <span class="glyphicon glyphicon-pencil" style="float: right; margin-right: 5px; z-index: 100;" onclick="var list = $(this).parents('.list-group-item')[0];page.subCategoryManager.editNode(list);list.click();"></span>
                         </div>
-                    }
+
+                        <form id="template_subCategoryEdit">
+                            <input name="Name" type="text" class="form-control" style="display: inline;" value="{Name}" />
+
+                            <button name="delete" style="float: right"><span class="glyphicon glyphicon-trash"></span></button>
+                            <button type="submit"><span class="glyphicon glyphicon-ok save"></span></button>
+                        </form>
+                    </div>
                 </div>
 
             </div>
@@ -90,34 +99,94 @@
 
 @Scripts.Render("~/bundles/extensions")
 @Scripts.Render("~/bundles/ninjahive")
+@Scripts.Render("~/Scripts/NinjaHive/NinjaHive_CategoryPage.js")
+@Scripts.Render("~/Scripts/NinjaHive/NinjaHive_CategoriesScripts.js")
+
+@{  var editUrl = Url.Action<CategoriesController>(c => c.EditSubCategory(null));
+    var deleteUrl = UrlProvider<CategoriesController>.GetParameterlessUrl(c => c.Delete(Guid.Empty, false));
+    var getGameItemsUrl = UrlProvider<CategoriesController>.GetParameterlessUrl(c => c.GetLinkedGameItems(Guid.Empty));
+    var editUrlMainCategory = Url.Action<CategoriesController>(c => c.EditMainCategory(null));
+    var mainCategoriesJson = Json.Encode(Model);
+}
 
 @section Scripts{
-    <script>
-    //$(function () {
+<script>
+    var page = ninjaHive.initCategoriesPage();
 
-    (function () {
-        ninjaHive.categoryPage.subCategoryFormClassName = "subCategoryForm";
-        ninjaHive.categoryPage.mainCategoryFormIdName = "mainCategory";
-        ninjaHive.categoryPage.subCategoryGroupClassName = "subCategories";
+    // Pass the URLs to the scripts
+    page.addRequestUrl("deleteCategory", "@deleteUrl");
+    page.addRequestUrl("editMainCategory", "@editUrlMainCategory");
+    page.addRequestUrl("editSubCategory", "@editUrl");
+    page.addRequestUrl("relatedItems", "@getGameItemsUrl");
 
-        @{ var editUrl = Url.Action<CategoriesController>(c => c.EditSubCategory(null)); }
-        @{ var deleteUrl = UrlProvider<CategoriesController>.GetParameterlessUrl(c => c.Delete(Guid.Empty, false)); }
-        @{ var getGameItemsUrl = UrlProvider<CategoriesController>.GetParameterlessUrl(c => c.GetLinkedGameItems(Guid.Empty)); }
-        @{ var editUrlMainCategory = Url.Action<CategoriesController>(c => c.EditMainCategory(null));}
+    // Set up the maincategories manager
+                                    // The initial dataset and a target parent container to fill
+    page.setupMainCategoryManager(@Html.Raw(mainCategoriesJson),  document.getElementById("mainCategories"),
+                                    // The display template, set to be in a list-group-item container
+                                    ninjaHive.createHtmlTemplate(document.getElementById("template_mainCategoryDisplay"),
+                                        {tag:"a", class:"list-group-item mainCategory"}),
+                                    // The edit template, not formatted because it will be pulled out of its container
+                                    ninjaHive.createHtmlTemplate(document.getElementById("template_mainCategoryEdit")),
+                                    // The forms with the verification tokens
+                                    document.forms["mainEditValidation"], document.forms["mainDeleteValidation"]);
+    
+    // Set up the subcategories manager
+                                    // The target parent container to fill
+    page.setupSubCategoryManager(document.getElementById("subCategories"),
+                                    // The display template, set to be in a list-group-item container
+                                    ninjaHive.createHtmlTemplate(document.getElementById("template_subCategoryDisplay"),
+                                        {tag:"a", class:"list-group-item subCategory"}),
+                                    // The edit template, not formatted because it will be pulled out of its container
+                                    ninjaHive.createHtmlTemplate(document.getElementById("template_subCategoryEdit")),
+                                    // The forms with the verification tokens
+                                    document.forms["subEditValidation"], document.forms["subDeleteValidation"]);
 
-        ninjaHive.categoryPage.editUrlSubCategory = "@editUrl";
-        ninjaHive.categoryPage.deleteUrl = "@deleteUrl";
-        ninjaHive.categoryPage.getGameItemsUrl = "@getGameItemsUrl";
-        ninjaHive.categoryPage.editUrlMainCategory = "@editUrlMainCategory";
-
-        var mainCategoryForm = new ninjaHive.categoryPage.MainCategoryForm(document.getElementById("mainCategories"));
-        if (mainCategoryForm.getChildren().length > 0) {
-            var firstMainCategory = mainCategoryForm.getChildren()[0];
-
-            firstMainCategory.activate();
-            firstMainCategory.showSubCategoryForm();
-            firstMainCategory.getSubCategoryForm().showSubCategories();
-        }
-    })();
+    page.start();
 </script>
+}
+@section PageStyles{
+    <style type="text/css">
+        .noCategories .subCategoryForm {
+            display: none;
+        }
+        .noCategoriesWarning
+        {
+            display:none;
+        }
+        .noCategories .noCategoriesWarning
+        {
+            display:block;
+        }
+        a.list-group-item
+        {
+            cursor:pointer;
+        }
+        a.list-group-item button
+        {
+            margin:0px;padding:0px;
+            background:transparent;
+            border:0px;
+        }
+        a.list-group-item input
+        {
+            margin:-10px 0px;
+        }
+        a.list-group-item button .glyphicon
+        {
+            color:white;
+        }
+        a.list-group-item button:hover .glyphicon
+        {
+            color:darkgray;
+        }
+        a.list-group-item .glyphicon.glyphicon-ok.save
+        {
+            color:#8F8;
+            text-shadow:1px 0px 1px #008;
+        }
+        a.list-group-item button:hover .glyphicon.glyphicon-ok.save
+        {
+            color:#CFC;
+        }
+    </style>
 }
