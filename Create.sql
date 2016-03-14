@@ -7,9 +7,9 @@ GO
 CREATE DATABASE [NinjaHive]
  CONTAINMENT = NONE
  ON  PRIMARY 
-( NAME = N'NinjaHive', FILENAME = N'C:\Users\[USERNAME]\AppData\Local\Microsoft\Microsoft SQL Server Local DB\Instances\v11.0\NinjaHive.mdf' , SIZE = 3136KB , MAXSIZE = UNLIMITED, FILEGROWTH = 1024KB )
+( NAME = N'NinjaHive', FILENAME = N'C:\Users\[USERNAME]\AppData\Local\Microsoft\Microsoft SQL Server Local DB\Instances\MSSQLLocalDB\NinjaHive.mdf' , SIZE = 3136KB , MAXSIZE = UNLIMITED, FILEGROWTH = 1024KB )
  LOG ON 
-( NAME = N'NinjaHive_log', FILENAME = N'C:\Users\[USERNAME]\AppData\Local\Microsoft\Microsoft SQL Server Local DB\Instances\v11.0\NinjaHive_log.ldf' , SIZE = 784KB , MAXSIZE = 2048GB , FILEGROWTH = 10%)
+( NAME = N'NinjaHive_log', FILENAME = N'C:\Users\[USERNAME]\AppData\Local\Microsoft\Microsoft SQL Server Local DB\Instances\MSSQLLocalDB\NinjaHive_log.ldf' , SIZE = 784KB , MAXSIZE = 2048GB , FILEGROWTH = 10%)
 GO
 ALTER DATABASE [NinjaHive] SET COMPATIBILITY_LEVEL = 110
 GO
