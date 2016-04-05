@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Web.Mvc;
-using System.Linq;
 using NinjaHive.Contract.Models;
 using NinjaHive.Contract.Queries;
 using NinjaHive.Core;
 using NinjaHive.WebApp.Helpers;
 using NinjaHive.WebApp.Extensions;
-using System.Collections;
-using System.Collections.Generic;
 
 namespace NinjaHive.WebApp.Controllers
 {
@@ -34,15 +31,42 @@ namespace NinjaHive.WebApp.Controllers
             return View(categories);
         }
 
+        public ActionResult CreateMainCategory()
+        {
+            return View();
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AddMainCategory(MainCategoryModel model)
+        public ActionResult CreateMainCategory(MainCategoryModel model)
         {
             if (ModelState.IsValid)
             {
                 this.mainCategoryRepository.Create(model);
+                return Redirect(UrlProvider<CategoriesController>.GetUrl(c => c.Index()));
+
             }
-            return Redirect(UrlProvider<CategoriesController>.GetUrl(c => c.Index()));
+            return View(model);
+        }
+
+        public ActionResult CreateSubCategory(Guid mainCategoryId)
+        {
+            //TODO: validate if ID exists
+            var subCategoryModel = new SubCategoryModel {MainCategoryId = mainCategoryId};
+            return View(subCategoryModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateSubCategory(SubCategoryModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                this.subCategoryRepository.Create(model);
+                return Redirect(UrlProvider<CategoriesController>.GetUrl(c => c.Index()));
+
+            }
+            return View(model);
         }
 
         [HttpPost]

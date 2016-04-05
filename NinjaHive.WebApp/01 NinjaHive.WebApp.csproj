@@ -24,6 +24,7 @@
     <ApplicationInsightsResourceId>/subscriptions/2bb8b906-0a26-4d51-93ac-39d14aadddd5/resourcegroups/NinjaHive-ResourceGroup/providers/microsoft.insights/components/NinjaHive</ApplicationInsightsResourceId>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -257,7 +258,6 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\NinjaHive\NinjaHive_Ajax.js" />
-    <Content Include="Scripts\NinjaHive\NinjaHive_CategoryPage.js" />
     <Content Include="Scripts\NinjaHive\NinjaHive_Common.js" />
     <Content Include="Scripts\NinjaHive\NinjaHive_DynamicObjectTemplate.js" />
     <Content Include="Scripts\NinjaHive\NinjaHive_EditableElementManager.js" />
@@ -292,10 +292,10 @@
     <Content Include="Views\Items\_EditGameItemPartial.cshtml" />
     <Content Include="Views\Items\Edit.cshtml" />
     <Content Include="Views\Categories\Index.cshtml" />
-    <Content Include="Views\Categories\_MainCategoryFormPartial.cshtml" />
-    <Content Include="Views\Categories\_SubCategoryFormPartial.cshtml" />
     <Content Include="Views\Account\ChangePassword.cshtml" />
     <Content Include="Views\Account\ChangePasswordConfirmation.cshtml" />
+    <Content Include="Views\Categories\CreateMainCategory.cshtml" />
+    <Content Include="Views\Categories\CreateSubCategory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Validation\" />

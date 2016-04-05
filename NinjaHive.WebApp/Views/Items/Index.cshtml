@@ -3,14 +3,10 @@
 @using NinjaHive.WebApp.Helpers
 
 <div class="row">
+    
     <div class="page-header">
-        <h2>
-            Game Items
-            @{ var createUrl = Url.Action<ItemsController>(c => c.Create()); }
-            <a class="btn btn-primary" href="@createUrl" role="button">
-                Create
-            </a>
-        </h2>
+        <h2>Game Items</h2>
+        @( Html.ActionLink<ItemsController>("Create new Game Item", c => c.Create(), new {@class = "btn btn-primary"}) )
     </div>
 
     <div id="ninjahive-content-container">
