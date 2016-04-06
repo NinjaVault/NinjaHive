@@ -43,8 +43,7 @@ namespace NinjaHive.WebApp.Controllers
             if (ModelState.IsValid)
             {
                 this.mainCategoryRepository.Create(model);
-                return Redirect(UrlProvider<CategoriesController>.GetUrl(c => c.Index()));
-
+                return this.RedirectToIndex();
             }
             return View(model);
         }
@@ -63,7 +62,7 @@ namespace NinjaHive.WebApp.Controllers
             if (ModelState.IsValid)
             {
                 this.subCategoryRepository.Create(model);
-                return Redirect(UrlProvider<CategoriesController>.GetUrl(c => c.Index()));
+                return this.RedirectToIndex();
 
             }
             return View(model);
@@ -112,7 +111,7 @@ namespace NinjaHive.WebApp.Controllers
         {
             //TODO: validate if we can delete by checking subcategories
             this.mainCategoryRepository.Delete(model.Id);
-            return Redirect(UrlProvider<CategoriesController>.GetUrl(c => c.Index()));
+            return this.RedirectToIndex();
         }
 
         public ActionResult DeleteSubCategory(Guid id)
@@ -127,6 +126,11 @@ namespace NinjaHive.WebApp.Controllers
         {
             //TODO: needs validation both server/client side to check if we can delete it by checking if gameitems are attached to it
             this.subCategoryRepository.Delete(model.Id);
+            return this.RedirectToIndex();
+        }
+
+        private ActionResult RedirectToIndex()
+        {
             return Redirect(UrlProvider<CategoriesController>.GetUrl(c => c.Index()));
         }
 
