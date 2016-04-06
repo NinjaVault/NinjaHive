@@ -7,7 +7,7 @@
 
     <div class="page-header">
         <h2>Categories</h2>
-        @( Html.ActionLink<CategoriesController>("Create new Main Category", c => c.CreateMainCategory(), new { @class = "btn btn-primary" }) )
+        @(Html.ActionLink<CategoriesController>("Create new Main Category", c => c.CreateMainCategory(), new { @class = "btn btn-primary" }))
     </div>
 
     <div id="ninjahive-content-container">
@@ -16,18 +16,24 @@
             @foreach (var mainCategory in Model)
             {
                 <div class="panel panel-default">
-                    <div class="panel-heading">
+                    <div class="panel-heading clearfix">
                         @mainCategory.Name
-                    </div>
-
-                    <div class="panel-body">
-                        @( Html.ActionLink<CategoriesController>("Create new Sub Category", c => c.CreateSubCategory(mainCategory.Id), new {@class = "btn btn-primary"}) )
+                        <div class="pull-right">
+                            @(Html.ActionLink<CategoriesController>("add subcategory", c => c.CreateSubCategory(mainCategory.Id)))
+                            -
+                            @(Html.ActionLink<CategoriesController>("delete", c => c.DeleteMainCategory(mainCategory.Id)))
+                        </div>
                     </div>
 
                     <ul class="list-group">
                         @foreach (var subCategory in mainCategory.SubCategories)
                         {
-                            <li class="list-group-item">@subCategory.Name</li>
+                            <li class="list-group-item clearfix">
+                                @subCategory.Name
+                                <div class="pull-right">
+                                    @(Html.ActionLink<CategoriesController>("delete", c => c.DeleteSubCategory(subCategory.Id)))
+                                </div>
+                            </li>
                         }
                     </ul>
                 </div>

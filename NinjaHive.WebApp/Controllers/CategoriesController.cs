@@ -87,21 +87,6 @@ namespace NinjaHive.WebApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AddSubCategory(SubCategoryModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                this.subCategoryRepository.Create(model);
-
-                var subCategories = this.queryProcessor.Execute(new GetSubCategoriesQuery { ParentId = model.MainCategoryId });
-                return this.JsonSuccess(subCategories, JsonRequestBehavior.DenyGet);
-            }
-            return this.JsonFailure(ModelState.GetErrorsAsArray());
-            //return Redirect(UrlProvider<CategoriesController>.GetUrl(c => c.Index()));
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult EditSubCategory(SubCategoryModel model)
         {
             if (ModelState.IsValid)
@@ -115,18 +100,34 @@ namespace NinjaHive.WebApp.Controllers
             //return base.Home();
         }
 
+        public ActionResult DeleteMainCategory(Guid id)
+        {
+            var model = this.queryProcessor.Execute(new GetEntityByIdQuery<MainCategoryModel>(id));
+            return View(model);
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(Guid id, bool isMainCategory)
+        public ActionResult DeleteMainCategory(MainCategoryModel model)
         {
-            if (isMainCategory)
-            {
-                this.mainCategoryRepository.Delete(id);
-                var mainCategories = this.queryProcessor.Execute(new GetMainCategoriesQuery() );
-                return this.JsonSuccess(mainCategories);
-            }
-            this.subCategoryRepository.Delete(id);
-            return this.JsonSuccess(true);
+            //TODO: validate if we can delete by checking subcategories
+            this.mainCategoryRepository.Delete(model.Id);
+            return Redirect(UrlProvider<CategoriesController>.GetUrl(c => c.Index()));
+        }
+
+        public ActionResult DeleteSubCategory(Guid id)
+        {
+            var model = this.queryProcessor.Execute(new GetEntityByIdQuery<SubCategoryModel>(id));
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteSubCategory(SubCategoryModel model)
+        {
+            //TODO: needs validation both server/client side to check if we can delete it by checking if gameitems are attached to it
+            this.subCategoryRepository.Delete(model.Id);
+            return Redirect(UrlProvider<CategoriesController>.GetUrl(c => c.Index()));
         }
 
         [HttpPost]

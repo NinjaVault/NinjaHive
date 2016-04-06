@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace NinjaHive.WebApp.Extensions
@@ -10,21 +8,41 @@ namespace NinjaHive.WebApp.Extensions
     {
         public static ModelAttributeError[] GetErrorsAsArray(this ModelStateDictionary modelState)
         {
-            var errors = modelState.Where(c => c.Value.Errors.Any())
-                                   .Select(c => new ModelAttributeError{ Name = c.Key, Errors = c.Value.Errors });
-            return errors.ToArray();
+            var errorsInModel =
+                from keyValuePair in modelState
+                let errors = keyValuePair.Value.Errors
+                where errors.Any()
+                select new ModelAttributeError
+                {
+                    Name = keyValuePair.Key,
+                    Errors = errors
+                };
+
+            return errorsInModel.ToArray();
         }
-        public static JsonResult JsonFailure(this Controller control, object obj, JsonRequestBehavior behaviour = JsonRequestBehavior.DenyGet)
+
+        public static JsonResult JsonFailure(this Controller control, object obj)
         {
-            var res = new JsonResult();
-            res.Data = new JsonRequestResult { Data = obj, Success = false };
-            return res;
+            return new JsonResult
+            {
+                Data = new JsonRequestResult
+                {
+                    Data = obj,
+                    Success = false
+                }
+            };
         }
-        public static JsonResult JsonSuccess(this Controller control, object obj, JsonRequestBehavior behaviour = JsonRequestBehavior.DenyGet)
+
+        public static JsonResult JsonSuccess(this Controller control, object obj)
         {
-            var res = new JsonResult();
-            res.Data = new JsonRequestResult { Data = obj, Success = true };
-            return res;
+            return new JsonResult
+            {
+                Data = new JsonRequestResult
+                {
+                    Data = obj,
+                    Success = true
+                }
+            };
         }
 
         [Serializable]
@@ -33,6 +51,7 @@ namespace NinjaHive.WebApp.Extensions
             public bool Success { get; set; }
             public object Data { get; set; }
         }
+
         public struct ModelAttributeError
         {
             public string Name { get; set; }

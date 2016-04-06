@@ -296,6 +296,8 @@
     <Content Include="Views\Account\ChangePasswordConfirmation.cshtml" />
     <Content Include="Views\Categories\CreateMainCategory.cshtml" />
     <Content Include="Views\Categories\CreateSubCategory.cshtml" />
+    <Content Include="Views\Categories\DeleteMainCategory.cshtml" />
+    <Content Include="Views\Categories\DeleteSubCategory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Validation\" />

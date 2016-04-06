@@ -1,0 +1,38 @@
+﻿@using NinjaHive.WebApp.Controllers
+@using NinjaHive.WebApp.Extensions
+@model NinjaHive.Contract.Models.MainCategoryModel
+
+<h2>Delete Main Category</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+    </dl>
+    @if (Model.SubCategories.Any())
+    {
+        <div class="alert alert-warning" role="alert">
+            You cannot delete this Main Category because there are Sub Categories attached to it.
+        </div>
+    }
+    else
+    {
+        using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-group">
+                <input type="submit" value="Delete" class="btn btn-danger" />
+            </div>
+        }
+    }
+
+    @(Html.ActionLink<CategoriesController>("Back to List", c => c.Index()))
+</div>
