@@ -1,10 +1,10 @@
 ﻿@using NinjaHive.WebApp.Controllers
-@using NinjaHive.WebApp.Helpers
+@using NinjaHive.WebApp.Extensions
 <div class="page-header">
     <h1>Error - Unknown</h1>
 </div>
 <div class="alert alert-danger" role="alert">
-    <b>Oops!</b> An error has occurred. Sorry for the inconvenience.
-    For help, contact an admin.
-    Click @Html.ActionLink("here", UrlProvider<ItemsController>.GetUrl(c => c.Index())) to return to the homepage.
+    <b>Oops!</b> An error has occurred. Sorry for the inconvenience.<br/>
+    For help, contact an admin.<br/>
+    Click @(Html.ActionLink<ItemsController>("here", c => c.Index())) to return to the homepage.
 </div>
