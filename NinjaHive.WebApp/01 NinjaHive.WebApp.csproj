@@ -298,6 +298,8 @@
     <Content Include="Views\Categories\CreateSubCategory.cshtml" />
     <Content Include="Views\Categories\DeleteMainCategory.cshtml" />
     <Content Include="Views\Categories\DeleteSubCategory.cshtml" />
+    <Content Include="Views\Categories\EditMainCategory.cshtml" />
+    <Content Include="Views\Categories\EditSubCategory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Validation\" />

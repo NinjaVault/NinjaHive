@@ -12,7 +12,6 @@ namespace NinjaHive.Contract.Models
         [Required(ErrorMessage = "{0} is required")]
         [StringLength(255, MinimumLength = 3, ErrorMessage = "{0}, minimum: {2}, maximum: {1}")]
         [RegularExpression(RegEx.AlphaNumUnderscoreSpace, ErrorMessage = "a-z 0-9 spaces underscores")]
-        [Display(Name = "Sub Category")]
         public string Name { get; set; }
 
         [NonEmptyGuid]

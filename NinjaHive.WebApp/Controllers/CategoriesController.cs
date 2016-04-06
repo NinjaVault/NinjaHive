@@ -68,6 +68,12 @@ namespace NinjaHive.WebApp.Controllers
             return View(model);
         }
 
+        public ActionResult EditMainCategory(Guid id)
+        {
+            var model = this.queryProcessor.Execute(new GetEntityByIdQuery<MainCategoryModel>(id));
+            return View(model);
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult EditMainCategory(MainCategoryModel model)
@@ -75,13 +81,15 @@ namespace NinjaHive.WebApp.Controllers
             if(ModelState.IsValid)
             {
                 this.mainCategoryRepository.Update(model);
-
-                var mainCategories = this.queryProcessor.Execute(new GetMainCategoriesQuery());
-                return this.JsonSuccess(mainCategories);
+                return this.RedirectToIndex();
             }
-            return this.JsonFailure( ModelState.GetErrorsAsArray() );
-            //return Json(errors, JsonRequestBehavior.DenyGet);
-            //return base.Home();
+            return View(model);
+        }
+
+        public ActionResult EditSubCategory(Guid id)
+        {
+            var model = this.queryProcessor.Execute(new GetEntityByIdQuery<SubCategoryModel>(id));
+            return View(model);
         }
 
         [HttpPost]
@@ -91,12 +99,9 @@ namespace NinjaHive.WebApp.Controllers
             if (ModelState.IsValid)
             {
                 this.subCategoryRepository.Update(model);
-
-                var subCategories = this.queryProcessor.Execute(new GetSubCategoriesQuery { ParentId = model.MainCategoryId });
-                return this.JsonSuccess( subCategories );
+                return this.RedirectToIndex();
             }
-            return this.JsonFailure( ModelState.GetErrorsAsArray() );
-            //return base.Home();
+            return View(model);
         }
 
         public ActionResult DeleteMainCategory(Guid id)

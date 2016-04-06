@@ -21,6 +21,8 @@
                         <div class="pull-right">
                             @(Html.ActionLink<CategoriesController>("add subcategory", c => c.CreateSubCategory(mainCategory.Id)))
                             -
+                            @(Html.ActionLink<CategoriesController>("edit", c => c.EditMainCategory(mainCategory.Id)))
+                            -
                             @(Html.ActionLink<CategoriesController>("delete", c => c.DeleteMainCategory(mainCategory.Id)))
                         </div>
                     </div>
@@ -31,6 +33,8 @@
                             <li class="list-group-item clearfix">
                                 @subCategory.Name
                                 <div class="pull-right">
+                                    @(Html.ActionLink<CategoriesController>("edit", c => c.EditSubCategory(subCategory.Id)))
+                                    -
                                     @(Html.ActionLink<CategoriesController>("delete", c => c.DeleteSubCategory(subCategory.Id)))
                                 </div>
                             </li>
