@@ -1,6 +1,7 @@
 ﻿@using NinjaHive.WebApp.Extensions
 @using NinjaHive.Contract.Models
 @using NinjaHive.WebApp.Controllers
+@using NinjaHive.WebApp.Helpers
 @model IReadOnlyCollection<MainCategoryModel>
 
 <div class="row">
@@ -12,35 +13,41 @@
 
     <div id="ninjahive-content-container">
         <div id="ninjahive-content">
-
-            @foreach (var mainCategory in Model)
+            @if (Model.Any())
             {
-                <div class="panel panel-default">
-                    <div class="panel-heading clearfix">
-                        @mainCategory.Name
-                        <div class="pull-right">
-                            @(Html.ActionLink<CategoriesController>("add subcategory", c => c.CreateSubCategory(mainCategory.Id)))
-                            -
-                            @(Html.ActionLink<CategoriesController>("edit", c => c.EditMainCategory(mainCategory.Id)))
-                            -
-                            @(Html.ActionLink<CategoriesController>("delete", c => c.DeleteMainCategory(mainCategory.Id)))
+                foreach (var mainCategory in Model)
+                {
+                    <div class="panel panel-default">
+                        <div class="panel-heading clearfix">
+                            @mainCategory.Name
+                            <div class="pull-right">
+                                @(Html.ActionLink<CategoriesController>("add subcategory", c => c.CreateSubCategory(mainCategory.Id)))
+                                -
+                                @(Html.ActionLink<CategoriesController>("edit", c => c.EditMainCategory(mainCategory.Id)))
+                                -
+                                @(Html.ActionLink<CategoriesController>("delete", c => c.DeleteMainCategory(mainCategory.Id)))
+                            </div>
                         </div>
-                    </div>
 
-                    <ul class="list-group">
-                        @foreach (var subCategory in mainCategory.SubCategories)
-                        {
-                            <li class="list-group-item clearfix">
-                                @subCategory.Name
-                                <div class="pull-right">
-                                    @(Html.ActionLink<CategoriesController>("edit", c => c.EditSubCategory(subCategory.Id)))
-                                    -
-                                    @(Html.ActionLink<CategoriesController>("delete", c => c.DeleteSubCategory(subCategory.Id)))
-                                </div>
-                            </li>
-                        }
-                    </ul>
-                </div>
+                        <ul class="list-group">
+                            @foreach (var subCategory in mainCategory.SubCategories)
+                            {
+                                <li class="list-group-item clearfix">
+                                    @subCategory.Name
+                                    <div class="pull-right">
+                                        @(Html.ActionLink<CategoriesController>("edit", c => c.EditSubCategory(subCategory.Id)))
+                                        -
+                                        @(Html.ActionLink<CategoriesController>("delete", c => c.DeleteSubCategory(subCategory.Id)))
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                }
+            }
+            else
+            {
+                @Html.Partial(Partials.NoResults);
             }
 
         </div>
