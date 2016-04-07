@@ -1,0 +1,9 @@
+﻿@using NinjaHive.WebApp.Controllers
+@using NinjaHive.WebApp.Extensions
+<div class="page-header">
+    <h1>Error - Unauthorized</h1>
+</div>
+<div class="alert alert-danger" role="alert">
+    <b>Stop!</b> You don't have any permissions to visit that page.<br />
+    Click @(Html.ActionLink<ItemsController>("here", c => c.Index())) to return to the homepage.
+</div>

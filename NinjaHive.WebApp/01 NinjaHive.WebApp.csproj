@@ -208,11 +208,13 @@
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\ErrorsController.cs" />
     <Compile Include="Controllers\ItemsController.cs" />
+    <Compile Include="Extensions\HttpExtensions.cs" />
     <Compile Include="Extensions\IdentityExtensions.cs" />
     <Compile Include="Extensions\JsonResults.cs" />
     <Compile Include="Extensions\ClaimsIdentityExtensions.cs" />
     <Compile Include="Extensions\FormExtensions.cs" />
     <Compile Include="Extensions\UrlExtensions.cs" />
+    <Compile Include="Filters\AuthorizeRolesAttribute.cs" />
     <Compile Include="Filters\LogExceptionFilterAttribute.cs" />
     <Compile Include="Helpers\Partials.cs" />
     <Compile Include="IUserContextWithRoles.cs" />
@@ -306,6 +308,7 @@
     <Content Include="Views\Categories\EditSubCategory.cshtml" />
     <Content Include="Views\Account\CreateUser.cshtml" />
     <Content Include="Views\Account\ManageUsers.cshtml" />
+    <Content Include="Views\Errors\UnauthorizedError.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Validation\" />

@@ -1,4 +1,6 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
@@ -6,6 +8,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
+using NinjaHive.Contract;
+using NinjaHive.Core.Extensions;
 using NinjaHive.WebApp.Extensions;
 
 namespace NinjaHive.WebApp
@@ -29,13 +33,15 @@ namespace NinjaHive.WebApp
     {
         protected override void Seed(ApplicationDbContext context)
         {
-            var userManager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
             var roleManager = HttpContext.Current.GetOwinContext().Get<ApplicationRoleManager>();
-
-            this.AddRoleIfNotExist(roleManager, "Admin");
-            this.AddRoleIfNotExist(roleManager, "Game Designer");
+            var roles = Enum.GetNames(typeof (Role)).Select(FriendlyExtensions.ToFriendlyString).ToArray();
+            foreach (var role in roles)
+            {
+                this.AddRoleIfNotExist(roleManager, role);
+            }
 
 #if DEBUG
+            var userManager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
             var user = userManager.FindByName("admin");
             if (user == null)
             {
@@ -46,7 +52,7 @@ namespace NinjaHive.WebApp
                 var result = userManager.Create(user, "admin");
                 if (result.Succeeded)
                 {
-                    userManager.AddToRoles(user.Id, "Admin", "Game Designer");
+                    userManager.AddToRoles(user.Id, roles);
                 }
             }
 #endif
