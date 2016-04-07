@@ -15,9 +15,14 @@
                         <span class="caret"></span>
                     </a>
 
-                    @{ var changePasswordLink = Html.ActionLink<AccountController>("Change password", c => c.ChangePassword(), new { role = "menuitem", tabindex = -1 }); }
+                    @{
+                        var changePassword = Html.ActionLink<AccountController>("Change password", c => c.ChangePassword(), new {role = "menuitem", tabindex = -1});
+                        var manageUsers = Html.ActionLink<AccountController>("Manage users", c => c.ManageUsers(), new {role = "menuitem", tabindex = -1});
+                    }
+
                     <ul class="dropdown-menu" id="dropdown" role="menu">
-                        <li>@changePasswordLink</li>
+                        <li>@changePassword</li>
+                        <li>@manageUsers</li>
                         <li class="divider"></li>
                         <li><a role="menuitem" tabindex="-1" href="javascript:document.getElementById('logoutForm').submit()">Sign out</a></li>
                     </ul>
@@ -26,7 +31,8 @@
         </div>
 
         <ul class="nav navbar-nav navbar-right visible-xs">
-            <li>@changePasswordLink</li>
+            <li>@changePassword</li>
+            <li>@manageUsers</li>
             <li><a role="menuitem" tabindex="-1" href="javascript:document.getElementById('logoutForm').submit()">Sign out</a></li>
         </ul>
     }

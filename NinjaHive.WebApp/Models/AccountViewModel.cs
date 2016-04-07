@@ -37,4 +37,14 @@ namespace NinjaHive.WebApp.Models
         [System.ComponentModel.DataAnnotations.Compare("NewPassword", ErrorMessage = "The passwords doesn't match!")]
         public string ConfirmPassword { get; set; }
     }
+
+    public class UserViewModel
+    {
+        [Required(ErrorMessage = "{0} is required")]
+        public string Username { get; set; }
+
+        [Required(ErrorMessage = "{0} is required")]
+        [EmailAddress]
+        public string Email { get; set; }
+    }
 }

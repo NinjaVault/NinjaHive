@@ -208,6 +208,7 @@
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\ErrorsController.cs" />
     <Compile Include="Controllers\ItemsController.cs" />
+    <Compile Include="Extensions\IdentityExtensions.cs" />
     <Compile Include="Extensions\JsonResults.cs" />
     <Compile Include="Extensions\ClaimsIdentityExtensions.cs" />
     <Compile Include="Extensions\FormExtensions.cs" />
@@ -303,6 +304,8 @@
     <Content Include="Views\Categories\DeleteSubCategory.cshtml" />
     <Content Include="Views\Categories\EditMainCategory.cshtml" />
     <Content Include="Views\Categories\EditSubCategory.cshtml" />
+    <Content Include="Views\Account\CreateUser.cshtml" />
+    <Content Include="Views\Account\ManageUsers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Validation\" />

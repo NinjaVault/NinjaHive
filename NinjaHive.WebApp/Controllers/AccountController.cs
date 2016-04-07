@@ -2,6 +2,8 @@
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
+using NinjaHive.Core.Extensions;
+using NinjaHive.WebApp.Extensions;
 using NinjaHive.WebApp.Helpers;
 using NinjaHive.WebApp.Models;
 
@@ -112,6 +114,30 @@ namespace NinjaHive.WebApp.Controllers
         {
             this.authenticationManager.SignOut();
             return Home();
+        }
+
+        public ActionResult ManageUsers()
+        {
+            var users = userManager.GetAllUsers().ToReadOnlyCollection();
+            return View(users);
+        }
+
+        //TODO: authorize admin role
+        public ActionResult CreateUser()
+        {
+            return View();
+        }
+
+        //TODO: authorize admin role
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateUser(UserViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                return Redirect(UrlProvider<AccountController>.GetUrl(c => c.ManageUsers()));
+            }
+            return View(viewModel);
         }
     }
 }

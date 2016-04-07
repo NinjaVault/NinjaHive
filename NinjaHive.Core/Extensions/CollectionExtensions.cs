@@ -5,7 +5,7 @@ namespace NinjaHive.Core.Extensions
 {
     public static class CollectionExtensions
     {
-        public static ReadOnlyCollection<T> ToReadOnlyCollection<T>(this IEnumerable<T> list)
+        public static IReadOnlyCollection<T> ToReadOnlyCollection<T>(this IEnumerable<T> list)
         {
             var localList = new List<T>(list);
             return new ReadOnlyCollection<T>(localList);

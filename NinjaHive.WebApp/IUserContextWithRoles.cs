@@ -1,4 +1,4 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
 using NinjaHive.Contract;
 using NinjaHive.Core;
 
@@ -6,6 +6,6 @@ namespace NinjaHive.WebApp
 {
     public interface IUserContextWithRoles : IUserContext
     {
-        ReadOnlyCollection<Role> UserRoles { get; }
+        IReadOnlyCollection<Role> UserRoles { get; }
     }
 }

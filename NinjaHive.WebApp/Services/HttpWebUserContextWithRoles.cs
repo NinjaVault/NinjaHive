@@ -1,4 +1,4 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
 using System.Web;
 using System.Web.Security;
 using Microsoft.AspNet.Identity;
@@ -14,7 +14,7 @@ namespace NinjaHive.WebApp.Services
 
         public string UserName => HttpContext.Current.User.Identity.GetUserName();
 
-        public ReadOnlyCollection<Role> UserRoles
+        public IReadOnlyCollection<Role> UserRoles
             => Roles.GetRolesForUser().ToRoles().ToReadOnlyCollection();
     }
 }
