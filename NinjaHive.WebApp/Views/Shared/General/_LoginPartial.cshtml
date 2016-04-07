@@ -1,9 +1,10 @@
 ﻿@using Microsoft.AspNet.Identity
+@using NinjaHive.Contract
 @using NinjaHive.WebApp.Controllers
 @using NinjaHive.WebApp.Extensions
 @if (Request.IsAuthenticated)
 {
-    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new {id = "logoutForm", @class = "navbar-right"}))
     {
         @Html.AntiForgeryToken()
 
@@ -22,7 +23,11 @@
 
                     <ul class="dropdown-menu" id="dropdown" role="menu">
                         <li>@changePassword</li>
-                        <li>@manageUsers</li>
+                        @if (HttpContext.Current.User.IsInRoles(Role.Admin))
+                        {
+                            <li>@manageUsers</li>
+                        }
+
                         <li class="divider"></li>
                         <li><a role="menuitem" tabindex="-1" href="javascript:document.getElementById('logoutForm').submit()">Sign out</a></li>
                     </ul>
@@ -32,7 +37,10 @@
 
         <ul class="nav navbar-nav navbar-right visible-xs">
             <li>@changePassword</li>
-            <li>@manageUsers</li>
+            @if (HttpContext.Current.User.IsInRoles(Role.Admin))
+            {
+                <li>@manageUsers</li>
+            }
             <li><a role="menuitem" tabindex="-1" href="javascript:document.getElementById('logoutForm').submit()">Sign out</a></li>
         </ul>
     }

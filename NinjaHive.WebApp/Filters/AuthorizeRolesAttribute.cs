@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using NinjaHive.Contract;
@@ -30,11 +29,7 @@ namespace NinjaHive.WebApp.Filters
                 return false;
             }
 
-            var userRoles = httpContext.User.LoadUserRolesList();
-
-            //returns true if userroles contains all of the specified roles
-            var result = this.roles.All(role => userRoles.Contains(role));
-            return result;
+            return httpContext.User.IsInRoles(this.roles);
         }
 
         protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)

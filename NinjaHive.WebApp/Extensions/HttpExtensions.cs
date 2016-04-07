@@ -16,5 +16,11 @@ namespace NinjaHive.WebApp.Extensions
                 where userPrincipal.IsInRole(role.ToFriendlyString())
                 select (Role)Enum.Parse(typeof(Role), role);
         }
+
+        public static bool IsInRoles(this IPrincipal userPrincipal, params Role[] roles)
+        {
+            var userRoles = userPrincipal.LoadUserRolesList();
+            return roles.All(role => userRoles.Contains(role));
+        }
     }
 }
