@@ -70,6 +70,7 @@ namespace NinjaHive.WebApp
             container.RegisterSingleton(typeof (IEntityMapper<>), typeof (EntitiesAutoMapper<>));
             container.RegisterSingleton(typeof (IEntityMapper<,>), typeof (EntitiesAutoMapper<,>));
             container.Register<IUserContext, HttpWebUserContext>(Lifestyle.Scoped);
+            container.Register<IUserContextWithRoles, HttpWebUserContextWithRoles>(Lifestyle.Scoped);
             container.RegisterSingleton<ITimeProvider, SystemTimeProvider>();
             container.RegisterSingleton(typeof(IWriteOnlyRepository<>), typeof(WriteOnlyCommandRepository<>));
             container.RegisterSingleton<ILogger, DatabaseLogger>();
@@ -126,8 +127,13 @@ namespace NinjaHive.WebApp
             container.RegisterPerWebRequest<IUserStore<ApplicationUser>>(
                 () => new UserStore<ApplicationUser>(container.GetInstance<ApplicationDbContext>()));
 
+            container.RegisterPerWebRequest<IRoleStore<IdentityRole, string>>(
+                () => new RoleStore<IdentityRole>(container.GetInstance<ApplicationDbContext>()));
+
             container.RegisterInitializer<ApplicationUserManager>(
                 manager => ConfigureApplicationUserManager(manager, app));
+
+            container.RegisterPerWebRequest<ApplicationRoleManager>();
 
             container.RegisterPerWebRequest<IAuthenticationManager>(
                 () => container.IsVerifying()
@@ -147,7 +153,7 @@ namespace NinjaHive.WebApp
             // Configure validation logic for passwords
             manager.PasswordValidator = new PasswordValidator
             {
-                RequiredLength = 6,
+                RequiredLength = 5,
                 RequireNonLetterOrDigit = false,
                 RequireDigit = false,
                 RequireLowercase = false,

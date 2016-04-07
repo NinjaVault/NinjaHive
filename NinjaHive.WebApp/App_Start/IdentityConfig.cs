@@ -1,9 +1,11 @@
 ﻿using System.Data.Entity;
-using System.Data.Entity.Migrations;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Web;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin;
 using NinjaHive.WebApp.Extensions;
 
 namespace NinjaHive.WebApp
@@ -18,26 +20,47 @@ namespace NinjaHive.WebApp
         }
     }
 
-    public class DatabaseInitializer : CreateDatabaseIfNotExists<ApplicationDbContext>
+    public class DatabaseInitializer :
+#if DEBUG
+        DropCreateDatabaseAlways<ApplicationDbContext>
+#else
+        CreateDatabaseIfNotExists<ApplicationDbContext>
+#endif
     {
         protected override void Seed(ApplicationDbContext context)
         {
-#if DEBUG
-            const string id = "1AB2BC08-35E1-4513-A757-ECC68405EBC8";
-            const string username = "dev";
-            const string securityStamp = "529FA8A6-7299-4D63-BA6F-496542B3015E";
-            var password = new PasswordHasher().HashPassword("dev");
+            var userManager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            var roleManager = HttpContext.Current.GetOwinContext().Get<ApplicationRoleManager>();
 
-            context.Users.AddOrUpdate(u => u.UserName,
-                new ApplicationUser
+            this.AddRoleIfNotExist(roleManager, "Admin");
+            this.AddRoleIfNotExist(roleManager, "Game Designer");
+
+#if DEBUG
+            var user = userManager.FindByName("admin");
+            if (user == null)
+            {
+                user = new ApplicationUser
                 {
-                    Id = id,
-                    UserName = username,
-                    PasswordHash = password,
-                    SecurityStamp = securityStamp,
-                    EmailConfirmed = true,
-                });
+                    UserName = "admin",
+                };
+                var result = userManager.Create(user, "admin");
+                if (result.Succeeded)
+                {
+                    userManager.AddToRoles(user.Id, "Admin", "Game Designer");
+                }
+            }
 #endif
+            base.Seed(context);
+        }
+
+        private void AddRoleIfNotExist(RoleManager<IdentityRole> roleManager, string roleName)
+        {
+            var role = roleManager.FindByName(roleName);
+            if (role == null)
+            {
+                role = new IdentityRole(roleName);
+                var roleresult = roleManager.Create(role);
+            }
         }
     }
 
@@ -45,6 +68,14 @@ namespace NinjaHive.WebApp
     {
         public ApplicationUserManager(IUserStore<ApplicationUser> store)
             : base(store)
+        {
+        }
+    }
+
+    public class ApplicationRoleManager : RoleManager<IdentityRole>
+    {
+        public ApplicationRoleManager(IRoleStore<IdentityRole, string> roleStore)
+            : base(roleStore)
         {
         }
     }
@@ -59,5 +90,11 @@ namespace NinjaHive.WebApp
             userIdentity.SetIsPersistent(isPersistent);
             return userIdentity;
         }
+    }
+
+    public class ApplicationRole : IdentityRole
+    {
+        public ApplicationRole() : base() { }
+        public ApplicationRole(string name) : base(name) { }
     }
 }
