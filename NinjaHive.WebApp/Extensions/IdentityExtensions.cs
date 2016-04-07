@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNet.Identity;
 using NinjaHive.Contract;
+using NinjaHive.Core.Extensions;
+using NinjaHive.WebApp.Identity;
 using NinjaHive.WebApp.Models;
 
 namespace NinjaHive.WebApp.Extensions
@@ -26,6 +29,20 @@ namespace NinjaHive.WebApp.Extensions
                 let trimmedRole = role.Trim()
                 let parsedRole = Enum.Parse(typeof(Role), trimmedRole, ignoreCase: true)
                 select (Role)parsedRole;
+        }
+
+        public static IdentityResult AddToRole<TUser, TKey>(this UserManager<TUser, TKey> manager, TKey userId, Role role)
+            where TUser : class, IUser<TKey>
+            where TKey : IEquatable<TKey>
+        {
+            return manager.AddToRole(userId, role.ToFriendlyString());
+        }
+
+        public static IdentityResult AddToRoles<TUser, TKey>(this UserManager<TUser, TKey> manager, TKey userId, params Role[] roles)
+            where TUser : class, IUser<TKey>
+            where TKey : IEquatable<TKey>
+        {
+            return manager.AddToRoles(userId, roles.Select(r => r.ToFriendlyString()).ToArray());
         }
     }
 }

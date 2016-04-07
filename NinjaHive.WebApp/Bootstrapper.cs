@@ -20,6 +20,7 @@ using NinjaHive.Core;
 using NinjaHive.Core.Decorators;
 using NinjaHive.Core.Services;
 using NinjaHive.Domain;
+using NinjaHive.WebApp.Identity;
 using NinjaHive.WebApp.Services;
 using Owin;
 using SimpleInjector;
@@ -36,7 +37,7 @@ namespace NinjaHive.WebApp
         public static Container Initialize(IAppBuilder app)
         {
             AutoMapperConfiguration.Configure();
-            
+
             container = GetInitializedContainer(app);
 
             container.Verify();
@@ -58,6 +59,7 @@ namespace NinjaHive.WebApp
             RegisterQueryHandlers();
 
             RegisterServices();
+            RegisterEmailServices();
 
             container.RegisterMvcControllers(Assembly.GetExecutingAssembly());
             container.RegisterMvcIntegratedFilterProvider();
@@ -67,13 +69,26 @@ namespace NinjaHive.WebApp
 
         private static void RegisterServices()
         {
-            container.RegisterSingleton(typeof (IEntityMapper<>), typeof (EntitiesAutoMapper<>));
-            container.RegisterSingleton(typeof (IEntityMapper<,>), typeof (EntitiesAutoMapper<,>));
+            container.RegisterSingleton(typeof(IEntityMapper<>), typeof(EntitiesAutoMapper<>));
+            container.RegisterSingleton(typeof(IEntityMapper<,>), typeof(EntitiesAutoMapper<,>));
             container.Register<IUserContext, HttpWebUserContext>(Lifestyle.Scoped);
             container.Register<IUserContextWithRoles, HttpWebUserContextWithRoles>(Lifestyle.Scoped);
             container.RegisterSingleton<ITimeProvider, SystemTimeProvider>();
             container.RegisterSingleton(typeof(IWriteOnlyRepository<>), typeof(WriteOnlyCommandRepository<>));
             container.RegisterSingleton<ILogger, DatabaseLogger>();
+        }
+
+        private static void RegisterEmailServices()
+        {
+#if DEBUG
+            container.RegisterSingleton<IIdentityMessageService, FakeEmailService>();
+#else
+            container.RegisterSingleton<IIdentityMessageService>(new SendGridEmailService(
+                mailAccount: ConfigurationManager.AppSettings["mailAccount"],
+                mailPassword: ConfigurationManager.AppSettings["mailPassword"],
+                fromAddress: ConfigurationManager.AppSettings["fromAddress"]));
+#endif
+
         }
 
         private static void RegisterNinjaHiveDatabase()
@@ -97,10 +112,10 @@ namespace NinjaHive.WebApp
 
         private static void RegisterCommandHandlers()
         {
-            container.Register(typeof (ICommandHandler<>), Bootstrapper.GetAssemblies());
+            container.Register(typeof(ICommandHandler<>), Bootstrapper.GetAssemblies());
 
-            container.RegisterDecorator(typeof (ICommandHandler<>), typeof (ValidationCommandHandlerDecorator<>));
-            container.RegisterDecorator(typeof (ICommandHandler<>), typeof (SaveChangesCommandHandlerDecorator<>));
+            container.RegisterDecorator(typeof(ICommandHandler<>), typeof(ValidationCommandHandlerDecorator<>));
+            container.RegisterDecorator(typeof(ICommandHandler<>), typeof(SaveChangesCommandHandlerDecorator<>));
             container.RegisterDecorator(typeof(ICommandHandler<>), typeof(LifetimeScopeCommandHandlerProxy<>), Lifestyle.Singleton);
         }
 
@@ -109,7 +124,7 @@ namespace NinjaHive.WebApp
             container.RegisterSingleton<IQueryProcessor, QueryProcessor>();
 
             container.Register(typeof(IQueryHandler<,>), typeof(GetEntityByIdQueryHandler<>));
-            container.Register(typeof (IQueryHandler<,>), Bootstrapper.GetAssemblies());
+            container.Register(typeof(IQueryHandler<,>), Bootstrapper.GetAssemblies());
 
             container.RegisterDecorator(typeof(IQueryHandler<,>), typeof(LifetimeScopeQueryHandlerProxy<,>), Lifestyle.Singleton);
         }
@@ -147,7 +162,7 @@ namespace NinjaHive.WebApp
             manager.UserValidator = new UserValidator<ApplicationUser>(manager)
             {
                 AllowOnlyAlphanumericUserNames = true,
-                RequireUniqueEmail = false,
+                RequireUniqueEmail = true,
             };
 
             // Configure validation logic for passwords

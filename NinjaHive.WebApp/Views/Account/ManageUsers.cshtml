@@ -15,7 +15,8 @@
             @foreach (var user in Model)
             {
                 <li class="list-group-item clearfix">
-                    @user.Username
+                    @user.Username - 
+                    <a href="mailto:@user.Email">@user.Email</a>
                 </li>
             }
         </ul>

@@ -1,5 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using System.Web.Mvc;
+using System.Web.Security;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 using NinjaHive.Contract;
@@ -7,6 +9,7 @@ using NinjaHive.Core.Extensions;
 using NinjaHive.WebApp.Extensions;
 using NinjaHive.WebApp.Filters;
 using NinjaHive.WebApp.Helpers;
+using NinjaHive.WebApp.Identity;
 using NinjaHive.WebApp.Models;
 
 namespace NinjaHive.WebApp.Controllers
@@ -138,9 +141,52 @@ namespace NinjaHive.WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                return Redirect(UrlProvider<AccountController>.GetUrl(c => c.ManageUsers()));
+                var user = new ApplicationUser
+                {
+                    UserName = viewModel.Username,
+                    Email = viewModel.Email,
+                };
+
+                var password = Membership.GeneratePassword(8, 1);
+                var result = this.userManager.Create(user, password);
+                if (result.Succeeded)
+                {
+                    var roleResult = this.userManager.AddToRoles(user.Id, Role.GameDesigner);
+                    if (roleResult.Succeeded)
+                    {
+                        var mailToken = this.userManager.GenerateEmailConfirmationToken(user.Id);
+                        var callbackUrl =
+                            Url.GetFullyQualifiedActionLink<AccountController>(c => c.ConfirmEmail(user.Id, mailToken), Request.Url.Scheme);
+
+                        this.userManager.SendEmail(user.Id, "Confirm your account",
+                            $"Hello {user.UserName},"
+                            + Environment.NewLine
+                            + Environment.NewLine +
+                            $"Please confirm your account by clicking <a href=\"{callbackUrl}\">here</a>."
+                            + Environment.NewLine +
+                            $"Your password is: <b>{password}</b>");
+
+                        return Redirect(UrlProvider<AccountController>.GetUrl(c => c.ManageUsers()));
+                    }
+                    
+                }
             }
             return View(viewModel);
+        }
+
+        [AllowAnonymous]
+        public ActionResult ConfirmEmail(string userId, string mailToken)
+        {
+            if (userId != null && mailToken != null)
+            {
+                var result = this.userManager.ConfirmEmail(userId, mailToken);
+                if (result.Succeeded)
+                {
+                    return View();
+                }
+            }
+
+            return Redirect(UrlProvider<ErrorsController>.GetUrl(c => c.DefaultError()));
         }
     }
 }

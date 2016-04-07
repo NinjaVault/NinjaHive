@@ -117,6 +117,18 @@
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="SendGrid, Version=6.3.4.0, Culture=neutral, PublicKeyToken=4f047e93159395ca, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sendgrid.6.3.4\lib\SendGrid.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SendGrid.SmtpApi, Version=1.3.1.0, Culture=neutral, PublicKeyToken=2ae73662c35d80e4, processorArchitecture=MSIL">
+      <HintPath>..\packages\SendGrid.SmtpApi.1.3.1\lib\net40\SendGrid.SmtpApi.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SendGridMail, Version=6.3.4.0, Culture=neutral, PublicKeyToken=4f047e93159395ca, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sendgrid.6.3.4\lib\SendGridMail.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="SimpleInjector, Version=3.1.0.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
       <HintPath>..\packages\SimpleInjector.3.1.0\lib\net45\SimpleInjector.dll</HintPath>
       <Private>True</Private>
@@ -136,6 +148,10 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -199,7 +215,10 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
-    <Compile Include="App_Start\IdentityConfig.cs" />
+    <Compile Include="App_Start\Identity\ApplicationDbContext.cs" />
+    <Compile Include="App_Start\Identity\ApplicationRole.cs" />
+    <Compile Include="App_Start\Identity\ApplicationUser.cs" />
+    <Compile Include="App_Start\Identity\DatabaseInitializer.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Bootstrapper.cs" />
@@ -217,11 +236,15 @@
     <Compile Include="Filters\AuthorizeRolesAttribute.cs" />
     <Compile Include="Filters\LogExceptionFilterAttribute.cs" />
     <Compile Include="Helpers\Partials.cs" />
+    <Compile Include="App_Start\Identity\ApplicationRoleManager.cs" />
+    <Compile Include="App_Start\Identity\ApplicationUserManager.cs" />
     <Compile Include="IUserContextWithRoles.cs" />
     <Compile Include="Models\AccountViewModel.cs" />
     <Compile Include="Models\GameItemViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\UrlProvider.cs" />
+    <Compile Include="Services\FakeEmailService.cs" />
+    <Compile Include="Services\SendGridEmailService.cs" />
     <Compile Include="Services\HttpWebUserContextWithRoles.cs" />
     <Compile Include="Services\HttpWebUserContext.cs" />
     <Compile Include="Services\WriteOnlyCommandRepository.cs" />
@@ -249,6 +272,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
+    <Content Include="AppSettingsSecrets.config" />
+    <Content Include="ConnectionStrings.config" />
     <None Include="Properties\PublishProfiles\NinjaHive - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
@@ -309,6 +334,7 @@
     <Content Include="Views\Account\CreateUser.cshtml" />
     <Content Include="Views\Account\ManageUsers.cshtml" />
     <Content Include="Views\Errors\UnauthorizedError.cshtml" />
+    <Content Include="Views\Account\ConfirmEmail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Validation\" />

@@ -4,6 +4,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using NinjaHive.WebApp.Extensions;
+using NinjaHive.WebApp.Identity;
 using Owin;
 using SimpleInjector;
 
