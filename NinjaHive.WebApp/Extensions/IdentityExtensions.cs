@@ -14,7 +14,8 @@ namespace NinjaHive.WebApp.Extensions
         public static IEnumerable<UserViewModel> GetAllUsers(this ApplicationUserManager userManager)
         {
             return
-                from user in userManager.Users
+                from user in userManager.Users.ToList() //load to memory, because linq2entities cannot handle IsInRole..
+                let isAdmin = userManager.IsInRole(user.Id, Role.Admin)
                 orderby user.UserName ascending
                 select new UserViewModel
                 {
@@ -22,6 +23,7 @@ namespace NinjaHive.WebApp.Extensions
                     Username = user.UserName,
                     Email = user.Email,
                     EmailConfirmed = user.EmailConfirmed,
+                    IsAdmin = isAdmin
                 };
         }
 
