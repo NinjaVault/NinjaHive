@@ -166,11 +166,58 @@ namespace NinjaHive.WebApp.Controllers
                             + Environment.NewLine +
                             $"Your password is: <b>{password}</b>");
 
-                        return Redirect(UrlProvider<AccountController>.GetUrl(c => c.ManageUsers()));
+                        
                     }
                     
                 }
             }
+            return View(viewModel);
+        }
+
+        [AuthorizeRoles(Role.Admin)]
+        
+        public ActionResult EditUser(string userId)
+        {
+            var user = this.userManager.FindById(userId);
+            if (user != null)
+            {
+                var viewModel = new UserViewModel
+                {
+                    Id = user.Id,
+                    Username = user.UserName,
+                    Email = user.Email,
+                };
+                return View(viewModel);
+            }
+
+            return Redirect(UrlProvider<ErrorsController>.GetUrl(c => c.DefaultError()));
+        }
+
+        [AuthorizeRoles(Role.Admin)]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> EditUser(UserViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = this.userManager.FindById(viewModel.Id);
+                if (user != null)
+                {
+                    user.UserName = viewModel.Username;
+                    user.Email = viewModel.Email;
+
+                    var result = this.userManager.Update(user);
+                    if (result.Succeeded)
+                    {
+                        if (User.Identity.GetUserId() == user.Id)
+                        {
+                            await SignInAsync(user, false);
+                        }
+                        return Redirect(UrlProvider<AccountController>.GetUrl(c => c.ManageUsers()));
+                    }
+                }
+            }
+            
             return View(viewModel);
         }
 
