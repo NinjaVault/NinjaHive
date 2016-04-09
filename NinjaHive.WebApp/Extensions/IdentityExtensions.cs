@@ -15,10 +15,12 @@ namespace NinjaHive.WebApp.Extensions
         {
             return
                 from user in userManager.Users
+                orderby user.UserName ascending
                 select new UserViewModel
                 {
                     Username = user.UserName,
                     Email = user.Email,
+                    EmailConfirmed = user.EmailConfirmed,
                 };
         }
 

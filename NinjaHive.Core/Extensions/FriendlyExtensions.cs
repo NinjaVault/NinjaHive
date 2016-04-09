@@ -18,5 +18,14 @@ namespace NinjaHive.Core.Extensions
         {
             return enumType.ToString().ToFriendlyString();
         }
+
+        public static string ToFriendlyString(this bool boolean, bool capitalize = true)
+        {
+            if (capitalize)
+            {
+                return boolean ? "Yes" : "No";
+            }
+            return boolean ? "yes" : "no";
+        }
     }
 }

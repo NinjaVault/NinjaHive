@@ -46,5 +46,6 @@ namespace NinjaHive.WebApp.Models
         [Required(ErrorMessage = "{0} is required")]
         [EmailAddress]
         public string Email { get; set; }
+        public bool EmailConfirmed { get; set; }
     }
 }

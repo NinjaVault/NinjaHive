@@ -1,4 +1,5 @@
-﻿@using NinjaHive.WebApp.Controllers
+﻿@using NinjaHive.Core.Extensions
+@using NinjaHive.WebApp.Controllers
 @using NinjaHive.WebApp.Extensions
 @using NinjaHive.WebApp.Helpers
 @model IReadOnlyCollection<NinjaHive.WebApp.Models.UserViewModel>
@@ -6,20 +7,62 @@
 <div class="row">
     <div class="page-header">
         <h2>Manage Users</h2>
-        @(Html.ActionLink<AccountController>("Register user", c => c.CreateUser(), new { @class = "btn btn-primary" }))
+        @(Html.ActionLink<AccountController>("Register new user", c => c.CreateUser(), new { @class = "btn btn-primary" }))
     </div>
 
     @if (Model.Any())
     {
-        <ul class="list-group">
-            @foreach (var user in Model)
-            {
-                <li class="list-group-item clearfix">
-                    @user.Username - 
-                    <a href="mailto:@user.Email">@user.Email</a>
-                </li>
-            }
-        </ul>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th class="col-md-3">Username</th>
+                <th class="col-md-3">E-mail</th>
+                <th class="col-md-1">Confirmed</th>
+                <th class="col-md-2"></th> <!--column for resending mail confirmation-->
+                <th class="col-md-1"></th> <!--column for sending user password reset mail-->
+                <th class="col-md-1"></th> <!--column for editing user-->
+                <th class="col-md-2"></th> <!--column for deleting user-->
+            </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model)
+                {
+                    <tr>
+                        <td>
+                            @user.Username
+                        </td>
+                        <td>
+                            <a href="mailto:@user.Email">@user.Email</a>
+                        </td>
+                        <td class="
+                            @if (user.EmailConfirmed)
+                            {
+                                @:success
+                            }
+                            else
+                            {
+                                @:danger
+                            }">
+                            @user.EmailConfirmed.ToFriendlyString()
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-primary btn-xs">Resend email confirmation</button>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-default btn-xs">Reset user password</button>
+                        </td>
+                        <td>
+                            <a href="#"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Edit</a>
+                        </td>
+                        <td>
+                            <a href="#"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+
     }
     else
     {
