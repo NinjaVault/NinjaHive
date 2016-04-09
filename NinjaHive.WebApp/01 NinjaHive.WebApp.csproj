@@ -336,6 +336,7 @@
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Scripts\jquery-2.2.2.min.map" />
     <Content Include="Views\Account\EditUser.cshtml" />
+    <Content Include="Views\Account\SendEmailConfirmation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Validation\" />

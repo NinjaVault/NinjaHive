@@ -154,28 +154,48 @@ namespace NinjaHive.WebApp.Controllers
                     var roleResult = this.userManager.AddToRoles(user.Id, Role.GameDesigner);
                     if (roleResult.Succeeded)
                     {
-                        var mailToken = this.userManager.GenerateEmailConfirmationToken(user.Id);
-                        var callbackUrl =
-                            Url.GetFullyQualifiedActionLink<AccountController>(c => c.ConfirmEmail(user.Id, mailToken), Request.Url.Scheme);
-
-                        this.userManager.SendEmail(user.Id, "Confirm your account",
-                            $"Hello {user.UserName},"
-                            + Environment.NewLine
-                            + Environment.NewLine +
-                            $"Please confirm your account by clicking <a href=\"{callbackUrl}\">here</a>."
-                            + Environment.NewLine +
-                            $"Your password is: <b>{password}</b>");
-
-                        
+                        this.SendEmailConfirmation(user.Id, user.UserName, password);
+                        return Redirect(UrlProvider<AccountController>.GetUrl(c => c.ManageUsers()));
                     }
-                    
                 }
             }
             return View(viewModel);
         }
 
         [AuthorizeRoles(Role.Admin)]
-        
+        public ActionResult SendEmailConfirmation(string userId)
+        {
+            var user = this.userManager.FindById(userId);
+            if (user != null && !user.EmailConfirmed)
+            {
+                var token = this.userManager.GeneratePasswordResetToken(userId);
+                var password = Membership.GeneratePassword(8, 1);
+                var result = this.userManager.ResetPassword(userId, token, password);
+                if (result.Succeeded)
+                {
+                    this.SendEmailConfirmation(userId, user.UserName, password);
+                    return View(user);
+                }
+            }
+            return base.DefaultError();
+        }
+
+        private void SendEmailConfirmation(string userId, string userName, string password)
+        {
+            var mailToken = this.userManager.GenerateEmailConfirmationToken(userId);
+            var callbackUrl =
+                Url.GetFullyQualifiedActionLink<AccountController>(c => c.ConfirmEmail(userId, mailToken), Request.Url.Scheme);
+
+            this.userManager.SendEmail(userId, "Confirm your account",
+                $"Hello {userName},"
+                + Environment.NewLine
+                + Environment.NewLine +
+                $"Please confirm your account for NinjaHive by clicking <a href=\"{callbackUrl}\">here</a>."
+                + Environment.NewLine +
+                $"Your password is: <b>{password}</b>");
+        }
+
+        [AuthorizeRoles(Role.Admin)]
         public ActionResult EditUser(string userId)
         {
             var user = this.userManager.FindById(userId);
@@ -190,7 +210,7 @@ namespace NinjaHive.WebApp.Controllers
                 return View(viewModel);
             }
 
-            return Redirect(UrlProvider<ErrorsController>.GetUrl(c => c.DefaultError()));
+            return base.DefaultError();
         }
 
         [AuthorizeRoles(Role.Admin)]
@@ -234,7 +254,7 @@ namespace NinjaHive.WebApp.Controllers
                     return Redirect(UrlProvider<AccountController>.GetUrl(c => c.ManageUsers()));
                 }
             }
-            return Redirect(UrlProvider<ErrorsController>.GetUrl(c => c.DefaultError()));
+            return base.DefaultError();
         }
 
         [AllowAnonymous]
@@ -249,7 +269,7 @@ namespace NinjaHive.WebApp.Controllers
                 }
             }
 
-            return Redirect(UrlProvider<ErrorsController>.GetUrl(c => c.DefaultError()));
+            return base.DefaultError();
         }
     }
 }

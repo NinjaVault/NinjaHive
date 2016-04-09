@@ -15,5 +15,10 @@ namespace NinjaHive.WebApp.Controllers
         {
             return PartialView(Partials.NoResults);
         }
+
+        protected virtual ActionResult DefaultError()
+        {
+            return Redirect(UrlProvider<ErrorsController>.GetUrl(c => c.DefaultError()));
+        }
     }
 }

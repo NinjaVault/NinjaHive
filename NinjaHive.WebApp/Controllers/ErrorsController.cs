@@ -2,7 +2,7 @@
 
 namespace NinjaHive.WebApp.Controllers
 {
-    public class ErrorsController : BaseController
+    public class ErrorsController : Controller
     {
         public ActionResult DefaultError()
         {
