@@ -40,12 +40,15 @@ namespace NinjaHive.WebApp.Models
 
     public class UserViewModel
     {
+        public string Id { get; set; }
+
         [Required(ErrorMessage = "{0} is required")]
         public string Username { get; set; }
 
         [Required(ErrorMessage = "{0} is required")]
         [EmailAddress]
         public string Email { get; set; }
+
         public bool EmailConfirmed { get; set; }
     }
 }

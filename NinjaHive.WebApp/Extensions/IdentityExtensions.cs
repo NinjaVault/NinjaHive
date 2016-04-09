@@ -18,10 +18,18 @@ namespace NinjaHive.WebApp.Extensions
                 orderby user.UserName ascending
                 select new UserViewModel
                 {
+                    Id = user.Id,
                     Username = user.UserName,
                     Email = user.Email,
                     EmailConfirmed = user.EmailConfirmed,
                 };
+        }
+
+        public static bool UserExists<TUser, TKey>(this UserManager<TUser, TKey> manager, TKey userId)
+            where TUser : class, IUser<TKey>
+            where TKey : IEquatable<TKey>
+        {
+            return userId != null && manager.FindById(userId) != null;
         }
 
         public static IEnumerable<Role> ToRoles(this IEnumerable<string> roles)
@@ -45,6 +53,13 @@ namespace NinjaHive.WebApp.Extensions
             where TKey : IEquatable<TKey>
         {
             return manager.AddToRoles(userId, roles.Select(r => r.ToFriendlyString()).ToArray());
+        }
+
+        public static bool IsInRole<TUser, TKey>(this UserManager<TUser, TKey> manager, TKey userId, Role role)
+            where TUser : class, IUser<TKey>
+            where TKey : IEquatable<TKey>
+        {
+            return manager.IsInRole(userId, role.ToFriendlyString());
         }
     }
 }

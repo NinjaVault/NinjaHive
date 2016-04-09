@@ -174,10 +174,26 @@ namespace NinjaHive.WebApp.Controllers
             return View(viewModel);
         }
 
+        [AuthorizeRoles(Role.Admin)]
+        [HttpPost]
+        public ActionResult DeleteUser(string userId)
+        {
+            var user = this.userManager.FindById(userId);
+            if (user != null && !this.userManager.IsInRole(userId, Role.Admin))
+            {
+                var result = this.userManager.Delete(user);
+                if (result.Succeeded)
+                {
+                    return Redirect(UrlProvider<AccountController>.GetUrl(c => c.ManageUsers()));
+                }
+            }
+            return Redirect(UrlProvider<ErrorsController>.GetUrl(c => c.DefaultError()));
+        }
+
         [AllowAnonymous]
         public ActionResult ConfirmEmail(string userId, string mailToken)
         {
-            if (userId != null && mailToken != null)
+            if (mailToken != null && this.userManager.UserExists(userId))
             {
                 var result = this.userManager.ConfirmEmail(userId, mailToken);
                 if (result.Succeeded)
