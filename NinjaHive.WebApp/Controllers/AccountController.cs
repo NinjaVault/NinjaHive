@@ -180,6 +180,28 @@ namespace NinjaHive.WebApp.Controllers
             return base.DefaultError();
         }
 
+        public ActionResult ResetPasswordConfirmation(string userId)
+        {
+            var user = this.userManager.FindById(userId);
+            if (user != null && user.EmailConfirmed)
+            {
+                var token = this.userManager.GeneratePasswordResetToken(userId);
+                var callbackUrl = Url.GetFullyQualifiedActionLink<AccountController>(
+                    c => c.ResetPassword(user.Id, token), Request.Url.Scheme);
+
+                this.userManager.SendEmail(userId, "Reset your password",
+                    $"Hello {user.UserName},"
+                    + Environment.NewLine
+                    + Environment.NewLine +
+                    "A NinjaHive admin has provided a password reset for you."
+                    + Environment.NewLine +
+                    $"Click <a href=\"{callbackUrl}\">here</a> to reset your password.");
+
+                return View(user);
+            }
+            return base.DefaultError();
+        }
+
         private void SendEmailConfirmation(string userId, string userName, string password)
         {
             var mailToken = this.userManager.GenerateEmailConfirmationToken(userId);
@@ -270,6 +292,44 @@ namespace NinjaHive.WebApp.Controllers
             }
 
             return base.DefaultError();
+        }
+
+        [AllowAnonymous]
+        public ActionResult ResetPassword(string userId, string passwordToken)
+        {
+            if (passwordToken != null && this.userManager.UserExists(userId))
+            {
+                var viewModel = new ResetPasswordViewModel
+                {
+                    UserId = userId,
+                    PasswordResetToken = passwordToken,
+                };
+                return View(viewModel);
+            }
+            return base.DefaultError();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult ResetPassword(ResetPasswordViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                if (this.userManager.UserExists(viewModel.UserId))
+                {
+                    var result = this.userManager.ResetPassword(
+                        viewModel.UserId, viewModel.PasswordResetToken, viewModel.NewPassword);
+
+                    if (result.Succeeded)
+                    {
+                        return base.Home();
+                    }
+                }
+
+                return base.DefaultError();
+            }
+            return View(viewModel);
         }
     }
 }

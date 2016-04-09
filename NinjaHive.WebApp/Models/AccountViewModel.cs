@@ -38,6 +38,26 @@ namespace NinjaHive.WebApp.Models
         public string ConfirmPassword { get; set; }
     }
 
+    public class ResetPasswordViewModel
+    {
+        [HiddenInput]
+        public string UserId { get; set; }
+        [HiddenInput]
+        public string PasswordResetToken { get; set; }
+
+
+        [Required(ErrorMessage = "{0} is required")]
+        [StringLength(100, ErrorMessage = "The password must have a minimum length of {0} characters.", MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        [Display(Name = "New password")]
+        public string NewPassword { get; set; }
+
+        [DataType(DataType.Password)]
+        [Display(Name = "Confirm new password")]
+        [System.ComponentModel.DataAnnotations.Compare("NewPassword", ErrorMessage = "The passwords doesn't match!")]
+        public string ConfirmPassword { get; set; }
+    }
+
     public class UserViewModel
     {
         public string Id { get; set; }

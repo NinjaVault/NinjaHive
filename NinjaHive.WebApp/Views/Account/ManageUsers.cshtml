@@ -15,10 +15,9 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th class="col-md-3">Username</th>
-                <th class="col-md-3">E-mail</th>
+                <th class="col-md-4">Username</th>
+                <th class="col-md-4">E-mail</th>
                 <th class="col-md-2">Account Confirmed</th>
-                <th class="col-md-2"></th> <!--column for sending user password reset mail-->
                 <th class="col-md-1">Edit</th> <!--column for editing user-->
                 <th class="col-md-1">Delete</th> <!--column for deleting user-->
             </tr>
@@ -46,13 +45,17 @@
                         @if (!user.EmailConfirmed)
                         {
                             <a href="@(Url.Action<AccountController>(c => c.SendEmailConfirmation(user.Id)))"
-                               type="button" class="btn btn-primary btn-xs">
+                               type="button" class="btn btn-primary btn-sm">
                                 Resend email confirmation
                             </a>
                         }
-                    </td>
-                    <td>
-                        <button type="button" class="btn btn-default btn-xs">Reset user password</button>
+                        else
+                        {
+                            <a href="@(Url.Action<AccountController>(c => c.ResetPasswordConfirmation(user.Id)))"
+                               type="button" class="btn btn-default btn-sm">
+                                Reset user password
+                            </a>
+                        }
                     </td>
                     <td>
                         <a href="@(Url.Action<AccountController>(c => c.EditUser(user.Id)))">
