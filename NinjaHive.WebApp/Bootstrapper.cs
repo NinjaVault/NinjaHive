@@ -186,7 +186,10 @@ namespace NinjaHive.WebApp
             {
                 manager.UserTokenProvider =
                     new DataProtectorTokenProvider<ApplicationUser>(
-                        dataProtectionProvider.Create("ASP.NET Identity"));
+                        dataProtectionProvider.Create("ASP.NET Identity"))
+                    {
+                        TokenLifespan = TimeSpan.FromHours(12),
+                    };
             }
         }
 
