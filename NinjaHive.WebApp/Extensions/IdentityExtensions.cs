@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using NinjaHive.Contract;
 using NinjaHive.Core.Extensions;
 using NinjaHive.WebApp.Identity;
@@ -11,11 +12,13 @@ namespace NinjaHive.WebApp.Extensions
 {
     public static class IdentityExtensions
     {
-        public static IEnumerable<UserViewModel> GetAllUsers(this ApplicationUserManager userManager)
+        public static IEnumerable<UserViewModel> GetAllUsers(this ApplicationUserManager userManager,
+            ApplicationRoleManager roleManager)
         {
             return
                 from user in userManager.Users.ToList() //load to memory, because linq2entities cannot handle IsInRole..
                 let isAdmin = userManager.IsInRole(user.Id, Role.Admin)
+                let roles = roleManager.GetUserRoles(user.Roles)
                 orderby user.UserName ascending
                 select new UserViewModel
                 {
@@ -23,9 +26,24 @@ namespace NinjaHive.WebApp.Extensions
                     Username = user.UserName,
                     Email = user.Email,
                     EmailConfirmed = user.EmailConfirmed,
-                    IsAdmin = isAdmin
+                    IsAdmin = isAdmin,
+                    Roles = roles,
                 };
         }
+
+        public static IEnumerable<Role> GetUserRoles<TRole, TKey>(this RoleManager<TRole, TKey> manager,
+            IEnumerable<IdentityUserRole<TKey>> roles)
+            where TRole : class, IRole<TKey>
+            where TKey : IEquatable<TKey>
+        {
+            var roleNames =
+                from userRole in roles
+                let role = manager.FindById(userRole.RoleId)
+                select role.Name;
+
+            return roleNames.ToRoles();
+        }
+
 
         public static bool UserExists<TUser, TKey>(this UserManager<TUser, TKey> manager, TKey userId)
             where TUser : class, IUser<TKey>
@@ -38,7 +56,7 @@ namespace NinjaHive.WebApp.Extensions
         {
             return
                 from role in roles
-                let trimmedRole = role.Trim()
+                let trimmedRole = role.RemoveAllWhiteSpace()
                 let parsedRole = Enum.Parse(typeof(Role), trimmedRole, ignoreCase: true)
                 select (Role)parsedRole;
         }

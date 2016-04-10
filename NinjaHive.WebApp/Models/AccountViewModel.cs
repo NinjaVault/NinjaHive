@@ -1,5 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Web.Mvc;
+using NinjaHive.Contract;
+using NinjaHive.Core.Extensions;
 
 namespace NinjaHive.WebApp.Models
 {
@@ -68,6 +72,10 @@ namespace NinjaHive.WebApp.Models
         [Required(ErrorMessage = "{0} is required")]
         [EmailAddress]
         public string Email { get; set; }
+
+        public IEnumerable<Role> Roles { get; set; }
+
+        public string RolesDisplay => string.Join(", ", this.Roles.Select(r => r.ToFriendlyString()));
 
         public bool EmailConfirmed { get; set; }
         public bool IsAdmin { get; set; }

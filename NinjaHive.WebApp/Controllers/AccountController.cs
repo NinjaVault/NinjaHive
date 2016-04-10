@@ -20,11 +20,16 @@ namespace NinjaHive.WebApp.Controllers
     {
         private readonly IAuthenticationManager authenticationManager;
         private readonly ApplicationUserManager userManager;
+        private readonly ApplicationRoleManager roleManager;
 
-        public AccountController(IAuthenticationManager authenticationManager, ApplicationUserManager userManager)
+        public AccountController(
+            IAuthenticationManager authenticationManager,
+            ApplicationUserManager userManager,
+            ApplicationRoleManager roleManager)
         {
             this.authenticationManager = authenticationManager;
             this.userManager = userManager;
+            this.roleManager = roleManager;
         }
 
         [AllowAnonymous]
@@ -124,7 +129,7 @@ namespace NinjaHive.WebApp.Controllers
         [AuthorizeRoles(Role.Admin)]
         public ActionResult ManageUsers()
         {
-            var users = userManager.GetAllUsers().ToReadOnlyCollection();
+            var users = userManager.GetAllUsers(this.roleManager).ToReadOnlyCollection();
             return View(users);
         }
 
