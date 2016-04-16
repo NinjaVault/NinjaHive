@@ -2,12 +2,14 @@
 @using NinjaHive.WebApp.Extensions
 @model NinjaHive.Contract.Models.MainCategoryModel
 
-<h2>Edit Main Category</h2>
+<div class="page-header">
+    <h2>Edit Main Category</h2>
+</div>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)

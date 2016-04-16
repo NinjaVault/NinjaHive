@@ -1,8 +1,15 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using System.Web.Mvc;
+using System.Web.Security;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
+using NinjaHive.Contract;
+using NinjaHive.Core.Extensions;
+using NinjaHive.WebApp.Extensions;
+using NinjaHive.WebApp.Filters;
 using NinjaHive.WebApp.Helpers;
+using NinjaHive.WebApp.Identity;
 using NinjaHive.WebApp.Models;
 
 namespace NinjaHive.WebApp.Controllers
@@ -13,11 +20,16 @@ namespace NinjaHive.WebApp.Controllers
     {
         private readonly IAuthenticationManager authenticationManager;
         private readonly ApplicationUserManager userManager;
+        private readonly ApplicationRoleManager roleManager;
 
-        public AccountController(IAuthenticationManager authenticationManager, ApplicationUserManager userManager)
+        public AccountController(
+            IAuthenticationManager authenticationManager,
+            ApplicationUserManager userManager,
+            ApplicationRoleManager roleManager)
         {
             this.authenticationManager = authenticationManager;
             this.userManager = userManager;
+            this.roleManager = roleManager;
         }
 
         [AllowAnonymous]
@@ -112,6 +124,217 @@ namespace NinjaHive.WebApp.Controllers
         {
             this.authenticationManager.SignOut();
             return Home();
+        }
+
+        [AuthorizeRoles(Role.Admin)]
+        public ActionResult ManageUsers()
+        {
+            var users = userManager.GetAllUsers(this.roleManager).ToReadOnlyCollection();
+            return View(users);
+        }
+
+        [AuthorizeRoles(Role.Admin)]
+        public ActionResult CreateUser()
+        {
+            return View();
+        }
+
+        [AuthorizeRoles(Role.Admin)]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateUser(UserViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new ApplicationUser
+                {
+                    UserName = viewModel.Username,
+                    Email = viewModel.Email,
+                };
+
+                var password = Membership.GeneratePassword(8, 1);
+                var result = this.userManager.Create(user, password);
+                if (result.Succeeded)
+                {
+                    var roleResult = this.userManager.AddToRoles(user.Id, Role.GameDesigner);
+                    if (roleResult.Succeeded)
+                    {
+                        this.SendEmailConfirmation(user.Id, user.UserName, password);
+                        return Redirect(UrlProvider<AccountController>.GetUrl(c => c.ManageUsers()));
+                    }
+                }
+            }
+            return View(viewModel);
+        }
+
+        [AuthorizeRoles(Role.Admin)]
+        public ActionResult SendEmailConfirmation(string userId)
+        {
+            var user = this.userManager.FindById(userId);
+            if (user != null && !user.EmailConfirmed)
+            {
+                var token = this.userManager.GeneratePasswordResetToken(userId);
+                var password = Membership.GeneratePassword(8, 1);
+                var result = this.userManager.ResetPassword(userId, token, password);
+                if (result.Succeeded)
+                {
+                    this.SendEmailConfirmation(userId, user.UserName, password);
+                    return View(user);
+                }
+            }
+            return base.DefaultError();
+        }
+
+        public ActionResult ResetPasswordConfirmation(string userId)
+        {
+            var user = this.userManager.FindById(userId);
+            if (user != null && user.EmailConfirmed)
+            {
+                var token = this.userManager.GeneratePasswordResetToken(userId);
+                var callbackUrl = Url.GetFullyQualifiedActionLink<AccountController>(
+                    c => c.ResetPassword(user.Id, token), Request.Url.Scheme);
+
+                this.userManager.SendEmail(userId, "Reset your password",
+                    $"Hello {user.UserName},"
+                    + Environment.NewLine
+                    + Environment.NewLine +
+                    "A NinjaHive admin has provided a password reset for you."
+                    + Environment.NewLine +
+                    $"Click <a href=\"{callbackUrl}\">here</a> to reset your password.");
+
+                return View(user);
+            }
+            return base.DefaultError();
+        }
+
+        private void SendEmailConfirmation(string userId, string userName, string password)
+        {
+            var mailToken = this.userManager.GenerateEmailConfirmationToken(userId);
+            var callbackUrl =
+                Url.GetFullyQualifiedActionLink<AccountController>(c => c.ConfirmEmail(userId, mailToken), Request.Url.Scheme);
+
+            this.userManager.SendEmail(userId, "Confirm your account",
+                $"Hello {userName},"
+                + Environment.NewLine
+                + Environment.NewLine +
+                $"Please confirm your account for NinjaHive by clicking <a href=\"{callbackUrl}\">here</a>."
+                + Environment.NewLine +
+                $"Your password is: <b>{password}</b>");
+        }
+
+        [AuthorizeRoles(Role.Admin)]
+        public ActionResult EditUser(string userId)
+        {
+            var user = this.userManager.FindById(userId);
+            if (user != null)
+            {
+                var viewModel = new UserViewModel
+                {
+                    Id = user.Id,
+                    Username = user.UserName,
+                    Email = user.Email,
+                };
+                return View(viewModel);
+            }
+
+            return base.DefaultError();
+        }
+
+        [AuthorizeRoles(Role.Admin)]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> EditUser(UserViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = this.userManager.FindById(viewModel.Id);
+                if (user != null)
+                {
+                    user.UserName = viewModel.Username;
+                    user.Email = viewModel.Email;
+
+                    var result = this.userManager.Update(user);
+                    if (result.Succeeded)
+                    {
+                        if (User.Identity.GetUserId() == user.Id)
+                        {
+                            await SignInAsync(user, false);
+                        }
+                        return Redirect(UrlProvider<AccountController>.GetUrl(c => c.ManageUsers()));
+                    }
+                }
+            }
+            
+            return View(viewModel);
+        }
+
+        [AuthorizeRoles(Role.Admin)]
+        [HttpPost]
+        public ActionResult DeleteUser(string userId)
+        {
+            var user = this.userManager.FindById(userId);
+            if (user != null && !this.userManager.IsInRole(userId, Role.Admin))
+            {
+                var result = this.userManager.Delete(user);
+                if (result.Succeeded)
+                {
+                    return Redirect(UrlProvider<AccountController>.GetUrl(c => c.ManageUsers()));
+                }
+            }
+            return base.DefaultError();
+        }
+
+        [AllowAnonymous]
+        public ActionResult ConfirmEmail(string userId, string mailToken)
+        {
+            if (mailToken != null && this.userManager.UserExists(userId))
+            {
+                var result = this.userManager.ConfirmEmail(userId, mailToken);
+                if (result.Succeeded)
+                {
+                    return View();
+                }
+            }
+
+            return base.DefaultError();
+        }
+
+        [AllowAnonymous]
+        public ActionResult ResetPassword(string userId, string passwordToken)
+        {
+            if (passwordToken != null && this.userManager.UserExists(userId))
+            {
+                var viewModel = new ResetPasswordViewModel
+                {
+                    UserId = userId,
+                    PasswordResetToken = passwordToken,
+                };
+                return View(viewModel);
+            }
+            return base.DefaultError();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult ResetPassword(ResetPasswordViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                if (this.userManager.UserExists(viewModel.UserId))
+                {
+                    var result = this.userManager.ResetPassword(
+                        viewModel.UserId, viewModel.PasswordResetToken, viewModel.NewPassword);
+
+                    if (result.Succeeded)
+                    {
+                        return base.Home();
+                    }
+                }
+
+                return base.DefaultError();
+            }
+            return View(viewModel);
         }
     }
 }

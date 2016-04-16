@@ -1,0 +1,36 @@
+﻿@model NinjaHive.WebApp.Models.UserViewModel
+
+<div class="page-header">
+    <h2>Register User</h2>
+</div>
+
+@using (Html.BeginForm())
+{
+    <h4>Register a new user</h4>
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Username, new {@class = "col-md-2 control-label"})
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Username, new {@class = "form-control"})
+                @Html.ValidationMessageFor(m => m.Username, "", new {@class = "text-danger"})
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Email, new {@class = "col-md-2 control-label"})
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Email, new {@class = "form-control"})
+                @Html.ValidationMessageFor(m => m.Email, "", new {@class = "text-danger"})
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Register" class="btn btn-default"/>
+            </div>
+        </div>
+    </div>
+}

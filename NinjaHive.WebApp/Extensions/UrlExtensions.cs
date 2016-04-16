@@ -10,6 +10,14 @@ namespace NinjaHive.WebApp.Extensions
 {
     public static class UrlExtensions
     {
+        public static string GetFullyQualifiedActionLink<TController>(this UrlHelper urlHelper,
+            Expression<Action<TController>> expression, string scheme)
+            where TController : Controller
+        {
+            var routeValues = expression.GetRouteValues();
+            return urlHelper.RouteUrl("Default", routeValues, scheme, string.Empty);
+        }
+
         public static string Action<TController>(this UrlHelper urlHelper, Expression<Action<TController>> expression)
             where TController : Controller
         {

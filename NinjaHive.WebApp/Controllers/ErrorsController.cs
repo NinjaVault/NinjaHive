@@ -2,10 +2,14 @@
 
 namespace NinjaHive.WebApp.Controllers
 {
-    public class ErrorsController : BaseController
+    public class ErrorsController : Controller
     {
-        // GET: Errors
         public ActionResult DefaultError()
+        {
+            return View();
+        }
+
+        public ActionResult UnauthorizedError()
         {
             return View();
         }

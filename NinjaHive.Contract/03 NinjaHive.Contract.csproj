@@ -56,6 +56,7 @@
     <Compile Include="Queries\GetLinkedGameItemNamesQuery.cs" />
     <Compile Include="Queries\GetMainCategoriesQuery.cs" />
     <Compile Include="Queries\GetSubCategoriesQuery.cs" />
+    <Compile Include="Role.enum.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NinjaHive.Core\06 NinjaHive.Core.csproj">
