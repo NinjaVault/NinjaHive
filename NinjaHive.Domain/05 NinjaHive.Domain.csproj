@@ -107,6 +107,10 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\NinjaHive.Components\06 NinjaHive.Components.csproj">
+      <Project>{d73816d8-9dce-400f-8b4e-c01291a319e6}</Project>
+      <Name>06 NinjaHive.Components</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NinjaHive.Core\07 NinjaHive.Core.csproj">
       <Project>{1087016a-3d9a-41b4-8893-13d56f7d7f75}</Project>
       <Name>07 NinjaHive.Core</Name>

@@ -71,6 +71,10 @@
     <Compile Include="QueryHandlers\GetEntityByIdQueryHandler.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\NinjaHive.Components\06 NinjaHive.Components.csproj">
+      <Project>{d73816d8-9dce-400f-8b4e-c01291a319e6}</Project>
+      <Name>06 NinjaHive.Components</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NinjaHive.Contract\03 NinjaHive.Contract.csproj">
       <Project>{3b537332-5517-4bc2-b8cc-24bf208ee365}</Project>
       <Name>03 NinjaHive.Contract</Name>
