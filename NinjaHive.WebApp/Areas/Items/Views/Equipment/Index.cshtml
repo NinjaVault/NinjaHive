@@ -13,7 +13,7 @@
     </div>
 </div>
 
-@if(Model != null && Model.Any())
+@if(Model.Any())
 {
     foreach (var mainGroup in Model.GroupBy(m => m.SubCategoryMainCategoryName))
     {
