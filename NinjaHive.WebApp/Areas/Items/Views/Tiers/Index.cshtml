@@ -1,11 +1,9 @@
 ﻿@using NinjaHive.WebApp.Areas.Items.Controllers
 @using NinjaHive.WebApp.Areas.Items.Models
 @using NinjaHive.WebApp.Extensions
-@using NinjaHive.Contract.Models
 @using NinjaHive.WebApp.Helpers
 
 @model TiersListViewModel
-
 
 <div class="page-header">
     <h2>Equipment Tiers <small>@Model.Equipment.Name</small></h2>
@@ -13,7 +11,7 @@
 </div>
 
 <div class="list-group" id="tiers" role="tablist">
-        @foreach (TierModel tier in Model.Tiers)
+        @foreach (var tier in Model.Tiers)
         {
             var tierEditUrl = UrlProvider<TiersController>.GetUrl(c => c.Edit(tier.Id));
             var tierPageId = Html.AttributeEncode(tier.Name.Replace(" ",""));

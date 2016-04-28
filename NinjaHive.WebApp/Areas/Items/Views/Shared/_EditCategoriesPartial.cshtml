@@ -12,10 +12,12 @@
     @Html.ValidationMessageFor(m => m.BaseGameItem.CategoryId, "", new { @class = "text-danger" })
 </div>
 
-@{var subCategoryRequest = UrlProvider<GameItemsController>.GetUrl(c => c.GetSubCategoriesJson(null));
-var parentCategoryRequest = UrlProvider<GameItemsController>.GetUrl(c => c.GetMainCategoriesJson(null));
+@{
+    var subCategoryRequest = UrlProvider<GameItemsController>.GetUrl(c => c.GetSubCategoriesJson(null));
+    var parentCategoryRequest = UrlProvider<GameItemsController>.GetUrl(c => c.GetMainCategoriesJson(null));
 
-bool hasCategory = Model.BaseGameItem.SubCategoryName != null;}
+    bool hasCategory = Model.BaseGameItem.SubCategoryName != null;
+}
 
 <script src="~/Scripts/NinjaHive/NinjaHive_EditGameItemScripts.js"></script>
 <script>

@@ -12,15 +12,17 @@
             Equipment <small>Create</small>
         </h2>
     </div>
-    @{ Html.BeginForm<EquipmentController>(c => c.Create(null), new { @class = "form-horizontal", role = "form", name = "createEquipmentForm" }); }
-    @Html.AntiForgeryToken()
-    @Html.EditorForModel()
-    <div class="form-group">
-        <div class="col-md-12">
-            <input type="submit" class="btn btn-primary" value="Create Equipment" />
+
+    @using (Html.BeginForm<EquipmentController>(c => c.Create(null), new {@class = "form-horizontal", role = "form", name = "createEquipmentForm"}))
+    {
+        @Html.AntiForgeryToken()
+        @Html.EditorForModel()
+        <div class="form-group">
+            <div class="col-md-12">
+                <input type="submit" class="btn btn-primary" value="Create Equipment"/>
+            </div>
         </div>
-    </div>
-    @{ Html.EndForm(); }
+    }
 
     <script>
         @{var validateUrl = UrlProvider<EquipmentController>.GetUrl(c => c.GetEquipmentJson(null));}
