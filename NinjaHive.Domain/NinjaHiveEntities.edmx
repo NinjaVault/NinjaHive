@@ -1001,6 +1001,8 @@
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(NinjaHiveEntities.EquipmentItemEntity)">
               <MappingFragment StoreEntitySet="EquipmentItems">
+                <ScalarProperty Name="BodySlot" ColumnName="BodySlot" />
+                <ScalarProperty Name="NumberOfSlots" ColumnName="NumberOfSlots" />
                 <ScalarProperty Name="Durability" ColumnName="Durability" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
