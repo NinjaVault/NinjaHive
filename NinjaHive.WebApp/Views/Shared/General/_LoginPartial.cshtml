@@ -1,10 +1,9 @@
 ﻿@using Microsoft.AspNet.Identity
-@using NinjaHive.Contract
 @using NinjaHive.WebApp.Controllers
 @using NinjaHive.WebApp.Extensions
 @if (Request.IsAuthenticated)
 {
-    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new {id = "logoutForm", @class = "navbar-right"}))
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
         @Html.AntiForgeryToken()
 
@@ -16,18 +15,9 @@
                         <span class="caret"></span>
                     </a>
 
-                    @{
-                        var changePassword = Html.ActionLink<AccountController>("Change password", c => c.ChangePassword(), new {role = "menuitem", tabindex = -1});
-                        var manageUsers = Html.ActionLink<AccountController>("Manage users", c => c.ManageUsers(), new {role = "menuitem", tabindex = -1});
-                    }
-
+                    @{ var changePasswordLink = Html.ActionLink<AccountController>("Change password", c => c.ChangePassword(), new { role = "menuitem", tabindex = -1 }); }
                     <ul class="dropdown-menu" id="dropdown" role="menu">
-                        <li>@changePassword</li>
-                        @if (HttpContext.Current.User.IsInRoles(Role.Admin))
-                        {
-                            <li>@manageUsers</li>
-                        }
-
+                        <li>@changePasswordLink</li>
                         <li class="divider"></li>
                         <li><a role="menuitem" tabindex="-1" href="javascript:document.getElementById('logoutForm').submit()">Sign out</a></li>
                     </ul>
@@ -36,11 +26,7 @@
         </div>
 
         <ul class="nav navbar-nav navbar-right visible-xs">
-            <li>@changePassword</li>
-            @if (HttpContext.Current.User.IsInRoles(Role.Admin))
-            {
-                <li>@manageUsers</li>
-            }
+            <li>@changePasswordLink</li>
             <li><a role="menuitem" tabindex="-1" href="javascript:document.getElementById('logoutForm').submit()">Sign out</a></li>
         </ul>
     }

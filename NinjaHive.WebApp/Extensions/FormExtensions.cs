@@ -17,9 +17,10 @@ namespace NinjaHive.WebApp.Extensions
         public static MvcForm BeginForm<TController>(this HtmlHelper htmlHelper, Expression<Action<TController>> expression, object htmlAttributes)
             where TController : Controller
         {
-            var urlParts = UrlProvider<TController>.GetParameterlessUrl(expression).Split('/');
-            var controller = urlParts[1];
-            var action = urlParts[2];
+            var urlParts = UrlProvider<TController>.GetRouteValues(expression);
+
+            var controller = urlParts["controller"].ToString();
+            var action = urlParts["action"].ToString();
             return htmlHelper.BeginForm(action, controller, FormMethod.Post, htmlAttributes);
         }
     }

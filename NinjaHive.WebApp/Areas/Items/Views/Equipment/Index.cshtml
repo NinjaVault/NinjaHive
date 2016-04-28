@@ -1,0 +1,59 @@
+﻿@using NinjaHive.Contract.Models
+@using NinjaHive.WebApp.Areas.Items.Controllers
+@using NinjaHive.WebApp.Extensions
+@using NinjaHive.WebApp.Helpers
+
+@model IEnumerable<EquipmentModel>
+
+
+<div class="row">
+    <div class="page-header">
+        <h2>Equipment</h2>
+        @( Html.ActionLink<EquipmentController>("Create new Equipment", c => c.Create(), new { @class = "btn btn-primary" }))
+    </div>
+</div>
+
+@if(Model != null && Model.Any())
+{
+    foreach (var mainGroup in Model.GroupBy(m => m.SubCategoryMainCategoryName))
+    {
+        <h3>@mainGroup.Key</h3>
+        foreach (var subGroup in mainGroup.GroupBy(m => m.SubCategoryName))
+        {
+            <div class="panel panel-default">
+                <div class="panel-heading">@subGroup.Key</div>
+                <div class="panel-body" style="position:relative;">
+                    <ul class="list-group">
+                        @foreach (var item in subGroup)
+                        {
+                            var editUrl = UrlProvider<EquipmentController>.GetUrl(c => c.Edit(item.Id));
+                            var tiersUrl = UrlProvider<TiersController>.GetUrl(c => c.Index(item.Id));
+                            <li class="list-group-item">
+                                <div class="btn-group btn-group-sm pull-right">
+                                    <a href="@tiersUrl" class="btn btn-info" data-toggle="tooltip" title="View Tiers"><span class=" glyphicon glyphicon-sort-by-attributes"></span></a>
+                                    <a href="@editUrl" class="btn btn-primary" data-toggle="tooltip" title="Edit"><span class=" glyphicon glyphicon-pencil"></span></a>
+                                </div>
+                                <h4 class="list-group-item-heading">@item.Name</h4>
+
+                                <p class="list-group-item-text">@item.Description</p>
+                            </li>
+
+                        }
+                    </ul>
+                </div>
+            </div>
+        }
+    }
+}
+else
+{
+    @Html.Partial(Partials.NoResults);
+}
+
+<script>
+    $(function ()
+    {
+        // container: body is to avoid issues with tooltips in btn-group changing button size
+        $('[data-toggle="tooltip"]').tooltip({container:'body'})
+    })
+</script>

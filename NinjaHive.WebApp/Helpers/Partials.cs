@@ -10,11 +10,20 @@
         public const string NoResults = "General/_NoResultsPartial";
 
         //Items
+        public const string ItemsSubNav = "_ItemsSubnavigationPartial";
         public const string GameItems = "_GameItemsPartial";
-        public const string EditGameItem = "_EditGameItemPartial";
+        public const string EditGameItem = "EditorTemplates/IGameItemViewModel";
+
+        //Equipment
+        public const string EditEquipment = "_EditEquipmentPartial";
+        public const string EditTier = "_EditTierPartial";
+
+        //StatInfo
+        public const string EditStatInfo = "General/_EditStatInfo";
 
         //Categories
         public const string MainCategoryForm = "_MainCategoryFormPartial";
         public const string SubCategoryForm = "_SubCategoryFormPartial";
+        public const string EditCategories = "_EditCategoriesPartial";
     }
 }

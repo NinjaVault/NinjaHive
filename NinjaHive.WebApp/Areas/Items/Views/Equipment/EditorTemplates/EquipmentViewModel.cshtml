@@ -1,0 +1,27 @@
+﻿@using NinjaHive.WebApp.Areas.Items.Controllers
+@using NinjaHive.WebApp.Areas.Items.Models
+@using NinjaHive.WebApp.Helpers
+@using NinjaHive.Contract.Models
+@model EquipmentViewModel
+
+@Html.Partial(Partials.EditGameItem, Model)
+
+<div class="col-md-12">
+    <div class="col-md-6">
+        <div class="form-group">
+            @Html.LabelFor(m => m.Equipment.Durability, new { @class = "col-md-4 control-label" })
+            <div class="col-md-8">
+                @Html.TextBoxFor(m => m.Equipment.Durability, new { @class = "form-control", Name="Durability", type="number", min="0" })
+                @Html.ValidationMessageFor(m => m.Equipment.Durability, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <br />
+        <div class="form-group">
+            @Html.LabelFor(m => m.Equipment.Slot, new { @class = "col-md-4 control-label" })
+            <div class="col-md-8">
+                @Html.DropDownListFor(m => m.Equipment.Slot,    EnumHelper.GetSelectList(typeof(EquipmentSlot)),     new { @class = "form-control", Name="Slot" })
+                @Html.ValidationMessageFor(m => m.Equipment.Durability, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+</div>

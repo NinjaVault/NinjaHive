@@ -50,6 +50,7 @@
 <body>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/ninjahive")
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             
@@ -66,6 +67,12 @@
             <div id="navbar" class="navbar-collapse collapse">
                 @Html.Partial(Partials.NavbarNav)
                 @Html.Partial(Partials.Login)
+            </div>
+        </div>
+
+        <div class="navbar-subnav">
+            <div class="container">
+                @RenderSection("SubNavigation", required: false)
             </div>
         </div>
     </div>

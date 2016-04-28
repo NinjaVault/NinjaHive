@@ -186,6 +186,7 @@
             ajax.onError = function (event, ajax)
             {
                 error.innerHTML = "An error has occured trying to validate this name. Please try again later.";
+                console.log(ajax.responseText);
             };
             ajax.send();
 
@@ -238,5 +239,35 @@
         ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         ajax.send(data);
         return ajax;
+    }
+
+    function deleteFormConfirm(evt)
+    {
+        NH.removeEventListener(this.target, "submit", deleteFormSubmit);
+
+        NH.setAttribute(this.target, "action", NH.getAttribute(this.target, "data-action"));
+
+        this.target.submit();
+
+    }
+    function deleteFormSubmit(evt)
+    {
+        evt.preventDefault();
+        NH.modal.deleteConfirmDialog()
+                    .on("submit", deleteFormConfirm)
+                    .target = this;
+        return false;
+    }
+    NH.promptBeforeDelete = function()
+    {
+        var deletes = document.getElementsByClassName("form-delete");
+
+        for(var i=0;i<deletes.length;++i)
+        {
+            var form = deletes[i];
+            NH.setAttribute(form, "data-action", NH.getAttribute(form, "action"));
+            NH.setAttribute(form, "action", "");
+            NH.addEventListener(form, "submit", deleteFormSubmit);
+        }
     }
 })(ninjaHive);

@@ -36,3 +36,31 @@ textarea {
 .glyphicon:hover {
   	color: darkgray;
 }
+
+.navbar .navbar-subnav{
+    width:100%;
+    background:#000;
+}
+.navbar .navbar-subnav .nav li{
+    display:inline-block;
+}
+.navbar .navbar-subnav .nav li a{
+    display:inline-block;
+    background:#000;
+    color:#bbb;
+    font-weight:bold;
+    font-size:12px;
+    padding:5px 15px;
+}
+.navbar .navbar-subnav .nav li.active a{
+    background:#337AB7;
+    border:1px solid #2E6DA4;
+    color:#fff;
+}
+.navbar .navbar-subnav .nav li a:hover{
+    color:#fff;
+}
+.navbar .navbar-subnav .nav li a.active{
+    background:#337ab7;
+    color:#fff;
+}

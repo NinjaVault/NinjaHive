@@ -221,6 +221,15 @@
     <Compile Include="App_Start\Identity\DatabaseInitializer.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Areas\Items\Controllers\EquipmentController.cs" />
+    <Compile Include="Areas\Items\Controllers\GameItemsController.cs" />
+    <Compile Include="Areas\Items\Controllers\TiersController.cs" />
+    <Compile Include="Areas\Items\ItemsAreaRegistration.cs" />
+    <Compile Include="Areas\Items\Models\EquipmentViewModel.cs" />
+    <Compile Include="Areas\Items\Models\GameItemViewModel.cs" />
+    <Compile Include="Areas\Items\Models\IGameItemViewModel.cs" />
+    <Compile Include="Areas\Items\Models\TiersListViewModel.cs" />
+    <Compile Include="Areas\Items\Models\TierViewModel.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
@@ -273,6 +282,20 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Areas\Items\Views\Equipment\Create.cshtml" />
+    <Content Include="Areas\Items\Views\Equipment\Edit.cshtml" />
+    <Content Include="Areas\Items\Views\Equipment\EditorTemplates\EquipmentViewModel.cshtml" />
+    <Content Include="Areas\Items\Views\Equipment\Index.cshtml" />
+    <Content Include="Areas\Items\Views\Shared\EditorTemplates\IGameItemViewModel.cshtml" />
+    <Content Include="Areas\Items\Views\Shared\_EditCategoriesPartial.cshtml" />
+    <Content Include="Areas\Items\Views\Shared\_ItemsLayout.cshtml" />
+    <Content Include="Areas\Items\Views\Shared\_ItemsSubnavigationPartial.cshtml" />
+    <Content Include="Areas\Items\Views\Tiers\Create.cshtml" />
+    <Content Include="Areas\Items\Views\Tiers\Edit.cshtml" />
+    <Content Include="Areas\Items\Views\Tiers\EditorTemplates\TierModel.cshtml" />
+    <Content Include="Areas\Items\Views\Tiers\Index.cshtml" />
+    <Content Include="Areas\Items\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Items\web.config" />
     <None Include="Properties\PublishProfiles\NinjaHive - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -308,18 +331,11 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\General\_Layout.cshtml" />
     <Content Include="Views\Items\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Shared\General\_NavbarNavPartial.cshtml" />
-    <Content Include="Views\Shared\General\_LoginPartial.cshtml" />
     <Content Include="Views\Errors\DefaultError.cshtml" />
     <Content Include="Views\Items\Create.cshtml" />
-    <Content Include="Views\Shared\General\_LoadingPartial.cshtml" />
-    <Content Include="Views\Shared\General\_NoResultsPartial.cshtml" />
-    <Content Include="Views\Shared\General\_AjaxErrorPartial.cshtml" />
     <Content Include="Views\Items\_GameItemsPartial.cshtml" />
-    <Content Include="Views\Items\_EditGameItemPartial.cshtml" />
     <Content Include="Views\Items\Edit.cshtml" />
     <Content Include="Views\Categories\Index.cshtml" />
     <Content Include="Views\Account\ChangePassword.cshtml" />
@@ -339,6 +355,14 @@
     <Content Include="Views\Account\SendEmailConfirmation.cshtml" />
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\StatInfoModel.cshtml" />
+    <Content Include="Views\Shared\General\_AjaxErrorPartial.cshtml" />
+    <Content Include="Views\Shared\General\_EditStatInfo.cshtml" />
+    <Content Include="Views\Shared\General\_Layout.cshtml" />
+    <Content Include="Views\Shared\General\_LoadingPartial.cshtml" />
+    <Content Include="Views\Shared\General\_LoginPartial.cshtml" />
+    <Content Include="Views\Shared\General\_NavbarNavPartial.cshtml" />
+    <Content Include="Views\Shared\General\_NoResultsPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Validation\" />
