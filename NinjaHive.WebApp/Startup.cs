@@ -4,7 +4,7 @@ using System.Web.Routing;
 using Microsoft.Owin;
 using Owin;
 
-[assembly: OwinStartupAttribute(typeof(NinjaHive.WebApp.Startup))]
+[assembly: OwinStartup(typeof(NinjaHive.WebApp.Startup))]
 namespace NinjaHive.WebApp
 {
     public partial class Startup
