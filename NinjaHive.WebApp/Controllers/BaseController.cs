@@ -13,10 +13,10 @@ namespace NinjaHive.WebApp.Controllers
             return Redirect<EquipmentController>(c => c.Index());
         }
 
-        protected virtual RedirectResult Redirect<ArgType>(Expression<Action<ArgType>> action)
-            where ArgType : Controller
+        protected virtual RedirectResult Redirect<TController>(Expression<Action<TController>> action)
+            where TController : Controller
         {
-            var homeUrl = UrlProvider<ArgType>.GetUrl(action);
+            var homeUrl = UrlProvider<TController>.GetUrl(action);
             return Redirect(homeUrl);
         }
 
