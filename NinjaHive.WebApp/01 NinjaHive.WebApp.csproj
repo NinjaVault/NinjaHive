@@ -240,7 +240,9 @@
     <Compile Include="App_Start\Identity\ApplicationUserManager.cs" />
     <Compile Include="IUserContextWithRoles.cs" />
     <Compile Include="Models\AccountViewModel.cs" />
+    <Compile Include="Models\EquipmentViewModel.cs" />
     <Compile Include="Models\GameItemViewModel.cs" />
+    <Compile Include="Models\TierViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\UrlProvider.cs" />
     <Compile Include="Services\FakeEmailService.cs" />
@@ -257,6 +259,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Images\default_image.png" />
     <Content Include="Content\Win8Loader.css" />
+    <Compile Include="Controllers\TiersController.cs" />
     <Content Include="favicon.ico" />
     <Content Include="Content\Site.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
