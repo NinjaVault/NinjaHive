@@ -1,11 +1,7 @@
 ﻿using NinjaHive.Core.Helpers;
 using NinjaHive.Core.Validations;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NinjaHive.Contract.Models
 {
@@ -13,7 +9,6 @@ namespace NinjaHive.Contract.Models
     {
         public TierModel()
         {
-            Id = Guid.NewGuid();
             StatInfo = new StatInfoModel();
         }
 
