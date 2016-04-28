@@ -112,9 +112,9 @@
       <Project>{3b537332-5517-4bc2-b8cc-24bf208ee365}</Project>
       <Name>03 NinjaHive.Contract</Name>
     </ProjectReference>
-    <ProjectReference Include="..\NinjaHive.Core\06 NinjaHive.Core.csproj">
+    <ProjectReference Include="..\NinjaHive.Core\07 NinjaHive.Core.csproj">
       <Project>{1087016A-3D9A-41B4-8893-13D56F7D7F75}</Project>
-      <Name>06 NinjaHive.Core</Name>
+      <Name>07 NinjaHive.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\NinjaHive.WebApp\01 NinjaHive.WebApp.csproj">
       <Project>{34EE914C-BC5F-4EB2-8E12-03E9DBA4179D}</Project>

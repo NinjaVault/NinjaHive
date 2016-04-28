@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{3B537332-5517-4BC2-B8CC-24BF208EE365}</ProjectGuid>
+    <ProjectGuid>{D73816D8-9DCE-400F-8B4E-C01291A319E6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NinjaHive.Contract</RootNamespace>
-    <AssemblyName>03 NinjaHive.Contract</AssemblyName>
+    <RootNamespace>NinjaHive.Components</RootNamespace>
+    <AssemblyName>NinjaHive.Components</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,45 +31,17 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commands\CreateEntityCommand.cs" />
-    <Compile Include="Commands\DeleteEntityCommand.cs" />
-    <Compile Include="Commands\UpdateEntityCommand.cs" />
-    <Compile Include="EquipmentSlot.enum.cs" />
-    <Compile Include="Extensions\ParameterVisitor.cs" />
-    <Compile Include="IModel.cs" />
-    <Compile Include="Models\EquipmentModel.cs" />
-    <Compile Include="Models\LevelModel.cs" />
-    <Compile Include="Models\MainCategoryModel.cs" />
-    <Compile Include="Models\StatInfoModel.cs" />
-    <Compile Include="Models\SubCategoryModel.cs" />
-    <Compile Include="Models\GameItemModel.cs" />
-    <Compile Include="Models\TierModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Queries\GetAllCategoriesQuery.cs" />
-    <Compile Include="Queries\GetAllGameItemsQuery.cs" />
-    <Compile Include="Queries\GetEntityByIdQuery.cs" />
-    <Compile Include="Queries\GetItemsQuery.cs" />
-    <Compile Include="Queries\GetLinkedGameItemNamesQuery.cs" />
-    <Compile Include="Queries\GetMainCategoriesQuery.cs" />
-    <Compile Include="Queries\GetSubCategoriesQuery.cs" />
-    <Compile Include="Role.enum.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\NinjaHive.Core\07 NinjaHive.Core.csproj">
-      <Project>{1087016a-3d9a-41b4-8893-13d56f7d7f75}</Project>
-      <Name>07 NinjaHive.Core</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
