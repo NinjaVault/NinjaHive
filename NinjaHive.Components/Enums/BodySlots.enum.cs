@@ -1,7 +1,8 @@
-﻿namespace NinjaHive.Domain.Enums
+﻿namespace NinjaHive.Components.Enums
 {
     public enum BodySlot
     {
+        //reserve 0
         Hair = 1,
         Head = 2,
         Neck = 3,

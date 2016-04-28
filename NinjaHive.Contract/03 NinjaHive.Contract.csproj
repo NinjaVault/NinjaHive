@@ -44,7 +44,6 @@
     <Compile Include="Commands\CreateEntityCommand.cs" />
     <Compile Include="Commands\DeleteEntityCommand.cs" />
     <Compile Include="Commands\UpdateEntityCommand.cs" />
-    <Compile Include="EquipmentSlot.enum.cs" />
     <Compile Include="Extensions\ParameterVisitor.cs" />
     <Compile Include="IModel.cs" />
     <Compile Include="Models\EquipmentModel.cs" />

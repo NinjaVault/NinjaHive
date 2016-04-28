@@ -1,4 +1,4 @@
-﻿namespace NinjaHive.Domain.Enums
+﻿namespace NinjaHive.Components.Enums
 {
     public enum Target
     {

@@ -1,5 +1,4 @@
-﻿@using NinjaHive.Contract
-@using NinjaHive.WebApp.Areas.Items.Models
+﻿@using NinjaHive.WebApp.Areas.Items.Models
 @using NinjaHive.WebApp.Helpers
 @model EquipmentViewModel
 
@@ -18,7 +17,15 @@
         <div class="form-group">
             @Html.LabelFor(m => m.Equipment.Slot, new { @class = "col-md-4 control-label" })
             <div class="col-md-8">
-                @Html.DropDownListFor(m => m.Equipment.Slot,    EnumHelper.GetSelectList(typeof(EquipmentSlot)),     new { @class = "form-control", Name="Slot" })
+
+                
+                @*
+                    TODO:
+                    The client should not know anything about the Component assembly where the enum resides.
+                    In order to fix this issue, the client should 'QUERY' the businesslayer for a list of the body slots!!!
+                    @Html.DropDownListFor(m => m.Equipment.Slot,    EnumHelper.GetSelectList(typeof(BodySlot)),     new { @class = "form-control", Name="Slot" })
+                *@
+                
                 @Html.ValidationMessageFor(m => m.Equipment.Durability, "", new { @class = "text-danger" })
             </div>
         </div>

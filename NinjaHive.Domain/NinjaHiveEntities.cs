@@ -40,14 +40,13 @@ namespace NinjaHive.Domain
             this.Races = new HashSet<RaceEntity>();
             this.Classes = new HashSet<ClassEntity>();
             this.Enhancers = new HashSet<OtherItemEntity>();
-            this.Slot = new ItemSlot();
             this.OnCreated();
         }
     
         partial void OnCreated();
         public int Durability { get; set; }
-    
-        public ItemSlot Slot { get; set; }
+        public int NumberOfSlots { get; set; }
+        public NinjaHive.Components.Enums.BodySlot BodySlot { get; set; }
     
         public virtual ICollection<TierEntity> Tiers { get; set; }
         public virtual ICollection<RaceEntity> Races { get; set; }
@@ -204,7 +203,7 @@ namespace NinjaHive.Domain
         public int Range { get; set; }
         public int Radius { get; set; }
         public int Targets { get; set; }
-        public NinjaHive.Domain.Enums.Target Target { get; set; }
+        public NinjaHive.Components.Enums.Target Target { get; set; }
         public bool Friendly { get; set; }
     
         public EditInfo EditInfo { get; set; }
@@ -335,15 +334,5 @@ namespace NinjaHive.Domain
         public string CreatedBy { get; set; }
         public System.DateTime EditedOn { get; set; }
         public string EditedBy { get; set; }
-    }
-}
-namespace NinjaHive.Domain
-{
-    using System;
-    
-    public partial class ItemSlot
-    {
-        public int NumberOfSlots { get; set; }
-        public NinjaHive.Domain.Enums.BodySlot BodySlot { get; set; }
     }
 }

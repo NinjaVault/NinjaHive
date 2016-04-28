@@ -812,17 +812,14 @@
         </EntityType>
         <EntityType Name="EquipmentItemEntity" BaseType="NinjaHiveEntities.GameItemEntity" >
           <Property Name="Durability" Type="Int32" Nullable="false" />
-          <Property Name="Slot" Type="NinjaHiveEntities.ItemSlot" Nullable="false" />
           <NavigationProperty Name="Tiers" Relationship="NinjaHiveEntities.EquipmentItemsTiersAssociation" FromRole="EquipmentItemEntity" ToRole="TierEntity" />
           <NavigationProperty Name="Races" Relationship="NinjaHiveEntities.EquipmentItemsRacesAssociation" FromRole="EquipmentItemEntity" ToRole="RaceEntity" />
           <NavigationProperty Name="Classes" Relationship="NinjaHiveEntities.EquipmentItemsClassesAssociation" FromRole="EquipmentItemEntity" ToRole="ClassEntity" />
           <NavigationProperty Name="Enhancers" Relationship="NinjaHiveEntities.EquipmentItemsEnhancersAssociation" FromRole="EquipmentItemEntity" ToRole="OtherItemEntity" />
+          <Property Name="NumberOfSlots" Type="Int32" Nullable="false" />
+          <Property Name="BodySlot" Type="NinjaHiveEntities.BodySlot" Nullable="false" />
         </EntityType>
-        <EnumType Name="BodySlot" cg:ExternalTypeName="NinjaHive.Domain.Enums.BodySlot" />
-        <ComplexType Name="ItemSlot">
-          <Property Type="Int32" Name="NumberOfSlots" Nullable="false" />
-          <Property Type="NinjaHiveEntities.BodySlot" Name="BodySlot" Nullable="false" />
-        </ComplexType>
+        <EnumType Name="BodySlot" cg:ExternalTypeName="NinjaHive.Components.Enums.BodySlot" />
         <EntityType Name="TierEntity">
           <Key>
             <PropertyRef Name="Id" />
@@ -887,7 +884,7 @@
           <Property Name="Name" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
           <Property Name="EditInfo" Type="NinjaHiveEntities.EditInfo" Nullable="false" />
         </EntityType>
-        <EnumType Name="Target" cg:ExternalTypeName="NinjaHive.Domain.Enums.Target" />
+        <EnumType Name="Target" cg:ExternalTypeName="NinjaHive.Components.Enums.Target" />
         <Association Name="EquipmentItemsTiersAssociation">
           <End Type="NinjaHiveEntities.EquipmentItemEntity" Role="EquipmentItemEntity" Multiplicity="1" />
           <End Type="NinjaHiveEntities.TierEntity" Role="TierEntity" Multiplicity="*" />
@@ -1006,10 +1003,6 @@
               <MappingFragment StoreEntitySet="EquipmentItems">
                 <ScalarProperty Name="Durability" ColumnName="Durability" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
-                <ComplexProperty Name="Slot">
-                  <ScalarProperty Name="BodySlot" ColumnName="BodySlot" />
-                  <ScalarProperty Name="NumberOfSlots" ColumnName="NumberOfSlots" />
-                </ComplexProperty>
               </MappingFragment>
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(NinjaHiveEntities.OtherItemEntity)">
