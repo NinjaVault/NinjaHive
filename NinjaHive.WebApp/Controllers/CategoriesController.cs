@@ -70,7 +70,7 @@ namespace NinjaHive.WebApp.Controllers
 
         public ActionResult EditMainCategory(Guid id)
         {
-            var model = this.queryProcessor.Execute(new GetEntityByIdQuery<MainCategoryModel>(id));
+            var model = this.mainCategoryRepository.GetById(id);
             return View(model);
         }
 
@@ -88,7 +88,7 @@ namespace NinjaHive.WebApp.Controllers
 
         public ActionResult EditSubCategory(Guid id)
         {
-            var model = this.queryProcessor.Execute(new GetEntityByIdQuery<SubCategoryModel>(id));
+            var model = this.subCategoryRepository.GetById(id);
             return View(model);
         }
 
@@ -106,7 +106,7 @@ namespace NinjaHive.WebApp.Controllers
 
         public ActionResult DeleteMainCategory(Guid id)
         {
-            var model = this.queryProcessor.Execute(new GetEntityByIdQuery<MainCategoryModel>(id));
+            var model = this.mainCategoryRepository.GetById(id);
             return View(model);
         }
 
@@ -121,7 +121,7 @@ namespace NinjaHive.WebApp.Controllers
 
         public ActionResult DeleteSubCategory(Guid id)
         {
-            var model = this.queryProcessor.Execute(new GetEntityByIdQuery<SubCategoryModel>(id));
+            var model = this.subCategoryRepository.GetById(id);
             return View(model);
         }
 
