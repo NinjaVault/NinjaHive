@@ -14,7 +14,7 @@ namespace NinjaHive.WebApp.Tests
         public void PerformValidation_CreateItemWithoutCategory_ThrowsValidationError()
         {
             // Arrange
-            var item = new GameItemModel
+            var item = new EquipmentModel
             {
                 Name = "Valid",
                 Description = "Valid description"
@@ -33,7 +33,7 @@ namespace NinjaHive.WebApp.Tests
         public void PerformValidation_GameItemWithEmptyName_ThrowsValidationError()
         {
             // Arrange
-            var item = new GameItemModel
+            var item = new EquipmentModel
             {
                 Name = string.Empty,
                 Description = "Valid description",
@@ -52,7 +52,7 @@ namespace NinjaHive.WebApp.Tests
         public void PerformValidation_GameItemNameWithInvalidCharacters_ThrowsValidationError()
         {
             // Arrange
-            var item = new GameItemModel
+            var item = new EquipmentModel
             {
                 Name = "1n val!d",
                 Description = "Valid description",

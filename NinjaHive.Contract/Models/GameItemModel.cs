@@ -5,7 +5,7 @@ using NinjaHive.Core.Validations;
 
 namespace NinjaHive.Contract.Models
 {
-    public class GameItemModel : IModel
+    public abstract class GameItemModel : IModel
     {
         public Guid Id { get; set; }
 

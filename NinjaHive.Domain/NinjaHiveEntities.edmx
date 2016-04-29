@@ -771,7 +771,7 @@
             <End Role="SubCategories" EntitySet="SubCategories" />
           </AssociationSet>
           </EntityContainer>
-        <EntityType Name="GameItemEntity" Abstract="false">
+        <EntityType Name="GameItemEntity" Abstract="true">
           <Key>
             <PropertyRef Name="Id" />
           </Key>

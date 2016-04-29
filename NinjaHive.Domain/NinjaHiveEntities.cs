@@ -59,7 +59,7 @@ namespace NinjaHive.Domain
     using System;
     using System.Collections.Generic;
     
-    public partial class GameItemEntity : NinjaHive.Domain.IEntity
+    public abstract partial class GameItemEntity : NinjaHive.Domain.IEntity
     {
         public GameItemEntity()
         {
