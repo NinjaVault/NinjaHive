@@ -71,7 +71,7 @@ namespace NinjaHive.WebApp.Areas.Items.Controllers
 
         private EquipmentViewModel PrepareViewModel(EquipmentModel model)
         {
-            var categories = this.queryProcessor.Execute(new GetCategoriesQuery());
+            var categories = this.queryProcessor.Execute(new GetGroupedCategoriesQuery());
             return new EquipmentViewModel(model, categories);
         }
     }

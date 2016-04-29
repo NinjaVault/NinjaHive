@@ -3,7 +3,7 @@ using NinjaHive.Core;
 
 namespace NinjaHive.Contract.Queries.Categories
 {
-    public class GetCategoriesQuery : IQuery<CategoryModel[]>
+    public class GetGroupedCategoriesQuery : IQuery<CategoryModel[]>
     {
     }
 }

@@ -5,9 +5,9 @@ using NinjaHive.Core;
 
 namespace NinjaHive.BusinessLayer.QueryHandlers.Categories
 {
-    public class GetCategoriesQueryHandler : IQueryHandler<GetCategoriesQuery, CategoryModel[]>
+    public class GetGroupedCategoriesQueryHandler : IQueryHandler<GetGroupedCategoriesQuery, CategoryModel[]>
     {
-        public CategoryModel[] Handle(GetCategoriesQuery query)
+        public CategoryModel[] Handle(GetGroupedCategoriesQuery query)
         {
             return new[]
             {

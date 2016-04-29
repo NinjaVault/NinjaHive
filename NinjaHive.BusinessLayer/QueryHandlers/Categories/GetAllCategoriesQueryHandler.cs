@@ -1,10 +1,10 @@
 ﻿using System.Linq;
 using NinjaHive.Contract.Models;
-using NinjaHive.Contract.Queries;
+using NinjaHive.Contract.Queries.Categories;
 using NinjaHive.Core;
 using NinjaHive.Domain;
 
-namespace NinjaHive.BusinessLayer.QueryHandlers
+namespace NinjaHive.BusinessLayer.QueryHandlers.Categories
 {
     public class GetAllCategoriesQueryHandler
         : IQueryHandler<GetAllCategoriesQuery, MainCategoryModel[]>

@@ -4,7 +4,7 @@ using NinjaHive.Contract.Models;
 using NinjaHive.Contract.Queries;
 using NinjaHive.Core;
 using NinjaHive.WebApp.Helpers;
-using NinjaHive.WebApp.Extensions;
+using NinjaHive.Contract.Queries.Categories;
 
 namespace NinjaHive.WebApp.Controllers
 {
