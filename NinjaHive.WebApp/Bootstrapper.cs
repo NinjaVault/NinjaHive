@@ -74,7 +74,7 @@ namespace NinjaHive.WebApp
             container.Register<IUserContext, HttpWebUserContext>(Lifestyle.Scoped);
             container.Register<IUserContextWithRoles, HttpWebUserContextWithRoles>(Lifestyle.Scoped);
             container.RegisterSingleton<ITimeProvider, SystemTimeProvider>();
-            container.RegisterSingleton(typeof(IWriteOnlyRepository<>), typeof(WriteOnlyCommandRepository<>));
+            container.RegisterSingleton(typeof(IUnitOfWork<>), typeof(UnitOfWork<>));
             container.RegisterSingleton<ILogger, DatabaseLogger>();
         }
 
@@ -117,6 +117,8 @@ namespace NinjaHive.WebApp
             container.RegisterDecorator(typeof(ICommandHandler<>), typeof(ValidationCommandHandlerDecorator<>));
             container.RegisterDecorator(typeof(ICommandHandler<>), typeof(SaveChangesCommandHandlerDecorator<>));
             container.RegisterDecorator(typeof(ICommandHandler<>), typeof(LifetimeScopeCommandHandlerProxy<>), Lifestyle.Singleton);
+
+            container.RegisterSingleton(typeof(IPromptableCommandHandler<>), typeof(PromptableCommandHandler<>));
         }
 
         private static void RegisterQueryHandlers()

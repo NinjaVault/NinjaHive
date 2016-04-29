@@ -13,6 +13,6 @@ namespace NinjaHive.Contract.Queries
         }
 
         [NonEmptyGuid]
-        public Guid Id { get; set; }
+        public Guid Id { get; }
     }
 }

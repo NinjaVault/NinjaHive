@@ -12,13 +12,13 @@ namespace NinjaHive.WebApp.Controllers
     public class CategoriesController : BaseController
     {
         private readonly IQueryProcessor queryProcessor;
-        private readonly IWriteOnlyRepository<MainCategoryModel> mainCategoryRepository;
-        private readonly IWriteOnlyRepository<SubCategoryModel> subCategoryRepository;
+        private readonly IUnitOfWork<MainCategoryModel> mainCategoryRepository;
+        private readonly IUnitOfWork<SubCategoryModel> subCategoryRepository;
 
         public CategoriesController(
             IQueryProcessor queryProcessor,
-            IWriteOnlyRepository<MainCategoryModel> mainCategoryRepository,
-            IWriteOnlyRepository<SubCategoryModel> subCategoryRepository)
+            IUnitOfWork<MainCategoryModel> mainCategoryRepository,
+            IUnitOfWork<SubCategoryModel> subCategoryRepository)
         {
             this.queryProcessor = queryProcessor;
             this.mainCategoryRepository = mainCategoryRepository;

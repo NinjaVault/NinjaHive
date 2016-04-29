@@ -250,10 +250,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\UrlProvider.cs" />
     <Compile Include="Services\FakeEmailService.cs" />
+    <Compile Include="Services\PromptableCommandHandler.cs" />
     <Compile Include="Services\SendGridEmailService.cs" />
     <Compile Include="Services\HttpWebUserContextWithRoles.cs" />
     <Compile Include="Services\HttpWebUserContext.cs" />
-    <Compile Include="Services\WriteOnlyCommandRepository.cs" />
+    <Compile Include="Services\UnitOfWork.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
