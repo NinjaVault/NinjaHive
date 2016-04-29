@@ -96,6 +96,7 @@
     <Compile Include="Mocks\Contract\AddGameItemCommand.cs" />
     <Compile Include="ContractValidationTests.cs" />
     <Compile Include="CoreExtensionTests.cs" />
+    <Compile Include="Mocks\FakeValidator.cs" />
     <Compile Include="ValidationDecoratorTests.cs" />
     <Compile Include="WebAppBootstrapperTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

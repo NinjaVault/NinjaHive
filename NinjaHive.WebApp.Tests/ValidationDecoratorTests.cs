@@ -3,8 +3,10 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NinjaHive.BusinessLayer.CrossCuttingConcerns;
 using NinjaHive.Core;
+using NinjaHive.Core.Validation;
 using NinjaHive.Core.Validation.Attributes;
 using NinjaHive.WebApp.Tests.Exceptions;
+using NinjaHive.WebApp.Tests.Mocks;
 
 namespace NinjaHive.WebApp.Tests
 {
@@ -116,7 +118,7 @@ namespace NinjaHive.WebApp.Tests
 
         private ValidationCommandHandlerDecorator<IFakeCommandInterface> ValidationDecorator
         {
-            get { return new ValidationCommandHandlerDecorator<IFakeCommandInterface>(new FakeDecoratee()); }
+            get { return new ValidationCommandHandlerDecorator<IFakeCommandInterface>(new FakeDecoratee(), new FakeValidator<IFakeCommandInterface>(), new ObjectValidator()); }
         }
 
         private Guid Guid

@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NinjaHive.BusinessLayer.CrossCuttingConcerns;
 using NinjaHive.Contract.Models;
+using NinjaHive.Core.Validation;
 using NinjaHive.WebApp.Tests.Exceptions;
 
 namespace NinjaHive.WebApp.Tests
@@ -22,7 +23,8 @@ namespace NinjaHive.WebApp.Tests
             var command = new Mocks.Contract.AddGameItemCommand(item);
 
             var fakeHandler = new Mocks.Contract.AddGameItemCommandHandler();
-            var handler = new ValidationCommandHandlerDecorator<Mocks.Contract.AddGameItemCommand>(fakeHandler);
+            var fakeValidator = new Mocks.FakeValidator<Mocks.Contract.AddGameItemCommand>();
+            var handler = new ValidationCommandHandlerDecorator<Mocks.Contract.AddGameItemCommand>(fakeHandler, fakeValidator, new ObjectValidator());
 
             // Act
             handler.Handle(command);
@@ -41,7 +43,8 @@ namespace NinjaHive.WebApp.Tests
             var command = new Mocks.Contract.AddGameItemCommand(item);
 
             var fakeHandler = new Mocks.Contract.AddGameItemCommandHandler();
-            var handler = new ValidationCommandHandlerDecorator<Mocks.Contract.AddGameItemCommand>(fakeHandler);
+            var fakeValidator = new Mocks.FakeValidator<Mocks.Contract.AddGameItemCommand>();
+            var handler = new ValidationCommandHandlerDecorator<Mocks.Contract.AddGameItemCommand>(fakeHandler, fakeValidator, new ObjectValidator());
 
             // Act
             handler.Handle(command);
@@ -60,7 +63,8 @@ namespace NinjaHive.WebApp.Tests
             var command = new Mocks.Contract.AddGameItemCommand(item);
 
             var fakeHandler = new Mocks.Contract.AddGameItemCommandHandler();
-            var handler = new ValidationCommandHandlerDecorator<Mocks.Contract.AddGameItemCommand>(fakeHandler);
+            var fakeValidator = new Mocks.FakeValidator<Mocks.Contract.AddGameItemCommand>();
+            var handler = new ValidationCommandHandlerDecorator<Mocks.Contract.AddGameItemCommand>(fakeHandler, fakeValidator, new ObjectValidator());
 
             // Act
             handler.Handle(command);

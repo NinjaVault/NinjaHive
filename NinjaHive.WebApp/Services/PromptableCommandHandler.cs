@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using NinjaHive.Core;
 
 namespace NinjaHive.WebApp.Services
@@ -28,6 +29,10 @@ namespace NinjaHive.WebApp.Services
             {
                 this.commandHandler.Handle(command);
                 successAction?.Invoke();
+            }
+            catch(ValidationException exception)
+            {
+                //TODO: somehow show validation results to the view..
             }
             catch (Exception exception)
             {

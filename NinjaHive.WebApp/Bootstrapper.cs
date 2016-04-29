@@ -74,6 +74,8 @@ namespace NinjaHive.WebApp
         {
             container.RegisterCollection(typeof(IValidator<>), Bootstrapper.GetAssemblies());
             container.RegisterSingleton(typeof(IValidator<>), typeof(CompositeValidator<>));
+
+            container.RegisterSingleton<IObjectValidator, ObjectValidator>();
         }
 
         private static void RegisterServices()

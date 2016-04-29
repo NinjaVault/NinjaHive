@@ -71,6 +71,7 @@
     <Compile Include="IEntityMapper.cs" />
     <Compile Include="ILogger.cs" />
     <Compile Include="IMapper.cs" />
+    <Compile Include="IObjectValidator.cs" />
     <Compile Include="IPromptableCommandHandler.cs" />
     <Compile Include="IQuery.cs" />
     <Compile Include="IQueryHandler.cs" />
@@ -85,6 +86,7 @@
     <Compile Include="Services\SqlConnectionFactory.cs" />
     <Compile Include="Services\SystemTimeProvider.cs" />
     <Compile Include="Validation\CompositeValidator.cs" />
+    <Compile Include="Validation\ObjectValidator.cs" />
     <Compile Include="Validation\ValidationCumulativeResults.cs" />
     <Compile Include="Validation\Attributes\NonEmptyGuidAttribute.cs" />
     <Compile Include="Validation\Attributes\ValidateObjectDeepAttribute.cs" />
