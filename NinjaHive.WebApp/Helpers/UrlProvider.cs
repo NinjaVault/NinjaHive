@@ -42,7 +42,7 @@ namespace NinjaHive.WebApp.Helpers
             {
                 var routes = new RouteValueDictionary(new
                 {
-                    Controller = typeof(TController).Name.Replace(typeof(Controller).Name, ""),
+                    Controller = typeof(TController).Name.Replace(nameof(Controller), ""),
                     Action = method.Name,
                     Area = GetAreaName()
                 });
@@ -67,7 +67,7 @@ namespace NinjaHive.WebApp.Helpers
             {
                 var routes = new RouteValueDictionary(new
                 {
-                    Controller = typeof(TController).Name.Replace(typeof(Controller).Name, ""),
+                    Controller = typeof(TController).Name.Replace(nameof(Controller), ""),
                     Action = method.Name,
                     Area = GetAreaName()
                 });
