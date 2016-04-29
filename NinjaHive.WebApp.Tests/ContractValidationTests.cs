@@ -10,7 +10,7 @@ namespace NinjaHive.WebApp.Tests
     public class ContractValidationTests
     {
         [TestMethod]
-        [ExpectedExceptionWithMessage(typeof(ValidationException), "The field 'CategoryId' in 'NinjaHive.Contract.Models.GameItemModel' is invalid!", MatchSubstring = true)]
+        [ExpectedExceptionWithMessage(typeof(ValidationException), "The field 'CategoryId' in 'NinjaHive.Contract.Models.EquipmentModel' is invalid!", MatchSubstring = true)]
         public void PerformValidation_CreateItemWithoutCategory_ThrowsValidationError()
         {
             // Arrange
