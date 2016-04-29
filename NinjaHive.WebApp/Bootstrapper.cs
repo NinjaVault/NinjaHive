@@ -19,6 +19,7 @@ using NinjaHive.BusinessLayer.Services;
 using NinjaHive.Core;
 using NinjaHive.Core.Decorators;
 using NinjaHive.Core.Services;
+using NinjaHive.Core.Validation;
 using NinjaHive.Domain;
 using NinjaHive.WebApp.Identity;
 using NinjaHive.WebApp.Services;
@@ -58,6 +59,8 @@ namespace NinjaHive.WebApp
             RegisterCommandHandlers();
             RegisterQueryHandlers();
 
+            RegisterValidators();
+
             RegisterServices();
             RegisterEmailServices();
 
@@ -65,6 +68,12 @@ namespace NinjaHive.WebApp
             container.RegisterMvcIntegratedFilterProvider();
 
             return container;
+        }
+
+        private static void RegisterValidators()
+        {
+            container.RegisterCollection(typeof(IValidator<>), Bootstrapper.GetAssemblies());
+            container.RegisterSingleton(typeof(IValidator<>), typeof(CompositeValidator<>));
         }
 
         private static void RegisterServices()

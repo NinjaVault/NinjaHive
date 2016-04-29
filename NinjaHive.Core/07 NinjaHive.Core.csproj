@@ -65,6 +65,7 @@
     <Compile Include="Extensions\FriendlyExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Helpers\RegEx.cs" />
+    <Compile Include="Helpers\Requires.cs" />
     <Compile Include="ICommandHandler.cs" />
     <Compile Include="IConnectionFactory.cs" />
     <Compile Include="IEntityMapper.cs" />
@@ -83,6 +84,7 @@
     <Compile Include="Services\QueryProcessor.cs" />
     <Compile Include="Services\SqlConnectionFactory.cs" />
     <Compile Include="Services\SystemTimeProvider.cs" />
+    <Compile Include="Validation\CompositeValidator.cs" />
     <Compile Include="Validation\ValidationCumulativeResults.cs" />
     <Compile Include="Validation\Attributes\NonEmptyGuidAttribute.cs" />
     <Compile Include="Validation\Attributes\ValidateObjectDeepAttribute.cs" />
