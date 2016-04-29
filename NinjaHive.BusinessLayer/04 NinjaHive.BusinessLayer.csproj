@@ -60,6 +60,8 @@
     <Compile Include="CommandHandlers\GameItemCommandHandler.cs" />
     <Compile Include="CrossCuttingConcerns\SaveChangesCommandHandlerDecorator.cs" />
     <Compile Include="CrossCuttingConcerns\ValidationCommandHandlerDecorator.cs" />
+    <Compile Include="QueryHandlers\Categories\GetCategoriesQueryHandler.cs" />
+    <Compile Include="QueryHandlers\GameItems\GetEquipmentItemsQueryHandler.cs" />
     <Compile Include="QueryHandlers\GetAllCategoriesQueryHandler.cs" />
     <Compile Include="QueryHandlers\GetItemsQueryHandler.cs" />
     <Compile Include="QueryHandlers\GetLinkedGameItemNamesQueryHandler.cs" />

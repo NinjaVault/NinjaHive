@@ -24,6 +24,5 @@
         //Categories
         public const string MainCategoryForm = "_MainCategoryFormPartial";
         public const string SubCategoryForm = "_SubCategoryFormPartial";
-        public const string EditCategories = "_EditCategoriesPartial";
     }
 }

@@ -46,6 +46,7 @@
     <Compile Include="Commands\UpdateEntityCommand.cs" />
     <Compile Include="Extensions\ParameterVisitor.cs" />
     <Compile Include="IModel.cs" />
+    <Compile Include="Models\CategoryModel.cs" />
     <Compile Include="Models\EquipmentModel.cs" />
     <Compile Include="Models\LevelModel.cs" />
     <Compile Include="Models\MainCategoryModel.cs" />
@@ -54,6 +55,8 @@
     <Compile Include="Models\GameItemModel.cs" />
     <Compile Include="Models\TierModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Queries\Categories\GetCategoriesQuery.cs" />
+    <Compile Include="Queries\GameItems\GetEquipmentItemsQuery.cs" />
     <Compile Include="Queries\GetAllCategoriesQuery.cs" />
     <Compile Include="Queries\GetAllGameItemsQuery.cs" />
     <Compile Include="Queries\GetEntityByIdQuery.cs" />

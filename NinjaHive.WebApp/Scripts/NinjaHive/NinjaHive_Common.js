@@ -159,41 +159,6 @@
         }
         return newArray;
     }
-
-    NH.enforceUniqueValue = function(form, elementName, validationUrl)
-    {
-
-        NH.addEventListener(form, "submit", function (evt)
-        {
-            evt.preventDefault();
-
-            var element = form[elementName];
-            var error = element.nextElementSibling;
-
-            var ajax = NH.createHttpRequest("GET", validationUrl + "?Name=" + element.value);
-            ajax.onSuccess= function (event, ajax)
-            {
-                var exists = JSON.parse(ajax.responseText).length;
-                if (!exists || exists == 0)
-                {
-                    form.submit();
-                }
-                else
-                {
-                    error.innerHTML = "This value already exists.";
-                }
-            };
-            ajax.onError = function (event, ajax)
-            {
-                error.innerHTML = "An error has occured trying to validate this name. Please try again later.";
-                console.log(ajax.responseText);
-            };
-            ajax.send();
-
-            return false;
-        });
-
-    }
     
     /*
      sendVerifiableForm(form, requestUrl)

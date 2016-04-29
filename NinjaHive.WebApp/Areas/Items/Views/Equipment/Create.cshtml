@@ -1,11 +1,8 @@
 ﻿@using NinjaHive.WebApp.Areas.Items.Controllers
 @using NinjaHive.WebApp.Areas.Items.Models
 @using NinjaHive.WebApp.Extensions
-@using NinjaHive.WebApp.Helpers
 
 @model EquipmentViewModel
-
-@Scripts.Render("~/bundles/ninjahive")
 
 <div class="row">
     <div class="page-header">
@@ -27,8 +24,4 @@
         </div>
     }
 
-    <script>
-        @{var validateUrl = UrlProvider<EquipmentController>.GetUrl(c => c.GetEquipmentJson(null));}
-        ninjaHive.enforceUniqueValue(document.forms["createEquipmentForm"], "Name", "@validateUrl");
-    </script>
 </div>

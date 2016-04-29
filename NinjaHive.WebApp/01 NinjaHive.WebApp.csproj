@@ -222,11 +222,9 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Items\Controllers\EquipmentController.cs" />
-    <Compile Include="Areas\Items\Controllers\GameItemsController.cs" />
     <Compile Include="Areas\Items\Controllers\TiersController.cs" />
     <Compile Include="Areas\Items\ItemsAreaRegistration.cs" />
     <Compile Include="Areas\Items\Models\EquipmentViewModel.cs" />
-    <Compile Include="Areas\Items\Models\GameItemViewModel.cs" />
     <Compile Include="Areas\Items\Models\IGameItemViewModel.cs" />
     <Compile Include="Areas\Items\Models\TiersListViewModel.cs" />
     <Compile Include="Areas\Items\Models\TierViewModel.cs" />
@@ -286,7 +284,6 @@
     <Content Include="Areas\Items\Views\Equipment\EditorTemplates\EquipmentViewModel.cshtml" />
     <Content Include="Areas\Items\Views\Equipment\Index.cshtml" />
     <Content Include="Areas\Items\Views\Shared\EditorTemplates\IGameItemViewModel.cshtml" />
-    <Content Include="Areas\Items\Views\Shared\_EditCategoriesPartial.cshtml" />
     <Content Include="Areas\Items\Views\Shared\_ItemsLayout.cshtml" />
     <Content Include="Areas\Items\Views\Shared\_ItemsSubnavigationPartial.cshtml" />
     <Content Include="Areas\Items\Views\Tiers\Create.cshtml" />
@@ -314,7 +311,6 @@
     <Content Include="Scripts\NinjaHive\NinjaHive_Common.js" />
     <Content Include="Scripts\NinjaHive\NinjaHive_DynamicObjectTemplate.js" />
     <Content Include="Scripts\NinjaHive\NinjaHive_EditableElementManager.js" />
-    <Content Include="Scripts\NinjaHive\NinjaHive_EditGameItemScripts.js" />
     <Content Include="Scripts\NinjaHive\NinjaHive_GenericModal.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />

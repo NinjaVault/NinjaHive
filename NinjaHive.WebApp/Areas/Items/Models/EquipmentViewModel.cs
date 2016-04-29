@@ -1,34 +1,28 @@
 ﻿using NinjaHive.Contract.Models;
-using NinjaHive.WebApp.Models;
 using System.Collections.Generic;
 using System.Web.Mvc;
 
 namespace NinjaHive.WebApp.Areas.Items.Models
 {
-    [ValidateInput(false)]
-    public class EquipmentViewModel: IGameItemViewModel
+    public class EquipmentViewModel : IGameItemViewModel<EquipmentModel>
     {
-        public EquipmentModel equipment;
+        private readonly IEnumerable<CategoryModel> categories;
 
-        public IEnumerable<MainCategoryModel> mainCategories;
-        public IEnumerable<SubCategoryModel> categories;
-
-        // Implement the equipment property solely with a getter for consistency's sake
-        public EquipmentModel Equipment { get { return equipment; } }
-
-        public GameItemModel BaseGameItem { get { return equipment; } }
-
-        // Get around EditorFor anti-recursion
-        public IGameItemViewModel GameItemViewModel { get { return this; } }
-
-        public IEnumerable<SelectListItem> MainCategories
+        public EquipmentViewModel(
+            EquipmentModel equipment,
+            IEnumerable<CategoryModel> categories)
         {
-            get { return new SelectList(this.mainCategories ?? new List<MainCategoryModel>(), "Id", "Name"); }
+            this.DerivedItem = equipment;
+            this.categories = categories;
         }
 
-        public IEnumerable<SelectListItem> Categories
-        {
-            get { return new SelectList(this.categories ?? new List<SubCategoryModel>(), "Id", "Name"); }
-        }
+        public GameItemModel Item => this.DerivedItem;
+
+        public EquipmentModel DerivedItem { get; }
+
+        public IEnumerable<SelectListItem> Categories =>
+            new SelectList(this.categories, nameof(CategoryModel.Id), nameof(CategoryModel.Name), nameof(CategoryModel.MainCategoryName), 1);
+
+        
     }
 }
