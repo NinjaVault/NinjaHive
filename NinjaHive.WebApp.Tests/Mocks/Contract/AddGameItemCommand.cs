@@ -1,7 +1,7 @@
 ﻿using NinjaHive.Contract.Commands;
 using NinjaHive.Contract.Models;
 using NinjaHive.Core;
-using NinjaHive.Core.Validations;
+using NinjaHive.Core.Validation.Attributes;
 
 namespace NinjaHive.WebApp.Tests.Mocks.Contract
 {

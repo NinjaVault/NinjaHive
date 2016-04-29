@@ -3,8 +3,7 @@ using NinjaHive.Core;
 
 namespace NinjaHive.Contract.Queries.Categories
 {
-    public class GetAllCategoriesQuery
-        : IQuery<MainCategoryModel[]>
+    public class GetAllCategoriesQuery : IQuery<MainCategoryModel[]>
     {
     }
 }

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NinjaHive.BusinessLayer.CrossCuttingConcerns;
 using NinjaHive.Core;
-using NinjaHive.Core.Validations;
+using NinjaHive.Core.Validation.Attributes;
 using NinjaHive.WebApp.Tests.Exceptions;
 
 namespace NinjaHive.WebApp.Tests

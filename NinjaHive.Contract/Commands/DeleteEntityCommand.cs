@@ -1,5 +1,5 @@
 ﻿using System;
-using NinjaHive.Core.Validations;
+using NinjaHive.Core.Validation.Attributes;
 
 namespace NinjaHive.Contract.Commands
 {

@@ -1,5 +1,5 @@
 ﻿using NinjaHive.Core.Helpers;
-using NinjaHive.Core.Validations;
+using NinjaHive.Core.Validation.Attributes;
 using System;
 using System.ComponentModel.DataAnnotations;
 

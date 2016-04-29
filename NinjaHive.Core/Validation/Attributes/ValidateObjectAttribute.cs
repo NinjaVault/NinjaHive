@@ -2,7 +2,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace NinjaHive.Core.Validations
+namespace NinjaHive.Core.Validation.Attributes
 {
     /// <summary>
     /// This attribute will let a validator perform validation on the members of the object.

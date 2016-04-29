@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace NinjaHive.Core.Validations
+namespace NinjaHive.Core.Validation.Attributes
 {
     /// <summary>
     /// Use on Guids to validate that the Guid cannot be empty.

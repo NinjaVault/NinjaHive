@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace NinjaHive.Core.Validations
+namespace NinjaHive.Core.Validation
 {
     public class ValidationCumulativeResults : ValidationResult
     {
