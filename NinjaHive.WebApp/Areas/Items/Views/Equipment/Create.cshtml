@@ -6,6 +6,7 @@
 @model EquipmentViewModel
 
 @Scripts.Render("~/bundles/ninjahive")
+
 <div class="row">
     <div class="page-header">
         <h2>
@@ -16,7 +17,9 @@
     @using (Html.BeginForm<EquipmentController>(c => c.Create(null), new {@class = "form-horizontal", role = "form", name = "createEquipmentForm"}))
     {
         @Html.AntiForgeryToken()
+
         @Html.EditorForModel()
+
         <div class="form-group">
             <div class="col-md-12">
                 <input type="submit" class="btn btn-primary" value="Create Equipment"/>
