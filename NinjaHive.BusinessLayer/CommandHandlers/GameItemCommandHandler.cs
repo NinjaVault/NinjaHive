@@ -23,9 +23,9 @@ namespace NinjaHive.BusinessLayer.CommandHandlers
 
         public void Handle(CreateEntityCommand<GameItemModel> command)
         {
-            var entity = new GameItemEntity();
-            this.UpdateItem(entity, command.Model);
-            this.itemRepository.Add(entity);
+            //var entity = new GameItemEntity();
+            //this.UpdateItem(entity, command.Model);
+            //this.itemRepository.Add(entity);
         }
 
         public void Handle(UpdateEntityCommand<GameItemModel> command)
