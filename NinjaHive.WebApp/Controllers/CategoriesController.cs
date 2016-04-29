@@ -129,7 +129,6 @@ namespace NinjaHive.WebApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteSubCategory(SubCategoryModel model)
         {
-            //TODO: needs validation both server/client side to check if we can delete it by checking if gameitems are attached to it
             this.subCategoryRepository.Delete(model.Id);
             return this.RedirectToIndex();
         }

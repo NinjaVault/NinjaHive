@@ -67,6 +67,7 @@
     <Compile Include="Services\EntitiesAutoMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueryHandlers\GetEntityByIdQueryHandler.cs" />
+    <Compile Include="Validators\CannotDeleteSubCategoriesIfGameItemsAreAttached.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NinjaHive.Components\06 NinjaHive.Components.csproj">
