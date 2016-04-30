@@ -1,27 +1,14 @@
 ﻿@using NinjaHive.WebApp.Areas.Items.Controllers
-@using NinjaHive.WebApp.Areas.Items.Models
 @using NinjaHive.WebApp.Extensions
 @using NinjaHive.WebApp.Helpers
 
-@model TiersListViewModel
+@model NinjaHive.WebApp.Areas.Items.Models.TiersListViewModel
 
 <div class="page-header">
-    <h2>Equipment Tiers <small>@Model.Equipment.Name</small></h2>
-    @( Html.ActionLink<TiersController>("Create new Tier", c => c.Create(Model.Equipment.Id), new { @class = "btn btn-primary" }))
+    <h2>Equipment Tiers <small>@Model.EquipmentName</small></h2>
+    @( Html.ActionLink<TiersController>("Create new Tier", c => c.Create(Model.EquipmentId), new { @class = "btn btn-primary" }))
 </div>
 
 <div class="list-group" id="tiers" role="tablist">
-        @foreach (var tier in Model.Tiers)
-        {
-            var tierEditUrl = UrlProvider<TiersController>.GetUrl(c => c.Edit(tier.Id));
-            var tierPageId = Html.AttributeEncode(tier.Name.Replace(" ",""));
-            <div class="list-group-item" data-id="@tier.Id.ToString()">
-                <div class="btn-group-sm pull-right">
-                    <a href="@tierEditUrl" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span></a>
-                </div>
-                <h4 class="panel-title" style="display:inline-block;">
-                        @tier.Name
-                </h4>
-            </div>
-        }
+    @Html.DisplayFor(m => m.Tiers)
 </div>
