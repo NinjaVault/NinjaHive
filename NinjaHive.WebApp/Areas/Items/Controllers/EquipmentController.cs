@@ -1,5 +1,4 @@
 ﻿using NinjaHive.Core;
-using NinjaHive.Contract.Queries;
 using NinjaHive.Contract.Models;
 using NinjaHive.Contract.Queries.GameItems;
 using NinjaHive.WebApp.Areas.Items.Models;
@@ -14,15 +13,18 @@ namespace NinjaHive.WebApp.Areas.Items.Controllers
     public class EquipmentController : BaseController
     {
         private readonly IQueryProcessor queryProcessor;
+        private readonly IUnitOfWork<EquipmentModel> equipmentItemsRepository;
 
-        public EquipmentController(IQueryProcessor queryProcessor)
+        public EquipmentController(IQueryProcessor queryProcessor,
+            IUnitOfWork<EquipmentModel> equipmentItemsRepository)
         {
             this.queryProcessor = queryProcessor;
+            this.equipmentItemsRepository = equipmentItemsRepository;
         }
 
         public ActionResult Index()
         {
-            var items = this.queryProcessor.Execute(new GetEquipmentItemsQuery());
+            var items = this.queryProcessor.Execute(new GetAllItemsQuery<EquipmentModel>());
             return View(items);
         }
 
@@ -33,29 +35,29 @@ namespace NinjaHive.WebApp.Areas.Items.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(EquipmentViewModel model)
+        public ActionResult Create(EquipmentViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                //TODO: query database
+                this.equipmentItemsRepository.Create(viewModel.DerivedItem);
                 return base.Home();
             }
-            return View();
+            return View(viewModel);
         }
 
         public ActionResult Edit(Guid id)
         {
-            var item = this.queryProcessor.Execute(new GetEntityByIdQuery<EquipmentModel>(id));
+            var item = this.equipmentItemsRepository.GetById(id);
             return View(PrepareViewModel(item));
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(EquipmentViewModel model)
+        public ActionResult Edit(EquipmentViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                //TODO: query database
+                this.equipmentItemsRepository.Update(viewModel.DerivedItem);
                 return base.Home();
             }
             return View();
@@ -65,7 +67,7 @@ namespace NinjaHive.WebApp.Areas.Items.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(Guid id)
         {
-            //TODO: query database
+            this.equipmentItemsRepository.Delete(id);
             return base.Home();
         }
 
