@@ -10,8 +10,8 @@
         <EntityTypeShape EntityType="NinjaHiveEntities.ClassEntity" Width="1.75" PointX="71" PointY="58.5" FillColor="Green" />
         <EntityTypeShape EntityType="NinjaHiveEntities.OtherItemEntity" Width="1.875" PointX="82.25" PointY="57.375" />
         <InheritanceConnector EntityType="NinjaHiveEntities.OtherItemEntity" />
-        <EntityTypeShape EntityType="NinjaHiveEntities.MiscItemEntity" Width="1.875" PointX="82.25" PointY="59.125" />
-        <InheritanceConnector EntityType="NinjaHiveEntities.MiscItemEntity" />
+        <EntityTypeShape EntityType="NinjaHiveEntities.SkillItemEntity" Width="1.875" PointX="82.25" PointY="59.125" />
+        <InheritanceConnector EntityType="NinjaHiveEntities.SkillItemEntity" />
         <EntityTypeShape EntityType="NinjaHiveEntities.EquipmentItemEntity" Width="1.875" PointX="75.25" PointY="57.375" />
         <InheritanceConnector EntityType="NinjaHiveEntities.EquipmentItemEntity" />
         <EntityTypeShape EntityType="NinjaHiveEntities.TierEntity" Width="1.75" PointX="75.375" PointY="60.875" />

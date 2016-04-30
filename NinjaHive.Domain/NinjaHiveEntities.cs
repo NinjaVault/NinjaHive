@@ -134,17 +134,6 @@ namespace NinjaHive.Domain
     using System;
     using System.Collections.Generic;
     
-    public partial class MiscItemEntity : GameItemEntity, NinjaHive.Domain.IEntity
-    {
-    
-        public virtual SkillEntity Skill { get; set; }
-    }
-}
-namespace NinjaHive.Domain
-{
-    using System;
-    using System.Collections.Generic;
-    
     public partial class OtherItemEntity : GameItemEntity, NinjaHive.Domain.IEntity
     {
         public OtherItemEntity()
@@ -210,6 +199,17 @@ namespace NinjaHive.Domain
     
         public virtual ICollection<SpecialEntity> Specials { get; set; }
         public virtual StatInfoEntity StatInfo { get; set; }
+    }
+}
+namespace NinjaHive.Domain
+{
+    using System;
+    using System.Collections.Generic;
+    
+    public partial class SkillItemEntity : GameItemEntity, NinjaHive.Domain.IEntity
+    {
+    
+        public virtual SkillEntity Skill { get; set; }
     }
 }
 namespace NinjaHive.Domain

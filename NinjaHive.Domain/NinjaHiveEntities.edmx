@@ -807,7 +807,7 @@
           <NavigationProperty Name="StatInfo" Relationship="NinjaHiveEntities.OtherItemsStatInfoAssociation" FromRole="OtherItemEntity" ToRole="StatInfoEntity" />
           <NavigationProperty Name="CraftingIngredients" Relationship="NinjaHiveEntities.OtherItemsCrafingItemsAssociation" FromRole="OtherItemEntity" ToRole="GameItemEntity" />
         </EntityType>
-        <EntityType Name="MiscItemEntity" BaseType="NinjaHiveEntities.GameItemEntity" >
+        <EntityType Name="SkillItemEntity" BaseType="NinjaHiveEntities.GameItemEntity" >
           <NavigationProperty Name="Skill" Relationship="NinjaHiveEntities.MiscItemsSkillsAssociation" FromRole="MiscItemEntity" ToRole="SkillEntity" />
         </EntityType>
         <EntityType Name="EquipmentItemEntity" BaseType="NinjaHiveEntities.GameItemEntity" >
@@ -914,7 +914,7 @@
           <End Type="NinjaHiveEntities.StatInfoEntity" Role="StatInfoEntity" Multiplicity="1" />
         </Association>
         <Association Name="MiscItemsSkillsAssociation">
-          <End Type="NinjaHiveEntities.MiscItemEntity" Role="MiscItemEntity" Multiplicity="0..1" />
+          <End Type="NinjaHiveEntities.SkillItemEntity" Role="MiscItemEntity" Multiplicity="0..1" />
           <End Type="NinjaHiveEntities.SkillEntity" Role="SkillEntity" Multiplicity="1" />
         </Association>
         <Association Name="EquipmentItemsRacesAssociation">
@@ -1013,7 +1013,7 @@
                 <ScalarProperty Name="IsEnhancer" ColumnName="IsEnhancer" />
               </MappingFragment>
             </EntityTypeMapping>
-            <EntityTypeMapping TypeName="IsTypeOf(NinjaHiveEntities.MiscItemEntity)">
+            <EntityTypeMapping TypeName="IsTypeOf(NinjaHiveEntities.SkillItemEntity)">
               <MappingFragment StoreEntitySet="MiscItems">
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
