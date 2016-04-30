@@ -75,9 +75,5 @@ namespace NinjaHive.Core.Validation
                 topLevelMessage,
                 string.Join("\n\t-", resultsCollection));
         }
-
-        /*public override string ToString()
-        {
-        }*/
     }
 }
