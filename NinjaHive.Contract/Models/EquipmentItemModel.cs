@@ -12,7 +12,7 @@ namespace NinjaHive.Contract.Models
         }
 
         public int Durability { get; set; }
-        public BodySlot VodySlot { get; set; }
+        public BodySlot BodySlot { get; set; }
         public int NumberOfSlots {get; set;}
     }
 }
