@@ -3,13 +3,13 @@
 @using NinjaHive.WebApp.Extensions
 @using NinjaHive.WebApp.Helpers
 
-@model IEnumerable<EquipmentModel>
+@model IEnumerable<OtherItemModel>
 
 
 <div class="row">
     <div class="page-header">
-        <h2>Equipment</h2>
-        @( Html.ActionLink<EquipmentController>("Create new Equipment", c => c.Create(), new { @class = "btn btn-primary" }))
+        <h2>Other Items</h2>
+        @( Html.ActionLink<OtherController>("Create new Item", c => c.Create(), new { @class = "btn btn-primary" }))
     </div>
 </div>
 

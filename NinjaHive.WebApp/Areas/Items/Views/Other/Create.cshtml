@@ -2,16 +2,16 @@
 @using NinjaHive.WebApp.Areas.Items.Models
 @using NinjaHive.WebApp.Extensions
 
-@model EquipmentViewModel
+@model OtherItemViewModel
 
 <div class="row">
     <div class="page-header">
         <h2>
-            Equipment <small>Create</small>
+            Other Items <small>Create</small>
         </h2>
     </div>
 
-    @using (Html.BeginForm<EquipmentController>(c => c.Create(null), new {@class = "form-horizontal", role = "form"}))
+    @using (Html.BeginForm<OtherController>(c => c.Create(null), new { @class = "form-horizontal", role = "form"}))
     {
         @Html.AntiForgeryToken()
 
@@ -19,7 +19,7 @@
 
         <div class="form-group">
             <div class="col-md-12">
-                <input type="submit" class="btn btn-primary" value="Create Equipment"/>
+                <input type="submit" class="btn btn-primary" value="Create Item" />
             </div>
         </div>
     }

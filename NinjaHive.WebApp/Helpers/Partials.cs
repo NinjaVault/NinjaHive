@@ -13,6 +13,7 @@
         //Items
         public const string ItemsSubNav = "_ItemsSubnavigationPartial";
         public const string GameItems = "_GameItemsPartial";
+        public const string GameItemsList = "_GameItemsList";
         public const string EditGameItem = "EditorTemplates/IGameItemViewModel";
 
         //Equipment

@@ -50,6 +50,7 @@
     <Compile Include="Models\EquipmentModel.cs" />
     <Compile Include="Models\LevelModel.cs" />
     <Compile Include="Models\MainCategoryModel.cs" />
+    <Compile Include="Models\OtherItemModel.cs" />
     <Compile Include="Models\StatInfoModel.cs" />
     <Compile Include="Models\SubCategoryModel.cs" />
     <Compile Include="Models\GameItemModel.cs" />

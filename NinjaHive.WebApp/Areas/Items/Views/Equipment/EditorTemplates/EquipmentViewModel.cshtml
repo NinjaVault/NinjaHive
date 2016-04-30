@@ -26,7 +26,7 @@
                     @Html.DropDownListFor(m => m.Equipment.Slot,    EnumHelper.GetSelectList(typeof(BodySlot)),     new { @class = "form-control", Name="Slot" })
                 *@
                 
-                @Html.ValidationMessageFor(m => m.DerivedItem.Durability, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(m => m.DerivedItem.Slot, "", new { @class = "text-danger" })
             </div>
         </div>
     </div>

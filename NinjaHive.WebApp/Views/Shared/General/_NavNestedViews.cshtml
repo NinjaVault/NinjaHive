@@ -1,0 +1,13 @@
+﻿@using System.Collections.Generic
+@using System.Web.Mvc
+
+@model IEnumerable<MvcHtmlString>
+
+<ul class="breadcrumb">
+    @foreach (var anchor in Model)
+    {
+        <li>
+            @anchor
+        </li>
+    }
+</ul>

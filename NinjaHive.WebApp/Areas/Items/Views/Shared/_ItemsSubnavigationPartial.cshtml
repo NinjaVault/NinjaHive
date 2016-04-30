@@ -9,7 +9,7 @@
                     {
                         {"Equipment", Html.ActionLink<EquipmentController>("Equipment", c => c.Index())},
                         //{"Misc", Html.ActionLink<EquipmentController>("Misc", c => c.Index(), new{title="Coming Soon"})},
-                        //{"Other", Html.ActionLink<EquipmentController>("Other", c => c.Index(), new{title="Coming Soon"})},
+                        {"Other", Html.ActionLink<OtherController>("Other", c => c.Index())},
                     };
 
             string pageCategory = ViewContext.RouteData.Values["Controller"].ToString();

@@ -33,10 +33,10 @@ namespace NinjaHive.WebApp.Areas.Items.Controllers
         public ActionResult Create(Guid equipmentId)
         {
             var model = new TierModel { StatInfo = new StatInfoModel() };
-            var viewModel = new TierViewModel {
-                Tier = model,
-                Equipment = GetEquipmentById(equipmentId)
-            };
+            var viewModel = new TierViewModel(
+                model,
+                GetEquipmentById(equipmentId)
+            );
             return View(viewModel);
         }
 
@@ -47,7 +47,7 @@ namespace NinjaHive.WebApp.Areas.Items.Controllers
             if (ModelState.IsValid)
             {
                 //TODO: query database
-                return this.Home(viewModel.Equipment.Id);
+                return this.Home(viewModel.EquipmentId);
             }
             return View(viewModel);
         }
@@ -73,7 +73,7 @@ namespace NinjaHive.WebApp.Areas.Items.Controllers
             if (ModelState.IsValid)
             {
                 //TODO: query database
-                return this.Home(viewModel.Equipment.Id);
+                return this.Home(viewModel.EquipmentId);
             }
             return View(viewModel);
         }
@@ -105,18 +105,20 @@ namespace NinjaHive.WebApp.Areas.Items.Controllers
 
         private TiersListViewModel PrepareListViewModel(Guid equipmentId)
         {
-            var viewModel = new TiersListViewModel();
-            viewModel.Equipment = GetParentEquipment(equipmentId);
-            viewModel.Tiers = GetTiersForEquipment(equipmentId);
+            var viewModel = new TiersListViewModel(
+                    GetTiersForEquipment(equipmentId),
+                    GetParentEquipment(equipmentId)
+                );
 
             return viewModel;
         }
 
         private TierViewModel PrepareViewModel(TierModel model)
         {
-            var viewModel = new TierViewModel();
-            viewModel.Equipment = GetParentEquipment(model);
-            viewModel.Tier = model;
+            var viewModel = new TierViewModel(
+                    model,
+                    GetParentEquipment(model)
+                );
 
             return viewModel;
         }
