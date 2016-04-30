@@ -5,8 +5,6 @@ using NinjaHive.WebApp.Areas.Items.Models;
 using NinjaHive.WebApp.Controllers;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace NinjaHive.WebApp.Areas.Items.Controllers
