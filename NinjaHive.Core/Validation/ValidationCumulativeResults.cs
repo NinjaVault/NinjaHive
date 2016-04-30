@@ -20,6 +20,7 @@ namespace NinjaHive.Core.Validation
         {
             resultsCollection = new Collection<ValidationResult>();
             AddResults(results);
+            ErrorMessage = CreateErrorMessage(errorMessage);
         }
 
         public ValidationCumulativeResults(string errorMessage, IEnumerable<string> memberNames) :base(errorMessage, memberNames)
@@ -68,11 +69,15 @@ namespace NinjaHive.Core.Validation
             }
         }
 
-        public override string ToString()
+        private string CreateErrorMessage(string topLevelMessage)
         {
             return string.Format("{0} Inner-Exceptions:{{\n\t-{1}}}",
-                base.ToString(),
-                string.Join("\n\t-",resultsCollection));
+                topLevelMessage,
+                string.Join("\n\t-", resultsCollection));
         }
+
+        /*public override string ToString()
+        {
+        }*/
     }
 }
