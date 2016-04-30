@@ -7,15 +7,7 @@
 <div class="col-md-6">
     @Html.FormGroupFor(m => m.Item.Name)
 
-    <div class="form-group">
-        @Html.LabelFor(m => m.Item.CategoryId, new { @class = "col-md-4 control-label" })
-        <div class="col-md-8">
-            @*TODO: enable c#6.0 for razor syntax to make use of the nameof() operator*@
-            @*NOTE: don't use DropDownListFor, because there's a bug inside this extension method that renders the wrong name!*@
-            @Html.DropDownList("CategoryId", Model.Categories, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.Item.CategoryId, "", new { @class = "text-danger" })
-        </div>
-    </div>
+    @Html.FormGroupFor(m => m.Item.CategoryId, Model.Categories)
 
     @Html.FormGroupFor(m => m.Item.Description)
 

@@ -59,10 +59,12 @@ namespace NinjaHive.WebApp.Extensions
             builder.AppendLine("<div class='form-group'>");
             builder.AppendLine(htmlHelper.LabelFor(expression, new { @class = "col-md-4 control-label" }).ToHtmlString());
             builder.AppendLine("<div class='col-md-8'>");
-
-            //NOTE: don't use DropDownListFor, because there's a bug inside this extension method that renders the wrong name!
-            //TODO: Replace this DropDownListFor
-            builder.AppendLine(htmlHelper.DropDownListFor(expression, list, new { @class = "form-control" }).ToHtmlString());
+            
+            builder.AppendLine(htmlHelper.DropDownList(PropertyHelper.NameFromExpression(expression),
+                                                        list,
+                                                        new { @class = "form-control" }
+                                                    ).ToHtmlString()
+                                                );
             builder.AppendLine(htmlHelper.ValidationMessageFor(expression, "", new { @class = "text-danger" }).ToHtmlString());
             builder.AppendLine("</div></div>");
 
