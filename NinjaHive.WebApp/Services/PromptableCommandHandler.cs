@@ -32,11 +32,14 @@ namespace NinjaHive.WebApp.Services
             }
             catch(ValidationException exception)
             {
+                throw exception;
                 //TODO: somehow show validation results to the view..
             }
             catch (Exception exception)
             {
-                failureAction?.Invoke(exception);
+                throw exception;
+                //TODO: show error message and logging and execute failureaction
+                //failureAction?.Invoke(exception);
             }
         }
     }
