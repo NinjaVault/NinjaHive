@@ -4,7 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using NinjaHive.Core;
 
-namespace NinjaHive.Domain
+namespace NinjaHive.Domain.Services
 {
     public class EntityEditHandler : IEntityEditHandler
     {

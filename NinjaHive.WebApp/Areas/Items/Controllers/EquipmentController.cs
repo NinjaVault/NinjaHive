@@ -35,14 +35,14 @@ namespace NinjaHive.WebApp.Areas.Items.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(EquipmentViewModel viewModel)
+        public ActionResult Create(EquipmentModel model)
         {
             if (ModelState.IsValid)
             {
-                this.equipmentItemsRepository.Create(viewModel.DerivedItem);
+                this.equipmentItemsRepository.Create(model);
                 return base.Home();
             }
-            return View(viewModel);
+            return View(PrepareViewModel(model));
         }
 
         public ActionResult Edit(Guid id)
@@ -53,11 +53,11 @@ namespace NinjaHive.WebApp.Areas.Items.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(EquipmentViewModel viewModel)
+        public ActionResult Edit(EquipmentModel model)
         {
             if (ModelState.IsValid)
             {
-                this.equipmentItemsRepository.Update(viewModel.DerivedItem);
+                this.equipmentItemsRepository.Update(model);
                 return base.Home();
             }
             return View();

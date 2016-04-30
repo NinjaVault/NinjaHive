@@ -11,7 +11,7 @@
         </h2>
     </div>
 
-    @using (Html.BeginForm<EquipmentController>(c => c.Create(null), new {@class = "form-horizontal", role = "form"}))
+    @using (Html.BeginForm<EquipmentController>(c => c.Create(Model.DerivedItem), new {@class = "form-horizontal", role = "form"}))
     {
         @Html.AntiForgeryToken()
 
