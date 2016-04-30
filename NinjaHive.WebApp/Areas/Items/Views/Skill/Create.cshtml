@@ -11,7 +11,7 @@
         </h2>
     </div>
 
-    @using (Html.BeginForm<SkillItemsController>(c => c.Create(null), new { @class = "form-horizontal", role = "form" }))
+    @using (Html.BeginForm<SkillController>(c => c.Create(null), new { @class = "form-horizontal", role = "form" }))
     {
         @Html.AntiForgeryToken()
 

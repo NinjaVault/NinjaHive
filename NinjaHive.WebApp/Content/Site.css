@@ -51,6 +51,7 @@ textarea {
     font-weight:bold;
     font-size:12px;
     padding:5px 15px;
+    border: 1px solid transparent;
 }
 .navbar .navbar-subnav .nav li.active a{
     background:#337AB7;

@@ -6,7 +6,7 @@
 
 <div class="row">
     <div class="page-header">
-        @using (Html.BeginForm<SkillItemsController>(c => c.Delete(Model.DerivedItem.Id), new { @class = "form-delete pull-right" }))
+        @using (Html.BeginForm<SkillController>(c => c.Delete(Model.DerivedItem.Id), new { @class = "form-delete pull-right" }))
         {
             @Html.AntiForgeryToken()
             @Html.HiddenFor(m => m.DerivedItem.Id, new { Name = "Id" })
@@ -17,7 +17,7 @@
             Skill Items <small>Edit</small>
         </h2>
     </div>
-    @using (Html.BeginForm<SkillItemsController>(c => c.Edit(null), new { @class = "form-horizontal", role = "form" }))
+    @using (Html.BeginForm<SkillController>(c => c.Edit(null), new { @class = "form-horizontal", role = "form" }))
     {
         @Html.AntiForgeryToken()
         @Html.EditorForModel()

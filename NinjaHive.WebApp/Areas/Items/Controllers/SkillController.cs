@@ -9,20 +9,20 @@ using System.Web.Mvc;
 
 namespace NinjaHive.WebApp.Areas.Items.Controllers
 {
-    public class SkillItemsController : BaseController
+    public class SkillController : BaseController
     {
         private readonly IQueryProcessor queryProcessor;
 
         List<SkillItemModel> tempList = new List<SkillItemModel>
         {
-            new SkillItemModel { Id = Guid.Parse("26851558-4568-7895-5568-123645215468"), Name="First Other Item", Description = "The first item of the Skill Items section", SubCategoryMainCategoryName="Enhancers", SubCategoryName="Attack" },
-            new SkillItemModel { Id = Guid.NewGuid(), Name="Second Other Item", SubCategoryMainCategoryName="Enhancers", SubCategoryName="Attack" },
-            new SkillItemModel { Id = Guid.NewGuid(), Name="Third Other Item", SubCategoryMainCategoryName="Enhancers", SubCategoryName="Defense"},
-            new SkillItemModel { Id = Guid.NewGuid(), Name="Foruth Other Item", SubCategoryMainCategoryName="Usables", SubCategoryName="Consumables"},
-            new SkillItemModel { Id = Guid.NewGuid(), Name="Fifth Other Item", SubCategoryMainCategoryName="Usables", SubCategoryName="Attack Items"},
+            new SkillItemModel { Id = Guid.Parse("26851558-4568-7895-5568-123645215468"), Name="First Skill Item", Description = "The first item of the Skill Items section", SubCategoryMainCategoryName="Enhancing", SubCategoryName="Ally" },
+            new SkillItemModel { Id = Guid.NewGuid(), Name="Second Skill Item", SubCategoryMainCategoryName="Enhancing", SubCategoryName="Ally" },
+            new SkillItemModel { Id = Guid.NewGuid(), Name="Third Skill Item", SubCategoryMainCategoryName="Enhancing", SubCategoryName="Enemy"},
+            new SkillItemModel { Id = Guid.NewGuid(), Name="Foruth Skill Item", SubCategoryMainCategoryName="Attacks", SubCategoryName="Blasts"},
+            new SkillItemModel { Id = Guid.NewGuid(), Name="Fifth Skill Item", SubCategoryMainCategoryName="Defenses", SubCategoryName="Shields"},
         };
 
-        public SkillItemsController(IQueryProcessor queryProcessor)
+        public SkillController(IQueryProcessor queryProcessor)
         {
             this.queryProcessor = queryProcessor;
         }
