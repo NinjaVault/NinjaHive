@@ -26,7 +26,7 @@
         <AssociationConnector Association="NinjaHiveEntities.LevelsStatInfoAssociation" />
         <AssociationConnector Association="NinjaHiveEntities.SkillsStatInfoAssociation" />
         <AssociationConnector Association="NinjaHiveEntities.OtherItemsStatInfoAssociation" />
-        <AssociationConnector Association="NinjaHiveEntities.MiscItemsSkillsAssociation" />
+        <AssociationConnector Association="NinjaHiveEntities.SkillItemsSkillsAssociation" />
         <AssociationConnector Association="NinjaHiveEntities.EquipmentItemsRacesAssociation" />
         <AssociationConnector Association="NinjaHiveEntities.EquipmentItemsClassesAssociation" />
         <AssociationConnector Association="NinjaHiveEntities.EquipmentItemsEnhancersAssociation" />
