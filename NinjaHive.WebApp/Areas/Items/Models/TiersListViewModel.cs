@@ -1,10 +1,6 @@
 ﻿using NinjaHive.Contract.Models;
-using NinjaHive.WebApp.Areas.Items.Controllers;
-using NinjaHive.WebApp.Extensions;
-using NinjaHive.WebApp.Helpers;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
 namespace NinjaHive.WebApp.Areas.Items.Models
