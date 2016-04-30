@@ -223,12 +223,14 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Items\Controllers\EquipmentController.cs" />
     <Compile Include="Areas\Items\Controllers\OtherController.cs" />
+    <Compile Include="Areas\Items\Controllers\SkillItemsController.cs" />
     <Compile Include="Areas\Items\Controllers\TiersController.cs" />
     <Compile Include="Areas\Items\ItemsAreaRegistration.cs" />
     <Compile Include="Areas\Items\Models\EquipmentViewModel.cs" />
     <Compile Include="Areas\Items\Models\IGameItemViewModel.cs" />
     <Compile Include="Areas\Items\Models\ITierViewModel.cs" />
     <Compile Include="Areas\Items\Models\OtherItemViewModel.cs" />
+    <Compile Include="Areas\Items\Models\SkillItemViewModel.cs" />
     <Compile Include="Areas\Items\Models\TiersListViewModel.cs" />
     <Compile Include="Areas\Items\Models\TierViewModel.cs" />
     <Compile Include="Bootstrapper.cs" />
@@ -304,6 +306,11 @@
     <Content Include="Areas\Items\Views\Equipment\DisplayTemplates\EquipmentModel.cshtml" />
     <Content Include="Areas\Items\Views\Shared\_GameItemsList.cshtml" />
     <Content Include="Areas\Items\Views\Other\DisplayTemplates\OtherItemModel.cshtml" />
+    <Content Include="Areas\Items\Views\SkillItems\Index.cshtml" />
+    <Content Include="Areas\Items\Views\SkillItems\Create.cshtml" />
+    <Content Include="Areas\Items\Views\SkillItems\Edit.cshtml" />
+    <Content Include="Areas\Items\Views\SkillItems\DisplayTemplates\SkillItemModel.cshtml" />
+    <Content Include="Areas\Items\Views\SkillItems\EditorTemplates\SkillItemViewModel.cshtml" />
     <None Include="Properties\PublishProfiles\NinjaHive - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />

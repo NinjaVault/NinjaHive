@@ -2,9 +2,9 @@
 
 namespace NinjaHive.Contract.Models
 {
-    public class EquipmentItemModel: GameItemModel
+    public class EquipmentModel: GameItemModel
     {
-        public EquipmentitemModel()
+        public EquipmentModel()
         {
             this.Durability = 0;
             this.Slot = BodySlot.Head;

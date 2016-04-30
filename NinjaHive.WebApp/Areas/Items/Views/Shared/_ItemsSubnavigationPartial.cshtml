@@ -8,7 +8,7 @@
             var actionLinks = new Dictionary<string, MvcHtmlString>
                     {
                         {"Equipment", Html.ActionLink<EquipmentController>("Equipment", c => c.Index())},
-                        //{"Misc", Html.ActionLink<EquipmentController>("Misc", c => c.Index(), new{title="Coming Soon"})},
+                        {"SkillItems", Html.ActionLink<SkillItemsController>("Skill", c => c.Index())},
                         {"Other", Html.ActionLink<OtherController>("Other", c => c.Index())},
                     };
 
