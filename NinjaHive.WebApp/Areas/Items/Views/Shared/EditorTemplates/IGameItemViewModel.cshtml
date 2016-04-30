@@ -7,8 +7,6 @@
 <div class="col-md-6">
     @Html.FormGroupFor(m => m.Item.Name)
 
-    @Html.FormGroupFor(m => m.Item.CategoryId, Model.Categories)
-
     <div class="form-group">
         @Html.LabelFor(m => m.Item.CategoryId, new { @class = "col-md-4 control-label" })
         <div class="col-md-8">
