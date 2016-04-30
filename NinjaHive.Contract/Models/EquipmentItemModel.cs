@@ -4,13 +4,15 @@ namespace NinjaHive.Contract.Models
 {
     public class EquipmentItemModel: GameItemModel
     {
-        public EquipmentitemModel()
+        public EquipmentItemModel()
         {
             this.Durability = 0;
-            this.Slot = BodySlot.Head;
+            this.BodySlot = BodySlot.Head;
+            this.NumberOfSlots = 1;
         }
 
         public int Durability { get; set; }
-        public BodySlot Slot { get; set; }
+        public BodySlot VodySlot { get; set; }
+        public int NumberOfSlots {get; set;}
     }
 }
