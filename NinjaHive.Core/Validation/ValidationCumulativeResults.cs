@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace NinjaHive.Core.Validation
 {
-    public class ValidationCumulativeResults : ValidationResult
+    public class ValidationCumulativeResults : ValidationResult, IEnumerable<ValidationResult>, IEnumerable
     {
         private readonly ICollection<ValidationResult> resultsCollection;
 
@@ -20,7 +21,6 @@ namespace NinjaHive.Core.Validation
         {
             resultsCollection = new Collection<ValidationResult>();
             AddResults(results);
-            ErrorMessage = CreateErrorMessage(errorMessage);
         }
 
         public ValidationCumulativeResults(string errorMessage, IEnumerable<string> memberNames) :base(errorMessage, memberNames)
@@ -69,11 +69,16 @@ namespace NinjaHive.Core.Validation
             }
         }
 
-        private string CreateErrorMessage(string topLevelMessage)
+        public IEnumerator<ValidationResult> GetEnumerator()
         {
-            return string.Format("{0} Inner-Exceptions:{{\n\t-{1}}}",
-                topLevelMessage,
-                string.Join("\n\t-", resultsCollection));
+            foreach(var result in resultsCollection)
+            {
+                yield return result;
+            }
+        }
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
         }
     }
 }
