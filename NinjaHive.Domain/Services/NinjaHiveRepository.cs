@@ -1,6 +1,7 @@
-﻿using System.Linq;
+﻿using System.Data.Entity;
+using System.Linq;
 
-namespace NinjaHive.Domain
+namespace NinjaHive.Domain.Services
 {
     public class NinjaHiveRepository<TEntity> : IRepository<TEntity>
         where TEntity : class, IEntity
@@ -12,18 +13,18 @@ namespace NinjaHive.Domain
             this.db = db;
         }
 
-        public IQueryable<TEntity> Entities
-        {
-            get { return this.db.Set<TEntity>(); }
-        }
+        public IQueryable<TEntity> Entities => this.DbSet;
+
         public void Add(TEntity entity)
         {
-            this.db.Set<TEntity>().Add(entity);
+            this.DbSet.Add(entity);
         }
 
         public void Remove(TEntity entity)
         {
-            this.db.Set<TEntity>().Remove(entity);
+            this.DbSet.Remove(entity);
         }
+
+        private DbSet<TEntity> DbSet => this.db.Set<TEntity>();
     }
 }

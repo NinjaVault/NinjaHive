@@ -53,7 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EntityEditHandler.cs" />
+    <Compile Include="Services\EntityEditHandler.cs" />
     <Compile Include="Extensions\DbSetExtensions.cs" />
     <Compile Include="Extensions\RepositoryExtensions.cs" />
     <Compile Include="IEntity.cs" />
@@ -75,7 +75,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>NinjaHiveEntities.edmx</DependentUpon>
     </Compile>
-    <Compile Include="NinjaHiveRepository.cs" />
+    <Compile Include="Services\NinjaHiveRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

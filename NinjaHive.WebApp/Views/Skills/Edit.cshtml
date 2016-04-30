@@ -9,7 +9,7 @@
         {
             @Html.AntiForgeryToken();
             @Html.HiddenFor(m => m.Skill.Id, new { Name = "id" })
-            <input type="submit" class="btn btn-primary" value="Delete" />
+            <input type="submit" class="btn btn-danger" value="Delete" />
         }
         <h2>Skills <small>Edit</small></h2>
     </div>

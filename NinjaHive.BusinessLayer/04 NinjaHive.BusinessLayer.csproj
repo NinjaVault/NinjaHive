@@ -57,11 +57,12 @@
   <ItemGroup>
     <Compile Include="AutoMapperConfiguration.cs" />
     <Compile Include="CommandHandlers\CategoryCommandHandler.cs" />
-    <Compile Include="CommandHandlers\GameItemCommandHandler.cs" />
+    <Compile Include="CommandHandlers\EquipmentItemCRUDCommandHandlers.cs" />
+    <Compile Include="CommandHandlers\OtherItemCRUDCommandHandlers.cs" />
     <Compile Include="CrossCuttingConcerns\SaveChangesCommandHandlerDecorator.cs" />
     <Compile Include="CrossCuttingConcerns\ValidationCommandHandlerDecorator.cs" />
     <Compile Include="QueryHandlers\Categories\GetGroupedCategoriesQueryHandler.cs" />
-    <Compile Include="QueryHandlers\GameItems\GetEquipmentItemsQueryHandler.cs" />
+    <Compile Include="QueryHandlers\GameItems\GetAllGameItemsQueryHandler.cs" />
     <Compile Include="QueryHandlers\Categories\GetAllCategoriesQueryHandler.cs" />
     <Compile Include="QueryHandlers\GetLinkedGameItemNamesQueryHandler.cs" />
     <Compile Include="Services\EntitiesAutoMapper.cs" />

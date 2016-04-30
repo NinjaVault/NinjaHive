@@ -3,7 +3,8 @@ using NinjaHive.Contract.Models;
 
 namespace NinjaHive.Contract.Queries.GameItems
 {
-    public class GetEquipmentItemsQuery : IQuery<EquipmentModel[]>
+    public class GetAllItemsQuery<TItem> : IQuery<TItem[]>
+        where TItem : GameItemModel
     {
     }
 }

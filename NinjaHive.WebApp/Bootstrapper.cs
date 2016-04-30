@@ -21,6 +21,7 @@ using NinjaHive.Core.Decorators;
 using NinjaHive.Core.Services;
 using NinjaHive.Core.Validation;
 using NinjaHive.Domain;
+using NinjaHive.Domain.Services;
 using NinjaHive.WebApp.Identity;
 using NinjaHive.WebApp.Services;
 using Owin;

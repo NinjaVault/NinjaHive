@@ -6,35 +6,36 @@ using NinjaHive.Domain.Extensions;
 
 namespace NinjaHive.BusinessLayer.CommandHandlers
 {
-    class GameItemCommandHandler :
-        ICommandHandler<CreateEntityCommand<GameItemModel>>,
-        ICommandHandler<UpdateEntityCommand<GameItemModel>>,
-        ICommandHandler<DeleteEntityCommand<GameItemModel>>
+    public class EquipmentItemCRUDCommandHandlers :
+        ICommandHandler<CreateEntityCommand<EquipmentModel>>,
+        ICommandHandler<UpdateEntityCommand<EquipmentModel>>,
+        ICommandHandler<DeleteEntityCommand<EquipmentModel>>
     {
-        private readonly IRepository<GameItemEntity> itemRepository;
+        private readonly IRepository<EquipmentItemEntity> itemRepository;
         private readonly IRepository<SubCategoryEntity> categoryRepository; 
 
-        public GameItemCommandHandler(IRepository<GameItemEntity> itemRepository,
+        public EquipmentItemCRUDCommandHandlers(
+            IRepository<EquipmentItemEntity> itemRepository,
             IRepository<SubCategoryEntity> categoryRepository)
         {
             this.itemRepository = itemRepository;
             this.categoryRepository = categoryRepository;
         }
 
-        public void Handle(CreateEntityCommand<GameItemModel> command)
+        public void Handle(CreateEntityCommand<EquipmentModel> command)
         {
-            //var entity = new GameItemEntity();
-            //this.UpdateItem(entity, command.Model);
-            //this.itemRepository.Add(entity);
+            var entity = new EquipmentItemEntity();
+            this.UpdateItem(entity, command.Model);
+            this.itemRepository.Add(entity);
         }
 
-        public void Handle(UpdateEntityCommand<GameItemModel> command)
+        public void Handle(UpdateEntityCommand<EquipmentModel> command)
         {
             var entity = this.itemRepository.FindById(command.Id);
             this.UpdateItem(entity, command.Model);
         }
 
-        private void UpdateItem(GameItemEntity entity, GameItemModel model)
+        private void UpdateItem(EquipmentItemEntity entity, EquipmentModel model)
         {
             entity.Name = model.Name;
             entity.Description = model.Description;
@@ -46,7 +47,7 @@ namespace NinjaHive.BusinessLayer.CommandHandlers
             entity.IsUpgrader = model.IsUpgrader;
         }
 
-        public void Handle(DeleteEntityCommand<GameItemModel> command)
+        public void Handle(DeleteEntityCommand<EquipmentModel> command)
         {
             this.itemRepository.RemoveById(command.Id);
         }
