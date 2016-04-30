@@ -26,7 +26,7 @@ namespace NinjaHive.WebApp
             routes.MapRoute(
                 name: "Default_NoArea",
                 url: "{controller}/{action}/{id}",
-                defaults: new {id = UrlParameter.Optional }
+                defaults: new {action = defaultUri["action"], id = UrlParameter.Optional }
             );
         }
     }

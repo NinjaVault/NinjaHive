@@ -11,7 +11,8 @@
             var actionLinks = new Dictionary<string, MvcHtmlString>
             {
                 {"Items", Html.ActionLink<EquipmentController>("Items", c => c.Index())},
-                {"Categories", Html.ActionLink<CategoriesController>("Categories", c => c.Index())}
+                {"Categories", Html.ActionLink<CategoriesController>("Categories", c => c.Index())},
+                {"Skills", Html.ActionLink<SkillsController>("Skills", c => c.Index())}
             };
             var routeData = ViewContext.RouteData.Values;
             string pageCategory = (routeData["Area"] ?? routeData["Controller"]).ToString();

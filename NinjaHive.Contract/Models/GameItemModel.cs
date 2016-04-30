@@ -16,6 +16,7 @@ namespace NinjaHive.Contract.Models
 
         [Required(ErrorMessage = "{0} is required")]
         [StringLength(255, MinimumLength = 3, ErrorMessage = "{0}, minimum: {2}, maximum: {1}")]
+        [DataType(DataType.MultilineText)]
         public string Description { get; set; }
 
         [NonEmptyGuid]

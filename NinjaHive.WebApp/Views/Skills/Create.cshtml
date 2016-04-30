@@ -1,0 +1,24 @@
+﻿@using NinjaHive.WebApp.Controllers
+@using NinjaHive.WebApp.Extensions
+@model NinjaHive.WebApp.Models.SkillViewModel
+
+
+<div class="row">
+    <div class="page-header">
+        <h2>Skills <small>Create</small></h2>
+    </div>
+
+
+    @using (Html.BeginForm<SkillsController>(m => m.Create(null), new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken();
+        @Html.EditorFor(m => m.Skill)
+
+
+        <div class="form-group">
+            <div class="col-md-12">
+                <input type="submit" class="btn btn-primary" value="Create Skill" />
+            </div>
+        </div>
+    }
+</div>

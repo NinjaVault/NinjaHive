@@ -1,65 +1,28 @@
 ﻿@using NinjaHive.Contract.Models
+@using NinjaHive.WebApp.Extensions
 @using NinjaHive.WebApp.Areas.Items.Models
 @model IGameItemViewModel
 
 @Html.HiddenFor(m => m.Item.Id)
 
 <div class="col-md-6">
+    @Html.FormGroupFor(m => m.Item.Name)
 
-    <div class="form-group">
-        @Html.LabelFor(m => m.Item.Name, new { @class = "col-md-4 control-label" })
-        <div class="col-md-8">
-            @Html.TextBoxFor(m => m.Item.Name, new { @class = "form-control", Name = "Name" })
-            @Html.ValidationMessageFor(m => m.Item.Name, "", new { @class = "text-danger" })
-        </div>
-    </div>
+    @Html.FormGroupFor(m => m.Item.CategoryId, Model.Categories)
 
-    <div class="form-group">
-        @Html.LabelFor(m => m.Item.CategoryId, new { @class = "col-md-4 control-label" })
-        <div class="col-md-8">
-            @Html.DropDownListFor(m => m.Item.CategoryId, Model.Categories, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.Item.CategoryId, "", new { @class = "text-danger" })
-        </div>
-    </div>
+    @Html.FormGroupFor(m => m.Item.Value)
 
-    <div class="form-group">
-        @Html.LabelFor(m => m.Item.Value, new { @class = "col-md-4 control-label" })
-        <div class="col-md-8">
-            @Html.TextBoxFor(m => m.Item.Value, new { @class = "form-control", Name = "Value", type = "number" })
-            @Html.ValidationMessageFor(m => m.Item.Value, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(m => m.Item.Description, new { @class = "col-md-4 control-label" })
-        <div class="col-md-8">
-            @Html.TextAreaFor(m => m.Item.Description, 4, 0, new { @class = "form-control", Name = "Description" })
-            @Html.ValidationMessageFor(m => m.Item.Description, "", new { @class = "text-danger" })
-        </div>
-    </div>
+    @Html.FormGroupFor(m => m.Item.Description)
 
 </div>
 
 <div class="col-md-6">
-
-    <div class="form-group">
-        @Html.CheckBoxFor(m => m.Item.IsUpgrader)
-        @Html.LabelFor(m => m.Item.IsUpgrader, new { @class = "control-label", Name = "IsUpgrader" })
-    </div>
+    @Html.FormGroupFor(m => m.Item.IsUpgrader)
+    <br/>
+    @Html.FormGroupFor(m => m.Item.IsCrafter)
     <br />
-    <div class="form-group">
-        @Html.CheckBoxFor(m => m.Item.IsCrafter)
-        @Html.LabelFor(m => m.Item.IsCrafter, new { @class = "control-label", Name = "IsCrafter" })
-    </div>
+    @Html.FormGroupFor(m => m.Item.Craftable)
     <br />
-    <div class="form-group">
-        @Html.CheckBoxFor(m => m.Item.Craftable)
-        @Html.LabelFor(m => m.Item.Craftable, new { @class = "control-label", Name = "Craftable" })
-    </div>
-    <br />
-    <div class="form-group">
-        @Html.CheckBoxFor(m => m.Item.IsQuestItem)
-        @Html.LabelFor(m => m.Item.IsQuestItem, new { @class = "control-label", Name = "IsQuestItem" })
-    </div>
+    @Html.FormGroupFor(m => m.Item.IsQuestItem)
 
 </div>

@@ -238,6 +238,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\ErrorsController.cs" />
+    <Compile Include="Controllers\SkillsController.cs" />
     <Compile Include="Extensions\HttpExtensions.cs" />
     <Compile Include="Extensions\IdentityExtensions.cs" />
     <Compile Include="Extensions\JsonResults.cs" />
@@ -252,6 +253,7 @@
     <Compile Include="IUserContextWithRoles.cs" />
     <Compile Include="Models\AccountViewModel.cs" />
     <Compile Include="Models\GameItemViewModel.cs" />
+    <Compile Include="Models\SkillViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\UrlProvider.cs" />
     <Compile Include="Services\FakeEmailService.cs" />
@@ -374,6 +376,11 @@
     <Content Include="Views\Shared\General\_NavbarNavPartial.cshtml" />
     <Content Include="Views\Shared\General\_NoResultsPartial.cshtml" />
     <Content Include="Views\Shared\General\_NavNestedViews.cshtml" />
+    <Content Include="Views\Skills\Index.cshtml" />
+    <Content Include="Views\Skills\Create.cshtml" />
+    <Content Include="Views\Skills\Edit.cshtml" />
+    <Content Include="Views\Skills\DisplayTemplates\SkillModel.cshtml" />
+    <Content Include="Views\Skills\EditorTemplates\SkillModel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Validation\" />

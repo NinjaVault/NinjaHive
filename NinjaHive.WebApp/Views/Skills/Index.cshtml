@@ -1,0 +1,35 @@
+﻿@using NinjaHive.Contract.Models
+@using NinjaHive.WebApp.Controllers
+@using NinjaHive.WebApp.Helpers
+@using System.Collections.Generic
+
+@model IEnumerable<SkillModel>
+
+@{ var createUrl = UrlProvider<SkillsController>.GetUrl(c => c.Create());}
+
+<div class="row">
+    <div class="page-header">
+        <h2>Skills</h2>
+        <a href="@createUrl" class="btn btn-primary">Create new Skill</a>
+    </div>
+
+    <div class="ninjahive-content-container">
+        <div class="ninjahive-content">
+
+            <div class="col-md-12">
+                @foreach (var letter in Model.GroupBy(m => m.Name[0]))
+                {
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            @letter.Key
+                        </div>
+
+                        <div class="panel-body">
+                            @Html.DisplayFor(m => letter)
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
