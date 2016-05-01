@@ -9,8 +9,7 @@ namespace NinjaHive.Contract.Models
     {
         public SkillModel()
         {
-            StatInfo = new StatInfoModel();
-            Special = new SpecialModel();
+            StatInfo = new StatInfoModel();           
             this.Target = Target.Ground;
         }
 
@@ -40,7 +39,6 @@ namespace NinjaHive.Contract.Models
         public bool Friendly { get; set; }
 
         public StatInfoModel StatInfo { get; set; }
-
-        public SpecialModel Special { get; set; }
+        public SpecialModel[] Specials { get; set; }
     }
 }
