@@ -13,6 +13,6 @@ namespace NinjaHive.Contract.Models
         public int Intelligence { get; set; }
         public int Hunger { get; set; }
         public int Stamina { get; set; }
-        public float Resistance { get; set; }
+        public double Resistance { get; set; }
     }
 }
