@@ -1,0 +1,11 @@
+﻿@using NinjaHive.WebApp.Helpers
+
+@{
+    Layout = "~/Views/Shared/General/_Layout.cshtml";
+}
+
+@section SubNavigation{
+    @Html.Partial(Partials.ItemsSubNav)
+}
+
+@RenderBody()

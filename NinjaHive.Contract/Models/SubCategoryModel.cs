@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using NinjaHive.Core.Helpers;
-using NinjaHive.Core.Validations;
+using NinjaHive.Core.Validation.Attributes;
 
 namespace NinjaHive.Contract.Models
 {

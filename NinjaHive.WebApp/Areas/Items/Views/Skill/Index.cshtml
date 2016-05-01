@@ -1,0 +1,16 @@
+﻿@using NinjaHive.Contract.Models
+@using NinjaHive.WebApp.Areas.Items.Controllers
+@using NinjaHive.WebApp.Extensions
+@using NinjaHive.WebApp.Helpers
+
+@model IEnumerable<SkillItemModel>
+
+
+<div class="row">
+    <div class="page-header">
+        <h2>Skill Items</h2>
+        @( Html.ActionLink<SkillController>("Create new Item", c => c.Create(), new { @class = "btn btn-primary" }))
+    </div>
+</div>
+
+@Html.Partial(Partials.GameItemsList, Model)

@@ -1,0 +1,28 @@
+﻿@using NinjaHive.WebApp.Areas.Items.Controllers
+@using NinjaHive.WebApp.Extensions
+@using NinjaHive.WebApp.Helpers
+@using System.Collections.Generic;
+@model NinjaHive.WebApp.Areas.Items.Models.TierViewModel
+
+<div class="row">
+    <div class="page-header">
+        <h2>
+            Equipment Tier<small>Create</small>
+        </h2>
+    </div>
+
+    @using (Html.BeginForm<TiersController>(c => c.Create(null), new { @class = "form-horizontal", role = "form", Name = "tierCreateForm" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.EquipmentId)
+
+        @Html.EditorFor(m => m.Tier)
+
+        <div class="form-group">
+            <div class="col-md-12">
+                <input type="submit" class="btn btn-primary" value="Create Tier" />
+            </div>
+        </div>
+    }
+    
+</div>

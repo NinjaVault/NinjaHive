@@ -1,0 +1,10 @@
+﻿@using NinjaHive.WebApp.Areas.Items.Models
+@using NinjaHive.WebApp.Helpers
+@model SkillItemViewModel
+
+@Html.Partial(Partials.EditGameItem, Model)
+
+<div class="col-md-12">
+    @Html.LabelFor(m => m.DerivedItem)
+    @Html.EditorFor(m => m.DerivedItem.StatInfo)
+</div>

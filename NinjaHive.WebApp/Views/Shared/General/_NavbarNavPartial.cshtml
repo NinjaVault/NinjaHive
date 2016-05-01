@@ -1,4 +1,5 @@
-﻿@using NinjaHive.WebApp.Controllers
+﻿@using NinjaHive.WebApp.Areas.Items.Controllers
+@using NinjaHive.WebApp.Controllers
 @using NinjaHive.WebApp.Extensions
 @using NinjaHive.WebApp.Helpers
 
@@ -9,11 +10,12 @@
             var currentPage = Request.Url.AbsolutePath;
             var actionLinks = new Dictionary<string, MvcHtmlString>
             {
-                {"Items", Html.ActionLink<ItemsController>("Items", c => c.Index())},
-                {"Categories", Html.ActionLink<CategoriesController>("Categories", c => c.Index())}
+                {"Items", Html.ActionLink<EquipmentController>("Items", c => c.Index())},
+                {"Categories", Html.ActionLink<CategoriesController>("Categories", c => c.Index())},
+                {"Skills", Html.ActionLink<SkillsController>("Skills", c => c.Index())}
             };
-
-            string pageCategory = ViewContext.RouteData.Values["Controller"].ToString();
+            var routeData = ViewContext.RouteData.Values;
+            string pageCategory = (routeData["Area"] ?? routeData["Controller"]).ToString();
 
             foreach (var pair in actionLinks)
             {

@@ -10,5 +10,13 @@ namespace NinjaHive.Core.Extensions
             var localList = new List<T>(list);
             return new ReadOnlyCollection<T>(localList);
         }
+
+        public static void AddRange<T>(this ICollection<T> collection, IEnumerable<T> listToAdd)
+        {
+            foreach(var item in listToAdd)
+            {
+                collection.Add(item);
+            }
+        }
     }
 }

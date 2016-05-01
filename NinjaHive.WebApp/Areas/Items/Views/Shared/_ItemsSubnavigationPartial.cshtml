@@ -1,0 +1,32 @@
+﻿@using NinjaHive.WebApp.Areas.Items.Controllers
+@using NinjaHive.WebApp.Extensions
+
+@if (Request.IsAuthenticated)
+{
+    <ul class="nav">
+        @{
+            var actionLinks = new Dictionary<string, MvcHtmlString>
+                    {
+                        {"Equipment", Html.ActionLink<EquipmentController>("Equipment", c => c.Index())},
+                        {"Skill", Html.ActionLink<SkillController>("Skill", c => c.Index())},
+                        {"Other", Html.ActionLink<OtherController>("Other", c => c.Index())},
+                    };
+
+            string pageCategory = ViewContext.RouteData.Values["Controller"].ToString();
+
+            foreach (var pair in actionLinks)
+            {
+                if (pageCategory == pair.Key)
+                {
+                    @:<li class="active">
+                }
+                else
+                {
+                    @:<li>
+                }
+                @pair.Value
+                @:</li>
+            }
+        }
+    </ul>
+}

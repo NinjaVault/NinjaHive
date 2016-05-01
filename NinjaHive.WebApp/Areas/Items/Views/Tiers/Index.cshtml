@@ -1,0 +1,14 @@
+﻿@using NinjaHive.WebApp.Areas.Items.Controllers
+@using NinjaHive.WebApp.Extensions
+@using NinjaHive.WebApp.Helpers
+
+@model NinjaHive.WebApp.Areas.Items.Models.TiersListViewModel
+
+<div class="page-header">
+    <h2>Equipment Tiers <small>@Model.EquipmentName</small></h2>
+    @( Html.ActionLink<TiersController>("Create new Tier", c => c.Create(Model.EquipmentId), new { @class = "btn btn-primary" }))
+</div>
+
+<div class="list-group" id="tiers" role="tablist">
+    @Html.DisplayFor(m => m.Tiers)
+</div>

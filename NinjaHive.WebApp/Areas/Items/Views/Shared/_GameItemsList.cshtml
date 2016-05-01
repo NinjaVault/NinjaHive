@@ -1,0 +1,35 @@
+﻿@using NinjaHive.Contract.Models
+@using NinjaHive.WebApp.Helpers
+@model IEnumerable<GameItemModel>
+
+
+@if (Model.Any())
+{
+    foreach (var mainGroup in Model.GroupBy(m => m.SubCategoryMainCategoryName))
+    {
+        <h3>@mainGroup.Key</h3>
+        foreach (var subGroup in mainGroup.GroupBy(m => m.SubCategoryName))
+        {
+            <div class="panel panel-default">
+                <div class="panel-heading">@subGroup.Key</div>
+                <div class="panel-body" style="position:relative;">
+                    <ul class="list-group">
+                        @Html.DisplayFor(m => subGroup)
+                    </ul>
+                </div>
+            </div>
+        }
+    }
+}
+else
+{
+    @Html.Partial(Partials.NoResults);
+}
+
+<script>
+    $(function ()
+    {
+        // container: body is to avoid issues with tooltips in btn-group changing button size
+        $('[data-toggle="tooltip"]').tooltip({container:'body'})
+    })
+</script>

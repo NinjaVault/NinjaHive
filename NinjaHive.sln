@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01 NinjaHive.WebApp", "NinjaHive.WebApp\01 NinjaHive.WebApp.csproj", "{34EE914C-BC5F-4EB2-8E12-03E9DBA4179D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "06 NinjaHive.Core", "NinjaHive.Core\06 NinjaHive.Core.csproj", "{1087016A-3D9A-41B4-8893-13D56F7D7F75}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "07 NinjaHive.Core", "NinjaHive.Core\07 NinjaHive.Core.csproj", "{1087016A-3D9A-41B4-8893-13D56F7D7F75}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "03 NinjaHive.Contract", "NinjaHive.Contract\03 NinjaHive.Contract.csproj", "{3B537332-5517-4BC2-B8CC-24BF208EE365}"
 EndProject
@@ -27,6 +27,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SqlScripts", "SqlScripts", 
 		Create.sql = Create.sql
 		Migrations.sql = Migrations.sql
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "06 NinjaHive.Components", "NinjaHive.Components\06 NinjaHive.Components.csproj", "{D73816D8-9DCE-400F-8B4E-C01291A319E6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -58,6 +60,10 @@ Global
 		{93E5E378-93E2-4117-B76D-A972E378CAEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{93E5E378-93E2-4117-B76D-A972E378CAEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{93E5E378-93E2-4117-B76D-A972E378CAEF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D73816D8-9DCE-400F-8B4E-C01291A319E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D73816D8-9DCE-400F-8B4E-C01291A319E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D73816D8-9DCE-400F-8B4E-C01291A319E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D73816D8-9DCE-400F-8B4E-C01291A319E6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

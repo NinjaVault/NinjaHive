@@ -4,7 +4,7 @@ using NinjaHive.Contract.Models;
 using NinjaHive.Contract.Queries;
 using NinjaHive.Core;
 using NinjaHive.WebApp.Helpers;
-using NinjaHive.WebApp.Extensions;
+using NinjaHive.Contract.Queries.Categories;
 
 namespace NinjaHive.WebApp.Controllers
 {
@@ -12,13 +12,13 @@ namespace NinjaHive.WebApp.Controllers
     public class CategoriesController : BaseController
     {
         private readonly IQueryProcessor queryProcessor;
-        private readonly IWriteOnlyRepository<MainCategoryModel> mainCategoryRepository;
-        private readonly IWriteOnlyRepository<SubCategoryModel> subCategoryRepository;
+        private readonly IUnitOfWork<MainCategoryModel> mainCategoryRepository;
+        private readonly IUnitOfWork<SubCategoryModel> subCategoryRepository;
 
         public CategoriesController(
             IQueryProcessor queryProcessor,
-            IWriteOnlyRepository<MainCategoryModel> mainCategoryRepository,
-            IWriteOnlyRepository<SubCategoryModel> subCategoryRepository)
+            IUnitOfWork<MainCategoryModel> mainCategoryRepository,
+            IUnitOfWork<SubCategoryModel> subCategoryRepository)
         {
             this.queryProcessor = queryProcessor;
             this.mainCategoryRepository = mainCategoryRepository;
@@ -70,7 +70,7 @@ namespace NinjaHive.WebApp.Controllers
 
         public ActionResult EditMainCategory(Guid id)
         {
-            var model = this.queryProcessor.Execute(new GetEntityByIdQuery<MainCategoryModel>(id));
+            var model = this.mainCategoryRepository.GetById(id);
             return View(model);
         }
 
@@ -88,7 +88,7 @@ namespace NinjaHive.WebApp.Controllers
 
         public ActionResult EditSubCategory(Guid id)
         {
-            var model = this.queryProcessor.Execute(new GetEntityByIdQuery<SubCategoryModel>(id));
+            var model = this.subCategoryRepository.GetById(id);
             return View(model);
         }
 
@@ -106,7 +106,7 @@ namespace NinjaHive.WebApp.Controllers
 
         public ActionResult DeleteMainCategory(Guid id)
         {
-            var model = this.queryProcessor.Execute(new GetEntityByIdQuery<MainCategoryModel>(id));
+            var model = this.mainCategoryRepository.GetById(id);
             return View(model);
         }
 
@@ -121,7 +121,7 @@ namespace NinjaHive.WebApp.Controllers
 
         public ActionResult DeleteSubCategory(Guid id)
         {
-            var model = this.queryProcessor.Execute(new GetEntityByIdQuery<SubCategoryModel>(id));
+            var model = this.subCategoryRepository.GetById(id);
             return View(model);
         }
 
@@ -129,7 +129,6 @@ namespace NinjaHive.WebApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteSubCategory(SubCategoryModel model)
         {
-            //TODO: needs validation both server/client side to check if we can delete it by checking if gameitems are attached to it
             this.subCategoryRepository.Delete(model.Id);
             return this.RedirectToIndex();
         }

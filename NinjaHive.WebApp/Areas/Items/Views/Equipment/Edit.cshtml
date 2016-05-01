@@ -1,0 +1,35 @@
+﻿@using NinjaHive.WebApp.Areas.Items.Controllers
+@using NinjaHive.WebApp.Areas.Items.Models
+@using NinjaHive.WebApp.Extensions;
+
+@model EquipmentViewModel
+
+<div class="row">
+    <div class="page-header">
+        @using (Html.BeginForm<EquipmentController>(c => c.Delete(Model.DerivedItem.Id), new {@class = "form-delete pull-right"}))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.DerivedItem.Id, new { Name = "Id" })
+            <input type="submit" class="btn btn-danger" value="Delete" />
+        }
+
+        <h2>
+            Equipment <small>Edit</small>
+        </h2>
+    </div>
+    @using (Html.BeginForm<EquipmentController>(c => c.Edit(null), new {@class = "form-horizontal", role = "form"}))
+    {
+        @Html.AntiForgeryToken()
+        @Html.EditorForModel()
+
+        <div class="form-group">
+            <div class="col-md-12">
+                <input type="submit" class="btn btn-primary" value="Save changes" />
+            </div>
+        </div>
+    }
+    
+    <script>
+        ninjaHive.promptBeforeDelete();
+    </script>
+</div>

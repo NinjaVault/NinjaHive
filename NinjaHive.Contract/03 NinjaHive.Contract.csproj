@@ -8,9 +8,10 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NinjaHive.Contract</RootNamespace>
-    <AssemblyName>03 NinjaHive.Contract</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <AssemblyName>NinjaHive.Contract</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -45,23 +46,34 @@
     <Compile Include="Commands\UpdateEntityCommand.cs" />
     <Compile Include="Extensions\ParameterVisitor.cs" />
     <Compile Include="IModel.cs" />
+    <Compile Include="Models\CategoryModel.cs" />
+    <Compile Include="Models\EquipmentModel.cs" />
+    <Compile Include="Models\LevelModel.cs" />
     <Compile Include="Models\MainCategoryModel.cs" />
+    <Compile Include="Models\OtherItemModel.cs" />
+    <Compile Include="Models\SkillItemModel.cs" />
+    <Compile Include="Models\SkillModel.cs" />
+    <Compile Include="Models\SpecialModel.cs" />
+    <Compile Include="Models\StatInfoModel.cs" />
     <Compile Include="Models\SubCategoryModel.cs" />
     <Compile Include="Models\GameItemModel.cs" />
+    <Compile Include="Models\TierModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Queries\GetAllCategoriesQuery.cs" />
-    <Compile Include="Queries\GetAllGameItemsQuery.cs" />
+    <Compile Include="Queries\Categories\GetGroupedCategoriesQuery.cs" />
+    <Compile Include="Queries\GameItems\GetAllItemsQuery.cs" />
+    <Compile Include="Queries\Categories\GetAllCategoriesQuery.cs" />
     <Compile Include="Queries\GetEntityByIdQuery.cs" />
-    <Compile Include="Queries\GetItemsQuery.cs" />
     <Compile Include="Queries\GetLinkedGameItemNamesQuery.cs" />
-    <Compile Include="Queries\GetMainCategoriesQuery.cs" />
-    <Compile Include="Queries\GetSubCategoriesQuery.cs" />
     <Compile Include="Role.enum.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NinjaHive.Core\06 NinjaHive.Core.csproj">
+    <ProjectReference Include="..\NinjaHive.Components\06 NinjaHive.Components.csproj">
+      <Project>{d73816d8-9dce-400f-8b4e-c01291a319e6}</Project>
+      <Name>06 NinjaHive.Components</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NinjaHive.Core\07 NinjaHive.Core.csproj">
       <Project>{1087016a-3d9a-41b4-8893-13d56f7d7f75}</Project>
-      <Name>06 NinjaHive.Core</Name>
+      <Name>07 NinjaHive.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

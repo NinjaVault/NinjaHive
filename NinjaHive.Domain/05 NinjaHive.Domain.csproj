@@ -9,10 +9,11 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NinjaHive.Domain</RootNamespace>
     <AssemblyName>NinjaHive.Domain</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -52,9 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EntityEditHandler.cs" />
-    <Compile Include="Enums\BodySlots.cs" />
-    <Compile Include="Enums\Targets.cs" />
+    <Compile Include="Services\EntityEditHandler.cs" />
     <Compile Include="Extensions\DbSetExtensions.cs" />
     <Compile Include="Extensions\RepositoryExtensions.cs" />
     <Compile Include="IEntity.cs" />
@@ -76,11 +75,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>NinjaHiveEntities.edmx</DependentUpon>
     </Compile>
-    <Compile Include="NinjaHiveRepository.cs" />
+    <Compile Include="Services\NinjaHiveRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <EntityDeploy Include="NinjaHiveEntities.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>NinjaHiveEntities.Designer.cs</LastGenOutput>
@@ -104,9 +105,13 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NinjaHive.Core\06 NinjaHive.Core.csproj">
+    <ProjectReference Include="..\NinjaHive.Components\06 NinjaHive.Components.csproj">
+      <Project>{d73816d8-9dce-400f-8b4e-c01291a319e6}</Project>
+      <Name>06 NinjaHive.Components</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NinjaHive.Core\07 NinjaHive.Core.csproj">
       <Project>{1087016a-3d9a-41b4-8893-13d56f7d7f75}</Project>
-      <Name>06 NinjaHive.Core</Name>
+      <Name>07 NinjaHive.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

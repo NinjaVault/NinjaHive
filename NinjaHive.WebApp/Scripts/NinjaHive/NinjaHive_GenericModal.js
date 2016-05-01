@@ -112,20 +112,39 @@ function ModalManager()
 	
 	    return this.genericDialog.apply(this, NH.mergeArrays(arguments, buttonArgs));
 	};
-	
-	/*=============================
-	*		questionDialog
+
+    /*=============================
+	*		alertDialog
 	*------------------------------------------------
 	*		Overloads:
-	*			questionDialog(String title, HTMLString body)
-	*			questionDialog(String title, HTMLString body, Boolean hasDynamicContent)
+	*			alertDialog(String title, HTMLString body)
+	*			alertDialog(String title, HTMLString body, Boolean hasDynamicContent)
 	*/
-	this.alertDialog = function(title, body, dynamicContent)
+	this.alertDialog = function (title, body, dynamicContent)
 	{
-	    var buttonArgs = [{'button': 'all', 'visible': false},
-            {'button':'submit', 'label':'Ok','visible':true,'className':_btnSubmitClass}];
-	
+	    var buttonArgs = [{ 'button': 'all', 'visible': false },
+            { 'button': 'submit', 'label': 'Ok', 'visible': true, 'className': _btnSubmitClass }];
+
 	    return this.genericDialog.apply(this, NH.mergeArrays(arguments, buttonArgs));
+	};
+
+    /*=============================
+	*		DeleteDialog
+	*------------------------------------------------
+	*		Overloads:
+	*			DeleteDialog(String title, HTMLString body)
+	*			DeleteDialog(String title, HTMLString body, Boolean hasDynamicContent)
+	*/
+	this.deleteConfirmDialog = function (dynamicContent)
+	{
+	    var buttonArgs = [{ 'button': 'all', 'visible': false },
+            { 'button': 'submit', 'label': 'Delete', 'visible': true, 'className': _btnSubmitClass },
+            { 'button': 'cancel', 'label': 'Cancel', 'visible': true, 'className': _btnCancelClass }];
+
+	    return this.genericDialog("Are you sure?",
+                    "If you delete this, you will not be able to undo it.<br><br>Are you sure that you want to delete this entry?",
+                    dynamicContent || false,
+                    buttonArgs[0], buttonArgs[1], buttonArgs[2]);
 	};
 }
 
@@ -906,8 +925,8 @@ GenericModal.ModalFooter = function(parent)
 	}
 	this.setButtonOptions = function(options)
 	{
-		if(!options.button || typeof options.button != 'string')
-			throw new Error("ModalFooter.handleButtonOptions parameter requires a 'button' member of type 'string'.");
+		if(!options.button || typeof options.button !== 'string')
+			throw new Error("ModalFooter.setButtonOptions parameter requires a 'button' member of type 'string'.");
 		
 		options.parent = this;
 		if(options.button == 'all')

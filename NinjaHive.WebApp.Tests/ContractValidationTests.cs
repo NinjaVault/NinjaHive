@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NinjaHive.BusinessLayer.CrossCuttingConcerns;
 using NinjaHive.Contract.Models;
+using NinjaHive.Core.Validation;
 using NinjaHive.WebApp.Tests.Exceptions;
 
 namespace NinjaHive.WebApp.Tests
@@ -10,11 +11,11 @@ namespace NinjaHive.WebApp.Tests
     public class ContractValidationTests
     {
         [TestMethod]
-        [ExpectedExceptionWithMessage(typeof(ValidationException), "The field 'CategoryId' in 'NinjaHive.Contract.Models.GameItemModel' is invalid!", MatchSubstring = true)]
+        [ExpectedExceptionWithMessage(typeof(ValidationException), "The field 'CategoryId' in 'NinjaHive.Contract.Models.EquipmentModel' is invalid!", MatchSubstring = true)]
         public void PerformValidation_CreateItemWithoutCategory_ThrowsValidationError()
         {
             // Arrange
-            var item = new GameItemModel
+            var item = new EquipmentModel
             {
                 Name = "Valid",
                 Description = "Valid description"
@@ -22,7 +23,8 @@ namespace NinjaHive.WebApp.Tests
             var command = new Mocks.Contract.AddGameItemCommand(item);
 
             var fakeHandler = new Mocks.Contract.AddGameItemCommandHandler();
-            var handler = new ValidationCommandHandlerDecorator<Mocks.Contract.AddGameItemCommand>(fakeHandler);
+            var fakeValidator = new Mocks.FakeValidator<Mocks.Contract.AddGameItemCommand>();
+            var handler = new ValidationCommandHandlerDecorator<Mocks.Contract.AddGameItemCommand>(fakeHandler, fakeValidator, new ObjectValidator());
 
             // Act
             handler.Handle(command);
@@ -33,7 +35,7 @@ namespace NinjaHive.WebApp.Tests
         public void PerformValidation_GameItemWithEmptyName_ThrowsValidationError()
         {
             // Arrange
-            var item = new GameItemModel
+            var item = new EquipmentModel
             {
                 Name = string.Empty,
                 Description = "Valid description",
@@ -41,7 +43,8 @@ namespace NinjaHive.WebApp.Tests
             var command = new Mocks.Contract.AddGameItemCommand(item);
 
             var fakeHandler = new Mocks.Contract.AddGameItemCommandHandler();
-            var handler = new ValidationCommandHandlerDecorator<Mocks.Contract.AddGameItemCommand>(fakeHandler);
+            var fakeValidator = new Mocks.FakeValidator<Mocks.Contract.AddGameItemCommand>();
+            var handler = new ValidationCommandHandlerDecorator<Mocks.Contract.AddGameItemCommand>(fakeHandler, fakeValidator, new ObjectValidator());
 
             // Act
             handler.Handle(command);
@@ -52,7 +55,7 @@ namespace NinjaHive.WebApp.Tests
         public void PerformValidation_GameItemNameWithInvalidCharacters_ThrowsValidationError()
         {
             // Arrange
-            var item = new GameItemModel
+            var item = new EquipmentModel
             {
                 Name = "1n val!d",
                 Description = "Valid description",
@@ -60,7 +63,8 @@ namespace NinjaHive.WebApp.Tests
             var command = new Mocks.Contract.AddGameItemCommand(item);
 
             var fakeHandler = new Mocks.Contract.AddGameItemCommandHandler();
-            var handler = new ValidationCommandHandlerDecorator<Mocks.Contract.AddGameItemCommand>(fakeHandler);
+            var fakeValidator = new Mocks.FakeValidator<Mocks.Contract.AddGameItemCommand>();
+            var handler = new ValidationCommandHandlerDecorator<Mocks.Contract.AddGameItemCommand>(fakeHandler, fakeValidator, new ObjectValidator());
 
             // Act
             handler.Handle(command);

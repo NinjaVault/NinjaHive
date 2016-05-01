@@ -1,0 +1,25 @@
+﻿@using NinjaHive.WebApp.Areas.Items.Models
+@using NinjaHive.WebApp.Extensions
+@model IGameItemViewModel
+
+@Html.HiddenFor(m => m.Item.Id)
+
+<div class="col-md-6">
+    @Html.FormGroupFor(m => m.Item.Name)
+
+    @Html.FormGroupFor(m => m.Item.CategoryId, Model.Categories)
+
+    @Html.FormGroupFor(m => m.Item.Description)
+
+</div>
+
+<div class="col-md-6">
+    @Html.FormGroupFor(m => m.Item.IsUpgrader)
+    <br/>
+    @Html.FormGroupFor(m => m.Item.IsCrafter)
+    <br />
+    @Html.FormGroupFor(m => m.Item.Craftable)
+    <br />
+    @Html.FormGroupFor(m => m.Item.IsQuestItem)
+
+</div>

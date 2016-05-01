@@ -13,7 +13,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NinjaHive.WebApp</RootNamespace>
     <AssemblyName>NinjaHive.WebApp</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort>44301</IISExpressSSLPort>
@@ -25,6 +25,7 @@
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <UseGlobalApplicationHostFile />
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -147,6 +148,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
@@ -156,8 +158,7 @@
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
       <Private>True</Private>
@@ -182,9 +183,7 @@
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
-    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Abstractions" />
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml" />
@@ -202,6 +201,7 @@
     <Reference Include="System.Web.Optimization">
       <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
     </Reference>
+    <Reference Include="System.Xml.Linq" />
     <Reference Include="WebGrease, Version=1.6.5135.21930, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
       <Private>True</Private>
@@ -221,12 +221,24 @@
     <Compile Include="App_Start\Identity\DatabaseInitializer.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Areas\Items\Controllers\EquipmentController.cs" />
+    <Compile Include="Areas\Items\Controllers\OtherController.cs" />
+    <Compile Include="Areas\Items\Controllers\SkillController.cs" />
+    <Compile Include="Areas\Items\Controllers\TiersController.cs" />
+    <Compile Include="Areas\Items\ItemsAreaRegistration.cs" />
+    <Compile Include="Areas\Items\Models\EquipmentViewModel.cs" />
+    <Compile Include="Areas\Items\Models\IGameItemViewModel.cs" />
+    <Compile Include="Areas\Items\Models\ITierViewModel.cs" />
+    <Compile Include="Areas\Items\Models\OtherItemViewModel.cs" />
+    <Compile Include="Areas\Items\Models\SkillItemViewModel.cs" />
+    <Compile Include="Areas\Items\Models\TiersListViewModel.cs" />
+    <Compile Include="Areas\Items\Models\TierViewModel.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\ErrorsController.cs" />
-    <Compile Include="Controllers\ItemsController.cs" />
+    <Compile Include="Controllers\SkillsController.cs" />
     <Compile Include="Extensions\HttpExtensions.cs" />
     <Compile Include="Extensions\IdentityExtensions.cs" />
     <Compile Include="Extensions\JsonResults.cs" />
@@ -238,16 +250,19 @@
     <Compile Include="Helpers\Partials.cs" />
     <Compile Include="App_Start\Identity\ApplicationRoleManager.cs" />
     <Compile Include="App_Start\Identity\ApplicationUserManager.cs" />
+    <Compile Include="Helpers\PropertyHelper.cs" />
     <Compile Include="IUserContextWithRoles.cs" />
     <Compile Include="Models\AccountViewModel.cs" />
     <Compile Include="Models\GameItemViewModel.cs" />
+    <Compile Include="Models\SkillViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\UrlProvider.cs" />
     <Compile Include="Services\FakeEmailService.cs" />
+    <Compile Include="Services\PromptableCommandHandler.cs" />
     <Compile Include="Services\SendGridEmailService.cs" />
     <Compile Include="Services\HttpWebUserContextWithRoles.cs" />
     <Compile Include="Services\HttpWebUserContext.cs" />
-    <Compile Include="Services\WriteOnlyCommandRepository.cs" />
+    <Compile Include="Services\UnitOfWork.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -273,6 +288,32 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Areas\Items\Views\Equipment\Create.cshtml" />
+    <Content Include="Areas\Items\Views\Equipment\Edit.cshtml" />
+    <Content Include="Areas\Items\Views\Equipment\EditorTemplates\EquipmentViewModel.cshtml" />
+    <Content Include="Areas\Items\Views\Equipment\Index.cshtml" />
+    <Content Include="Areas\Items\Views\Shared\EditorTemplates\IGameItemViewModel.cshtml" />
+    <Content Include="Areas\Items\Views\Shared\_ItemsLayout.cshtml" />
+    <Content Include="Areas\Items\Views\Shared\_ItemsSubnavigationPartial.cshtml" />
+    <Content Include="Areas\Items\Views\Tiers\Create.cshtml" />
+    <Content Include="Areas\Items\Views\Tiers\Edit.cshtml" />
+    <Content Include="Areas\Items\Views\Tiers\EditorTemplates\TierModel.cshtml" />
+    <Content Include="Areas\Items\Views\Tiers\Index.cshtml" />
+    <Content Include="Areas\Items\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Items\web.config" />
+    <Content Include="Areas\Items\Views\Tiers\DisplayTemplates\TierModel.cshtml" />
+    <Content Include="Areas\Items\Views\Other\Index.cshtml" />
+    <Content Include="Areas\Items\Views\Other\Create.cshtml" />
+    <Content Include="Areas\Items\Views\Other\Edit.cshtml" />
+    <Content Include="Areas\Items\Views\Other\EditorTemplates\OtherItemViewModel.cshtml" />
+    <Content Include="Areas\Items\Views\Equipment\DisplayTemplates\EquipmentModel.cshtml" />
+    <Content Include="Areas\Items\Views\Shared\_GameItemsList.cshtml" />
+    <Content Include="Areas\Items\Views\Other\DisplayTemplates\OtherItemModel.cshtml" />
+    <Content Include="Areas\Items\Views\Skill\Index.cshtml" />
+    <Content Include="Areas\Items\Views\Skill\Create.cshtml" />
+    <Content Include="Areas\Items\Views\Skill\Edit.cshtml" />
+    <Content Include="Areas\Items\Views\Skill\DisplayTemplates\SkillItemModel.cshtml" />
+    <Content Include="Areas\Items\Views\Skill\EditorTemplates\SkillItemViewModel.cshtml" />
     <None Include="Properties\PublishProfiles\NinjaHive - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -292,7 +333,6 @@
     <Content Include="Scripts\NinjaHive\NinjaHive_Common.js" />
     <Content Include="Scripts\NinjaHive\NinjaHive_DynamicObjectTemplate.js" />
     <Content Include="Scripts\NinjaHive\NinjaHive_EditableElementManager.js" />
-    <Content Include="Scripts\NinjaHive\NinjaHive_EditGameItemScripts.js" />
     <Content Include="Scripts\NinjaHive\NinjaHive_GenericModal.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
@@ -308,19 +348,8 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\General\_Layout.cshtml" />
-    <Content Include="Views\Items\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Shared\General\_NavbarNavPartial.cshtml" />
-    <Content Include="Views\Shared\General\_LoginPartial.cshtml" />
     <Content Include="Views\Errors\DefaultError.cshtml" />
-    <Content Include="Views\Items\Create.cshtml" />
-    <Content Include="Views\Shared\General\_LoadingPartial.cshtml" />
-    <Content Include="Views\Shared\General\_NoResultsPartial.cshtml" />
-    <Content Include="Views\Shared\General\_AjaxErrorPartial.cshtml" />
-    <Content Include="Views\Items\_GameItemsPartial.cshtml" />
-    <Content Include="Views\Items\_EditGameItemPartial.cshtml" />
-    <Content Include="Views\Items\Edit.cshtml" />
     <Content Include="Views\Categories\Index.cshtml" />
     <Content Include="Views\Account\ChangePassword.cshtml" />
     <Content Include="Views\Account\ChangePasswordConfirmation.cshtml" />
@@ -339,6 +368,20 @@
     <Content Include="Views\Account\SendEmailConfirmation.cshtml" />
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\StatInfoModel.cshtml" />
+    <Content Include="Views\Shared\General\_AjaxErrorPartial.cshtml" />
+    <Content Include="Views\Shared\General\_EditStatInfo.cshtml" />
+    <Content Include="Views\Shared\General\_Layout.cshtml" />
+    <Content Include="Views\Shared\General\_LoadingPartial.cshtml" />
+    <Content Include="Views\Shared\General\_LoginPartial.cshtml" />
+    <Content Include="Views\Shared\General\_NavbarNavPartial.cshtml" />
+    <Content Include="Views\Shared\General\_NoResultsPartial.cshtml" />
+    <Content Include="Views\Shared\General\_NavNestedViews.cshtml" />
+    <Content Include="Views\Skills\Index.cshtml" />
+    <Content Include="Views\Skills\Create.cshtml" />
+    <Content Include="Views\Skills\Edit.cshtml" />
+    <Content Include="Views\Skills\DisplayTemplates\SkillModel.cshtml" />
+    <Content Include="Views\Skills\EditorTemplates\SkillModel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Validation\" />
@@ -356,9 +399,9 @@
       <Project>{57b6a4ed-47ba-4ff6-bd28-fc42299c7e09}</Project>
       <Name>04 NinjaHive.BusinessLayer</Name>
     </ProjectReference>
-    <ProjectReference Include="..\NinjaHive.Core\06 NinjaHive.Core.csproj">
+    <ProjectReference Include="..\NinjaHive.Core\07 NinjaHive.Core.csproj">
       <Project>{1087016a-3d9a-41b4-8893-13d56f7d7f75}</Project>
-      <Name>06 NinjaHive.Core</Name>
+      <Name>07 NinjaHive.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\NinjaHive.Domain\05 NinjaHive.Domain.csproj">
       <Project>{93e5e378-93e2-4117-b76d-a972e378caef}</Project>

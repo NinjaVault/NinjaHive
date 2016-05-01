@@ -1,0 +1,21 @@
+﻿@using NinjaHive.WebApp.Areas.Items.Controllers
+@using NinjaHive.WebApp.Helpers
+
+@model NinjaHive.Contract.Models.SkillItemModel
+
+@{var editUrl = UrlProvider<SkillController>.GetUrl(c => c.Edit(Model.Id));}
+
+<li class="list-group-item">
+    <div class="btn-group btn-group-sm pull-right">
+        @if (Model.Craftable)
+        {
+            <a href="#" class="btn btn-info" data-toggle="tooltip" title="Edit Recipe"><span class="glyphicon glyphicon-apple"></span></a>
+        }
+        <a href="@editUrl" class="btn btn-primary" data-toggle="tooltip" title="Edit"><span class="glyphicon glyphicon-pencil"></span></a>
+    </div>
+    <h4 class="list-group-item-heading">@Model.Name</h4>
+
+    <p class="list-group-item-text">@Model.Description</p>
+</li>
+
+

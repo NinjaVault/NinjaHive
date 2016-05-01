@@ -1,7 +1,7 @@
-﻿using System.Web.Mvc;
+﻿using NinjaHive.WebApp.Helpers;
+using NinjaHive.WebApp.Areas.Items.Controllers;
+using System.Web.Mvc;
 using System.Web.Routing;
-using NinjaHive.WebApp.Controllers;
-using NinjaHive.WebApp.Helpers;
 
 namespace NinjaHive.WebApp
 {
@@ -11,11 +11,22 @@ namespace NinjaHive.WebApp
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
             routes.MapMvcAttributeRoutes();
-            var defaultUri = UrlProvider<ItemsController>.GetRouteValues(c => c.Index());
-            routes.MapRoute(
+
+            var defaultUri = UrlProvider<EquipmentController>.GetRouteValues(c => c.Index());
+
+            // Register an empty route to fix Area default route registration problems
+            var defaultRoute = routes.MapRoute(
                 name: "Default",
+                url: "",
+                defaults: new { area = defaultUri["area"], controller = defaultUri["controller"], action = defaultUri["action"], id = UrlParameter.Optional }
+            );
+            // area data token needs to be set for areas to work properly
+            defaultRoute.DataTokens["area"] = defaultUri["area"];
+
+            routes.MapRoute(
+                name: "Default_NoArea",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = defaultUri["controller"], action = defaultUri["action"], id = UrlParameter.Optional }
+                defaults: new {action = defaultUri["action"], id = UrlParameter.Optional }
             );
         }
     }

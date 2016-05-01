@@ -1,0 +1,83 @@
+﻿@using NinjaHive.Contract.Models
+@using NinjaHive.WebApp.Helpers
+@using System.Linq.Expressions
+
+@model StatInfoModel
+
+<div class="col-md-6">
+    <ul class="list-group col-md-12">
+
+        <li class="list-group-item col-md-12">
+            @Html.LabelFor(m => m.Health, new { @class = "col-md-4 control-label" })
+            <div class="col-md-8">
+                @Html.TextBoxFor(m => m.Health, new { @class = "form-control", type = "number", step = "1" })
+                @Html.ValidationMessageFor(m => m.Health, "", new { @class = "text-danger" })
+            </div>
+        </li>
+
+        <li class="list-group-item col-md-12">
+            @Html.LabelFor(m => m.Magic, new { @class = "col-md-4 control-label" })
+            <div class="col-md-8">
+                @Html.TextBoxFor(m => m.Magic, new { @class = "form-control", type = "number", step = "1" })
+                @Html.ValidationMessageFor(m => m.Magic, "", new { @class = "text-danger" })
+            </div>
+        </li>
+
+        <li class="list-group-item col-md-12">
+            @Html.LabelFor(m => m.Attack, new { @class = "col-md-4 control-label" })
+            <div class="col-md-8">
+                @Html.TextBoxFor(m => m.Attack, new { @class = "form-control", type = "number", step = "1" })
+                @Html.ValidationMessageFor(m => m.Attack, "", new { @class = "text-danger" })
+            </div>
+        </li>
+
+        <li class="list-group-item col-md-12">
+            @Html.LabelFor(m => m.Defense, new { @class = "col-md-4 control-label" })
+            <div class="col-md-8">
+                @Html.TextBoxFor(m => m.Defense, new { @class = "form-control", type = "number", step = "1" })
+                @Html.ValidationMessageFor(m => m.Defense, "", new { @class = "text-danger" })
+            </div>
+        </li>
+
+        <li class="list-group-item col-md-12">
+            @Html.LabelFor(m => m.Agility, new { @class = "col-md-4 control-label" })
+            <div class="col-md-8">
+                @Html.TextBoxFor(m => m.Agility, new { @class = "form-control", type = "number", step = "1" })
+                @Html.ValidationMessageFor(m => m.Agility, "", new { @class = "text-danger" })
+            </div>
+        </li>
+
+        <li class="list-group-item col-md-12">
+            @Html.LabelFor(m => m.Intelligence, new { @class = "col-md-4 control-label" })
+            <div class="col-md-8">
+                @Html.TextBoxFor(m => m.Intelligence, new { @class = "form-control", type = "number", step = "1" })
+                @Html.ValidationMessageFor(m => m.Intelligence, "", new { @class = "text-danger" })
+            </div>
+        </li>
+
+        <li class="list-group-item col-md-12">
+            @Html.LabelFor(m => m.Hunger, new { @class = "col-md-4 control-label" })
+            <div class="col-md-8">
+                @Html.TextBoxFor(m => m.Hunger, new { @class = "form-control", type = "number", step = "1" })
+                @Html.ValidationMessageFor(m => m.Hunger, "", new { @class = "text-danger" })
+            </div>
+        </li>
+
+        <li class="list-group-item col-md-12">
+            @Html.LabelFor(m => m.Stamina, new { @class = "col-md-4 control-label" })
+            <div class="col-md-8">
+                @Html.TextBoxFor(m => m.Stamina, new { @class = "form-control", type = "number", step = "1" })
+                @Html.ValidationMessageFor(m => m.Stamina, "", new { @class = "text-danger" })
+            </div>
+        </li>
+
+
+        <li class="list-group-item col-md-12">
+            @Html.LabelFor(m => m.Resistance, new { @class = "col-md-4 control-label" })
+            <div class="col-md-8">
+                @Html.TextBoxFor(m => m.Resistance, new { @class = "form-control", type = "number", step = "0.01" })
+                @Html.ValidationMessageFor(m => m.Resistance, "", new { @class = "text-danger" })
+            </div>
+        </li>
+    </ul>
+</div>

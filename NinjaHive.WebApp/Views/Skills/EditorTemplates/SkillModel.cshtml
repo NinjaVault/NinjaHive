@@ -1,0 +1,22 @@
+﻿@using NinjaHive.WebApp.Extensions
+
+@model NinjaHive.Contract.Models.SkillModel
+<div class="col-md-12">
+    <div class="col-md-6">
+        @Html.FormGroupFor(m => m.Name)
+
+        @Html.FormGroupFor(m => m.Range)
+
+        @Html.FormGroupFor(m => m.Radius)
+
+        @Html.FormGroupFor(m => m.Targets)
+
+        @Html.FormGroupFor(m => m.Target)
+    </div>
+
+    <div class="col-md-6">
+        @Html.FormGroupFor(m => m.Friendly)
+        <br />
+    </div>
+</div>
+@Html.EditorFor(m => m.StatInfo)

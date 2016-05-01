@@ -1,6 +1,5 @@
 ﻿using System;
 using NinjaHive.Core;
-using NinjaHive.Core.Validations;
 
 namespace NinjaHive.Contract.Queries
 {
@@ -12,7 +11,6 @@ namespace NinjaHive.Contract.Queries
             this.Id = id;
         }
 
-        [NonEmptyGuid]
-        public Guid Id { get; set; }
+        public Guid Id { get; }
     }
 }

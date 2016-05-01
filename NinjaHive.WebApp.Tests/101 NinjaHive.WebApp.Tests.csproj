@@ -8,7 +8,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NinjaHive.WebApp.Tests</RootNamespace>
     <AssemblyName>101 NinjaHive.WebApp.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -18,6 +18,7 @@
     <TestProjectType>UnitTest</TestProjectType>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -95,12 +96,15 @@
     <Compile Include="Mocks\Contract\AddGameItemCommand.cs" />
     <Compile Include="ContractValidationTests.cs" />
     <Compile Include="CoreExtensionTests.cs" />
+    <Compile Include="Mocks\FakeValidator.cs" />
     <Compile Include="ValidationDecoratorTests.cs" />
     <Compile Include="WebAppBootstrapperTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -112,9 +116,9 @@
       <Project>{3b537332-5517-4bc2-b8cc-24bf208ee365}</Project>
       <Name>03 NinjaHive.Contract</Name>
     </ProjectReference>
-    <ProjectReference Include="..\NinjaHive.Core\06 NinjaHive.Core.csproj">
+    <ProjectReference Include="..\NinjaHive.Core\07 NinjaHive.Core.csproj">
       <Project>{1087016A-3D9A-41B4-8893-13D56F7D7F75}</Project>
-      <Name>06 NinjaHive.Core</Name>
+      <Name>07 NinjaHive.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\NinjaHive.WebApp\01 NinjaHive.WebApp.csproj">
       <Project>{34EE914C-BC5F-4EB2-8E12-03E9DBA4179D}</Project>

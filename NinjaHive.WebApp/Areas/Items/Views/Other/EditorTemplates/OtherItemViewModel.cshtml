@@ -1,0 +1,15 @@
+﻿@using NinjaHive.WebApp.Areas.Items.Models
+@using NinjaHive.WebApp.Helpers
+@model OtherItemViewModel
+
+@Html.Partial(Partials.EditGameItem, Model)
+
+<div class="col-md-12">
+    @Html.EditorFor(m => m.DerivedItem.StatInfo)
+    <div class="col-md-6">
+        <div class="form-group">
+            @Html.EditorFor(m => m.DerivedItem.IsEnhancer)
+            @Html.LabelFor(m => m.DerivedItem.IsEnhancer, new { @class = "control-label" })
+        </div>
+    </div>
+</div>
