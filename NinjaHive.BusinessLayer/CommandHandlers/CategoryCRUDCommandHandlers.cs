@@ -6,7 +6,7 @@ using NinjaHive.Domain.Extensions;
 
 namespace NinjaHive.BusinessLayer.CommandHandlers
 {
-    public class CategoryCommandHandler :
+    public class CategoryCRUDCommandHandlers :
         ICommandHandler<CreateEntityCommand<MainCategoryModel>>,
         ICommandHandler<UpdateEntityCommand<MainCategoryModel>>,
         ICommandHandler<DeleteEntityCommand<MainCategoryModel>>,
@@ -17,7 +17,7 @@ namespace NinjaHive.BusinessLayer.CommandHandlers
         private readonly IRepository<MainCategoryEntity> mainCategoryRepository;
         private readonly IRepository<SubCategoryEntity> subCategoryRepository;
 
-        public CategoryCommandHandler(
+        public CategoryCRUDCommandHandlers(
             IRepository<MainCategoryEntity> mainCategoryRepository,
             IRepository<SubCategoryEntity> subCategoryRepository)
         {

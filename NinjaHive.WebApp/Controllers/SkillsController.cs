@@ -4,12 +4,14 @@ using NinjaHive.WebApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
+using NinjaHive.Contract.Queries.Skills;
 
 namespace NinjaHive.WebApp.Controllers
 {
     public class SkillsController : BaseController
     {
         private readonly IQueryProcessor queryProcessor;
+        private readonly IUnitOfWork<SkillModel> skillRepository;
 
         List<SkillModel> tempList = new List<SkillModel>
         {
@@ -20,22 +22,23 @@ namespace NinjaHive.WebApp.Controllers
             new SkillModel { Id = Guid.NewGuid(), Name="Fifth Skill"},
         };
 
-        public SkillsController(IQueryProcessor queryProcessor)
+        public SkillsController(IQueryProcessor queryProcessor,
+            IUnitOfWork<SkillModel> skillRepository)
         {
             this.queryProcessor = queryProcessor;
+            this.skillRepository = skillRepository;
         }
 
 
         public ActionResult Index()
         {
-            //TODO: query database
-            return View(tempList);
+            var skills = queryProcessor.Execute(new GetAllSkillsQuery());
+            return View(skills);
         }
 
         public ActionResult Create()
-        {
+        {            
             var viewModel = PrepareViewModel(new SkillModel());
-
             return View(viewModel);
         }
 
@@ -45,16 +48,17 @@ namespace NinjaHive.WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                //TODO: query database
+                skillRepository.Create(viewModel.Skill);
                 return this.Home();
             }
-            return View();
+            return View(viewModel);
         }
 
         public ActionResult Edit(Guid id)
         {
-            //TODO: query database
-            var viewModel = PrepareViewModel(tempList[0]);
+            var model = skillRepository.GetById(id);
+
+            var viewModel = PrepareViewModel(model);
             return View(viewModel);
         }
 
@@ -64,6 +68,7 @@ namespace NinjaHive.WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                skillRepository.Update(model.Skill);
                 return this.Home();
             }
             return View();
@@ -73,7 +78,7 @@ namespace NinjaHive.WebApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(Guid id)
         {
-            //TODO: query database
+            skillRepository.Delete(id);
             return this.Home();
         }
 

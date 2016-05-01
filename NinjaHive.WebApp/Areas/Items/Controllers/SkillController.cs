@@ -1,6 +1,7 @@
-﻿using NinjaHive.Contract.Models;
+﻿using NinjaHive.Core;
+using NinjaHive.Contract.Models;
+using NinjaHive.Contract.Queries.GameItems;
 using NinjaHive.Contract.Queries.Categories;
-using NinjaHive.Core;
 using NinjaHive.WebApp.Areas.Items.Models;
 using NinjaHive.WebApp.Controllers;
 using System;
@@ -12,6 +13,7 @@ namespace NinjaHive.WebApp.Areas.Items.Controllers
     public class SkillController : BaseController
     {
         private readonly IQueryProcessor queryProcessor;
+        private readonly IUnitOfWork<SkillItemModel> skillItemRepository;
 
         List<SkillItemModel> tempList = new List<SkillItemModel>
         {
@@ -22,16 +24,18 @@ namespace NinjaHive.WebApp.Areas.Items.Controllers
             new SkillItemModel { Id = Guid.NewGuid(), Name="Fifth Skill Item", SubCategoryMainCategoryName="Defenses", SubCategoryName="Shields"},
         };
 
-        public SkillController(IQueryProcessor queryProcessor)
+        public SkillController(IQueryProcessor queryProcessor,
+            IUnitOfWork<SkillItemModel> skillItemRepository)
         {
             this.queryProcessor = queryProcessor;
+            this.skillItemRepository = skillItemRepository;
         }
 
 
         public ActionResult Index()
         {
-            //TODO: query database
-            return View(tempList);
+            var skillItems = this.queryProcessor.Execute(new GetAllItemsQuery<SkillItemModel>());
+            return View(skillItems);
         }
 
         public ActionResult Create()
@@ -47,16 +51,18 @@ namespace NinjaHive.WebApp.Areas.Items.Controllers
         {
             if (ModelState.IsValid)
             {
-                //TODO: query database
+                this.skillItemRepository.Create(viewModel.DerivedItem);
                 return this.Home();
             }
+
             return View();
         }
 
         public ActionResult Edit(Guid id)
         {
-            //TODO: query database
-            var viewModel = PrepareViewModel(tempList[0]);
+            var model = this.skillItemRepository.GetById(id);
+
+            var viewModel = PrepareViewModel(model);
             return View(viewModel);
         }
 
@@ -75,7 +81,7 @@ namespace NinjaHive.WebApp.Areas.Items.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(Guid id)
         {
-            //TODO: query database
+            this.skillItemRepository.Delete(id);
             return this.Home();
         }
 
