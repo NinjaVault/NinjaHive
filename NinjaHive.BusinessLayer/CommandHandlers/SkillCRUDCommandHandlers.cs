@@ -6,7 +6,7 @@ using NinjaHive.Domain.Extensions;
 
 namespace NinjaHive.BusinessLayer.CommandHandlers
 {
-    class SkillCURDCommandHandlers :
+    class SkillCRUDCommandHandlers :
         ICommandHandler<CreateEntityCommand<SkillModel>>,
         ICommandHandler<UpdateEntityCommand<SkillModel>>,
         ICommandHandler<DeleteEntityCommand<SkillModel>>
@@ -15,7 +15,7 @@ namespace NinjaHive.BusinessLayer.CommandHandlers
         private readonly IRepository<StatInfoEntity> statInfoRepository;
         private readonly IRepository<SpecialEntity> specialRepository;
         
-        public SkillCURDCommandHandlers(IRepository<SkillEntity> skillRepository,
+        public SkillCRUDCommandHandlers(IRepository<SkillEntity> skillRepository,
             IRepository<StatInfoEntity> statInfoRepository,
             IRepository<SpecialEntity> specialRepository)
         {

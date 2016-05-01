@@ -59,7 +59,7 @@
     <Compile Include="CommandHandlers\CategoryCRUDCommandHandlers.cs" />
     <Compile Include="CommandHandlers\EquipmentItemCRUDCommandHandlers.cs" />
     <Compile Include="CommandHandlers\OtherItemCRUDCommandHandlers.cs" />
-    <Compile Include="CommandHandlers\SkillCURDCommandHandlers.cs" />
+    <Compile Include="CommandHandlers\SkillCRUDCommandHandlers.cs" />
     <Compile Include="CommandHandlers\SkillItemCRUDCommandHandlers.cs" />
     <Compile Include="CommandHandlers\TierCRUDCommandHandlers.cs" />
     <Compile Include="CrossCuttingConcerns\SaveChangesCommandHandlerDecorator.cs" />
