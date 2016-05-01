@@ -6,7 +6,7 @@ using NinjaHive.Core;
 using NinjaHive.Core.Validation;
 using NinjaHive.Core.Validation.Attributes;
 using NinjaHive.WebApp.Tests.Exceptions;
-using NinjaHive.WebApp.Tests.Mocks;
+using NinjaHive.WebApp.Tests.Mocks.Core;
 
 namespace NinjaHive.WebApp.Tests
 {
@@ -117,9 +117,8 @@ namespace NinjaHive.WebApp.Tests
         }
 
         private ValidationCommandHandlerDecorator<IFakeCommandInterface> ValidationDecorator
-        {
-            get { return new ValidationCommandHandlerDecorator<IFakeCommandInterface>(new FakeDecoratee(), new FakeValidator<IFakeCommandInterface>(), new ObjectValidator()); }
-        }
+            => new ValidationCommandHandlerDecorator<IFakeCommandInterface>(
+                new FakeDecoratee(), FakeServices.GetFakeValidator<IFakeCommandInterface>(null), new ObjectValidator());
 
         private Guid Guid
         {

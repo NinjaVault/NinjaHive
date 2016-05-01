@@ -30,6 +30,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SqlScripts", "SqlScripts", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "06 NinjaHive.Components", "NinjaHive.Components\06 NinjaHive.Components.csproj", "{D73816D8-9DCE-400F-8B4E-C01291A319E6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "201 UnitTesting.Web.Mvc", "UnitTesting.Web.Mvc\201 UnitTesting.Web.Mvc.csproj", "{F45A4B40-04F1-482C-B521-208ED9CB9B6D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -64,6 +66,10 @@ Global
 		{D73816D8-9DCE-400F-8B4E-C01291A319E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D73816D8-9DCE-400F-8B4E-C01291A319E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D73816D8-9DCE-400F-8B4E-C01291A319E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F45A4B40-04F1-482C-B521-208ED9CB9B6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F45A4B40-04F1-482C-B521-208ED9CB9B6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F45A4B40-04F1-482C-B521-208ED9CB9B6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F45A4B40-04F1-482C-B521-208ED9CB9B6D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

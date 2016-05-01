@@ -4,6 +4,8 @@ using NinjaHive.BusinessLayer.CrossCuttingConcerns;
 using NinjaHive.Contract.Models;
 using NinjaHive.Core.Validation;
 using NinjaHive.WebApp.Tests.Exceptions;
+using NinjaHive.WebApp.Tests.Mocks.Contract;
+using NinjaHive.WebApp.Tests.Mocks.Core;
 
 namespace NinjaHive.WebApp.Tests
 {
@@ -20,11 +22,12 @@ namespace NinjaHive.WebApp.Tests
                 Name = "Valid",
                 Description = "Valid description"
             };
-            var command = new Mocks.Contract.AddGameItemCommand(item);
 
-            var fakeHandler = new Mocks.Contract.AddGameItemCommandHandler();
-            var fakeValidator = new Mocks.FakeValidator<Mocks.Contract.AddGameItemCommand>();
-            var handler = new ValidationCommandHandlerDecorator<Mocks.Contract.AddGameItemCommand>(fakeHandler, fakeValidator, new ObjectValidator());
+            var command = new AddGameItemCommand(item);
+            var fakeHandler = new AddGameItemCommandHandler();
+            var fakeValidator = FakeServices.GetFakeValidator(command);
+
+            var handler = new ValidationCommandHandlerDecorator<AddGameItemCommand>(fakeHandler, fakeValidator, new ObjectValidator());
 
             // Act
             handler.Handle(command);
@@ -40,11 +43,12 @@ namespace NinjaHive.WebApp.Tests
                 Name = string.Empty,
                 Description = "Valid description",
             };
-            var command = new Mocks.Contract.AddGameItemCommand(item);
 
-            var fakeHandler = new Mocks.Contract.AddGameItemCommandHandler();
-            var fakeValidator = new Mocks.FakeValidator<Mocks.Contract.AddGameItemCommand>();
-            var handler = new ValidationCommandHandlerDecorator<Mocks.Contract.AddGameItemCommand>(fakeHandler, fakeValidator, new ObjectValidator());
+            var command = new AddGameItemCommand(item);
+            var fakeHandler = new AddGameItemCommandHandler();
+            var fakeValidator = FakeServices.GetFakeValidator(command);
+
+            var handler = new ValidationCommandHandlerDecorator<AddGameItemCommand>(fakeHandler, fakeValidator, new ObjectValidator());
 
             // Act
             handler.Handle(command);
@@ -60,11 +64,12 @@ namespace NinjaHive.WebApp.Tests
                 Name = "1n val!d",
                 Description = "Valid description",
             };
-            var command = new Mocks.Contract.AddGameItemCommand(item);
 
-            var fakeHandler = new Mocks.Contract.AddGameItemCommandHandler();
-            var fakeValidator = new Mocks.FakeValidator<Mocks.Contract.AddGameItemCommand>();
-            var handler = new ValidationCommandHandlerDecorator<Mocks.Contract.AddGameItemCommand>(fakeHandler, fakeValidator, new ObjectValidator());
+            var command = new AddGameItemCommand(item);
+            var fakeHandler = new AddGameItemCommandHandler();
+            var fakeValidator = FakeServices.GetFakeValidator(command);
+
+            var handler = new ValidationCommandHandlerDecorator<AddGameItemCommand>(fakeHandler, fakeValidator, new ObjectValidator());
 
             // Act
             handler.Handle(command);
