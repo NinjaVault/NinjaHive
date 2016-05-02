@@ -64,6 +64,7 @@
     <Compile Include="Extensions\CollectionExtensions.cs" />
     <Compile Include="Extensions\FriendlyExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Extensions\ExpressionExtensions.cs" />
     <Compile Include="Helpers\RegEx.cs" />
     <Compile Include="Helpers\Requires.cs" />
     <Compile Include="ICommandHandler.cs" />
