@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
+using NinjaHive.Core.Extensions;
 
 namespace NinjaHive.WebApp.Extensions
 {
@@ -60,7 +61,7 @@ namespace NinjaHive.WebApp.Extensions
             builder.AppendLine(htmlHelper.LabelFor(expression, new { @class = "col-md-4 control-label" }).ToHtmlString());
             builder.AppendLine("<div class='col-md-8'>");
             
-            builder.AppendLine(htmlHelper.DropDownList(PropertyHelper.NameFromExpression(expression),
+            builder.AppendLine(htmlHelper.DropDownList(expression.GetPropertyNameFromExpression(),
                                                         list,
                                                         new { @class = "form-control" }
                                                     ).ToHtmlString()

@@ -250,7 +250,6 @@
     <Compile Include="Helpers\Partials.cs" />
     <Compile Include="App_Start\Identity\ApplicationRoleManager.cs" />
     <Compile Include="App_Start\Identity\ApplicationUserManager.cs" />
-    <Compile Include="Helpers\PropertyHelper.cs" />
     <Compile Include="IUserContextWithRoles.cs" />
     <Compile Include="Models\AccountViewModel.cs" />
     <Compile Include="Models\GameItemViewModel.cs" />
