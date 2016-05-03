@@ -3,7 +3,7 @@ using NinjaHive.Contract.Commands;
 using NinjaHive.Contract.Models;
 using NinjaHive.Core;
 
-namespace NinjaHive.BusinessLayer.CommandHandlers
+namespace NinjaHive.BusinessLayer.CommandHandlers.GameItems
 {
     public class OtherItemCRUDCommandHandlers :
         ICommandHandler<CreateEntityCommand<OtherItemModel>>,
