@@ -1,16 +1,13 @@
-﻿using NinjaHive.Components.Enums;
+﻿using System.ComponentModel.DataAnnotations;
+using NinjaHive.Components.Enums;
 
 namespace NinjaHive.Contract.Models
 {
-    public class EquipmentModel: GameItemModel
+    public class EquipmentModel : GameItemModel
     {
-        public EquipmentModel()
-        {
-            this.Durability = 0;
-            this.Slot = BodySlot.Head;
-        }
-
+        [Range(0, int.MaxValue, ErrorMessage = "Please enter valid integer for {0}. Minimum: {1}")]
         public int Durability { get; set; }
+
         public BodySlot Slot { get; set; }
     }
 }
