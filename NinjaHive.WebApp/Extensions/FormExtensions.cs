@@ -5,7 +5,6 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
-using NinjaHive.Core.Extensions;
 
 namespace NinjaHive.WebApp.Extensions
 {
@@ -26,71 +25,61 @@ namespace NinjaHive.WebApp.Extensions
             var action = urlParts["action"].ToString();
             return htmlHelper.BeginForm(action, controller, FormMethod.Post, htmlAttributes);
         }
-
         
         public static MvcHtmlString FormGroupFor<TModel, TValue>(this HtmlHelper<TModel> htmlHelper,
-                                                                 Expression<Func<TModel, TValue>> expression,
-                                                                 object editorHtmlAttributes = null,
-                                                                 object containerHtmlAttributes = null)
+            Expression<Func<TModel, TValue>> expression, object editorHtmlAttributes = null, object containerHtmlAttributes = null)
         {
             var containerAttributes = containerHtmlAttributes ?? new { @class = "form-group" };
             var editorAttributes = editorHtmlAttributes ?? new { @class = "form-control" };
 
-
-
             var builder = new StringBuilder();
-            builder.AppendLine( htmlHelper.BeginElement("div", containerAttributes).ToHtmlString() );
-            builder.AppendLine(htmlHelper.LabelFor(expression, new { @class = "col-md-4 control-label" }).ToHtmlString());
+            builder.AppendLine(htmlHelper.BeginElement("div", containerAttributes));
+            builder.AppendLine(htmlHelper.LabelFor(expression, new { @class = "col-md-4 control-label" }));
             builder.AppendLine("<div class='col-md-8'>");
-            builder.AppendLine(htmlHelper.EditorFor(expression, new { htmlAttributes = editorAttributes }).ToHtmlString());
-            builder.AppendLine(htmlHelper.ValidationMessageFor(expression, "", new { @class = "text-danger" }).ToHtmlString());
+            builder.AppendLine(htmlHelper.EditorFor(expression, new { htmlAttributes = editorAttributes }));
+            builder.AppendLine(htmlHelper.ValidationMessageFor(expression, "", new { @class = "text-danger" }));
             builder.AppendLine("</div></div>");
 
             return new MvcHtmlString(builder.ToString());
         }
 
         public static MvcHtmlString FormGroupFor<TModel>(this HtmlHelper<TModel> htmlHelper,
-                                                         Expression<Func<TModel, bool>> expression,
-                                                         object editorHtmlAttributes = null,
-                                                         object containerHtmlAttributes = null)
+            Expression<Func<TModel, bool>> expression, object editorHtmlAttributes = null, object containerHtmlAttributes = null)
         {
             var containerAttributes = containerHtmlAttributes ?? new { @class = "form-group" };
             var editorAttributes = editorHtmlAttributes ?? new {};
 
             var builder = new StringBuilder();
-            builder.AppendLine(htmlHelper.BeginElement("div", containerAttributes).ToHtmlString());
-            builder.AppendLine(htmlHelper.EditorFor(expression, new { htmlAttributes = editorAttributes }).ToHtmlString());
-            builder.AppendLine(htmlHelper.LabelFor(expression, new { @class = "control-label" }).ToHtmlString());
+            builder.AppendLine(htmlHelper.BeginElement("div", containerAttributes));
+            builder.AppendLine(htmlHelper.EditorFor(expression, new { htmlAttributes = editorAttributes }));
+            builder.AppendLine(htmlHelper.LabelFor(expression, new { @class = "control-label" }));
             builder.AppendLine("</div>");
 
             return new MvcHtmlString(builder.ToString());
         }
 
-
         public static MvcHtmlString FormGroupFor<TModel,TValue>(this HtmlHelper<TModel> htmlHelper,
-                                                            Expression<Func<TModel, TValue>> expression,
-                                                            IEnumerable<SelectListItem> list,
-                                                            object editorHtmlAttributes = null,
-                                                            object containerHtmlAttributes = null)
+            Expression<Func<TModel, TValue>> expression, IEnumerable<SelectListItem> list,
+            object editorHtmlAttributes = null, object containerHtmlAttributes = null)
         {
             var containerAttributes = containerHtmlAttributes ?? new { @class = "form-group" };
             var editorAttributes = editorHtmlAttributes ?? new { @class = "form-control"};
 
-
             var builder = new StringBuilder();
-            builder.AppendLine(htmlHelper.BeginElement("div", containerAttributes).ToHtmlString());
-            builder.AppendLine(htmlHelper.LabelFor(expression, new { @class = "col-md-4 control-label" }).ToHtmlString());
+            builder.AppendLine(htmlHelper.BeginElement("div", containerAttributes));
+            builder.AppendLine(htmlHelper.LabelFor(expression, new { @class = "col-md-4 control-label" }));
             builder.AppendLine("<div class='col-md-8'>");
             
-            builder.AppendLine(htmlHelper.DropDownListFor(expression,
-                                                        list,
-                                                        editorAttributes
-                                                    ).ToHtmlString()
-                                                );
-            builder.AppendLine(htmlHelper.ValidationMessageFor(expression, "", new { @class = "text-danger" }).ToHtmlString());
+            builder.AppendLine(htmlHelper.DropDownListFor(expression, list, editorAttributes));
+            builder.AppendLine(htmlHelper.ValidationMessageFor(expression, "", new { @class = "text-danger" }));
             builder.AppendLine("</div></div>");
 
             return new MvcHtmlString(builder.ToString());
+        }
+
+        private static void AppendLine(this StringBuilder builder, MvcHtmlString htmlString)
+        {
+            builder.AppendLine(htmlString.ToHtmlString());
         }
     }
 }
