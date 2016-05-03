@@ -32,15 +32,15 @@ namespace NinjaHive.WebApp.Extensions
             var containerAttributes = containerHtmlAttributes ?? new { @class = "form-group" };
             var editorAttributes = editorHtmlAttributes ?? new { @class = "form-control" };
 
-            var builder = new StringBuilder();
-            builder.AppendLine(htmlHelper.BeginElement("div", containerAttributes));
-            builder.AppendLine(htmlHelper.LabelFor(expression, new { @class = "col-md-4 control-label" }));
-            builder.AppendLine("<div class='col-md-8'>");
-            builder.AppendLine(htmlHelper.EditorFor(expression, new { htmlAttributes = editorAttributes }));
-            builder.AppendLine(htmlHelper.ValidationMessageFor(expression, "", new { @class = "text-danger" }));
-            builder.AppendLine("</div></div>");
-
-            return new MvcHtmlString(builder.ToString());
+            return BuildHtmlMarkupWithStringBuilder(builder =>
+            {
+                builder.AppendLine(htmlHelper.BeginElement("div", containerAttributes));
+                builder.AppendLine(htmlHelper.LabelFor(expression, new { @class = "col-md-4 control-label" }));
+                builder.AppendLine("<div class='col-md-8'>");
+                builder.AppendLine(htmlHelper.EditorFor(expression, new { htmlAttributes = editorAttributes }));
+                builder.AppendLine(htmlHelper.ValidationMessageFor(expression, "", new { @class = "text-danger" }));
+                builder.AppendLine("</div></div>");
+            });
         }
 
         public static MvcHtmlString FormGroupFor<TModel>(this HtmlHelper<TModel> htmlHelper,
@@ -49,13 +49,13 @@ namespace NinjaHive.WebApp.Extensions
             var containerAttributes = containerHtmlAttributes ?? new { @class = "form-group" };
             var editorAttributes = editorHtmlAttributes ?? new {};
 
-            var builder = new StringBuilder();
-            builder.AppendLine(htmlHelper.BeginElement("div", containerAttributes));
-            builder.AppendLine(htmlHelper.EditorFor(expression, new { htmlAttributes = editorAttributes }));
-            builder.AppendLine(htmlHelper.LabelFor(expression, new { @class = "control-label" }));
-            builder.AppendLine("</div>");
-
-            return new MvcHtmlString(builder.ToString());
+            return BuildHtmlMarkupWithStringBuilder(builder =>
+            {
+                builder.AppendLine(htmlHelper.BeginElement("div", containerAttributes));
+                builder.AppendLine(htmlHelper.EditorFor(expression, new { htmlAttributes = editorAttributes }));
+                builder.AppendLine(htmlHelper.LabelFor(expression, new { @class = "control-label" }));
+                builder.AppendLine("</div>");
+            });
         }
 
         public static MvcHtmlString FormGroupFor<TModel,TValue>(this HtmlHelper<TModel> htmlHelper,
@@ -65,14 +65,23 @@ namespace NinjaHive.WebApp.Extensions
             var containerAttributes = containerHtmlAttributes ?? new { @class = "form-group" };
             var editorAttributes = editorHtmlAttributes ?? new { @class = "form-control"};
 
+            return BuildHtmlMarkupWithStringBuilder(builder =>
+            {
+                builder.AppendLine(htmlHelper.BeginElement("div", containerAttributes));
+                builder.AppendLine(htmlHelper.LabelFor(expression, new { @class = "col-md-4 control-label" }));
+                builder.AppendLine("<div class='col-md-8'>");
+
+                builder.AppendLine(htmlHelper.DropDownListFor(expression, list, editorAttributes));
+                builder.AppendLine(htmlHelper.ValidationMessageFor(expression, "", new { @class = "text-danger" }));
+                builder.AppendLine("</div></div>");
+            });
+        }
+
+        private static MvcHtmlString BuildHtmlMarkupWithStringBuilder(Action<StringBuilder> markupBuildAction)
+        {
             var builder = new StringBuilder();
-            builder.AppendLine(htmlHelper.BeginElement("div", containerAttributes));
-            builder.AppendLine(htmlHelper.LabelFor(expression, new { @class = "col-md-4 control-label" }));
-            builder.AppendLine("<div class='col-md-8'>");
-            
-            builder.AppendLine(htmlHelper.DropDownListFor(expression, list, editorAttributes));
-            builder.AppendLine(htmlHelper.ValidationMessageFor(expression, "", new { @class = "text-danger" }));
-            builder.AppendLine("</div></div>");
+
+            markupBuildAction(builder);
 
             return new MvcHtmlString(builder.ToString());
         }
