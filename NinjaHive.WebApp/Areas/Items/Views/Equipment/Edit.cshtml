@@ -17,7 +17,7 @@
             Equipment <small>Edit</small>
         </h2>
     </div>
-    @using (Html.BeginForm<EquipmentController>(c => c.Edit(null), new {@class = "form-horizontal", role = "form"}))
+    @using (Html.BeginForm<EquipmentController>(c => c.Edit(Model), new {@class = "form-horizontal", role = "form"}))
     {
         @Html.AntiForgeryToken()
         @Html.EditorForModel()
