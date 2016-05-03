@@ -6,10 +6,10 @@
 
 <div class="row">
     <div class="page-header">
-        @using (Html.BeginForm<EquipmentController>(c => c.Delete(Model.DerivedItem.Id), new {@class = "form-delete pull-right"}))
+        @using (Html.BeginForm<EquipmentController>(c => c.Delete(Model.Item.Id), new {@class = "form-delete pull-right"}))
         {
             @Html.AntiForgeryToken()
-            @Html.HiddenFor(m => m.DerivedItem.Id, new { Name = "Id" })
+            @Html.HiddenFor(m => m.Item.Id, new { Name = "Id" })
             <input type="submit" class="btn btn-danger" value="Delete" />
         }
 

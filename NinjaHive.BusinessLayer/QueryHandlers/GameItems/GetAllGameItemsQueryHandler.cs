@@ -6,16 +6,16 @@ using NinjaHive.Core;
 namespace NinjaHive.BusinessLayer.QueryHandlers.GameItems
 {
     public class GetAllGameItemsQueryHandler :
-        IQueryHandler<GetAllItemsQuery<EquipmentModel>, EquipmentModel[]>,
-        IQueryHandler<GetAllItemsQuery<OtherItemModel>, OtherItemModel[]>,
-        IQueryHandler<GetAllItemsQuery<SkillItemModel>, SkillItemModel[]>
+        IQueryHandler<GetAllGameItemsQuery<EquipmentModel>, EquipmentModel[]>,
+        IQueryHandler<GetAllGameItemsQuery<OtherItemModel>, OtherItemModel[]>,
+        IQueryHandler<GetAllGameItemsQuery<SkillItemModel>, SkillItemModel[]>
     {
-        public SkillItemModel[] Handle(GetAllItemsQuery<SkillItemModel> query)
+        public SkillItemModel[] Handle(GetAllGameItemsQuery<SkillItemModel> query)
         {
             throw new NotImplementedException();
         }
 
-        public OtherItemModel[] Handle(GetAllItemsQuery<OtherItemModel> query)
+        public OtherItemModel[] Handle(GetAllGameItemsQuery<OtherItemModel> query)
         {
             return new[]
             {
@@ -27,7 +27,7 @@ namespace NinjaHive.BusinessLayer.QueryHandlers.GameItems
             };
         }
 
-        public EquipmentModel[] Handle(GetAllItemsQuery<EquipmentModel> query)
+        public EquipmentModel[] Handle(GetAllGameItemsQuery<EquipmentModel> query)
         {
             return new[]
             {

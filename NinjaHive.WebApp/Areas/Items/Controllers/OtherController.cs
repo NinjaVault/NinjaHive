@@ -25,7 +25,7 @@ namespace NinjaHive.WebApp.Areas.Items.Controllers
 
         public ActionResult Index()
         {
-            var items = this.queryProcessor.Execute(new GetAllItemsQuery<OtherItemModel>());
+            var items = this.queryProcessor.Execute(new GetAllGameItemsQuery<OtherItemModel>());
             return View(items);
         }
 
@@ -42,10 +42,10 @@ namespace NinjaHive.WebApp.Areas.Items.Controllers
         {
             if(ModelState.IsValid)
             {
-                this.otherItemsRepository.Create(viewModel.DerivedItem);
+                this.otherItemsRepository.Create(viewModel.Item);
                 return this.Home();
             }
-            return View(viewModel);
+            return View(PrepareViewModel(viewModel.Item));
         }
 
         public ActionResult Edit(Guid id)
@@ -60,10 +60,10 @@ namespace NinjaHive.WebApp.Areas.Items.Controllers
         {
             if (ModelState.IsValid)
             {
-                this.otherItemsRepository.Update(viewModel.DerivedItem);
+                this.otherItemsRepository.Update(viewModel.Item);
                 return this.Home();
             }
-            return View();
+            return View(PrepareViewModel(viewModel.Item));
         }
 
         [HttpPost]
@@ -77,7 +77,7 @@ namespace NinjaHive.WebApp.Areas.Items.Controllers
         private OtherItemViewModel PrepareViewModel(OtherItemModel item)
         {
             var categories = this.queryProcessor.Execute(new GetGroupedCategoriesQuery());
-            return new OtherItemViewModel(item, categories);
+            return new OtherItemViewModel { Item = item, CategoriesList = categories };
         }
 
         protected override RedirectResult Home()

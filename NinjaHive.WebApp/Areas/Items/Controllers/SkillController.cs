@@ -50,7 +50,7 @@ namespace NinjaHive.WebApp.Areas.Items.Controllers
                 //TODO: query database
                 return this.Home();
             }
-            return View();
+            return View(PrepareViewModel(viewModel.Item));
         }
 
         public ActionResult Edit(Guid id)
@@ -62,13 +62,13 @@ namespace NinjaHive.WebApp.Areas.Items.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(SkillItemViewModel model)
+        public ActionResult Edit(SkillItemViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
                 return this.Home();
             }
-            return View();
+            return View(PrepareViewModel(viewModel.Item));
         }
 
         [HttpPost]
@@ -83,12 +83,12 @@ namespace NinjaHive.WebApp.Areas.Items.Controllers
         {
             var categories = this.queryProcessor.Execute(new GetGroupedCategoriesQuery());
 
-            return new SkillItemViewModel { DerivedItem = item, CategoryList = categories };
+            return new SkillItemViewModel { Item = item, CategoriesList = categories };
         }
 
         protected override RedirectResult Home()
         {
-            return base.Redirect<OtherController>(c => c.Index());
+            return base.Redirect<SkillController>(c => c.Index());
         }
     }
 }

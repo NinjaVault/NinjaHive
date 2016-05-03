@@ -67,7 +67,7 @@ namespace NinjaHive.WebApp.Tests
         public void TestMethod1() //TODO create tests for the FormExtensions
         {
             // Arrange
-            var viewModel = new EquipmentViewModel(new EquipmentModel(), Enumerable.Empty<CategoryModel>());
+            var viewModel = new EquipmentViewModel { Item = new EquipmentModel(), CategoriesList = Enumerable.Empty<CategoryModel>() };
 
             var viewData = new ViewDataDictionary(viewModel);
 
@@ -83,7 +83,7 @@ namespace NinjaHive.WebApp.Tests
         public void HtmlBuilder_PlainTagStart()
         {
             // Arrange
-            var viewModel = new EquipmentViewModel(new EquipmentModel(), Enumerable.Empty<CategoryModel>());
+            var viewModel = new EquipmentViewModel { Item = new EquipmentModel(), CategoriesList = Enumerable.Empty<CategoryModel>() };
 
             var viewData = new ViewDataDictionary(viewModel);
 
@@ -101,7 +101,7 @@ namespace NinjaHive.WebApp.Tests
         public void HtmlBuilder_PlainTagStart_SingleAttribute_NoDashesNoQuotes()
         {
             // Arrange
-            var viewModel = new EquipmentViewModel(new EquipmentModel(), Enumerable.Empty<CategoryModel>());
+            var viewModel = new EquipmentViewModel { Item = new EquipmentModel(), CategoriesList = Enumerable.Empty<CategoryModel>() };
 
             var viewData = new ViewDataDictionary(viewModel);
 
@@ -119,7 +119,7 @@ namespace NinjaHive.WebApp.Tests
         public void HtmlBuilder_PlainTagStart_SingleAttribute_DashesNoQuotes()
         {
             // Arrange
-            var viewModel = new EquipmentViewModel(new EquipmentModel(), Enumerable.Empty<CategoryModel>());
+            var viewModel = new EquipmentViewModel { Item = new EquipmentModel(), CategoriesList = Enumerable.Empty<CategoryModel>() };
 
             var viewData = new ViewDataDictionary(viewModel);
 
@@ -138,7 +138,7 @@ namespace NinjaHive.WebApp.Tests
         public void HtmlBuilder_PlainTagStart_SingleAttribute_DashesQuotes()
         {
             // Arrange
-            var viewModel = new EquipmentViewModel(new EquipmentModel(), Enumerable.Empty<CategoryModel>());
+            var viewModel = new EquipmentViewModel { Item = new EquipmentModel(), CategoriesList = Enumerable.Empty<CategoryModel>() };
 
             var viewData = new ViewDataDictionary(viewModel);
 
@@ -156,7 +156,7 @@ namespace NinjaHive.WebApp.Tests
         public void HtmlBuilder_SelfCloseTagStart()
         {
             // Arrange
-            var viewModel = new EquipmentViewModel(new EquipmentModel(), Enumerable.Empty<CategoryModel>());
+            var viewModel = new EquipmentViewModel { Item = new EquipmentModel(), CategoriesList = Enumerable.Empty<CategoryModel>() };
 
             var viewData = new ViewDataDictionary(viewModel);
 
@@ -174,7 +174,7 @@ namespace NinjaHive.WebApp.Tests
         public void HtmlBuilder_SelfCloseTagStart_SingleAttribute_NoDashesNoQuotes()
         {
             // Arrange
-            var viewModel = new EquipmentViewModel(new EquipmentModel(), Enumerable.Empty<CategoryModel>());
+            var viewModel = new EquipmentViewModel { Item = new EquipmentModel(), CategoriesList = Enumerable.Empty<CategoryModel>() };
 
             var viewData = new ViewDataDictionary(viewModel);
 
@@ -192,7 +192,7 @@ namespace NinjaHive.WebApp.Tests
         public void HtmlBuilder_SelfCloseTagStart_SingleAttribute_DashesNoQuotes()
         {
             // Arrange
-            var viewModel = new EquipmentViewModel(new EquipmentModel(), Enumerable.Empty<CategoryModel>());
+            var viewModel = new EquipmentViewModel { Item = new EquipmentModel(), CategoriesList = Enumerable.Empty<CategoryModel>() };
 
             var viewData = new ViewDataDictionary(viewModel);
 
@@ -211,7 +211,7 @@ namespace NinjaHive.WebApp.Tests
         public void HtmlBuilder_SelfCloseTagStart_SingleAttribute_DashesQuotes()
         {
             // Arrange
-            var viewModel = new EquipmentViewModel(new EquipmentModel(), Enumerable.Empty<CategoryModel>());
+            var viewModel = new EquipmentViewModel { Item = new EquipmentModel(), CategoriesList = Enumerable.Empty<CategoryModel>() };
 
             var viewData = new ViewDataDictionary(viewModel);
 

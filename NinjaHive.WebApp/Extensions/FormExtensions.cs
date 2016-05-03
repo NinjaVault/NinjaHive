@@ -82,7 +82,7 @@ namespace NinjaHive.WebApp.Extensions
             builder.AppendLine(htmlHelper.LabelFor(expression, new { @class = "col-md-4 control-label" }).ToHtmlString());
             builder.AppendLine("<div class='col-md-8'>");
             
-            builder.AppendLine(htmlHelper.DropDownList(expression.GetPropertyNameFromExpression(),
+            builder.AppendLine(htmlHelper.DropDownListFor(expression,
                                                         list,
                                                         editorAttributes
                                                     ).ToHtmlString()

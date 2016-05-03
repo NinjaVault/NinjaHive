@@ -10,10 +10,4 @@ namespace NinjaHive.WebApp.Areas.Items.Models
 
         IEnumerable<SelectListItem> Categories { get; }
     }
-
-    public interface IGameItemViewModel<TItem> : IGameItemViewModel
-        where TItem : GameItemModel
-    {
-        TItem DerivedItem { get; }
-    }
 }

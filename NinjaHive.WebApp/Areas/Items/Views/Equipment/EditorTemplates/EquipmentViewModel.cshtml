@@ -7,15 +7,15 @@
 <div class="col-md-12">
     <div class="col-md-6">
         <div class="form-group">
-            @Html.LabelFor(m => m.DerivedItem.Durability, new { @class = "col-md-4 control-label" })
+            @Html.LabelFor(m => m.Item.Durability, new { @class = "col-md-4 control-label" })
             <div class="col-md-8">
-                @Html.TextBoxFor(m => m.DerivedItem.Durability, new { @class = "form-control", Name="Durability", type="number", min="0" })
-                @Html.ValidationMessageFor(m => m.DerivedItem.Durability, "", new { @class = "text-danger" })
+                @Html.TextBoxFor(m => m.Item.Durability, new { @class = "form-control", Name="Durability", type="number", min="0" })
+                @Html.ValidationMessageFor(m => m.Item.Durability, "", new { @class = "text-danger" })
             </div>
         </div>
         <br />
         <div class="form-group">
-            @Html.LabelFor(m => m.DerivedItem.Slot, new { @class = "col-md-4 control-label" })
+            @Html.LabelFor(m => m.Item.Slot, new { @class = "col-md-4 control-label" })
             <div class="col-md-8">
 
                 
@@ -26,7 +26,7 @@
                     @Html.DropDownListFor(m => m.Equipment.Slot,    EnumHelper.GetSelectList(typeof(BodySlot)),     new { @class = "form-control", Name="Slot" })
                 *@
                 
-                @Html.ValidationMessageFor(m => m.DerivedItem.Slot, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(m => m.Item.Slot, "", new { @class = "text-danger" })
             </div>
         </div>
     </div>

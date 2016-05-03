@@ -24,7 +24,7 @@ namespace NinjaHive.WebApp.Areas.Items.Controllers
 
         public ActionResult Index()
         {
-            var items = this.queryProcessor.Execute(new GetAllItemsQuery<EquipmentModel>());
+            var items = this.queryProcessor.Execute(new GetAllGameItemsQuery<EquipmentModel>());
             return View(items);
         }
 
@@ -35,14 +35,14 @@ namespace NinjaHive.WebApp.Areas.Items.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(EquipmentModel model)
+        public ActionResult Create(EquipmentViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                this.equipmentItemsRepository.Create(model);
+                this.equipmentItemsRepository.Create(viewModel.Item);
                 return base.Home();
             }
-            return View(PrepareViewModel(model));
+            return View(PrepareViewModel(viewModel.Item));
         }
 
         public ActionResult Edit(Guid id)
@@ -53,14 +53,14 @@ namespace NinjaHive.WebApp.Areas.Items.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(EquipmentModel model)
+        public ActionResult Edit(EquipmentViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                this.equipmentItemsRepository.Update(model);
+                this.equipmentItemsRepository.Update(viewModel.Item);
                 return base.Home();
             }
-            return View();
+            return View(PrepareViewModel(viewModel.Item));
         }
 
         [HttpPost]
@@ -74,7 +74,7 @@ namespace NinjaHive.WebApp.Areas.Items.Controllers
         private EquipmentViewModel PrepareViewModel(EquipmentModel model)
         {
             var categories = this.queryProcessor.Execute(new GetGroupedCategoriesQuery());
-            return new EquipmentViewModel(model, categories);
+            return new EquipmentViewModel { Item = model, CategoriesList = categories };
         }
     }
 }
