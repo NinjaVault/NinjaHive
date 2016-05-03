@@ -3,7 +3,7 @@
 @model OtherItemViewModel
 
 @Html.Partial(Partials.EditGameItem, Model)
-<div>
+<div class="col-md-12">
     @Html.EditorFor(m => m.Item.StatInfo)
     <div class="col-md-6">
         <div class="form-group">

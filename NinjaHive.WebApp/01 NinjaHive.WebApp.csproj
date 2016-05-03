@@ -392,6 +392,10 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\NinjaHive.Components\06 NinjaHive.Components.csproj">
+      <Project>{D73816D8-9DCE-400F-8B4E-C01291A319E6}</Project>
+      <Name>06 NinjaHive.Components</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NinjaHive.Contract\03 NinjaHive.Contract.csproj">
       <Project>{3b537332-5517-4bc2-b8cc-24bf208ee365}</Project>
       <Name>03 NinjaHive.Contract</Name>

@@ -1,24 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Text;
 using System.Web.Mvc;
 using System.Web.Routing;
+using NinjaHive.Core.Helpers;
 
 namespace NinjaHive.WebApp.Extensions
 {
     public static class HtmlBuilderExtensions
     {
-        public static MvcHtmlString BeginElement(this HtmlHelper htmlHelper,
-                                                 string tagName,
-                                                 object htmlAttributes = null)
+        public static MvcHtmlString BeginElement(
+            this HtmlHelper htmlHelper, string tagName, object htmlAttributes = null)
         {
             return htmlHelper.BeginElement(tagName, htmlAttributes, false);
         }
 
-        public static MvcHtmlString BeginElementSelfClose(this HtmlHelper htmlHelper,
-                                                          string tagName,
-                                                          object htmlAttributes = null)
+        public static MvcHtmlString BeginElementSelfClose(
+            this HtmlHelper htmlHelper, string tagName, object htmlAttributes = null)
         {
             return htmlHelper.BeginElement(tagName, htmlAttributes, true);
         }
@@ -28,8 +25,8 @@ namespace NinjaHive.WebApp.Extensions
             return MvcHtmlString.Create($"</{tagName}>");
         }
 
-
-        static MvcHtmlString BeginElement(this HtmlHelper helper, string tagName, object htmlAttributes, bool selfClose)
+        static MvcHtmlString BeginElement(
+            this HtmlHelper helper, string tagName, object htmlAttributes, bool selfClose)
         {
             var builder = new StringBuilder();
             builder.Append($"<{tagName}");
@@ -62,17 +59,14 @@ namespace NinjaHive.WebApp.Extensions
 
         public static RouteValueDictionary MakeRouteValueDictionary(this HtmlHelper helper, object target)
         {
-            if (target == null)
-                throw new ArgumentNullException("target");
+            target.IsNotNull(nameof(target));
 
             var routeValue = target as RouteValueDictionary;
-            if (routeValue != null)
-                return routeValue;
+            if (routeValue != null) return routeValue;
 
             // If they're a dictionary, create a new RouteValueDictionary with it
             var dictionary = target as IDictionary<string, object>;
-            if (dictionary != null)
-                return new RouteValueDictionary(dictionary);
+            if (dictionary != null) return new RouteValueDictionary(dictionary);
 
             // Otherwise, create a RouteValueDictionary from the anonymous object
             return HtmlHelper.AnonymousObjectToHtmlAttributes(target);
