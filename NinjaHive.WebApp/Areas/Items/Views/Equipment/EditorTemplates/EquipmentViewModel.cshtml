@@ -13,13 +13,7 @@
         <div class="form-group">
             @Html.LabelFor(m => m.Item.Slot, new { @class = "col-md-4 control-label" })
             <div class="col-md-8">
-                @*
-                    TODO:
-                    The client should not know anything about the Component assembly where the enum resides.
-                    In order to fix this issue, the client should 'QUERY' the businesslayer for a list of the body slots!!!
-                    @Html.DropDownListFor(m => m.Equipment.Slot,    EnumHelper.GetSelectList(typeof(BodySlot)),     new { @class = "form-control", Name="Slot" })
-                *@
-                
+                @Html.EnumDropDownListFor(m => m.Item.Slot, new { @class = "form-control" })
                 @Html.ValidationMessageFor(m => m.Item.Slot, "", new { @class = "text-danger" })
             </div>
         </div>
