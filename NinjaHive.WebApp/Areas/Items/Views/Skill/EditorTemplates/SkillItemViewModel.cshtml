@@ -4,7 +4,5 @@
 
 @Html.Partial(Partials.EditGameItem, Model)
 
-<div class="col-md-12">
-    @Html.LabelFor(m => m.Item)
-    @Html.EditorFor(m => m.Item.StatInfo)
-</div>
+@Html.LabelFor(m => m.Item)
+@Html.EditorFor(m => m.Item.StatInfo)
