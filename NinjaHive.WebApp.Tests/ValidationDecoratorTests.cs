@@ -126,7 +126,7 @@ namespace NinjaHive.WebApp.Tests
         }
 
         #region Mockups
-        private interface IFakeCommandInterface {}
+        public interface IFakeCommandInterface {}
         private class FakeDecoratee : ICommandHandler<IFakeCommandInterface>
         {
             public void Handle(IFakeCommandInterface command)
