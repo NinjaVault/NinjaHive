@@ -8,13 +8,17 @@ namespace NinjaHive.Core.Extensions
     {
         public static string GetPropertyNameFromExpression<TModel, TProp>(this Expression<Func<TModel, TProp>> expression)
         {
-            var member = GetMemberExpression(expression);
+            var member = GetMemberExpression(expression).Member;
 
-            var prop = member.Member as PropertyInfo;
+            var prop = member as PropertyInfo;
 
             if (prop == null)
             {
-                throw new ArgumentException($"Member body '{member}' from expression '{expression}' is not a PropertyInfo");
+                //A member expression is only either a property or field
+                // If it has made it this far, it's a member expression but isn't a property
+                // Must be a field
+                var field = member as FieldInfo;
+                return field.Name;
             }
 
             return prop.Name;

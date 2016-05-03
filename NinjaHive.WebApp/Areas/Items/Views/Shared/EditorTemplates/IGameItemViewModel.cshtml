@@ -2,10 +2,14 @@
 @using NinjaHive.WebApp.Extensions
 @model IGameItemViewModel
 
+@{
+    ViewData.TemplateInfo.HtmlFieldPrefix = "";
+}
+
 @Html.HiddenFor(m => m.Item.Id)
 
 <div class="col-md-6">
-    @Html.FormGroupFor(m => m.Item.Name)
+    @Html.FormGroupFor(m => m.Item.Name, new { @class = "form-control", Name="Name" })
 
     @Html.FormGroupFor(m => m.Item.CategoryId, Model.Categories)
 

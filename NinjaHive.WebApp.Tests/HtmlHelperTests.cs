@@ -78,5 +78,150 @@ namespace NinjaHive.WebApp.Tests
 
             // Assert
         }
+
+        [TestMethod]
+        public void HtmlBuilder_PlainTagStart()
+        {
+            // Arrange
+            var viewModel = new EquipmentViewModel(new EquipmentModel(), Enumerable.Empty<CategoryModel>());
+
+            var viewData = new ViewDataDictionary(viewModel);
+
+            var html = MvcHelper.GetHtmlHelper(viewModel, new EquipmentController(null, null), true);
+
+            // Act
+            var element = html.BeginElement("div");
+
+            // Assert
+            Assert.AreEqual("<div>", element.ToString());
+        }
+
+
+        [TestMethod]
+        public void HtmlBuilder_PlainTagStart_SingleAttribute_NoDashesNoQuotes()
+        {
+            // Arrange
+            var viewModel = new EquipmentViewModel(new EquipmentModel(), Enumerable.Empty<CategoryModel>());
+
+            var viewData = new ViewDataDictionary(viewModel);
+
+            var html = MvcHelper.GetHtmlHelper(viewModel, new EquipmentController(null, null), true);
+
+            // Act
+            var element = html.BeginElement("div", new { @class = "justice" });
+
+            // Assert
+            Assert.AreEqual("<div class='justice'>", element.ToString());
+        }
+
+
+        [TestMethod]
+        public void HtmlBuilder_PlainTagStart_SingleAttribute_DashesNoQuotes()
+        {
+            // Arrange
+            var viewModel = new EquipmentViewModel(new EquipmentModel(), Enumerable.Empty<CategoryModel>());
+
+            var viewData = new ViewDataDictionary(viewModel);
+
+            var html = MvcHelper.GetHtmlHelper(viewModel, new EquipmentController(null, null), true);
+
+            // Act
+            var element = html.BeginElement("div", new { @class = "justice", data_model="template" });
+
+            // Assert
+            Assert.AreEqual("<div class='justice' data-model='template'>", element.ToString());
+        }
+
+
+
+        [TestMethod]
+        public void HtmlBuilder_PlainTagStart_SingleAttribute_DashesQuotes()
+        {
+            // Arrange
+            var viewModel = new EquipmentViewModel(new EquipmentModel(), Enumerable.Empty<CategoryModel>());
+
+            var viewData = new ViewDataDictionary(viewModel);
+
+            var html = MvcHelper.GetHtmlHelper(viewModel, new EquipmentController(null, null), true);
+
+            // Act
+            var element = html.BeginElement("div", new { @class = "justice", data_characters_allowed = "\"'" });
+
+            // Assert
+            Assert.AreEqual("<div class='justice' data-characters-allowed='\"\\''>", element.ToString());
+        }
+
+
+        [TestMethod]
+        public void HtmlBuilder_SelfCloseTagStart()
+        {
+            // Arrange
+            var viewModel = new EquipmentViewModel(new EquipmentModel(), Enumerable.Empty<CategoryModel>());
+
+            var viewData = new ViewDataDictionary(viewModel);
+
+            var html = MvcHelper.GetHtmlHelper(viewModel, new EquipmentController(null, null), true);
+
+            // Act
+            var element = html.BeginElementSelfClose("input");
+
+            // Assert
+            Assert.AreEqual("<input/>", element.ToString());
+        }
+
+
+        [TestMethod]
+        public void HtmlBuilder_SelfCloseTagStart_SingleAttribute_NoDashesNoQuotes()
+        {
+            // Arrange
+            var viewModel = new EquipmentViewModel(new EquipmentModel(), Enumerable.Empty<CategoryModel>());
+
+            var viewData = new ViewDataDictionary(viewModel);
+
+            var html = MvcHelper.GetHtmlHelper(viewModel, new EquipmentController(null, null), true);
+
+            // Act
+            var element = html.BeginElementSelfClose("input", new { @class = "justice" });
+
+            // Assert
+            Assert.AreEqual("<input class='justice'/>", element.ToString());
+        }
+
+
+        [TestMethod]
+        public void HtmlBuilder_SelfCloseTagStart_SingleAttribute_DashesNoQuotes()
+        {
+            // Arrange
+            var viewModel = new EquipmentViewModel(new EquipmentModel(), Enumerable.Empty<CategoryModel>());
+
+            var viewData = new ViewDataDictionary(viewModel);
+
+            var html = MvcHelper.GetHtmlHelper(viewModel, new EquipmentController(null, null), true);
+
+            // Act
+            var element = html.BeginElementSelfClose("input", new { @class = "justice", data_model = "template" });
+
+            // Assert
+            Assert.AreEqual("<input class='justice' data-model='template'/>", element.ToString());
+        }
+
+
+
+        [TestMethod]
+        public void HtmlBuilder_SelfCloseTagStart_SingleAttribute_DashesQuotes()
+        {
+            // Arrange
+            var viewModel = new EquipmentViewModel(new EquipmentModel(), Enumerable.Empty<CategoryModel>());
+
+            var viewData = new ViewDataDictionary(viewModel);
+
+            var html = MvcHelper.GetHtmlHelper(viewModel, new EquipmentController(null, null), true);
+
+            // Act
+            var element = html.BeginElementSelfClose("input", new { @class = "justice", data_characters_allowed = "\"'" });
+
+            // Assert
+            Assert.AreEqual("<input class='justice' data-characters-allowed='\"\\''/>", element.ToString());
+        }
     }
 }
