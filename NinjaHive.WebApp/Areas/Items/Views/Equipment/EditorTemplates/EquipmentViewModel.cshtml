@@ -4,28 +4,30 @@
 
 @Html.Partial(Partials.EditGameItem, Model)
 
-<div class="col-md-6">
-    <div class="form-group">
-        @Html.LabelFor(m => m.Item.Durability, new { @class = "col-md-4 control-label" })
-        <div class="col-md-8">
-            @Html.TextBoxFor(m => m.Item.Durability, new { @class = "form-control", Name="Durability", type="number", min="0" })
-            @Html.ValidationMessageFor(m => m.Item.Durability, "", new { @class = "text-danger" })
+<div>
+    <div class="col-md-6">
+        <div class="form-group">
+            @Html.LabelFor(m => m.Item.Durability, new { @class = "col-md-4 control-label" })
+            <div class="col-md-8">
+                @Html.TextBoxFor(m => m.Item.Durability, new { @class = "form-control", Name = "Durability", type = "number", min = "0" })
+                @Html.ValidationMessageFor(m => m.Item.Durability, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
-    <br />
-    <div class="form-group">
-        @Html.LabelFor(m => m.Item.Slot, new { @class = "col-md-4 control-label" })
-        <div class="col-md-8">
+        <br />
+        <div class="form-group">
+            @Html.LabelFor(m => m.Item.Slot, new { @class = "col-md-4 control-label" })
+            <div class="col-md-8">
 
-                
-            @*
-                TODO:
-                The client should not know anything about the Component assembly where the enum resides.
-                In order to fix this issue, the client should 'QUERY' the businesslayer for a list of the body slots!!!
-                @Html.DropDownListFor(m => m.Equipment.Slot,    EnumHelper.GetSelectList(typeof(BodySlot)),     new { @class = "form-control", Name="Slot" })
-            *@
-                
-            @Html.ValidationMessageFor(m => m.Item.Slot, "", new { @class = "text-danger" })
+
+                @*
+                    TODO:
+                    The client should not know anything about the Component assembly where the enum resides.
+                    In order to fix this issue, the client should 'QUERY' the businesslayer for a list of the body slots!!!
+                    @Html.DropDownListFor(m => m.Equipment.Slot,    EnumHelper.GetSelectList(typeof(BodySlot)),     new { @class = "form-control", Name="Slot" })
+                *@
+
+                @Html.ValidationMessageFor(m => m.Item.Slot, "", new { @class = "text-danger" })
+            </div>
         </div>
     </div>
 </div>

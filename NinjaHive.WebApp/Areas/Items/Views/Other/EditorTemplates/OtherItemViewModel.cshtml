@@ -3,11 +3,12 @@
 @model OtherItemViewModel
 
 @Html.Partial(Partials.EditGameItem, Model)
-
-@Html.EditorFor(m => m.Item.StatInfo)
-<div class="col-md-6">
-    <div class="form-group">
-        @Html.EditorFor(m => m.Item.IsEnhancer)
-        @Html.LabelFor(m => m.Item.IsEnhancer, new { @class = "control-label" })
+<div>
+    @Html.EditorFor(m => m.Item.StatInfo)
+    <div class="col-md-6">
+        <div class="form-group">
+            @Html.EditorFor(m => m.Item.IsEnhancer)
+            @Html.LabelFor(m => m.Item.IsEnhancer, new { @class = "control-label" })
+        </div>
     </div>
 </div>
