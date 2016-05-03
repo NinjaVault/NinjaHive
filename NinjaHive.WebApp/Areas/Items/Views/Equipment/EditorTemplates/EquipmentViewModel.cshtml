@@ -5,17 +5,15 @@
 
 @Html.Partial(Partials.EditGameItem, Model)
 
-<div class="col-md-12">
-    <div class="col-md-6">
+<div class="col-md-6">
 
-        @Html.FormGroupFor(m => m.Item.Durability)
+    @Html.FormGroupFor(m => m.Item.Durability)
 
-        <div class="form-group">
-            @Html.LabelFor(m => m.Item.Slot, new { @class = "col-md-4 control-label" })
-            <div class="col-md-8">
-                @Html.EnumDropDownListFor(m => m.Item.Slot, new { @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.Item.Slot, "", new { @class = "text-danger" })
-            </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Item.Slot, new { @class = "col-md-4 control-label" })
+        <div class="col-md-8">
+            @Html.EnumDropDownListFor(m => m.Item.Slot, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Item.Slot, "", new { @class = "text-danger" })
         </div>
     </div>
 </div>
