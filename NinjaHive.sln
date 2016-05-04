@@ -24,8 +24,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "05 NinjaHive.Domain", "Ninj
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SqlScripts", "SqlScripts", "{EE3EA988-EAC2-4156-84E6-AA14EA3E4120}"
 	ProjectSection(SolutionItems) = preProject
-		Create.sql = Create.sql
-		Migrations.sql = Migrations.sql
+		SqlScripts\Create.sql = SqlScripts\Create.sql
+		SqlScripts\Migrations.sql = SqlScripts\Migrations.sql
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "06 NinjaHive.Components", "NinjaHive.Components\06 NinjaHive.Components.csproj", "{D73816D8-9DCE-400F-8B4E-C01291A319E6}"
