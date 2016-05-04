@@ -323,13 +323,13 @@
     <Content Include="Areas\Items\Views\Skill\DisplayTemplates\SkillItemModel.cshtml" />
     <Content Include="Areas\Items\Views\Skill\EditorTemplates\SkillItemViewModel.cshtml" />
     <None Include="Properties\PublishProfiles\NinjaHive - Web Deploy.pubxml" />
-    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\BootstrapExtensions\ListGroupExtensions.js" />
-    <None Include="Scripts\jquery-2.2.2.intellisense.js" />
-    <Content Include="Scripts\jquery-2.2.2.js" />
-    <Content Include="Scripts\jquery-2.2.2.min.js" />
+    <None Include="Scripts\jquery-2.2.3-vsdoc.js" />
+    <Content Include="Scripts\jquery-2.2.3.js" />
+    <Content Include="Scripts\jquery-2.2.3.min.js" />
+    <Content Include="Scripts\jquery-2.2.3.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
@@ -373,7 +373,6 @@
     <Content Include="Views\Account\ManageUsers.cshtml" />
     <Content Include="Views\Errors\UnauthorizedError.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
-    <Content Include="Scripts\jquery-2.2.2.min.map" />
     <Content Include="Views\Account\EditUser.cshtml" />
     <Content Include="Views\Account\SendEmailConfirmation.cshtml" />
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
@@ -397,7 +396,9 @@
     <Folder Include="Views\Validation\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="packages.config" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NinjaHive.Components\06 NinjaHive.Components.csproj">
