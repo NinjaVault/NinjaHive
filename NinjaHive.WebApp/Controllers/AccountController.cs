@@ -117,9 +117,7 @@ namespace NinjaHive.WebApp.Controllers
                     JsonRequestBehavior.AllowGet);
         }
 
-        [HttpPost]
         [Authorize]
-        [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
             this.authenticationManager.SignOut();

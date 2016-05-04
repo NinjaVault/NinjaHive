@@ -4,46 +4,45 @@
 @using NinjaHive.WebApp.Extensions
 @if (Request.IsAuthenticated)
 {
-    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new {id = "logoutForm", @class = "navbar-right"}))
-    {
-        @Html.AntiForgeryToken()
+    <div class="nav navbar-nav navbar-right hidden-xs">
+        <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    Welcome @User.Identity.GetUserName()!
+                    <span class="caret"></span>
+                </a>
 
-        <div class="nav navbar-nav navbar-right hidden-xs">
-            <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        Welcome @User.Identity.GetUserName()!
-                        <span class="caret"></span>
-                    </a>
+                @{
+                    var changePassword = Html.ActionLink<AccountController>("Change password", c => c.ChangePassword(), new { role = "menuitem", tabindex = -1 });
+                    var manageUsers = Html.ActionLink<AccountController>("Manage users", c => c.ManageUsers(), new { role = "menuitem", tabindex = -1 });
+                    var signOut = Html.ActionLink<AccountController>("Sign out", c => c.LogOff(), new { role = "menuitem", tabindex = -1 });
+                }
 
-                    @{
-                        var changePassword = Html.ActionLink<AccountController>("Change password", c => c.ChangePassword(), new {role = "menuitem", tabindex = -1});
-                        var manageUsers = Html.ActionLink<AccountController>("Manage users", c => c.ManageUsers(), new {role = "menuitem", tabindex = -1});
+                <ul class="dropdown-menu" id="dropdown" role="menu">
+                    <li>@changePassword</li>
+
+                    @if (HttpContext.Current.User.IsInRoles(Role.Admin))
+                    {
+                        <li>@manageUsers</li>
                     }
 
-                    <ul class="dropdown-menu" id="dropdown" role="menu">
-                        <li>@changePassword</li>
-                        @if (HttpContext.Current.User.IsInRoles(Role.Admin))
-                        {
-                            <li>@manageUsers</li>
-                        }
-
-                        <li class="divider"></li>
-                        <li><a role="menuitem" tabindex="-1" href="javascript:document.getElementById('logoutForm').submit()">Sign out</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-
-        <ul class="nav navbar-nav navbar-right visible-xs">
-            <li>@changePassword</li>
-            @if (HttpContext.Current.User.IsInRoles(Role.Admin))
-            {
-                <li>@manageUsers</li>
-            }
-            <li><a role="menuitem" tabindex="-1" href="javascript:document.getElementById('logoutForm').submit()">Sign out</a></li>
+                    <li class="divider"></li>
+                    <li>@signOut</li>
+                </ul>
+            </li>
         </ul>
-    }
+    </div>
+
+    <ul class="nav navbar-nav navbar-right visible-xs">
+        <li>@changePassword</li>
+
+        @if (HttpContext.Current.User.IsInRoles(Role.Admin))
+        {
+            <li>@manageUsers</li>
+        }
+
+        <li>@signOut</li>
+    </ul>
 }
 else
 {
@@ -51,7 +50,7 @@ else
 
     <ul class="nav navbar-nav navbar-right">
         <li class="@(action == "Login" ? "active" : "")">
-            @Html.ActionLink("Login", "Login", "Account")
+            @(Html.ActionLink<AccountController>("Login", c => c.Login(string.Empty)))
         </li>
     </ul>
 }
