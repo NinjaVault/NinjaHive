@@ -12,8 +12,9 @@
         @if (System.Configuration.ConfigurationManager.AppSettings.Get("isTestEnvironment") == "true")
         {
             var version = typeof(Startup).Assembly.GetName().Version;
-            @String.Format("v{0}.{1}.{2}.alpha", version.Major, version.Minor, version.Build)
+            @($"v{version.Major}.{version.Minor}.{version.Build}.alpha")
         }
+        
     </title>
 
     @Styles.Render("~/Content/css")
