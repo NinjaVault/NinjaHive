@@ -19,8 +19,7 @@ namespace NinjaHive.WebApp
                         "~/Scripts/modernizr-{version}"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js",
-                      "~/Scripts/respond.js"));
+                      "~/Scripts/bootstrap.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/extensions").Include(
                 "~/Scripts/BootstrapExtensions/ListGroupExtensions.js"));
