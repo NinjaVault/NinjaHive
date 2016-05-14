@@ -3,7 +3,8 @@
 
 @if (Model.ValidationResults.Any())
 {
-    <div class="text-danger">
+    //TODO: make it more eye catchy and handle with newlines etc
+    <div class="alert alert-danger" role="alert">
         @Model.ValidationResults.TranslateToMessages()
     </div>
 }
