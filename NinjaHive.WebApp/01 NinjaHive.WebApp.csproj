@@ -232,6 +232,7 @@
     <Compile Include="Extensions\UrlExtensions.cs" />
     <Compile Include="Filters\AuthorizeRolesAttribute.cs" />
     <Compile Include="Filters\LogExceptionFilterAttribute.cs" />
+    <Compile Include="Filters\ValidationExceptionFilterAttribute.cs" />
     <Compile Include="Helpers\Partials.cs" />
     <Compile Include="App_Start\Identity\ApplicationRoleManager.cs" />
     <Compile Include="App_Start\Identity\ApplicationUserManager.cs" />

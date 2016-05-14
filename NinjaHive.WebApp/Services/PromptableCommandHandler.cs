@@ -32,8 +32,11 @@ namespace NinjaHive.WebApp.Services
             }
             catch(ValidationException exception)
             {
+                /* The exception thrown will be catched by the MVC ValidationExceptionFilter.
+                 * The filter will redirect to the same page with the validation message in the HTTP Response.
+                 * TODO: A global javascript file retrieves the validation message from the HTTP Response and shows it to the user.
+                 */
                 throw exception;
-                //TODO: somehow show validation results to the view..
             }
             catch (Exception exception)
             {

@@ -11,6 +11,7 @@ namespace NinjaHive.WebApp
         {
             filters.Add(new HandleErrorAttribute());
             filters.Add(new LogExceptionFilterAttribute(container.GetInstance<ILogger>()));
+            filters.Add(new ValidationExceptionFilterAttribute());
         }
     }
 }
