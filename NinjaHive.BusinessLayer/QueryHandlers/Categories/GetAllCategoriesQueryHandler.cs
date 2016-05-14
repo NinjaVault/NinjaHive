@@ -28,7 +28,7 @@ namespace NinjaHive.BusinessLayer.QueryHandlers.Categories
         private MainCategoryModel[] GetMainCategories()
         {
             var categories =
-                from category in this.repository.Entities.ToArray() //load into memory
+                from category in this.repository.Entities.ToArray()
                 orderby category.Name
                 select this.mainCategoryMapper.Map(category);
 

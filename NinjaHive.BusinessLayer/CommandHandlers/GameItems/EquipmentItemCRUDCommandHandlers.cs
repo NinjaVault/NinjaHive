@@ -40,7 +40,7 @@ namespace NinjaHive.BusinessLayer.CommandHandlers.GameItems
         {
             base.UpdateItem(entity, model);
 
-            entity.BodySlot = model.Slot;
+            entity.BodySlot = model.BodySlot;
             entity.Durability = model.Durability;
         }
     }

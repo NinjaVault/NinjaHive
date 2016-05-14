@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Linq;
 using NinjaHive.Contract.Models;
 using NinjaHive.Contract.Queries.GameItems;
 using NinjaHive.Core;
+using NinjaHive.Domain;
 
 namespace NinjaHive.BusinessLayer.QueryHandlers.GameItems
 {
@@ -10,6 +12,28 @@ namespace NinjaHive.BusinessLayer.QueryHandlers.GameItems
         IQueryHandler<GetAllGameItemsQuery<OtherItemModel>, OtherItemModel[]>,
         IQueryHandler<GetAllGameItemsQuery<SkillItemModel>, SkillItemModel[]>
     {
+        private readonly IRepository<EquipmentItemEntity> equipmentItemsRepository;
+        private readonly IEntityMapper<EquipmentItemEntity, EquipmentModel> equipmentItemMapper;
+
+        public GetAllGameItemsQueryHandler(
+            IRepository<EquipmentItemEntity> equipmentItemsRepository,
+            IEntityMapper<EquipmentItemEntity, EquipmentModel> equipmentItemMapper)
+        {
+            this.equipmentItemsRepository = equipmentItemsRepository;
+            this.equipmentItemMapper = equipmentItemMapper;
+        }
+
+        public EquipmentModel[] Handle(GetAllGameItemsQuery<EquipmentModel> query)
+        {
+            var items =
+                from item in this.equipmentItemsRepository.Entities.ToArray()
+                orderby item.Name ascending
+                select this.equipmentItemMapper.Map(item);
+
+            return items.ToArray();
+        }
+
+
         public SkillItemModel[] Handle(GetAllGameItemsQuery<SkillItemModel> query)
         {
             throw new NotImplementedException();
@@ -24,24 +48,6 @@ namespace NinjaHive.BusinessLayer.QueryHandlers.GameItems
                 new OtherItemModel { Id = Guid.NewGuid(), Name="Third Other Item", SubCategoryMainCategoryName="Enhancers", SubCategoryName="Defense"},
                 new OtherItemModel { Id = Guid.NewGuid(), Name="Foruth Other Item", SubCategoryMainCategoryName="Usables", SubCategoryName="Consumables"},
                 new OtherItemModel { Id = Guid.NewGuid(), Name="Fifth Other Item", SubCategoryMainCategoryName="Usables", SubCategoryName="Attack Items"},
-            };
-        }
-
-        public EquipmentModel[] Handle(GetAllGameItemsQuery<EquipmentModel> query)
-        {
-            return new[]
-            {
-                new EquipmentModel { Id=new Guid("45216fda-6549-5532-432f-afd65a8a7899"), Name = "Sword 01", SubCategoryName="Swords", SubCategoryMainCategoryName="Weapons", Description="The first sword in the set.", Value=50 },
-                new EquipmentModel { Id=Guid.NewGuid(), Name = "Sword 02", SubCategoryName="Swords", SubCategoryMainCategoryName="Weapons" },
-                new EquipmentModel { Id=Guid.NewGuid(), Name = "Sword 03", SubCategoryName="Swords", SubCategoryMainCategoryName="Weapons" },
-                new EquipmentModel { Id=Guid.NewGuid(), Name = "Axe 01", SubCategoryName="Axe", SubCategoryMainCategoryName="Weapons" },
-                new EquipmentModel { Id=Guid.NewGuid(), Name = "Axe 02", SubCategoryName="Axe", SubCategoryMainCategoryName="Weapons" },
-                new EquipmentModel { Id=Guid.NewGuid(), Name = "Hammer 01", SubCategoryName="Hammer", SubCategoryMainCategoryName="Weapons" },
-                new EquipmentModel { Id=Guid.NewGuid(), Name = "Helm 01", SubCategoryName="Helmets", SubCategoryMainCategoryName="Armor" },
-                new EquipmentModel { Id=Guid.NewGuid(), Name = "Helm 02", SubCategoryName="Helmets", SubCategoryMainCategoryName="Armor" },
-                new EquipmentModel { Id=Guid.NewGuid(), Name = "Torso 01", SubCategoryName="Torsos", SubCategoryMainCategoryName="Armor" },
-                new EquipmentModel { Id=Guid.NewGuid(), Name = "Leg 01", SubCategoryName="Trousers", SubCategoryMainCategoryName="Armor" },
-                new EquipmentModel { Id=Guid.NewGuid(), Name = "Torso 02", SubCategoryName="Torsos", SubCategoryMainCategoryName="Armor" },
             };
         }
     }
