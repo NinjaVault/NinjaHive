@@ -84,6 +84,7 @@
     <Compile Include="IUserContext.cs" />
     <Compile Include="IUnitOfWork.cs" />
     <Compile Include="IValidator.cs" />
+    <Compile Include="Models\WorkResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\DatabaseLogger.cs" />
     <Compile Include="Services\QueryProcessor.cs" />

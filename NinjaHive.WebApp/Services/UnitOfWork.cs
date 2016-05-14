@@ -3,6 +3,7 @@ using NinjaHive.Contract;
 using NinjaHive.Contract.Commands;
 using NinjaHive.Contract.Queries;
 using NinjaHive.Core;
+using NinjaHive.Core.Models;
 
 namespace NinjaHive.WebApp.Services
 {
@@ -32,25 +33,29 @@ namespace NinjaHive.WebApp.Services
             return this.queryProcessor.Execute(query);
         }
 
-        public void Create(TModel model)
+        public WorkResult Create(TModel model)
         {
             var command = new CreateEntityCommand<TModel>(model);
-            this.createHandler.Handle(command, e => { });
+            return this.Handle(this.createHandler, command);
         }
 
-        public void Update(TModel model)
+        public WorkResult Update(TModel model)
         {
             var command = new UpdateEntityCommand<TModel>(model.Id, model);
-            this.updateHandler.Handle(command, e => { });
+            return this.Handle(this.updateHandler, command);
         }
 
         public WorkResult Delete(Guid id)
         {
             var command = new DeleteEntityCommand<TModel>(id);
+            return this.Handle(this.deleteHandler, command);
+        }
 
+        private WorkResult Handle<TCommand>(IValidatableCommandHandler<TCommand> handler, TCommand command)
+        {
             WorkResult result = null;
 
-            this.deleteHandler.Handle(command,
+            handler.Handle(command,
                 validationErrorAction: exception =>
                 {
                     result = new WorkResult(exception.ValidationResults);
