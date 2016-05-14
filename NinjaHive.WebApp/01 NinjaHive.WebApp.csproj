@@ -226,7 +226,6 @@
     <Compile Include="Extensions\HtmlBuilderExtensions.cs" />
     <Compile Include="Extensions\HttpExtensions.cs" />
     <Compile Include="Extensions\IdentityExtensions.cs" />
-    <Compile Include="Extensions\JsonResults.cs" />
     <Compile Include="Extensions\ClaimsIdentityExtensions.cs" />
     <Compile Include="Extensions\FormExtensions.cs" />
     <Compile Include="Extensions\UrlExtensions.cs" />
