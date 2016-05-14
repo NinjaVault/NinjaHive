@@ -4,9 +4,6 @@ namespace NinjaHive.Core.Services
 {
     public class SystemTimeProvider : ITimeProvider
     {
-        public DateTime Now
-        {
-            get { return DateTime.Now; }
-        }
+        public DateTime Now => DateTime.UtcNow;
     }
 }
