@@ -5,6 +5,8 @@ using NinjaHive.Contract.Queries;
 using NinjaHive.Core;
 using NinjaHive.WebApp.Helpers;
 using NinjaHive.Contract.Queries.Categories;
+using System.Linq;
+using NinjaHive.Core.Extensions;
 
 namespace NinjaHive.WebApp.Controllers
 {
@@ -129,8 +131,13 @@ namespace NinjaHive.WebApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteSubCategory(SubCategoryModel model)
         {
-            this.subCategoryRepository.Delete(model.Id);
-            return this.RedirectToIndex();
+            var result = this.subCategoryRepository.Delete(model.Id);
+            if (result.IsValid)
+            {
+                return this.RedirectToIndex();
+            }
+            model.ValidationResults.AddRange(result.ValidationResults);
+            return View(model);
         }
 
         private ActionResult RedirectToIndex()

@@ -2,8 +2,7 @@
 using NinjaHive.Core;
 using NinjaHive.Core.Helpers;
 using System.Linq;
-using System.Collections.Generic;
-using System;
+using NinjaHive.Core.Exceptions;
 
 namespace NinjaHive.BusinessLayer.CrossCuttingConcerns
 {
@@ -44,26 +43,8 @@ namespace NinjaHive.BusinessLayer.CrossCuttingConcerns
 
             if (validationResults.Any())
             {
-                var validationMessages = this.TranslateToMessages(validationResults);
-                throw new ValidationException(validationMessages);
+                throw new ValidationErrorException(validationResults);
             }
-        }
-
-        private string TranslateToMessages(IEnumerable<ValidationResult> validationResults)
-        {
-            var messages =
-                from result in validationResults
-                from subResult in this.DissectValidationResult(result)
-                select $" - {subResult.ErrorMessage}";
-
-            return string.Join(Environment.NewLine, messages);
-        }
-
-        private IEnumerable<ValidationResult> DissectValidationResult(ValidationResult result)
-        {
-            var dissected = result as IEnumerable<ValidationResult>;
-
-            return dissected != null ? dissected.SelectMany(DissectValidationResult) : new[] { result };
         }
     }
 }

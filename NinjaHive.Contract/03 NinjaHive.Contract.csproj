@@ -46,6 +46,7 @@
     <Compile Include="Commands\UpdateEntityCommand.cs" />
     <Compile Include="Extensions\ParameterVisitor.cs" />
     <Compile Include="IModel.cs" />
+    <Compile Include="IValidatable.cs" />
     <Compile Include="Models\CategoryModel.cs" />
     <Compile Include="Models\EquipmentModel.cs" />
     <Compile Include="Models\LevelModel.cs" />

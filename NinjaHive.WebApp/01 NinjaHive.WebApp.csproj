@@ -232,7 +232,6 @@
     <Compile Include="Extensions\UrlExtensions.cs" />
     <Compile Include="Filters\AuthorizeRolesAttribute.cs" />
     <Compile Include="Filters\LogExceptionFilterAttribute.cs" />
-    <Compile Include="Filters\ValidationExceptionFilterAttribute.cs" />
     <Compile Include="Helpers\Partials.cs" />
     <Compile Include="App_Start\Identity\ApplicationRoleManager.cs" />
     <Compile Include="App_Start\Identity\ApplicationUserManager.cs" />
@@ -243,7 +242,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\UrlProvider.cs" />
     <Compile Include="Services\FakeEmailService.cs" />
-    <Compile Include="Services\PromptableCommandHandler.cs" />
+    <Compile Include="Services\ValidatableCommandHandler.cs" />
     <Compile Include="Services\SendGridEmailService.cs" />
     <Compile Include="Services\HttpWebUserContextWithRoles.cs" />
     <Compile Include="Services\HttpWebUserContext.cs" />
@@ -360,10 +359,9 @@
     <Content Include="Views\Skills\Edit.cshtml" />
     <Content Include="Views\Skills\DisplayTemplates\SkillModel.cshtml" />
     <Content Include="Views\Skills\EditorTemplates\SkillModel.cshtml" />
+    <Content Include="Views\Shared\General\_ValidationPartial.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\Validation\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config">
       <SubType>Designer</SubType>

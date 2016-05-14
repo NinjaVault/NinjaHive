@@ -130,7 +130,7 @@ namespace NinjaHive.WebApp
             container.RegisterDecorator(typeof(ICommandHandler<>), typeof(SaveChangesCommandHandlerDecorator<>));
             container.RegisterDecorator(typeof(ICommandHandler<>), typeof(LifetimeScopeCommandHandlerProxy<>), Lifestyle.Singleton);
 
-            container.RegisterSingleton(typeof(IPromptableCommandHandler<>), typeof(PromptableCommandHandler<>));
+            container.RegisterSingleton(typeof(IValidatableCommandHandler<>), typeof(ValidatableCommandHandler<>));
         }
 
         private static void RegisterQueryHandlers()

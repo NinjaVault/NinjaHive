@@ -9,6 +9,7 @@
         public const string NavbarNav = "General/_NavbarNavPartial";
         public const string NoResults = "General/_NoResultsPartial";
         public const string NavNestedViews = "General/_NavNestedViews";
+        public const string Validation = "General/_ValidationPartial";
 
         //Items
         public const string ItemsSubNav = "_ItemsSubnavigationPartial";

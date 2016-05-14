@@ -1,15 +1,37 @@
 ﻿using NinjaHive.WebApp.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
+using NinjaHive.Contract;
+using NinjaHive.Core.Validation.Attributes;
 
 namespace NinjaHive.WebApp.Extensions
 {
     public static class FormExtensions
     {
+        public static MvcHtmlString ValidationResultsFor<TValidatable>(this HtmlHelper<TValidatable> htmlHelper, TValidatable model)
+            where TValidatable : IValidatable
+        {
+            var properties =
+                from property in model.GetType().GetProperties()
+                where Attribute.IsDefined(property, typeof(RequiredForValidationAttribute))
+                select property;
+
+            return BuildHtmlMarkupWithStringBuilder(builder =>
+            {
+                foreach (var property in properties)
+                {
+                    builder.Append(htmlHelper.Hidden(property.Name, property.GetValue(model)));
+                }
+
+                builder.Append(htmlHelper.Partial(Partials.Validation, model));
+            });
+        }
+
         public static MvcForm BeginForm<TController>(this HtmlHelper htmlHelper, Expression<Action<TController>> expression)
             where TController : Controller
         {

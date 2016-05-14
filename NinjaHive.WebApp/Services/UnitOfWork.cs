@@ -10,15 +10,15 @@ namespace NinjaHive.WebApp.Services
         where TModel : class, IModel
     {
         private readonly IQueryProcessor queryProcessor;
-        private readonly IPromptableCommandHandler<CreateEntityCommand<TModel>> createHandler;
-        private readonly IPromptableCommandHandler<UpdateEntityCommand<TModel>> updateHandler;
-        private readonly IPromptableCommandHandler<DeleteEntityCommand<TModel>> deleteHandler;
+        private readonly IValidatableCommandHandler<CreateEntityCommand<TModel>> createHandler;
+        private readonly IValidatableCommandHandler<UpdateEntityCommand<TModel>> updateHandler;
+        private readonly IValidatableCommandHandler<DeleteEntityCommand<TModel>> deleteHandler;
 
         public UnitOfWork(
             IQueryProcessor queryProcessor,
-            IPromptableCommandHandler<CreateEntityCommand<TModel>> createHandler,
-            IPromptableCommandHandler<UpdateEntityCommand<TModel>> updateHandler,
-            IPromptableCommandHandler<DeleteEntityCommand<TModel>> deleteHandler)
+            IValidatableCommandHandler<CreateEntityCommand<TModel>> createHandler,
+            IValidatableCommandHandler<UpdateEntityCommand<TModel>> updateHandler,
+            IValidatableCommandHandler<DeleteEntityCommand<TModel>> deleteHandler)
         {
             this.queryProcessor = queryProcessor;
             this.createHandler = createHandler;
@@ -35,19 +35,29 @@ namespace NinjaHive.WebApp.Services
         public void Create(TModel model)
         {
             var command = new CreateEntityCommand<TModel>(model);
-            this.createHandler.Handle(command);
+            this.createHandler.Handle(command, e => { });
         }
 
         public void Update(TModel model)
         {
             var command = new UpdateEntityCommand<TModel>(model.Id, model);
-            this.updateHandler.Handle(command);
+            this.updateHandler.Handle(command, e => { });
         }
 
-        public void Delete(Guid id)
+        public WorkResult Delete(Guid id)
         {
             var command = new DeleteEntityCommand<TModel>(id);
-            this.deleteHandler.Handle(command);
+
+            WorkResult result = null;
+
+            this.deleteHandler.Handle(command,
+                validationErrorAction: exception =>
+                {
+                    result = new WorkResult(exception.ValidationResults);
+                });
+
+            return result ?? new WorkResult();
         }
     }
+
 }

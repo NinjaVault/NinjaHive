@@ -1,0 +1,9 @@
+﻿@using NinjaHive.Core.Extensions;
+@model NinjaHive.Contract.IValidatable
+
+@if (Model.ValidationResults.Any())
+{
+    <div class="text-danger">
+        @Model.ValidationResults.TranslateToMessages()
+    </div>
+}

@@ -16,9 +16,11 @@
         </dd>
 
     </dl>
-    @using (Html.BeginForm())
+    @using (Html.BeginForm<CategoriesController>(c => c.DeleteSubCategory(Model)))
     {
         @Html.AntiForgeryToken()
+        
+        @Html.ValidationResultsFor(Model)
 
         <div class="form-group">
             <input type="submit" value="Delete" class="btn btn-danger" />

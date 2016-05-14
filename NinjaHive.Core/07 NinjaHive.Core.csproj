@@ -61,11 +61,13 @@
   <ItemGroup>
     <Compile Include="Decorators\LifetimeScopeCommandHandlerProxy.cs" />
     <Compile Include="Decorators\LifetimeScopeQueryHandlerProxy.cs" />
+    <Compile Include="Exceptions\ValidationErrorException.cs" />
     <Compile Include="Extensions\CollectionExtensions.cs" />
     <Compile Include="Extensions\ExceptionExtensions.cs" />
     <Compile Include="Extensions\ExpressionExtensions.cs" />
     <Compile Include="Extensions\FriendlyExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Extensions\ValidationExtensions.cs" />
     <Compile Include="Helpers\RegEx.cs" />
     <Compile Include="Helpers\Requires.cs" />
     <Compile Include="ICommandHandler.cs" />
@@ -74,7 +76,7 @@
     <Compile Include="ILogger.cs" />
     <Compile Include="IMapper.cs" />
     <Compile Include="IObjectValidator.cs" />
-    <Compile Include="IPromptableCommandHandler.cs" />
+    <Compile Include="IValidatableCommandHandler.cs" />
     <Compile Include="IQuery.cs" />
     <Compile Include="IQueryHandler.cs" />
     <Compile Include="IQueryProcessor.cs" />
@@ -87,6 +89,7 @@
     <Compile Include="Services\QueryProcessor.cs" />
     <Compile Include="Services\SqlConnectionFactory.cs" />
     <Compile Include="Services\SystemTimeProvider.cs" />
+    <Compile Include="Validation\Attributes\RequiredForValidationAttribute.cs" />
     <Compile Include="Validation\CompositeValidator.cs" />
     <Compile Include="Validation\ObjectValidator.cs" />
     <Compile Include="Validation\ValidationCumulativeResults.cs" />
