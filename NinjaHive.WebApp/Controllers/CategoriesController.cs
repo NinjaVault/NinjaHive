@@ -116,9 +116,12 @@ namespace NinjaHive.WebApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteMainCategory(MainCategoryModel model)
         {
-            //TODO: validate if we can delete by checking subcategories
-            this.mainCategoryRepository.Delete(model.Id);
-            return this.RedirectToIndex();
+            var result = this.mainCategoryRepository.Delete(model.Id);
+            if (result.IsValid)
+            {
+                return this.RedirectToIndex();
+            }
+            return View(model);
         }
 
         public ActionResult DeleteSubCategory(Guid id)
@@ -143,13 +146,6 @@ namespace NinjaHive.WebApp.Controllers
         private ActionResult RedirectToIndex()
         {
             return Redirect(UrlProvider<CategoriesController>.GetUrl(c => c.Index()));
-        }
-
-        [HttpPost]
-        public JsonResult GetLinkedGameItems(Guid id)
-        {
-            var linkedGameItems = this.queryProcessor.Execute(new GetLinkedGameItemNamesQuery(id));
-            return Json(linkedGameItems, JsonRequestBehavior.DenyGet);
         }
     }
 }
