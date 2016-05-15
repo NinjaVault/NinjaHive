@@ -22,7 +22,7 @@ namespace NinjaHive.WebApp.Extensions
             where TController : Controller
         {
             var routeValues = expression.GetRouteValues();
-            return urlHelper.RouteUrl("Default", routeValues, scheme, string.Empty);
+            return urlHelper.RouteUrl(RouteConfig.Default_NoArea, routeValues, scheme, string.Empty);
         }
 
         public static MvcHtmlString ActionLink<TController>(this HtmlHelper htmlHelper, string linkText, Expression<Action<TController>> expression)

@@ -25,6 +25,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SqlScripts", "SqlScripts", "{EE3EA988-EAC2-4156-84E6-AA14EA3E4120}"
 	ProjectSection(SolutionItems) = preProject
 		SqlScripts\Create.sql = SqlScripts\Create.sql
+		SqlScripts\CreateIdentityUserWithRoles.sql = SqlScripts\CreateIdentityUserWithRoles.sql
 		SqlScripts\Migrations.sql = SqlScripts\Migrations.sql
 	EndProjectSection
 EndProject

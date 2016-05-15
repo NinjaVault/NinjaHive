@@ -1,6 +1,10 @@
-﻿using System.Net;
+﻿using System;
+using System.Linq;
+using System.Net;
 using System.Net.Mail;
+using System.Text;
 using System.Threading.Tasks;
+using Exceptions;
 using Microsoft.AspNet.Identity;
 using SendGrid;
 
@@ -36,7 +40,23 @@ namespace NinjaHive.WebApp.Services
             var transportWeb = new Web(this.credentials);
 
             // Send the email.
-            await transportWeb.DeliverAsync(myMessage);
+            try
+            {
+                await transportWeb.DeliverAsync(myMessage);
+            }
+            //http://stackoverflow.com/questions/28878924/bad-request-check-errors-for-a-list-of-errors-returned-by-the-api-at-sendgrid
+            catch (InvalidApiRequestException ex)
+            {
+                var errorDetails = new StringBuilder();
+
+                errorDetails.Append("ResponseStatusCode: " + ex.ResponseStatusCode + ".   ");
+                for (int i = 0; i < ex.Errors.Count(); i++)
+                {
+                    errorDetails.Append($" -- Error #{i} : {ex.Errors[i]}");
+                }
+
+                throw new ApplicationException(errorDetails.ToString(), ex);
+            }
         }
     }
 }

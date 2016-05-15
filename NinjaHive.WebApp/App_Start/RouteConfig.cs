@@ -7,6 +7,9 @@ namespace NinjaHive.WebApp
 {
     public class RouteConfig
     {
+        public const string Default = nameof(Default);
+        public const string Default_NoArea = nameof(Default_NoArea);
+
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
@@ -16,7 +19,7 @@ namespace NinjaHive.WebApp
 
             // Register an empty route to fix Area default route registration problems
             var defaultRoute = routes.MapRoute(
-                name: "Default",
+                name: Default,
                 url: "",
                 defaults: new { area = defaultUri["area"], controller = defaultUri["controller"], action = defaultUri["action"], id = UrlParameter.Optional }
             );
@@ -24,7 +27,7 @@ namespace NinjaHive.WebApp
             defaultRoute.DataTokens["area"] = defaultUri["area"];
 
             routes.MapRoute(
-                name: "Default_NoArea",
+                name: Default_NoArea,
                 url: "{controller}/{action}/{id}",
                 defaults: new {action = defaultUri["action"], id = UrlParameter.Optional }
             );

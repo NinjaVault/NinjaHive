@@ -1,16 +1,16 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Web.Mvc;
-using System.Web.Security;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 using NinjaHive.Contract;
 using NinjaHive.Core.Extensions;
+using NinjaHive.Core.Helpers;
 using NinjaHive.WebApp.Extensions;
 using NinjaHive.WebApp.Filters;
 using NinjaHive.WebApp.Helpers;
 using NinjaHive.WebApp.Identity;
 using NinjaHive.WebApp.Models;
+using NinjaHive.WebApp.Properties;
 
 namespace NinjaHive.WebApp.Controllers
 {
@@ -150,7 +150,7 @@ namespace NinjaHive.WebApp.Controllers
                     Email = viewModel.Email,
                 };
 
-                var password = Membership.GeneratePassword(8, 1);
+                var password = PasswordGenerator.GeneratePassword();
                 var result = this.userManager.Create(user, password);
                 if (result.Succeeded)
                 {
@@ -172,7 +172,7 @@ namespace NinjaHive.WebApp.Controllers
             if (user != null && !user.EmailConfirmed)
             {
                 var token = this.userManager.GeneratePasswordResetToken(userId);
-                var password = Membership.GeneratePassword(8, 1);
+                var password = PasswordGenerator.GeneratePassword();
                 var result = this.userManager.ResetPassword(userId, token, password);
                 if (result.Succeeded)
                 {
@@ -193,12 +193,7 @@ namespace NinjaHive.WebApp.Controllers
                     c => c.ResetPassword(user.Id, token), Request.Url.Scheme);
 
                 this.userManager.SendEmail(userId, "Reset your password",
-                    $"Hello {user.UserName},"
-                    + Environment.NewLine
-                    + Environment.NewLine +
-                    "A NinjaHive admin has provided a password reset for you."
-                    + Environment.NewLine +
-                    $"Click <a href=\"{callbackUrl}\">here</a> to reset your password.");
+                    string.Format(Resources.ResetPasswordMailTemplate, user.UserName, callbackUrl));
 
                 return View(user);
             }
@@ -212,12 +207,7 @@ namespace NinjaHive.WebApp.Controllers
                 Url.GetFullyQualifiedActionLink<AccountController>(c => c.ConfirmEmail(userId, mailToken), Request.Url.Scheme);
 
             this.userManager.SendEmail(userId, "Confirm your account",
-                $"Hello {userName},"
-                + Environment.NewLine
-                + Environment.NewLine +
-                $"Please confirm your account for NinjaHive by clicking <a href=\"{callbackUrl}\">here</a>."
-                + Environment.NewLine +
-                $"Your password is: <b>{password}</b>");
+                string.Format(Resources.AccountConfirmationMailTemplate, userName, callbackUrl, password));
         }
 
         [AuthorizeRoles(Role.Admin)]

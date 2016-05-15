@@ -68,6 +68,7 @@
     <Compile Include="Extensions\FriendlyExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\ValidationExtensions.cs" />
+    <Compile Include="Helpers\PasswordGenerator.cs" />
     <Compile Include="Helpers\RegEx.cs" />
     <Compile Include="Helpers\Requires.cs" />
     <Compile Include="ICommandHandler.cs" />
