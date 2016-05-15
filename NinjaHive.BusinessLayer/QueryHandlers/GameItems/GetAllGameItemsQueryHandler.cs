@@ -15,12 +15,20 @@ namespace NinjaHive.BusinessLayer.QueryHandlers.GameItems
         private readonly IRepository<EquipmentItemEntity> equipmentItemsRepository;
         private readonly IEntityMapper<EquipmentItemEntity, EquipmentModel> equipmentItemMapper;
 
+        private readonly IRepository<OtherItemEntity> otherItemsRepository;
+        private readonly IEntityMapper<OtherItemEntity, OtherItemModel> otherItemsMapper;
+
         public GetAllGameItemsQueryHandler(
             IRepository<EquipmentItemEntity> equipmentItemsRepository,
-            IEntityMapper<EquipmentItemEntity, EquipmentModel> equipmentItemMapper)
+            IEntityMapper<EquipmentItemEntity, EquipmentModel> equipmentItemMapper,
+            IRepository<OtherItemEntity> otherItemsRepository,
+            IEntityMapper<OtherItemEntity, OtherItemModel> otherItemsMapper)
         {
             this.equipmentItemsRepository = equipmentItemsRepository;
             this.equipmentItemMapper = equipmentItemMapper;
+
+            this.otherItemsRepository = otherItemsRepository;
+            this.otherItemsMapper = otherItemsMapper;
         }
 
         public EquipmentModel[] Handle(GetAllGameItemsQuery<EquipmentModel> query)
@@ -41,14 +49,12 @@ namespace NinjaHive.BusinessLayer.QueryHandlers.GameItems
 
         public OtherItemModel[] Handle(GetAllGameItemsQuery<OtherItemModel> query)
         {
-            return new[]
-            {
-                new OtherItemModel { Id = Guid.Parse("12356458-4568-7895-5568-123645215468"), Name="First Other Item", Description = "The first item of the Other section", SubCategoryMainCategoryName="Enhancers", SubCategoryName="Attack" },
-                new OtherItemModel { Id = Guid.NewGuid(), Name="Second Other Item", SubCategoryMainCategoryName="Enhancers", SubCategoryName="Attack" },
-                new OtherItemModel { Id = Guid.NewGuid(), Name="Third Other Item", SubCategoryMainCategoryName="Enhancers", SubCategoryName="Defense"},
-                new OtherItemModel { Id = Guid.NewGuid(), Name="Foruth Other Item", SubCategoryMainCategoryName="Usables", SubCategoryName="Consumables"},
-                new OtherItemModel { Id = Guid.NewGuid(), Name="Fifth Other Item", SubCategoryMainCategoryName="Usables", SubCategoryName="Attack Items"},
-            };
+            var items =
+                from item in this.otherItemsRepository.Entities.ToArray()
+                orderby item.Name ascending
+                select this.otherItemsMapper.Map(item);
+
+            return items.ToArray();
         }
     }
 }
