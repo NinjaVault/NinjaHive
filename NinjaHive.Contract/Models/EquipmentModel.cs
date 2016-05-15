@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using NinjaHive.Components.Enums;
 
 namespace NinjaHive.Contract.Models
@@ -9,5 +10,7 @@ namespace NinjaHive.Contract.Models
         public int Durability { get; set; }
 
         public BodySlot BodySlot { get; set; }
+
+        public IEnumerable<TierModel> Tiers { get; set; }
     }
 }

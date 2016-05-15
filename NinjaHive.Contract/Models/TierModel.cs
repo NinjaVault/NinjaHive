@@ -1,5 +1,4 @@
 ﻿using NinjaHive.Core.Helpers;
-using NinjaHive.Core.Validation.Attributes;
 using System;
 using System.ComponentModel.DataAnnotations;
 
@@ -7,11 +6,6 @@ namespace NinjaHive.Contract.Models
 {
     public class TierModel: IModel
     {
-        public TierModel()
-        {
-            StatInfo = new StatInfoModel();
-        }
-
         public Guid Id { get; set; }
 
         [Required(ErrorMessage = "{0} is required")]
@@ -19,13 +13,9 @@ namespace NinjaHive.Contract.Models
         [RegularExpression(RegEx.AlphaNumSpace, ErrorMessage = "Alphanumerics and spaces only")]
         public string Name { get; set; }
 
-
+        [Display(Name = "Tier Rank")]
         [Required(ErrorMessage = "{0} is required")]
         [Range(0, int.MaxValue, ErrorMessage = "Please enter valid integer for {0}. Minimum: {1}")]
         public int TierRank { get; set; }
-
-        [Display(Name="Stats")]
-        [ValidateObject]
-        public StatInfoModel StatInfo { get; set; }
     }
 }

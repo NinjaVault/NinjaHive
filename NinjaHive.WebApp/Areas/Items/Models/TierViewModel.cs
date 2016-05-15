@@ -5,7 +5,7 @@ using System.Web.Mvc;
 namespace NinjaHive.WebApp.Areas.Items.Models
 {
     [ValidateInput(false)]
-    public class TierViewModel: ITierViewModel
+    public class TierViewModel : ITierViewModel
     {
         public TierViewModel(TierModel tier, Guid equipmentId, string equipmentName = "")
         {

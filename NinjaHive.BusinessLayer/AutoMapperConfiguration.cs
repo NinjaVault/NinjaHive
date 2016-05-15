@@ -13,6 +13,7 @@ namespace NinjaHive.BusinessLayer
             Mapper.CreateMap<SubCategoryEntity, CategoryModel>();
 
             Mapper.CreateMap<EquipmentItemEntity, EquipmentModel>();
+            Mapper.CreateMap<TierEntity, TierModel>();
         }
     };
 }
