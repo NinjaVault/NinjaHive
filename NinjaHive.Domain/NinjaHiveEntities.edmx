@@ -123,8 +123,8 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Nullable="false" Type="uniqueidentifier" />
-          <Property Name="FKSkillsId" Nullable="false" Type="uniqueidentifier" />
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="FKSkillsId" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <EntityType Name="Skills">
           <Key>
@@ -245,7 +245,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_EquipmentItems_Tiers">
-          <End Role="EquipmentItems" Type="Self.EquipmentItems" Multiplicity="1" />
+          <End Role="EquipmentItems" Type="Self.EquipmentItems" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Tiers" Type="Self.Tiers" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="EquipmentItems">
@@ -403,10 +405,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_SkillItems_GameItems">
-          <End Type="Self.GameItems" Multiplicity="1" Role="GameItems">
+          <End Role="GameItems" Type="Self.GameItems" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Type="Self.SkillItems" Multiplicity="0..1" Role="SkillItems" />
+          <End Role="SkillItems" Type="Self.SkillItems" Multiplicity="0..1" />
           <ReferentialConstraint>
             <Principal Role="GameItems">
               <PropertyRef Name="Id" />
@@ -417,8 +419,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_SkillItems_Skills">
-          <End Type="Self.Skills" Multiplicity="1" Role="Skills" />
-          <End Type="Self.SkillItems" Multiplicity="*" Role="SkillItems" />
+          <End Role="Skills" Type="Self.Skills" Multiplicity="1" />
+          <End Role="SkillItems" Type="Self.SkillItems" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Skills">
               <PropertyRef Name="Id" />
@@ -639,12 +641,12 @@
             <End Role="OtherItemsCraftingItemsAssociation" EntitySet="OtherItemsCraftingItemsAssociation" />
           </AssociationSet>
           <AssociationSet Name="FK_SkillItems_GameItems" Association="Self.FK_SkillItems_GameItems">
-            <End EntitySet="GameItems" Role="GameItems" />
-            <End EntitySet="SkillItems" Role="SkillItems" />
+            <End Role="GameItems" EntitySet="GameItems" />
+            <End Role="SkillItems" EntitySet="SkillItems" />
           </AssociationSet>
           <AssociationSet Name="FK_SkillItems_Skills" Association="Self.FK_SkillItems_Skills">
-            <End EntitySet="Skills" Role="Skills" />
-            <End EntitySet="SkillItems" Role="SkillItems" />
+            <End Role="Skills" EntitySet="Skills" />
+            <End Role="SkillItems" EntitySet="SkillItems" />
           </AssociationSet>
           <AssociationSet Name="FK_Skills_StatInfo" Association="Self.FK_Skills_StatInfo">
             <End Role="StatInfo" EntitySet="StatInfo" />
@@ -886,7 +888,9 @@
         </EntityType>
         <EnumType Name="Target" cg:ExternalTypeName="NinjaHive.Components.Enums.Target" />
         <Association Name="EquipmentItemsTiersAssociation">
-          <End Type="NinjaHiveEntities.EquipmentItemEntity" Role="EquipmentItemEntity" Multiplicity="1" />
+          <End Type="NinjaHiveEntities.EquipmentItemEntity" Role="EquipmentItemEntity" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
           <End Type="NinjaHiveEntities.TierEntity" Role="TierEntity" Multiplicity="*" />
         </Association>
         <Association Name="TiersLevelsAssociation">

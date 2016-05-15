@@ -1,4 +1,5 @@
-﻿using NinjaHive.Contract.Commands;
+﻿using System.Linq;
+using NinjaHive.Contract.Commands;
 using NinjaHive.Contract.Models;
 using NinjaHive.Domain;
 using NinjaHive.Domain.Extensions;
