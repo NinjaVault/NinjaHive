@@ -5,12 +5,12 @@ using NinjaHive.Domain.Extensions;
 
 namespace NinjaHive.BusinessLayer.CommandHandlers.GameItems
 {
-    public class EquipmentItemCRUDCommandHandlers :
-        GameItemCRUDCommandHandlers<EquipmentModel, EquipmentItemEntity>
+    public class EquipmentItemCommandHandlers :
+        GameItemCommandHandlers<EquipmentModel, EquipmentItemEntity>
     {
         private readonly IRepository<EquipmentItemEntity> itemRepository;
 
-        public EquipmentItemCRUDCommandHandlers(
+        public EquipmentItemCommandHandlers(
             IRepository<EquipmentItemEntity> itemRepository,
             IRepository<SubCategoryEntity> categoryRepository)
             : base(categoryRepository)

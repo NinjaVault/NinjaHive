@@ -5,7 +5,7 @@ using NinjaHive.Core;
 
 namespace NinjaHive.BusinessLayer.CommandHandlers.GameItems
 {
-    public class OtherItemCRUDCommandHandlers :
+    public class OtherItemCommandHandlers :
         ICommandHandler<CreateEntityCommand<OtherItemModel>>,
         ICommandHandler<UpdateEntityCommand<OtherItemModel>>,
         ICommandHandler<DeleteEntityCommand<OtherItemModel>>

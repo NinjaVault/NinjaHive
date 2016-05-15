@@ -6,7 +6,7 @@ using NinjaHive.Domain.Extensions;
 
 namespace NinjaHive.BusinessLayer.CommandHandlers.GameItems
 {
-    public abstract class GameItemCRUDCommandHandlers<TModel, TEntity> :
+    public abstract class GameItemCommandHandlers<TModel, TEntity> :
             ICommandHandler<CreateEntityCommand<TModel>>,
             ICommandHandler<UpdateEntityCommand<TModel>>,
             ICommandHandler<DeleteEntityCommand<TModel>>
@@ -15,7 +15,7 @@ namespace NinjaHive.BusinessLayer.CommandHandlers.GameItems
     {
         protected readonly IRepository<SubCategoryEntity> categoryRepository;
 
-        public GameItemCRUDCommandHandlers(IRepository<SubCategoryEntity> categoryRepository)
+        public GameItemCommandHandlers(IRepository<SubCategoryEntity> categoryRepository)
         {
             this.categoryRepository = categoryRepository;
         }
