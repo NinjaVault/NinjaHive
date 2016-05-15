@@ -5,6 +5,7 @@ using System;
 using System.Web.Mvc;
 using NinjaHive.Core;
 using NinjaHive.Contract.Queries;
+using NinjaHive.Core.Extensions;
 
 namespace NinjaHive.WebApp.Areas.Items.Controllers
 {
@@ -12,39 +13,48 @@ namespace NinjaHive.WebApp.Areas.Items.Controllers
     public class TiersController : BaseController
     {
         private readonly IQueryProcessor queryProcessor;
+        private readonly IUnitOfWork<TierModel> tiersRepository;
 
         public TiersController(
-            IQueryProcessor queryProcessor)
+            IQueryProcessor queryProcessor,
+            IUnitOfWork<TierModel> tiersRepository)
         {
             this.queryProcessor = queryProcessor;
+            this.tiersRepository = tiersRepository;
         }
 
         public ActionResult Index(Guid equipmentId)
         {
-            var equipment = this.queryProcessor.Execute(new GetEntityByIdQuery<EquipmentModel>(equipmentId));
+            var equipment = this.GetEquipmentById(equipmentId);
             return View(equipment);
         }
 
         public ActionResult Create(Guid equipmentId)
         {
-            var model = new TierModel ();
-            var viewModel = new TierViewModel(
-                model,
-                GetEquipmentById(equipmentId)
-            );
-            return View(viewModel);
+            var equipment = this.GetEquipmentById(equipmentId);
+            var model = new TierModel
+            {
+                EquipmentItemId = equipment.Id,
+                EquipmentItemName = equipment.Name,
+            };
+
+            return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(TierViewModel viewModel)
+        public ActionResult Create(TierModel model)
         {
             if (ModelState.IsValid)
             {
-                //TODO: query database
-                return this.Home(viewModel.EquipmentId);
+                var result = this.tiersRepository.Create(model);
+                if (result.IsValid)
+                {
+                    return this.RederictToIndex(model.EquipmentItemId);
+                }
+                model.ValidationResults.AddRange(result.ValidationResults);
             }
-            return View(viewModel);
+            return View(model);
         }
 
         [HttpPost]
@@ -52,7 +62,7 @@ namespace NinjaHive.WebApp.Areas.Items.Controllers
         public ActionResult Delete(Guid id)
         {
             //TODO: query database
-            return this.Home(GetParentEquipment(id).Id);
+            return this.RederictToIndex(GetParentEquipment(id).Id);
         }
 
         public ActionResult Edit(Guid id)
@@ -68,12 +78,15 @@ namespace NinjaHive.WebApp.Areas.Items.Controllers
             if (ModelState.IsValid)
             {
                 //TODO: query database
-                return this.Home(viewModel.EquipmentId);
+                return this.RederictToIndex(viewModel.EquipmentId);
             }
             return View(viewModel);
         }
 
-
+        private EquipmentModel GetEquipmentById(Guid id)
+        {
+            return this.queryProcessor.Execute(new GetEntityByIdQuery<EquipmentModel>(id));
+        }
 
 
         private EquipmentModel GetParentEquipment(Guid id)
@@ -86,11 +99,7 @@ namespace NinjaHive.WebApp.Areas.Items.Controllers
             //TODO: query database
             return GetParentEquipment( tier.Id );
         }
-        private EquipmentModel GetEquipmentById(Guid id)
-        {
-            //TODO: query database
-            return new EquipmentModel { Name = "Unimplemented", Id = id };
-        }
+        
 
         private TierViewModel PrepareViewModel(TierModel model)
         {
@@ -102,9 +111,9 @@ namespace NinjaHive.WebApp.Areas.Items.Controllers
             return viewModel;
         }
 
-        protected virtual RedirectResult Home(Guid id)
+        private ActionResult RederictToIndex(Guid id)
         {
-            return Redirect<TiersController>(c => c.Index(id));
+            return base.Redirect<TiersController>(c => c.Index(id));
         }
     }
 }
