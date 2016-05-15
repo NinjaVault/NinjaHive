@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NinjaHive.BusinessLayer.CrossCuttingConcerns;
 using NinjaHive.Contract.Models;
+using NinjaHive.Core.Exceptions;
 using NinjaHive.Core.Validation;
 using NinjaHive.WebApp.Tests.Exceptions;
 using NinjaHive.WebApp.Tests.Mocks.Contract;
@@ -13,7 +14,7 @@ namespace NinjaHive.WebApp.Tests
     public class ContractValidationTests
     {
         [TestMethod]
-        [ExpectedExceptionWithMessage(typeof(ValidationException), "The field 'CategoryId' in 'NinjaHive.Contract.Models.EquipmentModel' is invalid!", MatchSubstring = true)]
+        [ExpectedExceptionWithMessage(typeof(ValidationErrorException), "The field 'SubCategoryId' in 'NinjaHive.Contract.Models.EquipmentModel' is invalid!", MatchSubstring = true)]
         public void PerformValidation_CreateItemWithoutCategory_ThrowsValidationError()
         {
             // Arrange
@@ -34,7 +35,7 @@ namespace NinjaHive.WebApp.Tests
         }
 
         [TestMethod]
-        [ExpectedExceptionWithMessage(typeof(ValidationException), "Name is required", MatchSubstring = true)]
+        [ExpectedExceptionWithMessage(typeof(ValidationErrorException), "Name is required", MatchSubstring = true)]
         public void PerformValidation_GameItemWithEmptyName_ThrowsValidationError()
         {
             // Arrange
@@ -55,7 +56,7 @@ namespace NinjaHive.WebApp.Tests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ValidationException))]
+        [ExpectedException(typeof(ValidationErrorException))]
         public void PerformValidation_GameItemNameWithInvalidCharacters_ThrowsValidationError()
         {
             // Arrange

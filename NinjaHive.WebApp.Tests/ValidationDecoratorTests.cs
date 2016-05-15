@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NinjaHive.BusinessLayer.CrossCuttingConcerns;
 using NinjaHive.Core;
+using NinjaHive.Core.Exceptions;
 using NinjaHive.Core.Validation;
 using NinjaHive.Core.Validation.Attributes;
 using NinjaHive.WebApp.Tests.Exceptions;
@@ -28,7 +29,7 @@ namespace NinjaHive.WebApp.Tests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ValidationException))]
+        [ExpectedException(typeof(ValidationErrorException))]
         public void ValidateObject_ObjectMissesRequiredMember_ValidationThrowsError()
         {
             // Arrange
@@ -55,7 +56,7 @@ namespace NinjaHive.WebApp.Tests
         }
 
         [TestMethod]
-        [ExpectedExceptionWithMessage(typeof(ValidationException), "RequiredProperty field is required", MatchSubstring = true)]
+        [ExpectedExceptionWithMessage(typeof(ValidationErrorException), "RequiredProperty field is required", MatchSubstring = true)]
         public void ValidateObjectWithComplexProperty_ComplexMemberMissesRequiredMember_ValidationThrowsError()
         {
             // Arrange
@@ -93,7 +94,7 @@ namespace NinjaHive.WebApp.Tests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ValidationException))]
+        [ExpectedException(typeof(ValidationErrorException))]
         public void NonEmptyGuid_GuidIsEmpty_ValidationFails()
         {
             // Arrange
