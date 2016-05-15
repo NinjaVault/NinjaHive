@@ -29,7 +29,7 @@ namespace NinjaHive.BusinessLayer.CommandHandlers.GameItems
         public override void Handle(UpdateEntityCommand<OtherItemModel> command)
         {
             var entity = this.itemRepository.FindById(command.Id);
-            base.UpdateItem(entity, command.Model);
+            this.UpdateItem(entity, command.Model);
         }
 
         public override void Handle(DeleteEntityCommand<OtherItemModel> command)

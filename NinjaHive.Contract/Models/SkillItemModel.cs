@@ -1,15 +1,13 @@
-﻿namespace NinjaHive.Contract.Models
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using NinjaHive.Core.Validation.Attributes;
+
+namespace NinjaHive.Contract.Models
 {
     public class SkillItemModel: GameItemModel
     {
-        public SkillItemModel(): base()
-        {
-            StatInfo = new StatInfoModel();
-            Skill = new SkillModel();
-        }
-
-        public StatInfoModel StatInfo { get; set; }
-
-        public SkillModel Skill { get; set; }
+        [NonEmptyGuid]
+        [Display(Name = "Skill")]
+        public Guid SkillId { get; set; }
     }
 }

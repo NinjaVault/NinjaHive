@@ -59,6 +59,7 @@
     <Compile Include="CommandHandlers\CategoryCommandHandler.cs" />
     <Compile Include="CommandHandlers\GameItems\EquipmentItemCommandHandlers.cs" />
     <Compile Include="CommandHandlers\GameItems\GameItemCommandHandlers.cs" />
+    <Compile Include="CommandHandlers\GameItems\SkillItemCommandHandlers.cs" />
     <Compile Include="CommandHandlers\GameItems\OtherItemCommandHandlers.cs" />
     <Compile Include="CommandHandlers\Skills\SkillCommandHandlers.cs" />
     <Compile Include="CommandHandlers\Tiers\TierCommandHandlers.cs" />

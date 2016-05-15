@@ -4,28 +4,23 @@ using NinjaHive.Core;
 using NinjaHive.WebApp.Areas.Items.Models;
 using NinjaHive.WebApp.Controllers;
 using System;
-using System.Collections.Generic;
 using System.Web.Mvc;
 using NinjaHive.Contract.Queries.GameItems;
+using NinjaHive.Contract.Queries.Skills;
 
 namespace NinjaHive.WebApp.Areas.Items.Controllers
 {
     public class SkillController : BaseController
     {
         private readonly IQueryProcessor queryProcessor;
+        private readonly IUnitOfWork<SkillItemModel> skillItemsRepository;
 
-        List<SkillItemModel> tempList = new List<SkillItemModel>
-        {
-            new SkillItemModel { Id = Guid.Parse("26851558-4568-7895-5568-123645215468"), Name="First Skill Item", Description = "The first item of the Skill Items section", SubCategoryMainCategoryName="Enhancing", SubCategoryName="Ally" },
-            new SkillItemModel { Id = Guid.NewGuid(), Name="Second Skill Item", SubCategoryMainCategoryName="Enhancing", SubCategoryName="Ally" },
-            new SkillItemModel { Id = Guid.NewGuid(), Name="Third Skill Item", SubCategoryMainCategoryName="Enhancing", SubCategoryName="Enemy"},
-            new SkillItemModel { Id = Guid.NewGuid(), Name="Foruth Skill Item", SubCategoryMainCategoryName="Attacks", SubCategoryName="Blasts"},
-            new SkillItemModel { Id = Guid.NewGuid(), Name="Fifth Skill Item", SubCategoryMainCategoryName="Defenses", SubCategoryName="Shields"},
-        };
-
-        public SkillController(IQueryProcessor queryProcessor)
+        public SkillController(
+            IQueryProcessor queryProcessor,
+            IUnitOfWork<SkillItemModel> skillItemsRepository)
         {
             this.queryProcessor = queryProcessor;
+            this.skillItemsRepository = skillItemsRepository;
         }
 
         public ActionResult Index()
@@ -36,9 +31,7 @@ namespace NinjaHive.WebApp.Areas.Items.Controllers
 
         public ActionResult Create()
         {
-            var viewModel = PrepareViewModel(new SkillItemModel());
-
-            return View(viewModel);
+            return View(this.PrepareViewModel(new SkillItemModel()));
         }
 
         [HttpPost]
@@ -47,17 +40,16 @@ namespace NinjaHive.WebApp.Areas.Items.Controllers
         {
             if (ModelState.IsValid)
             {
-                //TODO: query database
-                return this.Home();
+                this.skillItemsRepository.Create(viewModel.Item);
+                return this.RedirectToIndex();
             }
-            return View(PrepareViewModel(viewModel.Item));
+            return View(this.PrepareViewModel(viewModel.Item));
         }
 
         public ActionResult Edit(Guid id)
         {
-            //TODO: query database
-            var viewModel = PrepareViewModel(tempList[0]);
-            return View(viewModel);
+            var item = this.skillItemsRepository.GetById(id);
+            return View(this.PrepareViewModel(item));
         }
 
         [HttpPost]
@@ -66,27 +58,28 @@ namespace NinjaHive.WebApp.Areas.Items.Controllers
         {
             if (ModelState.IsValid)
             {
-                return this.Home();
+                this.skillItemsRepository.Update(viewModel.Item);
+                return this.RedirectToIndex();
             }
-            return View(PrepareViewModel(viewModel.Item));
+            return View(this.PrepareViewModel(viewModel.Item));
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(Guid id)
         {
-            //TODO: query database
-            return this.Home();
+            this.skillItemsRepository.Delete(id);
+            return this.RedirectToIndex();
         }
 
         private SkillItemViewModel PrepareViewModel(SkillItemModel item)
         {
             var categories = this.queryProcessor.Execute(new GetGroupedCategoriesQuery());
-
-            return new SkillItemViewModel { Item = item, CategoriesList = categories };
+            var skills = this.queryProcessor.Execute(new GetAllSkillsQuery());
+            return new SkillItemViewModel { Item = item, CategoriesList = categories, SkillsList = skills };
         }
 
-        protected override RedirectResult Home()
+        private ActionResult RedirectToIndex()
         {
             return base.Redirect<SkillController>(c => c.Index());
         }
