@@ -13,10 +13,14 @@ namespace NinjaHive.BusinessLayer.CommandHandlers.GameItems
             where TModel : GameItemModel
             where TEntity : GameItemEntity
     {
+        protected readonly IRepository<TEntity> itemRepository;
         protected readonly IRepository<SubCategoryEntity> categoryRepository;
 
-        public GameItemCommandHandlers(IRepository<SubCategoryEntity> categoryRepository)
+        public GameItemCommandHandlers(
+            IRepository<TEntity> itemRepository,
+            IRepository<SubCategoryEntity> categoryRepository)
         {
+            this.itemRepository = itemRepository;
             this.categoryRepository = categoryRepository;
         }
 

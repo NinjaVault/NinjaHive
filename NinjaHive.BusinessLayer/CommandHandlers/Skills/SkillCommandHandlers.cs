@@ -3,6 +3,7 @@ using NinjaHive.Contract.Models;
 using NinjaHive.Core;
 using NinjaHive.Domain;
 using NinjaHive.Domain.Extensions;
+using NinjaHive.BusinessLayer.Extensions;
 
 namespace NinjaHive.BusinessLayer.CommandHandlers.Skills
 {
@@ -49,20 +50,7 @@ namespace NinjaHive.BusinessLayer.CommandHandlers.Skills
             entity.Target = model.Target;
             entity.Friendly = model.Friendly;
 
-            this.UpdateStatsEntityFromModel(entity.StatInfo, model.StatInfo);
-        }
-
-        private void UpdateStatsEntityFromModel(StatInfoEntity entity, StatInfoModel model)
-        {
-            entity.Agility = model.Agility;
-            entity.Attack = model.Attack;
-            entity.Defense = model.Defense;
-            entity.Health = model.Health;
-            entity.Hunger = model.Hunger;
-            entity.Intelligence = model.Intelligence;
-            entity.Magic = model.Magic;
-            entity.Stamina = model.Stamina;
-            entity.Resistance = model.Resistance;
+            entity.StatInfo.UpdateStatsEntityFromModel(model.StatInfo);
         }
     }
 }

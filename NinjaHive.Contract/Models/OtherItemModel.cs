@@ -1,4 +1,5 @@
-﻿using NinjaHive.Core.Validation.Attributes;
+﻿using System.ComponentModel.DataAnnotations;
+using NinjaHive.Core.Validation.Attributes;
 
 namespace NinjaHive.Contract.Models
 {
@@ -8,6 +9,8 @@ namespace NinjaHive.Contract.Models
         {
             StatInfo = new StatInfoModel();
         }
+
+        [Display(Name = "Enhancer element")]
         public bool IsEnhancer { get; set; }
 
         [ValidateObject]

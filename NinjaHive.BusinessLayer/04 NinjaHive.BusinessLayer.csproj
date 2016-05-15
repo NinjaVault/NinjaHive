@@ -64,6 +64,7 @@
     <Compile Include="CommandHandlers\Tiers\TierCommandHandlers.cs" />
     <Compile Include="CrossCuttingConcerns\SaveChangesCommandHandlerDecorator.cs" />
     <Compile Include="CrossCuttingConcerns\ValidationCommandHandlerDecorator.cs" />
+    <Compile Include="Extensions\DomainExtensions.cs" />
     <Compile Include="QueryHandlers\Categories\GetGroupedCategoriesQueryHandler.cs" />
     <Compile Include="QueryHandlers\GameItems\GetAllGameItemsQueryHandler.cs" />
     <Compile Include="QueryHandlers\Categories\GetAllCategoriesQueryHandler.cs" />

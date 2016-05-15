@@ -1,6 +1,5 @@
 ﻿@using NinjaHive.WebApp.Areas.Items.Controllers
 @using NinjaHive.WebApp.Helpers
-
 @model NinjaHive.Contract.Models.OtherItemModel
 
 @{var editUrl = UrlProvider<OtherController>.GetUrl(c => c.Edit(Model.Id));}
@@ -9,6 +8,7 @@
     <div class="btn-group btn-group-sm pull-right">
         @if (Model.Craftable)
         {
+            //TODO:
             <a href="#" class="btn btn-info" data-toggle="tooltip" title="Edit Recipe"><span class="glyphicon glyphicon-apple"></span></a>
         }
         <a href="@editUrl" class="btn btn-primary" data-toggle="tooltip" title="Edit"><span class="glyphicon glyphicon-pencil"></span></a>

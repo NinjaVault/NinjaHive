@@ -14,6 +14,7 @@ namespace NinjaHive.Contract.Models
         [Range(0, int.MaxValue, ErrorMessage = "Please enter valid integer for {0}. Minimum: {1}")]
         public int Durability { get; set; }
 
+        [Display(Name = "Body slot")]
         public BodySlot BodySlot { get; set; }
 
         public IEnumerable<TierModel> Tiers { get; set; }

@@ -1,28 +1,49 @@
-﻿using System;
+﻿using NinjaHive.BusinessLayer.Extensions;
 using NinjaHive.Contract.Commands;
 using NinjaHive.Contract.Models;
-using NinjaHive.Core;
+using NinjaHive.Domain;
+using NinjaHive.Domain.Extensions;
 
 namespace NinjaHive.BusinessLayer.CommandHandlers.GameItems
 {
     public class OtherItemCommandHandlers :
-        ICommandHandler<CreateEntityCommand<OtherItemModel>>,
-        ICommandHandler<UpdateEntityCommand<OtherItemModel>>,
-        ICommandHandler<DeleteEntityCommand<OtherItemModel>>
+        GameItemCommandHandlers<OtherItemModel, OtherItemEntity>
     {
-        public void Handle(CreateEntityCommand<OtherItemModel> command)
+        public OtherItemCommandHandlers(
+            IRepository<OtherItemEntity> itemRepository,
+            IRepository<SubCategoryEntity> categoryRepository)
+            : base(itemRepository, categoryRepository)
         {
-            throw new NotImplementedException();
         }
 
-        public void Handle(UpdateEntityCommand<OtherItemModel> command)
+        public override void Handle(CreateEntityCommand<OtherItemModel> command)
         {
-            throw new NotImplementedException();
+            var entity = new OtherItemEntity
+            {
+                StatInfo = new StatInfoEntity(),
+            };
+            this.UpdateItem(entity, command.Model);
+            this.itemRepository.Add(entity);
         }
 
-        public void Handle(DeleteEntityCommand<OtherItemModel> command)
+        public override void Handle(UpdateEntityCommand<OtherItemModel> command)
         {
-            throw new NotImplementedException();
+            var entity = this.itemRepository.FindById(command.Id);
+            base.UpdateItem(entity, command.Model);
+        }
+
+        public override void Handle(DeleteEntityCommand<OtherItemModel> command)
+        {
+            this.itemRepository.RemoveById(command.Id);
+        }
+
+        protected override void UpdateItem(OtherItemEntity entity, OtherItemModel model)
+        {
+            base.UpdateItem(entity, model);
+
+            entity.IsEnhancer = model.IsEnhancer;
+
+            entity.StatInfo.UpdateStatsEntityFromModel(model.StatInfo);
         }
     }
 }

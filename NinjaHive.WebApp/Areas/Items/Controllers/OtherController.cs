@@ -43,7 +43,7 @@ namespace NinjaHive.WebApp.Areas.Items.Controllers
             if(ModelState.IsValid)
             {
                 this.otherItemsRepository.Create(viewModel.Item);
-                return this.Home();
+                return this.RedirectToIndex();
             }
             return View(PrepareViewModel(viewModel.Item));
         }
@@ -61,7 +61,7 @@ namespace NinjaHive.WebApp.Areas.Items.Controllers
             if (ModelState.IsValid)
             {
                 this.otherItemsRepository.Update(viewModel.Item);
-                return this.Home();
+                return this.RedirectToIndex();
             }
             return View(PrepareViewModel(viewModel.Item));
         }
@@ -70,8 +70,9 @@ namespace NinjaHive.WebApp.Areas.Items.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(Guid id)
         {
+            //TODO: server side validation
             this.otherItemsRepository.Delete(id);
-            return this.Home();
+            return this.RedirectToIndex();
         }
 
         private OtherItemViewModel PrepareViewModel(OtherItemModel item)
@@ -80,7 +81,7 @@ namespace NinjaHive.WebApp.Areas.Items.Controllers
             return new OtherItemViewModel { Item = item, CategoriesList = categories };
         }
 
-        protected override RedirectResult Home()
+        private ActionResult RedirectToIndex()
         {
             return base.Redirect<OtherController>(c => c.Index());
         }

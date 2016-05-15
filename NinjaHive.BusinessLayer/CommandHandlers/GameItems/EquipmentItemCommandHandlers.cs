@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using NinjaHive.Contract.Commands;
+﻿using NinjaHive.Contract.Commands;
 using NinjaHive.Contract.Models;
 using NinjaHive.Domain;
 using NinjaHive.Domain.Extensions;
@@ -9,14 +8,11 @@ namespace NinjaHive.BusinessLayer.CommandHandlers.GameItems
     public class EquipmentItemCommandHandlers :
         GameItemCommandHandlers<EquipmentModel, EquipmentItemEntity>
     {
-        private readonly IRepository<EquipmentItemEntity> itemRepository;
-
         public EquipmentItemCommandHandlers(
             IRepository<EquipmentItemEntity> itemRepository,
             IRepository<SubCategoryEntity> categoryRepository)
-            : base(categoryRepository)
+            : base(itemRepository, categoryRepository)
         {
-            this.itemRepository = itemRepository;
         }
 
         public override void Handle(CreateEntityCommand<EquipmentModel> command)
@@ -29,7 +25,7 @@ namespace NinjaHive.BusinessLayer.CommandHandlers.GameItems
         public override void Handle(UpdateEntityCommand<EquipmentModel> command)
         {
             var entity = this.itemRepository.FindById(command.Id);
-            this.UpdateItem(entity, command.Model);
+            base.UpdateItem(entity, command.Model);
         }
 
         public override void Handle(DeleteEntityCommand<EquipmentModel> command)
