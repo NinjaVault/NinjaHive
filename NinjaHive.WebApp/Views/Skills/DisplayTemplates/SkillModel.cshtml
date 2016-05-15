@@ -1,10 +1,8 @@
 ﻿@using NinjaHive.WebApp.Controllers
 @using NinjaHive.WebApp.Helpers
-
 @model NinjaHive.Contract.Models.SkillModel
 
-@{var editUrl = UrlProvider<SkillsController>.GetUrl(c => c.Edit(Model.Id));}
-
-<a href="@editUrl" data-toggle="tooltip" title="Edit" class="list-group-item">
+<a href="@(UrlProvider<SkillsController>.GetUrl(c => c.Edit(Model.Id)))"
+   data-toggle="tooltip" title="Edit" class="list-group-item">
     <h4 class="list-group-item-heading">@Model.Name</h4>
 </a>

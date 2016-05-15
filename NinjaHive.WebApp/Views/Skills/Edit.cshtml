@@ -1,25 +1,24 @@
 ﻿@using NinjaHive.WebApp.Controllers
 @using NinjaHive.WebApp.Extensions
-@model NinjaHive.WebApp.Models.SkillViewModel
-
+@model NinjaHive.Contract.Models.SkillModel
 
 <div class="row">
     <div class="page-header">
-        @using (Html.BeginForm<SkillsController>(m => m.Delete(Guid.Empty), new { @class = "form-delete pull-right" }))
+        @using (Html.BeginForm<SkillsController>(m => m.Delete(Model.Id), new { @class = "form-delete pull-right" }))
         {
             @Html.AntiForgeryToken();
-            @Html.HiddenFor(m => m.Skill.Id, new { Name = "id" })
+            @Html.HiddenFor(m => m.Id)
+
             <input type="submit" class="btn btn-danger" value="Delete" />
         }
         <h2>Skills <small>Edit</small></h2>
     </div>
 
 
-    @using (Html.BeginForm<SkillsController>(m => m.Edit(null), new { @class = "form-horizontal", role = "form" }))
+    @using (Html.BeginForm<SkillsController>(m => m.Edit(Model), new { @class = "form-horizontal", role = "form" }))
     {
         @Html.AntiForgeryToken();
-        @Html.EditorFor(m => m.Skill)
-
+        @Html.EditorForModel()
         
         <div class="form-group">
             <div class="col-md-12">

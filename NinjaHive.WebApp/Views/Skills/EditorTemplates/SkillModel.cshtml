@@ -1,8 +1,10 @@
 ﻿@using NinjaHive.WebApp.Extensions
-
 @model NinjaHive.Contract.Models.SkillModel
+
 <div class="col-md-12">
     <div class="col-md-6">
+        @Html.HiddenFor(m => m.Id)
+
         @Html.FormGroupFor(m => m.Name)
 
         @Html.FormGroupFor(m => m.Range)
@@ -11,12 +13,20 @@
 
         @Html.FormGroupFor(m => m.Targets)
 
-        @Html.FormGroupFor(m => m.Target)
+        <div class="form-group">
+            @Html.LabelFor(m => m.Target, new { @class = "col-md-4 control-label" })
+            <div class="col-md-8">
+                @Html.EnumDropDownListFor(m => m.Target, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Target, "", new { @class = "text-danger" })
+            </div>
+        </div>
     </div>
 
     <div class="col-md-6">
         @Html.FormGroupFor(m => m.Friendly)
-        <br />
     </div>
 </div>
-@Html.EditorFor(m => m.StatInfo)
+
+<div class="col-md-12">
+    @Html.EditorFor(m => m.StatInfo)
+</div>
