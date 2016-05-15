@@ -212,10 +212,8 @@
     <Compile Include="Areas\Items\Models\EquipmentViewModel.cs" />
     <Compile Include="Areas\Items\Models\GameItemViewModel.cs" />
     <Compile Include="Areas\Items\Models\IGameItemViewModel.cs" />
-    <Compile Include="Areas\Items\Models\ITierViewModel.cs" />
     <Compile Include="Areas\Items\Models\OtherItemViewModel.cs" />
     <Compile Include="Areas\Items\Models\SkillItemViewModel.cs" />
-    <Compile Include="Areas\Items\Models\TierViewModel.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />

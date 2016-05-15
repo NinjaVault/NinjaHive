@@ -23,7 +23,7 @@ namespace NinjaHive.Contract.Models
 
         [Display(Name = "Tier Rank")]
         [Required(ErrorMessage = "{0} is required")]
-        [Range(0, int.MaxValue, ErrorMessage = "Please enter valid integer for {0}. Minimum: {1}")]
+        [Range(1, int.MaxValue, ErrorMessage = "Please enter valid integer for {0}. Minimum: {1}")]
         public int Tier { get; set; }
 
         [RequiredForValidation]

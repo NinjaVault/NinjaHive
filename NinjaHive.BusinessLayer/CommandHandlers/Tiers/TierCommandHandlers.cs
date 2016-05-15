@@ -1,5 +1,4 @@
-﻿using System;
-using NinjaHive.Contract.Commands;
+﻿using NinjaHive.Contract.Commands;
 using NinjaHive.Contract.Models;
 using NinjaHive.Core;
 using NinjaHive.Domain;
@@ -37,12 +36,14 @@ namespace NinjaHive.BusinessLayer.CommandHandlers.Tiers
 
         public void Handle(UpdateEntityCommand<TierModel> command)
         {
-            throw new NotImplementedException();
+            var tier = this.tierRepository.FindById(command.Model.Id);
+            tier.Name = command.Model.Name;
+            tier.Tier = command.Model.Tier;
         }
 
         public void Handle(DeleteEntityCommand<TierModel> command)
         {
-            throw new NotImplementedException();
+            this.tierRepository.RemoveById(command.Id);
         }
     }
 }

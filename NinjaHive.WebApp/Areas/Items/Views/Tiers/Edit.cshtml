@@ -1,35 +1,42 @@
 ﻿@using NinjaHive.WebApp.Areas.Items.Controllers
 @using NinjaHive.WebApp.Extensions
-@using NinjaHive.WebApp.Helpers
-@model NinjaHive.WebApp.Areas.Items.Models.TierViewModel
+@model NinjaHive.Contract.Models.TierModel
 
 <div class="row">
     <div class="page-header">
-        @{Html.BeginForm<TiersController>(c => c.Delete(Model.Tier.Id), new { @class = "form-delete pull-right" });}
-            @Html.AntiForgeryToken()
-            @Html.HiddenFor(m => m.Tier.Id, new { Name = "Id"})
-            <input type="submit" class="btn btn-danger" value="Delete" />
-        @{Html.EndForm();}
 
+        @using (Html.BeginForm<TiersController>(c => c.Delete(Model), new { @class = "form-delete pull-right" }))
+        {
+            @Html.AntiForgeryToken()
+
+            @Html.HiddenFor(m => m.Id)
+
+            @Html.HiddenFor(m => m.EquipmentItemId)
+
+            <input type="submit" class="btn btn-danger" value="Delete" />
+        }
+            
         <h2>
-            Equipment Tier<small>Edit</small>
+            Edit Tier <small>for @Model.EquipmentItemName</small>
         </h2>
     </div>
 
         <br />
 
-        @{ Html.BeginForm<TiersController>(c => c.Edit(null), new { @class = "form-horizontal", role = "form", Name = "tierEditForm" }); }
-        @Html.AntiForgeryToken()
+        @using (Html.BeginForm<TiersController>(c => c.Edit(Model), new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
 
-        @Html.EditorFor(m => m.Tier)
+            @Html.ValidationResultsFor(Model)
 
-        <div class="form-group">
-            <div class="col-md-12">
-                <input type="submit" class="btn btn-primary" value="Save changes" />
+            @Html.EditorForModel()
+
+            <div class="form-group">
+                <div class="col-md-12">
+                    <input type="submit" class="btn btn-primary" value="Save changes" />
+                </div>
             </div>
-        </div>
-
-        @{ Html.EndForm(); }
+        }
 
     <script>
         ninjaHive.promptBeforeDelete();

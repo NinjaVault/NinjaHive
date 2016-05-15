@@ -67,6 +67,7 @@ namespace NinjaHive.WebApp.Areas.Items.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(Guid id)
         {
+            //TODO: server side validation
             this.equipmentItemsRepository.Delete(id);
             return base.Home();
         }

@@ -1,11 +1,11 @@
 ﻿using NinjaHive.Contract.Models;
-using NinjaHive.WebApp.Areas.Items.Models;
 using NinjaHive.WebApp.Controllers;
 using System;
 using System.Web.Mvc;
 using NinjaHive.Core;
 using NinjaHive.Contract.Queries;
 using NinjaHive.Core.Extensions;
+using NinjaHive.Core.Models;
 
 namespace NinjaHive.WebApp.Areas.Items.Controllers
 {
@@ -41,13 +41,40 @@ namespace NinjaHive.WebApp.Areas.Items.Controllers
             return View(model);
         }
 
+        public ActionResult Edit(Guid tierId)
+        {
+            var model = this.queryProcessor.Execute(new GetEntityByIdQuery<TierModel>(tierId));
+            return View(model);
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(TierModel model)
         {
+            return this.UpdateModelForPostResult(model, this.tiersRepository.Create);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(TierModel model)
+        {
+            return this.UpdateModelForPostResult(model, this.tiersRepository.Update);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete(TierModel model)
+        {
+            //TODO: server side validation
+            this.tiersRepository.Delete(model.Id);
+            return this.RederictToIndex(model.EquipmentItemId);
+        }
+
+        private ActionResult UpdateModelForPostResult(TierModel model, Func<TierModel, WorkResult> unitOfWork)
+        {
             if (ModelState.IsValid)
             {
-                var result = this.tiersRepository.Create(model);
+                var result = unitOfWork.Invoke(model);
                 if (result.IsValid)
                 {
                     return this.RederictToIndex(model.EquipmentItemId);
@@ -57,58 +84,9 @@ namespace NinjaHive.WebApp.Areas.Items.Controllers
             return View(model);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(Guid id)
-        {
-            //TODO: query database
-            return this.RederictToIndex(GetParentEquipment(id).Id);
-        }
-
-        public ActionResult Edit(Guid id)
-        {
-            var viewModel = PrepareViewModel(new TierModel());
-            return View(viewModel);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(TierViewModel viewModel)
-        {
-            if (ModelState.IsValid)
-            {
-                //TODO: query database
-                return this.RederictToIndex(viewModel.EquipmentId);
-            }
-            return View(viewModel);
-        }
-
         private EquipmentModel GetEquipmentById(Guid id)
         {
             return this.queryProcessor.Execute(new GetEntityByIdQuery<EquipmentModel>(id));
-        }
-
-
-        private EquipmentModel GetParentEquipment(Guid id)
-        {
-            //TODO: query database
-            return new EquipmentModel { Name = "Unimplemented", Id = id };
-        }
-        private EquipmentModel GetParentEquipment(TierModel tier)
-        {
-            //TODO: query database
-            return GetParentEquipment( tier.Id );
-        }
-        
-
-        private TierViewModel PrepareViewModel(TierModel model)
-        {
-            var viewModel = new TierViewModel(
-                    model,
-                    GetParentEquipment(model)
-                );
-
-            return viewModel;
         }
 
         private ActionResult RederictToIndex(Guid id)
