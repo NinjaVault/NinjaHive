@@ -30,7 +30,7 @@ namespace NinjaHive.BusinessLayer.CommandHandlers.GameItems
         {
             entity.Name = model.Name;
             entity.Description = model.Description;
-            entity.SubCategory = this.categoryRepository.FindById(model.CategoryId);
+            entity.SubCategory = this.categoryRepository.FindById(model.SubCategoryId);
             entity.Value = model.Value;
             entity.Craftable = model.Craftable;
             entity.IsQuestItem = model.IsQuestItem;

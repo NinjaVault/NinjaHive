@@ -21,7 +21,7 @@ namespace NinjaHive.Contract.Models
 
         [NonEmptyGuid]
         [Display(Name = "Category")]
-        public Guid CategoryId { get; set; }
+        public Guid SubCategoryId { get; set; }
 
         //conventions for automapper
         public string SubCategoryName { get; set; }
