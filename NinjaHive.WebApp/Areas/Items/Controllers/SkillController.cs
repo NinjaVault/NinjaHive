@@ -6,6 +6,7 @@ using NinjaHive.WebApp.Controllers;
 using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
+using NinjaHive.Contract.Queries.GameItems;
 
 namespace NinjaHive.WebApp.Areas.Items.Controllers
 {
@@ -27,11 +28,10 @@ namespace NinjaHive.WebApp.Areas.Items.Controllers
             this.queryProcessor = queryProcessor;
         }
 
-
         public ActionResult Index()
         {
-            //TODO: query database
-            return View(tempList);
+            var items = this.queryProcessor.Execute(new GetAllGameItemsQuery<SkillItemModel>());
+            return View(items);
         }
 
         public ActionResult Create()

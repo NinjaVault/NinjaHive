@@ -18,41 +18,50 @@ namespace NinjaHive.BusinessLayer.QueryHandlers.GameItems
         private readonly IRepository<OtherItemEntity> otherItemsRepository;
         private readonly IEntityMapper<OtherItemEntity, OtherItemModel> otherItemsMapper;
 
+        private readonly IRepository<SkillItemEntity> skillItemsRepository;
+        private readonly IEntityMapper<SkillItemEntity, SkillItemModel> skillItemsMapper;
+
         public GetAllGameItemsQueryHandler(
             IRepository<EquipmentItemEntity> equipmentItemsRepository,
             IEntityMapper<EquipmentItemEntity, EquipmentModel> equipmentItemMapper,
             IRepository<OtherItemEntity> otherItemsRepository,
-            IEntityMapper<OtherItemEntity, OtherItemModel> otherItemsMapper)
+            IEntityMapper<OtherItemEntity, OtherItemModel> otherItemsMapper,
+            IRepository<SkillItemEntity> skillItemsRepository,
+            IEntityMapper<SkillItemEntity, SkillItemModel> skillItemsMapper)
         {
             this.equipmentItemsRepository = equipmentItemsRepository;
             this.equipmentItemMapper = equipmentItemMapper;
 
             this.otherItemsRepository = otherItemsRepository;
             this.otherItemsMapper = otherItemsMapper;
+
+            this.skillItemsRepository = skillItemsRepository;
+            this.skillItemsMapper = skillItemsMapper;
         }
 
         public EquipmentModel[] Handle(GetAllGameItemsQuery<EquipmentModel> query)
         {
-            var items =
-                from item in this.equipmentItemsRepository.Entities.ToArray()
-                orderby item.Name ascending
-                select this.equipmentItemMapper.Map(item);
-
-            return items.ToArray();
+            return this.GetMappedItems(this.equipmentItemsRepository.Entities, this.equipmentItemMapper.Map);
         }
-
 
         public SkillItemModel[] Handle(GetAllGameItemsQuery<SkillItemModel> query)
         {
-            throw new NotImplementedException();
+            return this.GetMappedItems(this.skillItemsRepository.Entities, this.skillItemsMapper.Map);
         }
 
         public OtherItemModel[] Handle(GetAllGameItemsQuery<OtherItemModel> query)
         {
+            return this.GetMappedItems(this.otherItemsRepository.Entities, this.otherItemsMapper.Map);
+        }
+
+        private TModel[] GetMappedItems<TModel, TEntity>(IQueryable<TEntity> entities, Func<TEntity, TModel> mapper)
+            where TModel : GameItemModel
+            where TEntity : GameItemEntity, INamedEntity
+        {
             var items =
-                from item in this.otherItemsRepository.Entities.ToArray()
+                from item in entities.ToArray()
                 orderby item.Name ascending
-                select this.otherItemsMapper.Map(item);
+                select mapper.Invoke(item);
 
             return items.ToArray();
         }
