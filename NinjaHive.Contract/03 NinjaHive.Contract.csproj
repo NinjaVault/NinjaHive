@@ -64,7 +64,6 @@
     <Compile Include="Queries\GameItems\GetAllGameItemsQuery.cs" />
     <Compile Include="Queries\Categories\GetAllCategoriesQuery.cs" />
     <Compile Include="Queries\GetEntityByIdQuery.cs" />
-    <Compile Include="Queries\GetLinkedGameItemNamesQuery.cs" />
     <Compile Include="Role.enum.cs" />
   </ItemGroup>
   <ItemGroup>
