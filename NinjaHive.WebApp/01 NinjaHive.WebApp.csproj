@@ -207,7 +207,6 @@
     <Compile Include="Areas\Items\Controllers\EquipmentController.cs" />
     <Compile Include="Areas\Items\Controllers\OtherController.cs" />
     <Compile Include="Areas\Items\Controllers\SkillController.cs" />
-    <Compile Include="Areas\Items\Controllers\TiersController.cs" />
     <Compile Include="Areas\Items\ItemsAreaRegistration.cs" />
     <Compile Include="Areas\Items\Models\EquipmentViewModel.cs" />
     <Compile Include="Areas\Items\Models\GameItemViewModel.cs" />
@@ -276,13 +275,8 @@
     <Content Include="Areas\Items\Views\Shared\EditorTemplates\IGameItemViewModel.cshtml" />
     <Content Include="Areas\Items\Views\Shared\_ItemsLayout.cshtml" />
     <Content Include="Areas\Items\Views\Shared\_ItemsSubnavigationPartial.cshtml" />
-    <Content Include="Areas\Items\Views\Tiers\Create.cshtml" />
-    <Content Include="Areas\Items\Views\Tiers\Edit.cshtml" />
-    <Content Include="Areas\Items\Views\Tiers\EditorTemplates\TierModel.cshtml" />
-    <Content Include="Areas\Items\Views\Tiers\Index.cshtml" />
     <Content Include="Areas\Items\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Items\web.config" />
-    <Content Include="Areas\Items\Views\Tiers\DisplayTemplates\TierModel.cshtml" />
     <Content Include="Areas\Items\Views\Other\Index.cshtml" />
     <Content Include="Areas\Items\Views\Other\Create.cshtml" />
     <Content Include="Areas\Items\Views\Other\Edit.cshtml" />

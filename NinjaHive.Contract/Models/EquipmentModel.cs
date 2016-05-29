@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using NinjaHive.Components.Enums;
 
 namespace NinjaHive.Contract.Models
@@ -16,7 +15,5 @@ namespace NinjaHive.Contract.Models
 
         [Display(Name = "Body slot")]
         public BodySlot BodySlot { get; set; }
-
-        public IEnumerable<TierModel> Tiers { get; set; }
     }
 }

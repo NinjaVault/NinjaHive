@@ -6,13 +6,7 @@ namespace NinjaHive.WebApp.Areas.Items
 {
     public class ItemsAreaRegistration : AreaRegistration
     {
-        public override string AreaName
-        {
-            get
-            {
-                return "Items";
-            }
-        }
+        public override string AreaName => "Items";
 
         public override void RegisterArea(AreaRegistrationContext context)
         {

@@ -4,12 +4,10 @@
 
 @{
     var editUrl = UrlProvider<EquipmentController>.GetUrl(c => c.Edit(Model.Id));
-    var tiersUrl = UrlProvider<TiersController>.GetUrl(c => c.Index(Model.Id));
 }
 
 <li class="list-group-item">
     <div class="btn-group btn-group-sm pull-right">
-        <a href="@tiersUrl" class="btn btn-info" data-toggle="tooltip" title="View Tiers"><span class="glyphicon glyphicon-sort-by-attributes"></span></a>
         <a href="@editUrl" class="btn btn-primary" data-toggle="tooltip" title="Edit"><span class="glyphicon glyphicon-pencil"></span></a>
     </div>
     <h4 class="list-group-item-heading">@Model.Name</h4>
