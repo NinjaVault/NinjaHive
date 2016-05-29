@@ -1,4 +1,5 @@
-﻿using NinjaHive.Contract.Commands;
+﻿using System;
+using NinjaHive.Contract.Commands;
 using NinjaHive.Contract.Models;
 using NinjaHive.Domain;
 using NinjaHive.Domain.Extensions;
@@ -39,6 +40,13 @@ namespace NinjaHive.BusinessLayer.CommandHandlers.GameItems
 
             entity.BodySlot = model.BodySlot;
             entity.Durability = model.Durability;
+            entity.Tier = model.Tier;
+
+            if (model.ParentTierId != Guid.Empty)
+            {
+                entity.ParentTier = this.itemRepository.FindById(model.ParentTierId);
+            }
+            
         }
     }
 }

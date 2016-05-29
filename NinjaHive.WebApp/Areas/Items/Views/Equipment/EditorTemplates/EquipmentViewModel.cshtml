@@ -3,6 +3,8 @@
 @using NinjaHive.WebApp.Extensions
 @model EquipmentViewModel
 
+<div>Tier rank <span class="badge">@Model.Item.Tier</span></div>
+
 @Html.Partial(Partials.EditGameItem, Model)
 
 <div class="col-md-12">

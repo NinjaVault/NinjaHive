@@ -3,11 +3,13 @@
 @model NinjaHive.Contract.Models.EquipmentModel
 
 @{
+    var nextUrl = Model.HasNextTier ? "#" : UrlProvider<EquipmentController>.GetUrl(c => c.NextTier(Model.Id));
     var editUrl = UrlProvider<EquipmentController>.GetUrl(c => c.Edit(Model.Id));
 }
 
 <li class="list-group-item">
     <div class="btn-group btn-group-sm pull-right">
+        <a href="@nextUrl" class="btn btn-primary @(Model.HasNextTier ? "disabled" : string.Empty)" role="button">Create next tier</a>
         <a href="@editUrl" class="btn btn-primary" data-toggle="tooltip" title="Edit"><span class="glyphicon glyphicon-pencil"></span></a>
     </div>
     <h4 class="list-group-item-heading">@Model.Name</h4>

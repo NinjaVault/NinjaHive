@@ -25,42 +25,42 @@ namespace NinjaHive.WebApp.Areas.Items.Controllers
         public ActionResult Index()
         {
             var items = this.queryProcessor.Execute(new GetAllGameItemsQuery<EquipmentModel>());
-            return View(items);
+            return this.View(items);
         }
 
         public ActionResult Create()
         {
-            return View(PrepareViewModel(new EquipmentModel()));
+            return this.View(this.PrepareViewModel(new EquipmentModel()));
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(EquipmentViewModel viewModel)
         {
-            if (ModelState.IsValid)
+            if (this.ModelState.IsValid)
             {
                 this.equipmentItemsRepository.Create(viewModel.Item);
-                return base.Home();
+                return this.Home();
             }
-            return View(PrepareViewModel(viewModel.Item));
+            return this.View(this.PrepareViewModel(viewModel.Item));
         }
 
         public ActionResult Edit(Guid id)
         {
             var item = this.equipmentItemsRepository.GetById(id);
-            return View(PrepareViewModel(item));
+            return this.View(this.PrepareViewModel(item));
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(EquipmentViewModel viewModel)
         {
-            if (ModelState.IsValid)
+            if (this.ModelState.IsValid)
             {
                 this.equipmentItemsRepository.Update(viewModel.Item);
-                return base.Home();
+                return this.Home();
             }
-            return View(PrepareViewModel(viewModel.Item));
+            return this.View(this.PrepareViewModel(viewModel.Item));
         }
 
         [HttpPost]
@@ -69,7 +69,43 @@ namespace NinjaHive.WebApp.Areas.Items.Controllers
         {
             //TODO: server side validation
             this.equipmentItemsRepository.Delete(id);
-            return base.Home();
+            return this.Home();
+        }
+
+        public ActionResult NextTier(Guid parentTierId)
+        {
+            var model = this.equipmentItemsRepository.GetById(parentTierId);
+            var viewModel = new NextTierViewModel
+            {
+                ParentTierId = parentTierId,
+                Tier = ++model.Tier,
+            };
+            return this.View(viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult NextTier(NextTierViewModel viewModel)
+        {
+            if (this.ModelState.IsValid)
+            {
+                var model = this.equipmentItemsRepository.GetById(viewModel.ParentTierId);
+                this.SetNextTier(model, viewModel);
+
+                this.equipmentItemsRepository.Create(model);
+
+                return this.Home();
+            }
+            return this.View(viewModel);
+        }
+
+        private void SetNextTier(EquipmentModel model, NextTierViewModel viewModel)
+        {
+            model.Id = Guid.Empty;
+            model.Name = viewModel.Name;
+            model.Description = viewModel.Description;
+            model.ParentTierId = viewModel.ParentTierId;
+            model.Tier += 1;
         }
 
         private EquipmentViewModel PrepareViewModel(EquipmentModel model)

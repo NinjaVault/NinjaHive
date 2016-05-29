@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using NinjaHive.Components.Enums;
 
 namespace NinjaHive.Contract.Models
@@ -7,6 +8,7 @@ namespace NinjaHive.Contract.Models
     {
         public EquipmentModel()
         {
+            this.Tier = 1; //default value for new equipment items
             this.BodySlot = BodySlot.Hair; //default value for dropdownlist
         }
 
@@ -15,5 +17,12 @@ namespace NinjaHive.Contract.Models
 
         [Display(Name = "Body slot")]
         public BodySlot BodySlot { get; set; }
+
+        [Range(1, int.MaxValue, ErrorMessage = "Minimum {0} rank is {1}.")]
+        public int Tier { get; set; }
+
+        public Guid ParentTierId { get; set; }
+        public Guid NextTierId { get; set; }
+        public bool HasNextTier => this.NextTierId != Guid.Empty;
     }
 }
