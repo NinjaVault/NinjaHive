@@ -28,7 +28,6 @@ namespace NinjaHive.Domain
         public virtual DbSet<GameItemEntity> GameItemEntities { get; set; }
         public virtual DbSet<RaceEntity> RaceEntities { get; set; }
         public virtual DbSet<ClassEntity> ClassEntities { get; set; }
-        public virtual DbSet<TierEntity> TierEntities { get; set; }
         public virtual DbSet<LevelEntity> LevelEntities { get; set; }
         public virtual DbSet<SkillEntity> SkillEntities { get; set; }
         public virtual DbSet<StatInfoEntity> StatInfoEntities { get; set; }

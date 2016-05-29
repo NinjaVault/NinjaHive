@@ -16,7 +16,6 @@ namespace NinjaHive.BusinessLayer
             Mapper.CreateMap<OtherItemEntity, OtherItemModel>();
             Mapper.CreateMap<SkillItemEntity, SkillItemModel>();
 
-            Mapper.CreateMap<TierEntity, TierModel>();
             Mapper.CreateMap<SkillEntity, SkillModel>();
             Mapper.CreateMap<StatInfoEntity, StatInfoModel>();
         }

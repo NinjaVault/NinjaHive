@@ -36,10 +36,13 @@ namespace NinjaHive.Domain
     {
         public EquipmentItemEntity()
         {
-            this.Tiers = new HashSet<TierEntity>();
             this.Races = new HashSet<RaceEntity>();
             this.Classes = new HashSet<ClassEntity>();
             this.Enhancers = new HashSet<OtherItemEntity>();
+            this.Levels = new HashSet<LevelEntity>();
+            this.Skills = new HashSet<SkillEntity>();
+            this.CraftIngredients = new HashSet<GameItemEntity>();
+            this.Upgrades = new HashSet<GameItemEntity>();
             this.OnCreated();
         }
     
@@ -47,11 +50,17 @@ namespace NinjaHive.Domain
         public int Durability { get; set; }
         public int NumberOfSlots { get; set; }
         public NinjaHive.Components.Enums.BodySlot BodySlot { get; set; }
+        public int Tier { get; set; }
     
-        public virtual ICollection<TierEntity> Tiers { get; set; }
         public virtual ICollection<RaceEntity> Races { get; set; }
         public virtual ICollection<ClassEntity> Classes { get; set; }
         public virtual ICollection<OtherItemEntity> Enhancers { get; set; }
+        public virtual EquipmentItemEntity ParentTier { get; set; }
+        public virtual EquipmentItemEntity NextTier { get; set; }
+        public virtual ICollection<LevelEntity> Levels { get; set; }
+        public virtual ICollection<SkillEntity> Skills { get; set; }
+        public virtual ICollection<GameItemEntity> CraftIngredients { get; set; }
+        public virtual ICollection<GameItemEntity> Upgrades { get; set; }
     }
 }
 namespace NinjaHive.Domain
@@ -102,8 +111,8 @@ namespace NinjaHive.Domain
     
         public EditInfo EditInfo { get; set; }
     
-        public virtual TierEntity Tier { get; set; }
         public virtual StatInfoEntity StatInfo { get; set; }
+        public virtual EquipmentItemEntity EquipmentTier { get; set; }
     }
 }
 namespace NinjaHive.Domain
@@ -182,6 +191,7 @@ namespace NinjaHive.Domain
             this.Radius = 0;
             this.Targets = 1;
             this.Specials = new HashSet<SpecialEntity>();
+            this.EquipmentItems = new HashSet<EquipmentItemEntity>();
             this.EditInfo = new EditInfo();
             this.OnCreated();
         }
@@ -199,6 +209,7 @@ namespace NinjaHive.Domain
     
         public virtual ICollection<SpecialEntity> Specials { get; set; }
         public virtual StatInfoEntity StatInfo { get; set; }
+        public virtual ICollection<EquipmentItemEntity> EquipmentItems { get; set; }
     }
 }
 namespace NinjaHive.Domain
@@ -291,37 +302,6 @@ namespace NinjaHive.Domain
     
         public virtual ICollection<GameItemEntity> GameItems { get; set; }
         public virtual MainCategoryEntity MainCategory { get; set; }
-    }
-}
-namespace NinjaHive.Domain
-{
-    using System;
-    using System.Collections.Generic;
-    
-    public partial class TierEntity : NinjaHive.Domain.IEntity
-    {
-        public TierEntity()
-        {
-            this.Levels = new HashSet<LevelEntity>();
-            this.Skills = new HashSet<SkillEntity>();
-            this.UpgradeIngredients = new HashSet<GameItemEntity>();
-            this.CraftingIngredients = new HashSet<GameItemEntity>();
-            this.EditInfo = new EditInfo();
-            this.OnCreated();
-        }
-    
-        partial void OnCreated();
-        public System.Guid Id { get; set; }
-        public string Name { get; set; }
-        public int Tier { get; set; }
-    
-        public EditInfo EditInfo { get; set; }
-    
-        public virtual EquipmentItemEntity EquipmentItem { get; set; }
-        public virtual ICollection<LevelEntity> Levels { get; set; }
-        public virtual ICollection<SkillEntity> Skills { get; set; }
-        public virtual ICollection<GameItemEntity> UpgradeIngredients { get; set; }
-        public virtual ICollection<GameItemEntity> CraftingIngredients { get; set; }
     }
 }
 namespace NinjaHive.Domain

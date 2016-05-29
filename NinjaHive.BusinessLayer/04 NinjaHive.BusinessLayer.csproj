@@ -62,7 +62,6 @@
     <Compile Include="CommandHandlers\GameItems\SkillItemCommandHandlers.cs" />
     <Compile Include="CommandHandlers\GameItems\OtherItemCommandHandlers.cs" />
     <Compile Include="CommandHandlers\Skills\SkillCommandHandlers.cs" />
-    <Compile Include="CommandHandlers\Tiers\TierCommandHandlers.cs" />
     <Compile Include="CrossCuttingConcerns\SaveChangesCommandHandlerDecorator.cs" />
     <Compile Include="CrossCuttingConcerns\ValidationCommandHandlerDecorator.cs" />
     <Compile Include="Extensions\DomainExtensions.cs" />

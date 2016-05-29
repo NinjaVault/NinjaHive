@@ -14,14 +14,10 @@
         <InheritanceConnector EntityType="NinjaHiveEntities.SkillItemEntity" />
         <EntityTypeShape EntityType="NinjaHiveEntities.EquipmentItemEntity" Width="1.875" PointX="75.25" PointY="57.375" />
         <InheritanceConnector EntityType="NinjaHiveEntities.EquipmentItemEntity" />
-        <EntityTypeShape EntityType="NinjaHiveEntities.TierEntity" Width="1.75" PointX="75.375" PointY="60.875" />
-        <EntityTypeShape EntityType="NinjaHiveEntities.LevelEntity" Width="1.75" PointX="71.25" PointY="60.875" />
-        <EntityTypeShape EntityType="NinjaHiveEntities.SkillEntity" Width="1.75" PointX="75.375" PointY="64.5" />
-        <EntityTypeShape EntityType="NinjaHiveEntities.StatInfoEntity" Width="1.5" PointX="82.625" PointY="60.875" FillColor="Silver" />
-        <EntityTypeShape EntityType="NinjaHiveEntities.SpecialEntity" Width="1.75" PointX="71.25" PointY="64.5" />
-        <AssociationConnector Association="NinjaHiveEntities.EquipmentItemsTiersAssociation" />
-        <AssociationConnector Association="NinjaHiveEntities.TiersLevelsAssociation" />
-        <AssociationConnector Association="NinjaHiveEntities.TiersSkillsAssociation" />
+        <EntityTypeShape EntityType="NinjaHiveEntities.LevelEntity" Width="1.875" PointX="75.25" PointY="62" />
+        <EntityTypeShape EntityType="NinjaHiveEntities.SkillEntity" Width="1.875" PointX="82.25" PointY="61.25" />
+        <EntityTypeShape EntityType="NinjaHiveEntities.StatInfoEntity" Width="1.5" PointX="85.25" PointY="61.25" FillColor="Silver" />
+        <EntityTypeShape EntityType="NinjaHiveEntities.SpecialEntity" Width="1.75" PointX="78.625" PointY="62" />
         <AssociationConnector Association="NinjaHiveEntities.SkillsSpecialsAssociation" />
         <AssociationConnector Association="NinjaHiveEntities.LevelsStatInfoAssociation" />
         <AssociationConnector Association="NinjaHiveEntities.SkillsStatInfoAssociation" />
@@ -31,12 +27,16 @@
         <AssociationConnector Association="NinjaHiveEntities.EquipmentItemsClassesAssociation" />
         <AssociationConnector Association="NinjaHiveEntities.EquipmentItemsEnhancersAssociation" />
         <AssociationConnector Association="NinjaHiveEntities.OtherItemsCrafingItemsAssociation" />
-        <AssociationConnector Association="NinjaHiveEntities.TiersUpgradeItemsAssociation" />
-        <AssociationConnector Association="NinjaHiveEntities.TiersCraftingItemsAssociation" />
         <EntityTypeShape EntityType="NinjaHiveEntities.MainCategoryEntity" Width="1.75" PointX="75.875" PointY="53.75" FillColor="Red" />
         <EntityTypeShape EntityType="NinjaHiveEntities.SubCategoryEntity" Width="1.75" PointX="78.625" PointY="53.75" FillColor="Red" />
         <AssociationConnector Association="NinjaHiveEntities.FK_GameItems_Category1" />
         <AssociationConnector Association="NinjaHiveEntities.FK_SubCategory_MainCategory" />
+        <AssociationConnector Association="NinjaHiveEntities.Fk_EquipmentItem_ParentTier" />
+        <AssociationConnector Association="NinjaHiveEntities.Fk_Levels_EquipmentItems" />
+        <AssociationConnector Association="NinjaHiveEntities.EquipmentItemCraftIngredients" />
+        <AssociationConnector Association="NinjaHiveEntities.EquipmentItemSkills" ManuallyRouted="false" >
+        </AssociationConnector>
+        <AssociationConnector Association="NinjaHiveEntities.EquipmentItemUpgrades" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
