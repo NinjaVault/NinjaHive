@@ -79,6 +79,7 @@ namespace NinjaHive.WebApp.Areas.Items.Controllers
             {
                 ParentTierId = parentTierId,
                 Tier = ++model.Tier,
+                Value = model.Value,
             };
             return this.View(viewModel);
         }
@@ -106,6 +107,7 @@ namespace NinjaHive.WebApp.Areas.Items.Controllers
             model.Description = viewModel.Description;
             model.ParentTierId = viewModel.ParentTierId;
             model.Tier += 1;
+            model.Value = viewModel.Value;
         }
 
         private EquipmentViewModel PrepareViewModel(EquipmentModel model)
